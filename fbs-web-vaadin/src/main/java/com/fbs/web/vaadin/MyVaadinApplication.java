@@ -1,47 +1,89 @@
-/*
- * Copyright 2009 IT Mill Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
 package com.fbs.web.vaadin;
 
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.fbs.web.vaadin.i18n.ApplicationMessages;
+import com.fbs.web.vaadin.ui.ViewManager;
+import com.fbs.web.vaadin.ui.auth.LoginScreen;
 import com.vaadin.Application;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Window;
 
 /**
  * The Application's "main" class
  */
-@SuppressWarnings("serial")
 public class MyVaadinApplication extends Application
 {
-    private Window window;
+    private static final long serialVersionUID = 1L;
+    private static Logger logger = Logger.getLogger(MyVaadinApplication.class.getName());
+
+    /* Internationalized strings. */
+    private ResourceBundle i18nBundle;
+
+    /* View manager that handlers different screens in the UI. */
+    private ViewManager viewManager;
+
+    // UI Components
+    private Window mainWindow;
+
 
     @Override
     public void init()
     {
-        window = new Window("My Vaadin Application");
-        setMainWindow(window);
-        Button button = new Button("Click Me");
-        button.addListener(new Button.ClickListener() {
-            public void buttonClick(ClickEvent event) {
-                window.addComponent(new Label("Thank you for clicking"));
-            }
-        });
-        window.addComponent(button);
-        
+        logger.entering(this.getClass().getName(), "init");
+
+        // Initialize the view manager for the main window
+        final ResourceBundle i18n = ResourceBundle.getBundle("application", getLocale());
+
+        this.mainWindow = new Window(i18n.getString(ApplicationMessages.ApplicationTitle));
+        setMainWindow(mainWindow);
+
+        viewManager = new ViewManager(mainWindow);
+
+        // Create the login screen
+        viewManager.switchScreen(LoginScreen.class.getName(), new LoginScreen(this));
+
+        logger.exiting(this.getClass().getName(), "init");
+    }
+
+
+    @Override
+    public void setLocale(Locale locale)
+    {
+        super.setLocale(locale);
+
+        try
+        {
+            i18nBundle = ResourceBundle.getBundle("application", getLocale());
+        }
+        catch (MissingResourceException mre)
+        {
+            // Log the exception
+            logger.log(Level.SEVERE, "Resource not found", mre);
+        }
+    }
+
+
+    public ViewManager getViewManager()
+    {
+        return viewManager;
+    }
+
+
+    /**
+     * Returns a localized message from the resource bundle with the current application locale.
+     **/
+    public String getMessage(String key)
+    {
+        return i18nBundle.getString(key);
     }
     
+    public void logout()
+    {
+        this.getMainWindow().getApplication().close();
+    }
+
 }

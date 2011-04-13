@@ -8,9 +8,10 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>fbs-spring-dependencies</module>
 		<module>fbs-rest</module>
-		<module>fbs-web-vaadin</module>
+		<module>fbs-security</module>
+		<module>fbs-spring-dependencies</module>
+		<module>fbs-web-vaadin</module> 
 	</modules>
 
 	<properties>

@@ -9,7 +9,7 @@
 	</parent>
 
 	<groupId>com.fbs</groupId>
-	<artifactId>fbs-spring-dependencies</artifactId>
+	<artifactId>fbs-dependencies-spring</artifactId>
 	<packaging>pom</packaging>
 
 	<!-- Shared version number properties -->

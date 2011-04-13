@@ -8,10 +8,11 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>fbs-dependencies-shiro</module>
+		<module>fbs-dependencies-spring</module>
 		<module>fbs-rest</module>
 		<module>fbs-security</module>
-		<module>fbs-spring-dependencies</module>
-		<module>fbs-web-vaadin</module> 
+		<module>fbs-web-vaadin</module>
 	</modules>
 
 	<properties>
@@ -50,7 +51,7 @@
 			<url>http://repo1.maven.org/maven2</url>
 		</pluginRepository>
 	</pluginRepositories>
-	
+
 	<build>
 		<plugins>
 			<plugin>

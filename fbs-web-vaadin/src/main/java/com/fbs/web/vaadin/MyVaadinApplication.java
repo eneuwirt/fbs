@@ -6,15 +6,20 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.ViewManager;
 import com.fbs.web.vaadin.ui.auth.LoginScreen;
 import com.vaadin.Application;
 import com.vaadin.ui.Window;
-
+ 
 /**
  * The Application's "main" class
  */
+@Component(value = "vaadinApp")
+@Scope(value = "session")
 public class MyVaadinApplication extends Application
 {
     private static final long serialVersionUID = 1L;
@@ -29,7 +34,7 @@ public class MyVaadinApplication extends Application
     // UI Components
     private Window mainWindow;
 
-
+ 
     @Override
     public void init()
     {

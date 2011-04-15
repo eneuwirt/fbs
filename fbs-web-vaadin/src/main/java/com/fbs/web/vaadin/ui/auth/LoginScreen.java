@@ -119,7 +119,7 @@ public class LoginScreen extends VerticalLayout
     }
 
     // Click listener to switch the application locale
-    private static class SwitchLanguage implements Button.ClickListener
+    private static class SwitchLanguage implements Button.ClickListener, Serializable
     {
         private static final long serialVersionUID = 7382925259045032373L;
         private MyVaadinApplication app;
@@ -144,14 +144,14 @@ public class LoginScreen extends VerticalLayout
         }
     }
 
-    private static class MyLoginListener implements LoginForm.LoginListener, Serializable
+    private static class MyLoginListener implements LoginForm.LoginListener
     {
         private static final long serialVersionUID = 1L;
         private MyVaadinApplication app;
         private LoginForm loginForm;
 
 
-        public MyLoginListener(MyVaadinApplication app,LoginForm loginForm)
+        public MyLoginListener(MyVaadinApplication app, LoginForm loginForm)
         {
             this.app = app;
             this.loginForm = loginForm;
@@ -161,34 +161,22 @@ public class LoginScreen extends VerticalLayout
         @Override
         public void onLogin(LoginEvent event)
         {
-            logger.entering(MyLoginListener.class.getName(), "onlogin");
-
             String username = event.getLoginParameter("username");
             String password = event.getLoginParameter("password");
 
             logger.severe("Login User: " + username);
 
-            if (username.equals("1"))
+            try
+            {
+                MyVaadinApplication.getInstance().login(username, password);
+                
+                // Switch to the protected view
+                app.getViewManager().switchScreen(UserView.class.getName(), new UserView(app));
+            }
+            catch (Exception ex)
             {
                 this.loginForm.getWindow().showNotification("Invalid User", Notification.TYPE_ERROR_MESSAGE);
-
-                logger.severe("Failed");
-
-                logger.exiting(MyLoginListener.class.getName(), "onlogin");
-
-                return;
             }
-
-            if (password.equals("1"))
-            {
-                this.loginForm.getWindow().showNotification("Passwort warning", Notification.TYPE_WARNING_MESSAGE);
-            }
-
-            logger.exiting(MyLoginListener.class.getName(), "onlogin");
-            // Switch to the main view: the user view.
-            app.getViewManager().switchScreen(UserView.class.getName(), new UserView(app));
-
         }
-
     }
 }

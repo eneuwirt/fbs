@@ -15,11 +15,20 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/applicationContext.xml</param-value>
 	</context-param>
-
 	<filter>
 		<filter-name>ShiroFilter</filter-name>
 		<filter-class>org.apache.shiro.web.servlet.IniShiroFilter</filter-class>
-		<!-- no init-param means load the INI config from classpath:shiro.ini -->
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>
+                #See Shiro API http://shiro.apache.org/static/current/apidocs/org/apache/shiro/web/servlet/IniShiroFilter.html
+                
+                #create an object of the RoleSecurityJdbcRealm
+                #IniShiroFilter will inject that object into the SecurityManager
+                [main]
+                realm = com.fbs.web.shiro.MyRealm
+            </param-value>
+		</init-param>
 	</filter>
 
 	<!-- Make sure any request you want accessible to Shiro is filtered. /* 
@@ -54,4 +63,11 @@
 		<servlet-name>Spring Application Servlet</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
+
+	<resource-ref>
+		<description>postgreSQL Datasource example</description>
+		<res-ref-name>jdbc/postgres</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
 </web-app>

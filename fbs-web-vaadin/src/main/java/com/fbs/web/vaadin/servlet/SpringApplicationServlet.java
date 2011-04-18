@@ -23,6 +23,7 @@ public class SpringApplicationServlet extends AbstractApplicationServlet
     public void init(ServletConfig servletConfig) throws ServletException
     {
         super.init(servletConfig);
+        
         applicationBean = servletConfig.getInitParameter("applicationBean");
         
         if (applicationBean == null)

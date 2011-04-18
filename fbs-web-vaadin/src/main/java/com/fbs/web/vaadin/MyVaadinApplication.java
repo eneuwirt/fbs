@@ -6,6 +6,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +19,8 @@ import com.fbs.web.vaadin.ui.ViewManager;
 import com.fbs.web.vaadin.ui.auth.LoginScreen;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext;
+import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Window.Notification;
 
 /**
  * The Application's "main" class
@@ -27,9 +32,6 @@ public class MyVaadinApplication extends Application implements ApplicationConte
     private static final long serialVersionUID = 1L;
     private static Logger logger = Logger.getLogger(MyVaadinApplication.class.getName());
     private static ThreadLocal<MyVaadinApplication> currentApplication = new ThreadLocal<MyVaadinApplication>();
-
-    /* Internationalized strings. */
-    private ResourceBundle i18nBundle;
 
     /* View manager that handlers different screens in the UI. */
     private ViewManager viewManager;
@@ -45,37 +47,18 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
         this.getContext().addTransactionListener(this);
 
-        // Initialize the view manager for the main window
-        ResourceBundle i18n = ResourceBundle.getBundle("application", getLocale());
+        this.mainWindow = new Window(this.getMessage(ApplicationMessages.ApplicationTitle));
+        
+        this.setMainWindow(mainWindow);
 
-        this.mainWindow = new Window(i18n.getString(ApplicationMessages.ApplicationTitle));
-        setMainWindow(mainWindow);
-
-        viewManager = new ViewManager(mainWindow);
+        this.viewManager = new ViewManager(mainWindow);
 
         // Create the login screen
         viewManager.switchScreen(LoginScreen.class.getName(), new LoginScreen(this));
 
         logger.exiting(this.getClass().getName(), "init");
     }
-
-
-    @Override
-    public void setLocale(Locale locale)
-    {
-        super.setLocale(locale);
-
-        try
-        {
-            i18nBundle = ResourceBundle.getBundle("application", getLocale());
-        }
-        catch (MissingResourceException mre)
-        {
-            // Log the exception
-            logger.log(Level.SEVERE, "Resource not found", mre);
-        }
-    }
-
+    
 
     public ViewManager getViewManager()
     {
@@ -88,20 +71,30 @@ public class MyVaadinApplication extends Application implements ApplicationConte
      **/
     public String getMessage(String key)
     {
+        final ResourceBundle  i18nBundle = ResourceBundle.getBundle("application", this.getLocale());
+        
         return i18nBundle.getString(key);
     }
 
-    public void login(String username, String password) throws Exception
+
+    public void login(String username, String password) throws AuthenticationException
     {
-        if (password.equals("1"))
-        {
-            throw new Exception ("Nix da");
-        }
+        // Authenticate the subject by passing the user name and password token into the login method
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+
+        // ”Remember Me” built-in, just do this:
+        token.setRememberMe(true);
+
+        this.getCurrentUser().login(token);
     }
+
 
     public void logout()
     {
+        logger.entering(this.getClass().getName(), "logout");
         this.getMainWindow().getApplication().close();
+
+        this.getCurrentUser().logout();
     }
 
 
@@ -112,7 +105,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
         if (application == MyVaadinApplication.this)
         {
-            currentApplication.set(this);
+            MyVaadinApplication.currentApplication.set(this);
         }
 
         logger.exiting(this.getClass().getName(), "transactionStart");
@@ -124,15 +117,23 @@ public class MyVaadinApplication extends Application implements ApplicationConte
     {
         if (application == MyVaadinApplication.this)
         {
-            currentApplication.set(null);
+            MyVaadinApplication.currentApplication.set(null);
 
-            currentApplication.remove();
+            MyVaadinApplication.currentApplication.remove();
         }
+    }
+
+
+    // With most of Shiro, you'll always want to make sure you're working with the currently executing user,
+    // referred to as the subject
+    public Subject getCurrentUser()
+    {
+        return SecurityUtils.getSubject();
     }
 
 
     public static MyVaadinApplication getInstance()
     {
-        return currentApplication.get();
+        return MyVaadinApplication.currentApplication.get();
     }
 }

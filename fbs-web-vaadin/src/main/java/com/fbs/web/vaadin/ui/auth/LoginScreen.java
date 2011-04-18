@@ -4,9 +4,16 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+
 import com.fbs.web.vaadin.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.user.UserView;
+import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -169,9 +176,29 @@ public class LoginScreen extends VerticalLayout
             try
             {
                 MyVaadinApplication.getInstance().login(username, password);
-                
+
                 // Switch to the protected view
                 app.getViewManager().switchScreen(UserView.class.getName(), new UserView(app));
+            }
+            catch (UnknownAccountException uae)
+            {
+                this.loginForm.getWindow().showNotification("Invalid User", Notification.TYPE_ERROR_MESSAGE);
+            }
+            catch (IncorrectCredentialsException ice)
+            {
+                this.loginForm.getWindow().showNotification("Invalid User", Notification.TYPE_ERROR_MESSAGE);
+            }
+            catch (LockedAccountException lae)
+            {
+                this.loginForm.getWindow().showNotification("Invalid User", Notification.TYPE_ERROR_MESSAGE);
+            }
+            catch (ExcessiveAttemptsException eae)
+            {
+                this.loginForm.getWindow().showNotification("Invalid User", Notification.TYPE_ERROR_MESSAGE);
+            }
+            catch (AuthenticationException ae)
+            {
+                this.loginForm.getWindow().showNotification("Invalid User", Notification.TYPE_ERROR_MESSAGE);
             }
             catch (Exception ex)
             {

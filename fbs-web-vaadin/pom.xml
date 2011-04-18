@@ -34,7 +34,7 @@
 				</goals> </execution> </executions> </plugin> -->
 		</plugins>
 	</build>
-
+<!--  
 	<repositories>
 		<repository>
 			<id>vaadin-snapshots</id>
@@ -51,7 +51,7 @@
 			<url>http://maven.vaadin.com/vaadin-addons</url>
 		</repository>
 	</repositories>
-
+-->
 	<!-- <pluginRepositories> <pluginRepository> <id>codehaus-snapshots</id> 
 		<url>http://nexus.codehaus.org/snapshots</url> <snapshots> <enabled>true</enabled> 
 		</snapshots> <releases> <enabled>false</enabled> </releases> </pluginRepository> 
@@ -93,5 +93,4 @@
 			<type>pom</type>
 		</dependency>
 	</dependencies>
-
 </project>

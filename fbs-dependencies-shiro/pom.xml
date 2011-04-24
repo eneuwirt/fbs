@@ -19,6 +19,12 @@
 	</properties>
 
 	<dependencies>
+		<!-- Enables AspectJ support for Shiro AOP and Annotations. -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-aspectj</artifactId>
+			<version>${org.apache.shiro.version}</version>
+		</dependency>
 		<!-- Required in all environments. Slf4j's slf4j-api jar and one of its 
 			binding jars is required. commons-beanutils is required only if using INI 
 			config. -->
@@ -34,12 +40,13 @@
 			<version>${org.apache.shiro.version}</version>
 		</dependency>
 
-		<!-- Enables AspectJ support for Shiro AOP and Annotations. -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-aspectj</artifactId>
-			<version>${org.apache.shiro.version}</version>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.1.0</version>
 		</dependency>
+
+
 
 		<!-- Logging: SLF4J -->
 		<dependency>

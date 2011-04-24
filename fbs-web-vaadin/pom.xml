@@ -13,51 +13,11 @@
 	<artifactId>fbs-web-vaadin</artifactId>
 	<packaging>war</packaging>
 	<name>Vaadin Web Application</name>
-
+ 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hsqldb.version>2.0.0</hsqldb.version>
 	</properties>
-
-	<build>
-		<plugins>
-			<!-- Compile custom GWT components or widget dependencies with the GWT 
-				compiler -->
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>gwt-maven-plugin</artifactId> 
-				<version>2.1.0-1</version> <configuration> <webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory> 
-				<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs> <runTarget>fbs-web-vaadin</runTarget> 
-				<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp> 
-				<noServer>true</noServer> <port>8080</port> <soyc>false</soyc> </configuration> 
-				<executions> <execution> <goals> <goal>resources</goal> <goal>compile</goal> 
-				</goals> </execution> </executions> </plugin> <plugin> <groupId>com.vaadin</groupId> 
-				<artifactId>vaadin-maven-plugin</artifactId> <version>1.0.1</version> <executions> 
-				<execution> <configuration> </configuration> <goals> <goal>update-widgetset</goal> 
-				</goals> </execution> </executions> </plugin> -->
-		</plugins>
-	</build>
-<!--  
-	<repositories>
-		<repository>
-			<id>vaadin-snapshots</id>
-			<url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>vaadin-addons</id>
-			<url>http://maven.vaadin.com/vaadin-addons</url>
-		</repository>
-	</repositories>
--->
-	<!-- <pluginRepositories> <pluginRepository> <id>codehaus-snapshots</id> 
-		<url>http://nexus.codehaus.org/snapshots</url> <snapshots> <enabled>true</enabled> 
-		</snapshots> <releases> <enabled>false</enabled> </releases> </pluginRepository> 
-		<pluginRepository> <id>vaadin-snapshots</id> <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url> 
-		<snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>false</enabled> 
-		</releases> </pluginRepository> </pluginRepositories> -->
 
 	<dependencies>
 		<dependency>
@@ -91,6 +51,19 @@
 			<artifactId>fbs-dependencies-shiro</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>com.fbs</groupId>
+			<artifactId>fbs-security</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${hsqldb.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 </project>

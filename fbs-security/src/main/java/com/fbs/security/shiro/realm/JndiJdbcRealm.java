@@ -1,4 +1,4 @@
-package com.fbs.web.shiro;
+package com.fbs.security.shiro.realm;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -6,9 +6,9 @@ import javax.sql.DataSource;
 
 import org.apache.shiro.realm.jdbc.JdbcRealm;
 
-public class MyRealm extends JdbcRealm {
+public class JndiJdbcRealm extends JdbcRealm {
 
-    public MyRealm() {
+    public JndiJdbcRealm() {
         
         super();
 

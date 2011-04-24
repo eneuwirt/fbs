@@ -31,5 +31,6 @@
   </bean>
 
 
-
+  <!-- Test -->
+  <bean id="demoService" class="com.fbs.web.vaadin.DemoServiceImpl"/>
 </beans>

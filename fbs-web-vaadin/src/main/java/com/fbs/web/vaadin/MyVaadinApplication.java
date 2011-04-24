@@ -1,10 +1,9 @@
 package com.fbs.web.vaadin;
 
-import java.util.Locale;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -17,9 +16,9 @@ import org.springframework.stereotype.Component;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.ViewManager;
 import com.fbs.web.vaadin.ui.auth.LoginScreen;
+
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext;
-import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Window;
 
 /**
@@ -38,6 +37,10 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
     // UI Components
     private Window mainWindow;
+    
+    @Resource
+	DemoService demoService;
+
 
 
     @Override
@@ -135,5 +138,10 @@ public class MyVaadinApplication extends Application implements ApplicationConte
     public static MyVaadinApplication getInstance()
     {
         return MyVaadinApplication.currentApplication.get();
+    }
+    
+    public void doSomething()
+    {
+    	this.demoService.doSomething();
     }
 }

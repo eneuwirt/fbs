@@ -1,10 +1,5 @@
 package com.fbs.web.vaadin.ui.user;
 
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.fbs.web.vaadin.DemoService;
 import com.fbs.web.vaadin.MyVaadinApplication;
 import com.fbs.web.vaadin.ui.auth.LogoutListener;
 

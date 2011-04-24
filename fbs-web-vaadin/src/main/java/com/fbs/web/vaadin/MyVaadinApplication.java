@@ -19,7 +19,9 @@ import com.fbs.web.vaadin.ui.auth.LoginScreen;
 
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext;
+import com.vaadin.terminal.Terminal;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.Window.Notification;
 
 /**
  * The Application's "main" class
@@ -143,5 +145,19 @@ public class MyVaadinApplication extends Application implements ApplicationConte
     public void doSomething()
     {
     	this.demoService.doSomething();
+    }
+    
+    @Override
+    public void terminalError(Terminal.ErrorEvent event) {
+        // Call the default implementation.
+        super.terminalError(event);
+
+        // Some custom behaviour.
+        if (getMainWindow() != null) {
+            getMainWindow().showNotification(
+                    "An unchecked exception occured!",
+                    event.getThrowable().toString(),
+                    Notification.TYPE_ERROR_MESSAGE);
+        }
     }
 }

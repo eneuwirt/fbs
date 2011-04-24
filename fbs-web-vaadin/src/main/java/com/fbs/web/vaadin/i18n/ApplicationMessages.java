@@ -6,6 +6,8 @@ public interface ApplicationMessages extends Serializable
 {
     // Application
     public static String ApplicationTitle = "Application.Title";
+    
+    public static String CommonException = "Common.Exception";
 
     // Login Form
     public static String Login = "Login";
@@ -23,4 +25,10 @@ public interface ApplicationMessages extends Serializable
     //Register Form
     public static String RegisterTitle = "Register.Title";
     public static String RegisterNewUser = "Register.NewUser";
+    
+    public static String SecurityAccountLocked = "Security.AccountLocked";
+    public static String SecurityException = "Secutity.Exception";
+    public static String SecurityInvalidCredentials = "Security.InvalidCredentials";
+	public static String SecurityUnknownAccount = "Security.UnknownAccount";
+
 }

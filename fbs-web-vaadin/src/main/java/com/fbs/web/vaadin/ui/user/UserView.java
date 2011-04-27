@@ -12,6 +12,7 @@ public class UserView extends VerticalLayout
 {
 	private static final long serialVersionUID = 1L;
 	private MyVaadinApplication app;
+	Label demo;
 
 
 	public UserView(final MyVaadinApplication app)
@@ -19,9 +20,9 @@ public class UserView extends VerticalLayout
 		super();
 		this.app = app;
 
-		Label demo = new Label("Du hast dich als User eingelogt");
+		this.demo = new Label("Du hast dich als User eingelogt");
 
-		Button b = new Button("What is the time?", new TestListener(app));
+		Button b = new Button("What is the time?", new TestListener(app, this));
 
 		Button logout = new Button("logout");
 		logout.addListener(new LogoutListener(app));
@@ -36,18 +37,22 @@ public class UserView extends VerticalLayout
 	{
 		private static final long serialVersionUID = 1L;
 		MyVaadinApplication app;
+		UserView userView;
 
 
-		public TestListener(MyVaadinApplication app)
+		public TestListener(MyVaadinApplication app, UserView userView)
 		{
 			this.app = app;
+			this.userView = userView;
 		}
 
 
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
-			this.app.doSomething();
+			String res = app.doSomething();
+			
+			return;
 		}
 
 	}

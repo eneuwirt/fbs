@@ -1,6 +1,8 @@
 package com.fbs.web.vaadin;
 
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -13,6 +15,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.fbs.datasource.Catalog;
+import com.fbs.datasource.CustomerContextHolder;
+import com.fbs.datasource.CustomerType;
+import com.fbs.datasource.Item;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.ViewManager;
 import com.fbs.web.vaadin.ui.auth.LoginScreen;
@@ -33,6 +39,9 @@ public class MyVaadinApplication extends Application implements ApplicationConte
     private static final long serialVersionUID = 1L;
     private static Logger logger = Logger.getLogger(MyVaadinApplication.class.getName());
     private static ThreadLocal<MyVaadinApplication> currentApplication = new ThreadLocal<MyVaadinApplication>();
+    
+    //
+    private CustomerType customerType;
 
     /* View manager that handlers different screens in the UI. */
     private ViewManager viewManager;
@@ -42,6 +51,8 @@ public class MyVaadinApplication extends Application implements ApplicationConte
     
     @Resource
 	DemoService demoService;
+    @Resource 
+    Catalog catalog;
 
 
 
@@ -91,12 +102,26 @@ public class MyVaadinApplication extends Application implements ApplicationConte
         token.setRememberMe(true);
 
         this.getCurrentUser().login(token);
+        
+        if (username.equals("demo"))
+        {
+        	this.customerType = CustomerType.GOLD;
+        }
+        else if (username.equals("view"))
+        {
+        	this.customerType = CustomerType.SILVER;
+        }
+        
+        CustomerContextHolder.setCustomerType(customerType);
     }
 
 
     public void logout()
     {
         logger.entering(this.getClass().getName(), "logout");
+        
+        CustomerContextHolder.clearCustomerType();
+        
         this.getMainWindow().getApplication().close();
 
         this.getCurrentUser().logout();
@@ -111,13 +136,15 @@ public class MyVaadinApplication extends Application implements ApplicationConte
         if (application == MyVaadinApplication.this)
         {
             MyVaadinApplication.currentApplication.set(this);
+            
+            CustomerContextHolder.setCustomerType(this.customerType);
         }
 
         logger.exiting(this.getClass().getName(), "transactionStart");
     }
 
 
-    @Override
+	@Override
     public void transactionEnd(Application application, Object transactionData)
     {
         if (application == MyVaadinApplication.this)
@@ -125,6 +152,8 @@ public class MyVaadinApplication extends Application implements ApplicationConte
             MyVaadinApplication.currentApplication.set(null);
 
             MyVaadinApplication.currentApplication.remove();
+            
+            CustomerContextHolder.clearCustomerType();
         }
     }
 
@@ -142,9 +171,20 @@ public class MyVaadinApplication extends Application implements ApplicationConte
         return MyVaadinApplication.currentApplication.get();
     }
     
-    public void doSomething()
+    public String doSomething()
     {
-    	this.demoService.doSomething();
+    	//this.demoService.doSomething();
+    	
+    	String result;
+    	List<Item> goldItems = catalog.getItems();
+    	
+    	goldItems = catalog.getItems();
+    	
+    	result = "gold items: " + goldItems;
+    	
+    	logger.log(Level.SEVERE, "did Something: " + result);
+    	
+    	return result;
     }
     
     @Override

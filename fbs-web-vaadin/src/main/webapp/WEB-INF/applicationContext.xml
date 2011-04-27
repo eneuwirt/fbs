@@ -20,64 +20,66 @@
   <context:component-scan base-package="com.fbs.web.vaadin" />
 
   <!-- Sample RDBMS data source that would exist in any application, not Shiro related. -->
-  <bean id="dataSourceShiro" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-    <property name="url" value="jdbc:hsqldb:mem:shiro-spring" />
-    <property name="username" value="sa" />
+  <bean id="dataSourceShiro" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName" value="java:comp/env/jdbc/auth" />
+    <property name="resourceRef" value="true" />
   </bean>
+  
   <!-- Populates the sample database with sample users and roles. -->
   <bean id="bootstrapDataPopulator" class="com.fbs.security.shiro.BootstrapDataPopulator">
     <property name="dataSource" ref="dataSourceShiro" />
   </bean>
 
 
+
   <!-- Test -->
   <bean id="demoService" class="com.fbs.web.vaadin.DemoServiceImpl" />
+  <bean id="securityService" class="com.fbs.security.service.impl.SecurityServiceShiroImpl" />
 
   <bean id="parentDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" abstract="true">
     <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
     <property name="username" value="sa" />
   </bean>
 
-  <bean id="goldDataSource" parent="parentDataSource">
-    <property name="url" value="jdbc:hsqldb:mem:gold" />
+  <bean id="dataSource_0" parent="parentDataSource">
+    <property name="url" value="jdbc:hsqldb:mem:tenant_0" />
   </bean>
 
-  <bean id="silverDataSource" parent="parentDataSource">
-    <property name="url" value="jdbc:hsqldb:mem:silver" />
+  <bean id="dataSource_1" parent="parentDataSource">
+    <property name="url" value="jdbc:hsqldb:mem:tenant_1" />
   </bean>
 
-  <bean id="bronzeDataSource" parent="parentDataSource">
-    <property name="url" value="jdbc:hsqldb:mem:bronze" />
+  <bean id="dataSource_2" parent="parentDataSource">
+    <property name="url" value="jdbc:hsqldb:mem:dataSource_1" />
   </bean>
 
   <bean id="catalog" class="com.fbs.datasource.Catalog">
     <property name="dataSource" ref="dataSource" />
   </bean>
 
-  <bean id="dataSource" class="com.fbs.datasource.CustomerRoutingDataSource">
+  <bean id="dataSource" class="com.fbs.datasource.TenantRoutingDataSource">
     <property name="targetDataSources">
-      <map key-type="com.fbs.datasource.CustomerType">
-        <entry key="GOLD" value-ref="goldDataSource" />
-        <entry key="SILVER" value-ref="silverDataSource" />
-        <entry key="BRONZE" value-ref="bronzeDataSource" />
+      <map key-type="java.lang.String">
+        <entry key="0" value-ref="dataSource_0" />
+        <entry key="1" value-ref="dataSource_1" />
+        <entry key="2" value-ref="dataSource_2" />
       </map>
     </property>
-    <property name="defaultTargetDataSource" ref="bronzeDataSource" />
+    <property name="defaultTargetDataSource" ref="dataSource_0" />
   </bean>
-  
+
   <!-- Populates the sample database with sample users and roles. -->
+  <bean id="itemDataPopulator_0" class="com.fbs.datasource.ItemDataPopulator">
+    <property name="dataSource" ref="dataSource_0" />
+    <property name="client" value="0" />
+  </bean>
   <bean id="itemDataPopulator_1" class="com.fbs.datasource.ItemDataPopulator">
-    <property name="dataSource" ref="goldDataSource" />
-    <property name="client" value="1"/>
+    <property name="dataSource" ref="dataSource_1" />
+    <property name="client" value="1" />
   </bean>
-   <bean id="itemDataPopulator_2" class="com.fbs.datasource.ItemDataPopulator">
-    <property name="dataSource" ref="silverDataSource" />
-    <property name="client" value="2"/>
-  </bean>
-   <bean id="itemDataPopulator_3" class="com.fbs.datasource.ItemDataPopulator">
-    <property name="dataSource" ref="bronzeDataSource" />
-    <property name="client" value="3"/>
+  <bean id="itemDataPopulator_2" class="com.fbs.datasource.ItemDataPopulator">
+    <property name="dataSource" ref="dataSource_2" />
+    <property name="client" value="2" />
   </bean>
 
 </beans>

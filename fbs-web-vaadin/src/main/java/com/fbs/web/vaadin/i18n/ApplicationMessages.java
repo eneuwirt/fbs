@@ -27,7 +27,8 @@ public interface ApplicationMessages extends Serializable
     public static String RegisterNewUser = "Register.NewUser";
     
     public static String SecurityAccountLocked = "Security.AccountLocked";
-    public static String SecurityException = "Secutity.Exception";
+    public static String SecurityAuthenticationException = "Security.AuthenticationException";
+    public static String SecurityExcessiveAttempts = "Security.ExcessiveAttempts";
     public static String SecurityInvalidCredentials = "Security.InvalidCredentials";
 	public static String SecurityUnknownAccount = "Security.UnknownAccount";
 

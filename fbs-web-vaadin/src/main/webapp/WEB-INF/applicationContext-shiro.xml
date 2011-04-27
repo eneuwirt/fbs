@@ -13,14 +13,24 @@
                         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                         http://www.springframework.org/schema/util 
                         http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-                        
+
   <!-- Shiro Core Components - Not Spring Specific -->
   <!-- Shiro's main business-tier object for web-enabled applications (use DefaultSecurityManager instead when there is no 
     web environment) -->
+  <bean id="myRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">
+    <property name="dataSource" ref="dataSourceShiro" />
+  </bean>
+
   <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
     <!-- Single realm app. If you have multiple realms, use the 'realms' property instead. -->
     <property name="sessionMode" value="native" />
+    <property name="realm" ref="myRealm" />
   </bean>
+  <!--  
+  <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <property name="securityManager" ref="securityManager"/>
+</bean>
+-->
 
 
   <!-- Shiro Spring-specific integration -->
@@ -28,17 +38,17 @@
     don't have to 1) specify an init-method and destroy-method attributes for every bean definition and 2) even know which Shiro 
     objects require these methods to be called. -->
   <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
-  
+
   <!-- Enable Shiro Annotations for Spring-configured beans. Only run after the lifecycleBeanProcessor has run: -->
   <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor" />
-  
+
   <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
     <property name="securityManager" ref="securityManager" />
   </bean>
 
-  <!-- Enable Shiro Annotations for Spring-configured beans. Only run after -->
-  <!-- the lifecycleBeanProcessor has run: -->
+  <!-- Enable Shiro Annotations for Spring-configured beans. Only run after the lifecycleBeanProcessor has run: -->
   <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor" />
+
   <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
     <property name="securityManager" ref="securityManager" />
   </bean>

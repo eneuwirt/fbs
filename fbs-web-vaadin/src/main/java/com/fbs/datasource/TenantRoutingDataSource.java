@@ -2,11 +2,11 @@ package com.fbs.datasource;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
-public class CustomerRoutingDataSource extends AbstractRoutingDataSource {
+public class TenantRoutingDataSource extends AbstractRoutingDataSource {
 
    @Override
    protected Object determineCurrentLookupKey() {
-      Object result = CustomerContextHolder.getCustomerType();
+      Object result = ClientContextHolder.getCustomerType();
       
       return result;
    }

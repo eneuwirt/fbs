@@ -1,7 +1,5 @@
 package com.fbs.datasource;
 
-import java.util.logging.Logger;
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -9,17 +7,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 public class ItemDataPopulator implements InitializingBean
 {
-	private static Logger logger = Logger.getLogger(ItemDataPopulator.class.getName());
 	private static final String CREATE_TABLES = "create table item (\n" + "    name varchar(255) primary key,\n"
 	        + "    price double not null\n" + ");";
 
 	protected DataSource dataSource = null;
-	protected String client;
+	protected String tenantId;
 
 
-	public void setClient(String client)
+	public void setClient(String tenantId)
 	{
-		this.client = client;
+		this.tenantId = tenantId;
 	}
 
 
@@ -40,7 +37,7 @@ public class ItemDataPopulator implements InitializingBean
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(this.dataSource);
 		jdbcTemplate.execute(CREATE_TABLES);
 
-		String name = "Item for client " + this.client;
+		String name = "Item for tenant " + this.tenantId;
 		String query = "insert into item values ('" + name + "', '1' )";
 
 		jdbcTemplate.execute(query);

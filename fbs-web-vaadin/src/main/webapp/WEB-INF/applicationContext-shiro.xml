@@ -26,11 +26,6 @@
     <property name="sessionMode" value="native" />
     <property name="realm" ref="myRealm" />
   </bean>
-  <!--  
-  <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-    <property name="securityManager" ref="securityManager"/>
-</bean>
--->
 
 
   <!-- Shiro Spring-specific integration -->
@@ -52,5 +47,4 @@
   <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
     <property name="securityManager" ref="securityManager" />
   </bean>
-
 </beans>

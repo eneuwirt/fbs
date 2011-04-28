@@ -6,7 +6,7 @@ public class TenantRoutingDataSource extends AbstractRoutingDataSource {
 
    @Override
    protected Object determineCurrentLookupKey() {
-      Object result = ClientContextHolder.getCustomerType();
+      Object result = TenantContextHolder.getTenant();
       
       return result;
    }

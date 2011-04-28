@@ -5,18 +5,14 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
-
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.fbs.datasource.Catalog;
-import com.fbs.datasource.ClientContextHolder;
+import com.fbs.datasource.TenantContextHolder;
 import com.fbs.datasource.Item;
 import com.fbs.security.service.SecurityService;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
@@ -29,11 +25,9 @@ import com.vaadin.terminal.Terminal;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 
-/**
- * The Application's "main" class
- */
-@Component(value = "vaadinApp")
-@Scope(value = "session")
+
+@Component(value = "applicationBean")
+@Scope("prototype")
 public class MyVaadinApplication extends Application implements ApplicationContext.TransactionListener
 {
 	private static final long serialVersionUID = 1L;
@@ -50,11 +44,10 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	private Window mainWindow;
 
 	@Resource
-	DemoService demoService;
+	transient Catalog catalog;
+	
 	@Resource
-	Catalog catalog;
-	@Resource
-	SecurityService securityService;
+	transient SecurityService securityService;
 
 
 	@Override
@@ -67,7 +60,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		this.mainWindow = new Window(this.getMessage(ApplicationMessages.ApplicationTitle));
 
 		this.setMainWindow(mainWindow);
-
+ 
 		this.viewManager = new ViewManager(mainWindow);
 
 		// Create the login screen
@@ -97,12 +90,15 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 	public void login(String userName, String password) throws Exception
 	{
-		securityService.login(userName, password);
+		Object authentication;
 
-		this.tenantId = securityService.getTenant(userName);
-		
+		authentication = this.securityService.login(userName, password);
 
-		ClientContextHolder.setCustomerType(tenantId);
+		this.setUser(authentication);
+
+		this.tenantId = this.securityService.getTenant(userName);
+
+		TenantContextHolder.setTenant(tenantId);
 	}
 
 
@@ -110,7 +106,22 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	{
 		logger.entering(this.getClass().getName(), "logout");
 
-		ClientContextHolder.clearCustomerType();
+		this.close();
+	}
+
+
+	@Override
+	@PreDestroy
+	// In case the application is destroyed by the container
+	public void close()
+	{
+		super.close();
+
+		this.setUser(null);
+
+		TenantContextHolder.clearTenant();
+
+		getContext().removeTransactionListener(this);
 
 		this.getMainWindow().getApplication().close();
 
@@ -127,7 +138,18 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		{
 			MyVaadinApplication.currentApplication.set(this);
 
-			ClientContextHolder.setCustomerType(this.tenantId);
+			TenantContextHolder.setTenant(this.tenantId);
+
+			/*
+			 * The security context holder uses the thread local pattern to
+			 * store its authentication credentials. As requests may be handled
+			 * by different threads, we have to update the security context
+			 * holder in the beginning of each transaction.
+			 */
+			if (this.securityService != null)
+			{
+				this.securityService.rollContextIn(application.getUser());
+			}
 		}
 
 		logger.exiting(this.getClass().getName(), "transactionStart");
@@ -143,7 +165,12 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 			MyVaadinApplication.currentApplication.remove();
 
-			ClientContextHolder.clearCustomerType();
+			TenantContextHolder.clearTenant();
+
+			if (this.securityService != null)
+			{
+				this.securityService.rollContextOut();
+			}
 		}
 	}
 
@@ -154,10 +181,9 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	}
 
 
+	// TODO remove it
 	public String doSomething()
 	{
-		// this.demoService.doSomething();
-
 		String result;
 		List<Item> goldItems = catalog.getItems();
 
@@ -177,7 +203,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		// Call the default implementation.
 		super.terminalError(event);
 
-		// Some custom behaviour.
+		// Some custom behavior.
 		if (getMainWindow() != null)
 		{
 			getMainWindow().showNotification("An unchecked exception occured!", event.getThrowable().toString(),

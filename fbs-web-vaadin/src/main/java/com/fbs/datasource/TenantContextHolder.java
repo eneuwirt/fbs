@@ -3,18 +3,18 @@ package com.fbs.datasource;
 /*
  * ClientId is Integers represented by string. 
  */
-public class ClientContextHolder
+public class TenantContextHolder
 {
 	private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
 
 
-	public static void setCustomerType(String clientId)
+	public static void setTenant(String tenantId)
 	{
-		contextHolder.set(clientId);
+		contextHolder.set(tenantId);
 	}
 
 
-	public static String getCustomerType()
+	public static String getTenant()
 	{
 		String result = contextHolder.get();
 		
@@ -22,7 +22,7 @@ public class ClientContextHolder
 	}
 
 
-	public static void clearCustomerType()
+	public static void clearTenant()
 	{
 		contextHolder.remove();
 	}

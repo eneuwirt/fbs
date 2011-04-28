@@ -50,9 +50,7 @@ public class UserView extends VerticalLayout
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
-			String res = app.doSomething();
-			
-			return;
+			app.doSomething();
 		}
 
 	}

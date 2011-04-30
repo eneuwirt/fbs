@@ -20,20 +20,9 @@
   <context:component-scan base-package="com.fbs.web.vaadin" />
 
   <!-- Sample RDBMS data source that would exist in any application, not Shiro related. -->
-  <bean id="dataSourceShiro" class="org.springframework.jndi.JndiObjectFactoryBean">
+  <bean id="dataSourceSecurity" class="org.springframework.jndi.JndiObjectFactoryBean">
     <property name="jndiName" value="java:comp/env/jdbc/auth" />
     <property name="resourceRef" value="true" />
-  </bean>
-
-  <!-- Populates the sample database with sample users and roles. -->
-  <bean id="bootstrapDataPopulator" class="com.fbs.security.shiro.BootstrapDataPopulator">
-    <property name="dataSource" ref="dataSourceShiro" />
-  </bean>
-
-  
-  <!-- AuthenticationManager defined in security.xml -->
-  <bean id="securityService" class="com.fbs.security.service.impl.SecurityServiceSpringImpl">
-    <property name="authenticationManager" ref="authenticationManager" />
   </bean>
 
   <bean id="parentDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" abstract="true">

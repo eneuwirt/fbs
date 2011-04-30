@@ -1,7 +1,7 @@
 package com.fbs.datasource;
 
 /*
- * ClientId is Integers represented by string. 
+ * ClientId is an Integer value stored as String. 
  */
 public class TenantContextHolder
 {

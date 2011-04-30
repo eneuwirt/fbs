@@ -56,18 +56,18 @@ public class BootstrapDataPopulator implements InitializingBean {
         jdbcTemplate.execute(CREATE_TABLES);
 
         //password is 'user1' SHA hashed and base64 encoded:
-        //The first argument to the hash constructor is the actual value to be hased.  The 2nd is the
+        //The first argument to the hash constructor is the actual value to be hashed.  The 2nd is the
         //salt.  In this simple demo scenario, the username and the password are the same, but to clarify the
         //distinction, you would see this in practice:
         //new Sha256Hash( <password>, <cryptographically strong randomly generated salt> (not the username!) )
-        String adminHash = new Sha256Hash("admin").toBase64();
+        String adminHash = new Sha256Hash("admin", "admin").toBase64();
         String query = "insert into users values ('admin', '"  + adminHash + "', '0' )";
         jdbcTemplate.execute(query);
-        log.log(Level.INFO, "Created admin.");
+        log.log(Level.INFO, "Created admin. ");
 
         
         //password is 'demo' SHA hashed and base64 encoded:
-        String demoHash = new Sha256Hash("demo").toBase64();
+        String demoHash = new Sha256Hash("demo", "demo").toBase64();
         query = "insert into users values ( 'demo', '"  + demoHash + "', '1' )";
         jdbcTemplate.execute(query);
         log.log(Level.INFO,"Created demo.");

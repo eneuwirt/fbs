@@ -121,9 +121,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 		TenantContextHolder.clearTenant();
 
-		getContext().removeTransactionListener(this);
-
-		this.getMainWindow().getApplication().close();
+		this.getContext().removeTransactionListener(this);
 
 		this.securityService.logout();
 	}

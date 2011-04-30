@@ -31,16 +31,16 @@
 
   <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
+  <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+    <!-- true means hex encoded, false means base64 encoded -->
+    <property name="storedCredentialsHexEncoded" value="false" />
+    <property name="hashAlgorithmName" value="SHA-256" />
+    <property name="hashIterations" value="1024" />
+  </bean>
+
   <bean id="myRealm" class="com.fbs.security.shiro.realm.SaltAwareJdbcRealm">
     <property name="dataSource" ref="dataSourceSecurity" />
-    <property name="credentialsMatcher">
-      <!-- The 'bootstrapDataPopulator' Sha256 hashes the password (using the username as the salt) then base64 encodes it: -->
-      <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-        <!-- true means hex encoded, false means base64 encoded -->
-        <property name="storedCredentialsHexEncoded" value="false" />
-        <property name="hashAlgorithmName" value="SHA-256" />
-      </bean>
-    </property>
+    <property name="credentialsMatcher" ref="credentialsMatcher" />
   </bean>
 
   <!-- Populates the sample database with sample users and roles. -->

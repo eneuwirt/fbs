@@ -8,9 +8,9 @@ public class TenantContextHolder
 	private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
 
 
-	public static void setTenant(String tenantId)
+	public static void setTenant(Integer tenantId)
 	{
-		contextHolder.set(tenantId);
+		contextHolder.set(tenantId.toString());
 	}
 
 

@@ -6,6 +6,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
+import com.fbs.security.service.Authentication;
+import com.fbs.security.service.AuthenticationSimple;
 import com.fbs.security.service.SecurityService;
 
 public class SecurityServiceShiroImpl implements SecurityService, Serializable
@@ -14,8 +16,10 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 
 
 	@Override
-	public Object login(String userName, String password) throws Exception
+	public Authentication login(String userName, String password) throws Exception
 	{
+		Authentication result;
+		
 		Subject subject = SecurityUtils.getSubject();
 
 		// Authenticate the subject by passing the user name and password token
@@ -24,32 +28,29 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 
 		// ”Remember Me” built-in, just do this:
 		token.setRememberMe(true);
-
+ 
 		subject.login(token);
 
 		// security reason, clear token if someone uses memory-dumps
-		token.clear();
+		token.clear();	
 		
-		return subject.getPrincipal();
+		result = new AuthenticationSimple(userName, this.getTenantId(userName), null);
+		
+		return result;
 	}
 
 
-	@Override
-	public String getTenant(String userName)
+	private Integer getTenantId(String username)
 	{
-		String tenantId = "0";
-
-		Subject subject = SecurityUtils.getSubject();
-
-		String username = (String) subject.getPrincipal();
-
+		Integer tenantId = 0;
+		
 		if (username.equals("demo"))
 		{
-			tenantId = "1";
+			tenantId = 1;
 		}
 		else if (username.equals("view"))
 		{
-			tenantId = "2";
+			tenantId = 2;
 		}
 
 		return tenantId;

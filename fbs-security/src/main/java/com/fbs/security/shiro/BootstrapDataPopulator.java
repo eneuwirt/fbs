@@ -66,7 +66,7 @@ public class BootstrapDataPopulator implements InitializingBean {
         log.log(Level.INFO, "Created admin. ");
 
         
-        //password is 'demo' SHA hashed and base64 encoded:
+        //password is 'demo' SHA hashed, salted with String 'demo' and base64 encoded:
         String demoHash = new Sha256Hash("demo", "demo").toBase64();
         query = "insert into users values ( 'demo', '"  + demoHash + "', '1' )";
         jdbcTemplate.execute(query);

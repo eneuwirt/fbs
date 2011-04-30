@@ -12,6 +12,7 @@ public class SaltAwareJdbcRealm extends JdbcRealm
 	{
 		SimpleByteSource salt;
 		
+		//use a creative salt 
 		salt = new SimpleByteSource(username);
 		
 		return new SimpleAuthenticationInfo(username, password, salt, getName());

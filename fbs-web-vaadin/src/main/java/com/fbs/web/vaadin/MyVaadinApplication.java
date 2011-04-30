@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.fbs.datasource.Catalog;
 import com.fbs.datasource.TenantContextHolder;
 import com.fbs.datasource.Item;
+import com.fbs.security.service.Authentication;
 import com.fbs.security.service.SecurityService;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.ViewManager;
@@ -25,7 +26,6 @@ import com.vaadin.terminal.Terminal;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 
-
 @Component(value = "applicationBean")
 @Scope("prototype")
 public class MyVaadinApplication extends Application implements ApplicationContext.TransactionListener
@@ -33,9 +33,6 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(MyVaadinApplication.class.getName());
 	private static ThreadLocal<MyVaadinApplication> currentApplication = new ThreadLocal<MyVaadinApplication>();
-
-	// tenantID
-	private String tenantId;
 
 	/* View manager that handlers different screens in the UI. */
 	private ViewManager viewManager;
@@ -45,7 +42,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 	@Resource
 	transient Catalog catalog;
-	
+
 	@Resource
 	transient SecurityService securityService;
 
@@ -60,7 +57,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		this.mainWindow = new Window(this.getMessage(ApplicationMessages.ApplicationTitle));
 
 		this.setMainWindow(mainWindow);
- 
+
 		this.viewManager = new ViewManager(mainWindow);
 
 		// Create the login screen
@@ -90,15 +87,13 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 	public void login(String userName, String password) throws Exception
 	{
-		Object authentication;
+		Authentication authentication;
 
 		authentication = this.securityService.login(userName, password);
 
 		this.setUser(authentication);
 
-		this.tenantId = this.securityService.getTenant(userName);
-
-		TenantContextHolder.setTenant(tenantId);
+		TenantContextHolder.setTenant(authentication.getTenantId());
 	}
 
 
@@ -136,7 +131,15 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		{
 			MyVaadinApplication.currentApplication.set(this);
 
-			TenantContextHolder.setTenant(this.tenantId);
+			Authentication auth = (Authentication) this.getUser();
+			if (auth != null)
+			{
+				TenantContextHolder.setTenant(auth.getTenantId());
+			}
+			else
+			{
+				TenantContextHolder.clearTenant();
+			}
 
 			/*
 			 * The security context holder uses the thread local pattern to

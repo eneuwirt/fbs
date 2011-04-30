@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.fbs.security.service.SecurityService;
 
+
 public class SecurityServiceSpringImpl implements SecurityService
 {
 	private static Logger logger = Logger.getLogger(SecurityServiceSpringImpl.class.getName());
@@ -17,18 +18,21 @@ public class SecurityServiceSpringImpl implements SecurityService
 
 
 	@Override
-	public Object login(String userName, String userPassword) throws Exception
+	public com.fbs.security.service.Authentication login(String userName, String userPassword) throws Exception
 	{
 		Authentication input;
-		Authentication result;
+		Authentication valid;
+		com.fbs.security.service.Authentication result;
 		
 		logger.log(Level.INFO, "login");
 
 		input = new UsernamePasswordAuthenticationToken(userName, userPassword);
 
-		result = authenticationManager.authenticate(input);
+		valid = authenticationManager.authenticate(input);
 
-		SecurityContextHolder.getContext().setAuthentication(result);
+		SecurityContextHolder.getContext().setAuthentication(valid);
+		
+		result = new com.fbs.security.service.AuthenticationSimple(userName, this.getTenantId(userName), null);
 
 		return result;
 	}
@@ -44,11 +48,10 @@ public class SecurityServiceSpringImpl implements SecurityService
 	}
 
 
-	@Override
-	public String getTenant(String userName) throws Exception
+	private Integer getTenantId(String userName) throws Exception
 	{
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 	@Override

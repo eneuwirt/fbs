@@ -9,13 +9,10 @@ public interface SecurityService
 	 * @return object represented the current user
 	 * @throws Exception
 	 */
-	public Object login(String userName, String userPassword) throws Exception;
+	public Authentication login(String userName, String userPassword) throws Exception;
 
 
 	public void logout();
-
-
-	public String getTenant(String userName) throws Exception;
 	
 	/**
 	 * Spring security uses Thread local so I have to initialize it in the case of thread start

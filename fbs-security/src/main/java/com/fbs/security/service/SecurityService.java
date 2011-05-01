@@ -3,6 +3,7 @@ package com.fbs.security.service;
 public interface SecurityService
 {
 	/**
+	 * Login the user
 	 * 
 	 * @param userName
 	 * @param userPassword
@@ -14,14 +15,21 @@ public interface SecurityService
 
 	public void logout();
 	
+	public void changePassword(String userName, String newPassword);
+
+
 	/**
-	 * Spring security uses Thread local so I have to initialize it in the case of thread start
+	 * Spring security uses Thread local so I have to initialize it in the case
+	 * of thread start
+	 * 
 	 * @param object
 	 */
 	public void rollContextIn(Object object);
-	
+
+
 	/**
-	 * End of thread
+	 * Spring security uses Thread local so I have to deinitialize it in the
+	 * case of thread end
 	 */
 	public void rollContextOut();
 }

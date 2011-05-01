@@ -15,7 +15,7 @@ public class SecurityServiceSpringImpl implements SecurityService
 {
 	private static Logger logger = Logger.getLogger(SecurityServiceSpringImpl.class.getName());
 	private AuthenticationManager authenticationManager;
-
+ 
 
 	@Override
 	public com.fbs.security.service.Authentication login(String userName, String userPassword) throws Exception
@@ -82,4 +82,12 @@ public class SecurityServiceSpringImpl implements SecurityService
 	{
 		this.authenticationManager = authenticationManager;
 	}
+
+
+	@Override
+    public void changePassword(String userName, String newPassword)
+    {
+	    // TODO Auto-generated method stub
+	    
+    }
 }

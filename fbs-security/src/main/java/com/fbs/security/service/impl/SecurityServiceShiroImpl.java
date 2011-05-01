@@ -2,6 +2,8 @@ package com.fbs.security.service.impl;
 
 import java.io.Serializable;
 
+import javax.sql.DataSource;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -13,13 +15,13 @@ import com.fbs.security.service.SecurityService;
 public class SecurityServiceShiroImpl implements SecurityService, Serializable
 {
 	private static final long serialVersionUID = 1L;
-
+	protected DataSource dataSource = null;
 
 	@Override
 	public Authentication login(String userName, String password) throws Exception
 	{
 		Authentication result;
-		
+
 		Subject subject = SecurityUtils.getSubject();
 
 		// Authenticate the subject by passing the user name and password token
@@ -28,14 +30,14 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 
 		// ”Remember Me” built-in, just do this:
 		token.setRememberMe(true);
- 
+
 		subject.login(token);
 
 		// security reason, clear token if someone uses memory-dumps
-		token.clear();	
-		
+		token.clear();
+
 		result = new AuthenticationSimple(userName, this.getTenantId(userName), null);
-		
+
 		return result;
 	}
 
@@ -43,7 +45,7 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 	private Integer getTenantId(String username)
 	{
 		Integer tenantId = 0;
-		
+
 		if (username.equals("demo"))
 		{
 			tenantId = 1;
@@ -77,9 +79,20 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 
 
 	@Override
-    public void rollContextOut()
-    {
-	    return;
-    }
+	public void rollContextOut()
+	{
+		return;
+	}
 
+
+	@Override
+	public void changePassword(String userName, String newPassword)
+	{
+		
+	}
+	
+	public void setDataSource(DataSource dataSource)
+	{
+		this.dataSource = dataSource;
+	}
 }

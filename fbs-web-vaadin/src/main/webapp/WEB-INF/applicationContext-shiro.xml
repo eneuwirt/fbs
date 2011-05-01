@@ -44,12 +44,14 @@
   </bean>
 
   <!-- Populates the sample database with sample users and roles. -->
-  <bean id="bootstrapDataPopulator" class="com.fbs.security.shiro.BootstrapDataPopulator">
+  <bean id="bootstrapDataPopulator" class="com.fbs.security.shiro.utils.BootstrapDataPopulator">
     <property name="dataSource" ref="dataSourceSecurity" />
   </bean>
 
   <!-- AuthenticationManager defined in security.xml -->
-  <bean id="securityService" class="com.fbs.security.service.impl.SecurityServiceShiroImpl" />
+  <bean id="securityService" class="com.fbs.security.service.impl.SecurityServiceShiroImpl">
+    <property name="dataSource" ref="dataSourceSecurity" />
+  </bean>
 
 
   <!-- Enable Shiro Annotations for Spring-configured beans. Only run after the lifecycleBeanProcessor has run: -->

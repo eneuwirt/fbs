@@ -21,7 +21,7 @@ public class BootstrapDataPopulator implements InitializingBean {
     private static final String CREATE_TABLES = "create table users (\n" +
             "    username varchar(255) primary key,\n" +
             "    password varchar(255) not null,\n" +
-            "    tenant integer not null,\n" + 
+            "    tenant integer not null\n" + 
             ");\n" +
             "\n" +
             "create table roles (\n" +
@@ -100,6 +100,5 @@ public class BootstrapDataPopulator implements InitializingBean {
         jdbcTemplate.execute(query);
         log.log(Level.INFO,"Assigned demo roles ROLE_USER");
     }
-
 }
 

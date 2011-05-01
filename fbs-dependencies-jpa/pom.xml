@@ -14,7 +14,7 @@
 
   <!-- Shared version number properties -->
   <properties>
-    <org.hibernate.version>3.6.0.Final</org.hibernate.version>
+    <org.hibernate.version>3.6.3.Final</org.hibernate.version>
   </properties>
 
   <dependencies>

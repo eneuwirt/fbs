@@ -1,63 +1,61 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>com.fbs</groupId>
-		<artifactId>fbs</artifactId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
+  <parent>
+    <groupId>com.fbs</groupId>
+    <artifactId>fbs</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
 
-	<groupId>com.fbs</groupId>
-	<artifactId>fbs-dependencies-shiro</artifactId>
-	<packaging>pom</packaging>
+  <groupId>com.fbs</groupId>
+  <artifactId>fbs-dependencies-shiro</artifactId>
+  <packaging>pom</packaging>
 
-	<!-- Shared version number properties -->
-	<properties>
-		<org.apache.shiro.version>1.1.0</org.apache.shiro.version>
-		<slf4j.version>1.5.8</slf4j.version>
-	</properties>
+  <properties>
+    <org.apache.shiro.version>1.1.0</org.apache.shiro.version>
+  </properties>
 
-	<dependencies>
-		<!-- Enables AspectJ support for Shiro AOP and Annotations. -->
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-aspectj</artifactId>
-			<version>${org.apache.shiro.version}</version>
-		</dependency>
-		<!-- Required in all environments. Slf4j's slf4j-api jar and one of its 
-			binding jars is required. commons-beanutils is required only if using INI 
-			config. -->
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-core</artifactId>
-			<version>${org.apache.shiro.version}</version>
-		</dependency>
-		<!-- Enables support for web-based applications. -->
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-web</artifactId>
-			<version>${org.apache.shiro.version}</version>
-		</dependency>
+  <dependencies>
+    <!-- Enables AspectJ support for Shiro AOP and Annotations. -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-aspectj</artifactId>
+      <version>${org.apache.shiro.version}</version>
+    </dependency>
 
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-spring</artifactId>
-			<version>1.1.0</version>
-		</dependency>
+    <!-- Required in all environments. Slf4j's slf4j-api jar and one of its binding jars is required. commons-beanutils is 
+      required only if using INI config. -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-core</artifactId>
+      <version>${org.apache.shiro.version}</version>
+    </dependency>
 
+    <!-- Enables support for web-based applications. -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-web</artifactId>
+      <version>${org.apache.shiro.version}</version>
+    </dependency>
 
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring</artifactId>
+      <version>1.1.0</version>
+    </dependency>
 
-		<!-- Logging: SLF4J -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-	</dependencies>
+    <!-- Logging: SLF4J -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+  </dependencies>
 </project>

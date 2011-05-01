@@ -18,7 +18,6 @@
 	</properties>
 
 	<dependencies>
-
 		<!-- Core utilities used by other modules. Define this if you use Spring 
 			Utility APIs (org.springframework.core.*/org.springframework.util.*) -->
 		<dependency>
@@ -140,6 +139,5 @@
 			<version>${org.springframework.version}</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 </project>

@@ -61,6 +61,8 @@
   <bean id="itemDataPopulator_0" class="com.fbs.datasource.ItemDataPopulator">
     <property name="dataSource" ref="dataSource_0" />
     <property name="client" value="0" />
+    <!-- Interesting behavior, the default schema has already been created by JPA/Hibernate -->
+    <property name="createSchema" value="false" />
   </bean>
   <bean id="itemDataPopulator_1" class="com.fbs.datasource.ItemDataPopulator">
     <property name="dataSource" ref="dataSource_1" />
@@ -75,7 +77,12 @@
   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="dataSource" ref="dataSource" />
     <property name="jpaVendorAdapter">
-      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
+        <property name="showSql" value="true" />
+        <!-- hibernate.hbm2ddl.auto=update -->
+        <property name="generateDdl" value="true" />
+      </bean>
     </property>
   </bean>
 

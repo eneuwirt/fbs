@@ -2,6 +2,7 @@ package com.fbs.web.vaadin.ui.user;
 
 import com.fbs.web.vaadin.MyVaadinApplication;
 import com.fbs.web.vaadin.ui.auth.LogoutListener;
+import com.fbs.security.service.Authentication;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -20,7 +21,8 @@ public class UserView extends VerticalLayout
 		super();
 		this.app = app;
 
-		this.demo = new Label("Du hast dich als User eingelogt");
+		Authentication user = (Authentication) app.getUser();
+		this.demo = new Label("Du hast dich als" + user.getPrincipal() + " eingelogt");
 
 		Button create = new Button("Create items", new CreateListener(app, this));
 		Button show = new Button("Show items", new ShowListener(app, this));

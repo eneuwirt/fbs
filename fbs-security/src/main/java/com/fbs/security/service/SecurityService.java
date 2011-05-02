@@ -14,8 +14,6 @@ public interface SecurityService
 
 
 	public void logout();
-	
-	public void changePassword(String userName, String newPassword);
 
 
 	/**

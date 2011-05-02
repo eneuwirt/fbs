@@ -183,7 +183,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 
 	// TODO remove it
-	public String doSomething()
+	public String doShow()
 	{
 		String result;
 		List<Item> goldItems = catalog.getItems();
@@ -195,6 +195,14 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		logger.log(Level.SEVERE, "did Something: " + result);
 
 		return result;
+	}
+	
+	// TODO remove it
+	public void doCreate()
+	{
+		catalog.createItem();
+
+		logger.log(Level.SEVERE, "created ");
 	}
 
 

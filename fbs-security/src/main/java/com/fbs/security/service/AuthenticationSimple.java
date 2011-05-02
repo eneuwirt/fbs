@@ -10,12 +10,14 @@ public class AuthenticationSimple implements Authentication, Serializable
 	private String userName;
 	private Integer tenantId;
 	private String tenantName;
+	private UserRole userRole;
 	
-	public AuthenticationSimple(String userName, Integer tenantId, String tenantName)
+	public AuthenticationSimple(String userName, Integer tenantId, String tenantName, UserRole userRole)
 	{
 		this.userName = userName;
 		this.tenantId = tenantId;
 		this.tenantName = tenantName;
+		this.userRole = userRole;
 	}
 
 	@Override
@@ -38,4 +40,9 @@ public class AuthenticationSimple implements Authentication, Serializable
 		return tenantName;
 	}
 
+	@Override
+    public UserRole getUserRole()
+    {
+	    return this.userRole;
+    }
 }

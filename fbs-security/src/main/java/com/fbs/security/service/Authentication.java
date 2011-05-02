@@ -7,4 +7,6 @@ public interface Authentication
 	public Integer getTenantId();
 	
 	public String getTenantName();
+	
+	public UserRole getUserRole();
 }

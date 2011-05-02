@@ -16,10 +16,16 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <hsqldb.version>2.0.0</hsqldb.version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>com.fbs</groupId>
+      <artifactId>fbs-dependencies-jpa</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>pom</type>
+    </dependency>
+
     <dependency>
       <groupId>com.fbs</groupId>
       <artifactId>fbs-dependencies-shiro</artifactId>
@@ -39,6 +45,13 @@
       <artifactId>fbs-security</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>jar</type>
+    </dependency>
+
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>2.2</version>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -63,9 +76,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.hsqldb</groupId>
+      <groupId>hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>${hsqldb.version}</version>
+      <version>1.8.0.7</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>

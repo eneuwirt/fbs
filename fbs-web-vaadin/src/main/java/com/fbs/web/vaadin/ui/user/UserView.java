@@ -22,25 +22,27 @@ public class UserView extends VerticalLayout
 
 		this.demo = new Label("Du hast dich als User eingelogt");
 
-		Button b = new Button("What is the time?", new TestListener(app, this));
+		Button create = new Button("Create items", new CreateListener(app, this));
+		Button show = new Button("Show items", new ShowListener(app, this));
 
 		Button logout = new Button("logout");
 		logout.addListener(new LogoutListener(app));
 
 		
 		this.addComponent(demo);
-		this.addComponent(b);
+		this.addComponent(show);
+		this.addComponent(create);
 		this.addComponent(logout);
 	}
 
-	private static class TestListener implements Button.ClickListener
+	private static class CreateListener implements Button.ClickListener
 	{
 		private static final long serialVersionUID = 1L;
 		MyVaadinApplication app;
 		UserView userView;
 
 
-		public TestListener(MyVaadinApplication app, UserView userView)
+		public CreateListener(MyVaadinApplication app, UserView userView)
 		{
 			this.app = app;
 			this.userView = userView;
@@ -50,7 +52,29 @@ public class UserView extends VerticalLayout
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
-			app.doSomething();
+			app.doCreate();
+		}
+
+	}
+	
+	private static class ShowListener implements Button.ClickListener
+	{
+		private static final long serialVersionUID = 1L;
+		MyVaadinApplication app;
+		UserView userView;
+
+
+		public ShowListener(MyVaadinApplication app, UserView userView)
+		{
+			this.app = app;
+			this.userView = userView;
+		}
+
+
+		@Override
+		public void buttonClick(ClickEvent event)
+		{
+			app.doShow();
 		}
 
 	}

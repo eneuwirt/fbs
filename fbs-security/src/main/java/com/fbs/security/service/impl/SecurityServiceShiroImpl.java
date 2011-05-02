@@ -36,7 +36,7 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 		// security reason, clear token if someone uses memory-dumps
 		token.clear();
 
-		result = new AuthenticationSimple(userName, this.getTenantId(userName), null);
+		result = new AuthenticationSimple(userName, this.getTenantId(userName), null, null);
 
 		return result;
 	}
@@ -84,12 +84,6 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 		return;
 	}
 
-
-	@Override
-	public void changePassword(String userName, String newPassword)
-	{
-		
-	}
 	
 	public void setDataSource(DataSource dataSource)
 	{

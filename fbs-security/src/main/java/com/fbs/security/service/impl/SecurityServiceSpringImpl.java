@@ -11,13 +11,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.fbs.security.service.SecurityService;
 
 
-public class SecurityServiceSpringImpl implements SecurityService
+public class SecurityServiceSpringImpl //implements SecurityService
 {
 	private static Logger logger = Logger.getLogger(SecurityServiceSpringImpl.class.getName());
 	private AuthenticationManager authenticationManager;
  
 
-	@Override
+	//@Override
 	public com.fbs.security.service.Authentication login(String userName, String userPassword) throws Exception
 	{
 		Authentication input;
@@ -32,13 +32,13 @@ public class SecurityServiceSpringImpl implements SecurityService
 
 		SecurityContextHolder.getContext().setAuthentication(valid);
 		
-		result = new com.fbs.security.service.AuthenticationSimple(userName, this.getTenantId(userName), null);
+		result = new com.fbs.security.service.AuthenticationSimple(userName, this.getTenantId(userName), null, null);
 
 		return result;
 	}
 
 
-	@Override
+	//@Override
 	public void logout()
 	{
 		logger.log(Level.INFO, "logout");
@@ -54,7 +54,7 @@ public class SecurityServiceSpringImpl implements SecurityService
 		return 0;
 	}
 
-	@Override
+	//@Override
 	public void rollContextIn(Object user)
 	{
 		logger.log(Level.INFO, "roll security context in");
@@ -69,7 +69,7 @@ public class SecurityServiceSpringImpl implements SecurityService
 	}
 
 
-	@Override
+	//@Override
 	public void rollContextOut()
 	{
 		logger.log(Level.INFO, "roll security context out");
@@ -82,12 +82,4 @@ public class SecurityServiceSpringImpl implements SecurityService
 	{
 		this.authenticationManager = authenticationManager;
 	}
-
-
-	@Override
-    public void changePassword(String userName, String newPassword)
-    {
-	    // TODO Auto-generated method stub
-	    
-    }
 }

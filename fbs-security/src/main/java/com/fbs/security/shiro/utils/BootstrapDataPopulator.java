@@ -27,8 +27,8 @@ public class BootstrapDataPopulator implements InitializingBean
 		"create table users (\n" + 
 		"    username varchar(255) primary key,\n" + 
 		"    password varchar(255) not null,\n" + 
-		"    salt varchar(1500) not null,\n" + 
-		"    tenant integer not null\n" + 
+		"    salt varchar(255) not null,\n" + 
+		"    tenant_id integer not null\n" + 
 		");\n" + 
 		
 		"\n" + "create table roles (\n" + "    role_name varchar(255) primary key\n" + ");\n" + "\n"
@@ -94,10 +94,6 @@ public class BootstrapDataPopulator implements InitializingBean
 		query = "insert into roles_permissions values ( 'ROLE_ADMIN', 'PERMISSIONS_ADMIN')";
 		jdbcTemplate.execute(query);
 		log.log(Level.INFO, "Created permission admin for ROLE_ADMIN");
-
-		query = "insert into roles_permissions values ( 'ROLE_ADMIN', 'permission2')";
-		jdbcTemplate.execute(query);
-		log.log(Level.INFO, "Created permission 2 for ROLE_ADMIN");
 
 		query = "insert into roles_permissions values ( 'ROLE_USER', 'PERMISSIONS_USER')";
 		jdbcTemplate.execute(query);

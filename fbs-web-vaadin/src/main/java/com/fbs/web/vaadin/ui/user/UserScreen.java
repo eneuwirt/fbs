@@ -9,14 +9,14 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-public class UserView extends VerticalLayout
+public class UserScreen extends VerticalLayout
 {
 	private static final long serialVersionUID = 1L;
 	private MyVaadinApplication app;
 	Label demo;
 
 
-	public UserView(final MyVaadinApplication app)
+	public UserScreen(final MyVaadinApplication app)
 	{
 		super();
 		this.app = app;
@@ -41,13 +41,13 @@ public class UserView extends VerticalLayout
 	{
 		private static final long serialVersionUID = 1L;
 		MyVaadinApplication app;
-		UserView userView;
+		UserScreen userScreen;
 
 
-		public CreateListener(MyVaadinApplication app, UserView userView)
+		public CreateListener(MyVaadinApplication app, UserScreen userScreen)
 		{
 			this.app = app;
-			this.userView = userView;
+			this.userScreen = userScreen;
 		}
 
 
@@ -63,13 +63,13 @@ public class UserView extends VerticalLayout
 	{
 		private static final long serialVersionUID = 1L;
 		MyVaadinApplication app;
-		UserView userView;
+		UserScreen userScreen;
 
 
-		public ShowListener(MyVaadinApplication app, UserView userView)
+		public ShowListener(MyVaadinApplication app, UserScreen userScreen)
 		{
 			this.app = app;
-			this.userView = userView;
+			this.userScreen = userScreen;
 		}
 
 

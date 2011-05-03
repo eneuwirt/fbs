@@ -7,7 +7,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
-public class AdminView extends VerticalLayout
+public class AdminScreen extends VerticalLayout
 {
 	/**
      * 
@@ -16,7 +16,7 @@ public class AdminView extends VerticalLayout
 	private MyVaadinApplication app;
 
 
-	public AdminView(MyVaadinApplication app)
+	public AdminScreen(MyVaadinApplication app)
 	{
 		this.app = app;
 

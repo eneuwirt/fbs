@@ -14,8 +14,8 @@ import com.fbs.security.service.Authentication;
 import com.fbs.security.service.UserRole;
 import com.fbs.web.vaadin.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
-import com.fbs.web.vaadin.ui.admin.AdminView;
-import com.fbs.web.vaadin.ui.user.UserView;
+import com.fbs.web.vaadin.ui.admin.AdminScreen;
+import com.fbs.web.vaadin.ui.user.UserScreen;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -184,11 +184,11 @@ public class LoginScreen extends VerticalLayout
 				// Switch to the protected view
 				if (auth.getUserRole() == UserRole.ROLE_USER)
 				{
-					app.getViewManager().switchScreen(UserView.class.getName(), new UserView(app));
+					app.getViewManager().switchScreen(UserScreen.class.getName(), new UserScreen(app));
 				}
 				else
 				{
-					app.getViewManager().switchScreen(UserView.class.getName(), new AdminView(app));
+					app.getViewManager().switchScreen(UserScreen.class.getName(), new AdminScreen(app));
 				}
 			}
 			catch (UnknownAccountException uae)

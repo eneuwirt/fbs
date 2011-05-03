@@ -10,8 +10,11 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 
+import com.fbs.security.service.Authentication;
+import com.fbs.security.service.UserRole;
 import com.fbs.web.vaadin.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
+import com.fbs.web.vaadin.ui.admin.AdminView;
 import com.fbs.web.vaadin.ui.user.UserView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -176,8 +179,17 @@ public class LoginScreen extends VerticalLayout
 			{
 				this.app.login(username, password);
 
+				Authentication auth = (Authentication) app.getUser();
+
 				// Switch to the protected view
-				app.getViewManager().switchScreen(UserView.class.getName(), new UserView(app));
+				if (auth.getUserRole() == UserRole.ROLE_USER)
+				{
+					app.getViewManager().switchScreen(UserView.class.getName(), new UserView(app));
+				}
+				else
+				{
+					app.getViewManager().switchScreen(UserView.class.getName(), new AdminView(app));
+				}
 			}
 			catch (UnknownAccountException uae)
 			{
@@ -199,12 +211,14 @@ public class LoginScreen extends VerticalLayout
 			}
 			catch (ExcessiveAttemptsException eae)
 			{
-				this.loginForm.getWindow().showNotification(this.app.getMessage(ApplicationMessages.SecurityExcessiveAttempts),
+				this.loginForm.getWindow().showNotification(
+				        this.app.getMessage(ApplicationMessages.SecurityExcessiveAttempts),
 				        Notification.TYPE_ERROR_MESSAGE);
 			}
 			catch (AuthenticationException ae)
 			{
-				this.loginForm.getWindow().showNotification(this.app.getMessage(ApplicationMessages.SecurityAuthenticationException),
+				this.loginForm.getWindow().showNotification(
+				        this.app.getMessage(ApplicationMessages.SecurityAuthenticationException),
 				        Notification.TYPE_ERROR_MESSAGE);
 			}
 			catch (Exception ex)

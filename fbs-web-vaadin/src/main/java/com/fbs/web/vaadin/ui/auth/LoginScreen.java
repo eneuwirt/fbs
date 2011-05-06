@@ -178,18 +178,6 @@ public class LoginScreen extends VerticalLayout
 			try
 			{
 				this.app.login(username, password);
-
-				Authentication auth = (Authentication) app.getUser();
-
-				// Switch to the protected view
-				if (auth.getUserRole() == UserRole.ROLE_USER)
-				{
-					app.getViewManager().switchScreen(UserScreen.class.getName(), new UserScreen(app));
-				}
-				else
-				{
-					app.getViewManager().switchScreen(UserScreen.class.getName(), new AdminScreen(app));
-				}
 			}
 			catch (UnknownAccountException uae)
 			{

@@ -16,9 +16,12 @@ import com.fbs.datasource.TenantContextHolder;
 import com.fbs.datasource.Item;
 import com.fbs.security.service.Authentication;
 import com.fbs.security.service.SecurityService;
+import com.fbs.security.service.UserRole;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.ViewManager;
+import com.fbs.web.vaadin.ui.admin.AdminScreen;
 import com.fbs.web.vaadin.ui.auth.LoginScreen;
+import com.fbs.web.vaadin.ui.user.UserScreen;
 
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext;
@@ -90,10 +93,20 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		Authentication authentication;
 
 		authentication = this.securityService.login(userName, password);
-
-		this.setUser(authentication);
-
+		
+		this.setUser(authentication);	
+		
 		TenantContextHolder.setTenant(authentication.getTenantId());
+
+		// Switch to the protected view
+		if (authentication.getUserRole() == UserRole.ROLE_USER)
+		{
+			this.getViewManager().switchScreen(UserScreen.class.getName(), new UserScreen(this));
+		}
+		else
+		{
+			this.getViewManager().switchScreen(UserScreen.class.getName(), new AdminScreen(this));
+		}
 	}
 
 

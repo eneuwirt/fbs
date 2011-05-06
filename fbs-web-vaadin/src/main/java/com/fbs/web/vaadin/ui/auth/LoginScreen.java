@@ -10,12 +10,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 
-import com.fbs.security.service.Authentication;
-import com.fbs.security.service.UserRole;
 import com.fbs.web.vaadin.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
-import com.fbs.web.vaadin.ui.admin.AdminScreen;
-import com.fbs.web.vaadin.ui.user.UserScreen;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;

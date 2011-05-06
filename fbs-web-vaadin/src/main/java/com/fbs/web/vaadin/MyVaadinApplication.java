@@ -187,6 +187,12 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 			}
 		}
 	}
+	
+	@Override
+	public Authentication getUser()
+	{
+		return (Authentication) super.getUser();
+	}
 
 
 	public static MyVaadinApplication getInstance()

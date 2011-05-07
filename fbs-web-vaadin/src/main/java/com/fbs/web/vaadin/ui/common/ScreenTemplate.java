@@ -6,9 +6,6 @@ import com.vaadin.ui.VerticalLayout;
 
 public abstract class ScreenTemplate extends VerticalLayout
 {
-	/**
-     * 
-     */
 	private static final long serialVersionUID = 1L;
 
 	private Header header;
@@ -25,27 +22,34 @@ public abstract class ScreenTemplate extends VerticalLayout
 		this.app = app;
 		this.header = new Header(app);
 		this.footer = new Footer(app);
-
-		this.initLayout();
 		
-		this.createMainScreen();
+		this.initComponents();
+		
+		this.initLayout();
+	}
+
+	/**
+	 * The inherited class shall instantiate the screen object in this method
+	 */
+	protected abstract void initMainScreen();
+
+
+	private void initLayout()
+	{
+		this.setSizeFull();
+
+		this.setMargin(true);
+		this.setSpacing(true);
+		
+		this.setExpandRatio(mainScreen, 1.0f);
+	}
+	
+	private void initComponents()
+	{
+		this.initMainScreen();
 		
 		this.addComponent(header);
 		this.addComponent(mainScreen);
 		this.addComponent(footer);
-	}
-
-	/**
-	 * The inherited class shall create the screen in this method
-	 */
-	protected abstract void createMainScreen();
-
-
-	protected void initLayout()
-	{
-		this.setWidth("100%");
-
-		this.setMargin(true);
-		this.setSpacing(true);
 	}
 }

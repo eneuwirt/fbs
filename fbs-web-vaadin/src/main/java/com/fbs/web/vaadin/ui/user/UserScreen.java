@@ -14,23 +14,22 @@ public class UserScreen extends ScreenTemplate
 	private HorizontalLayout tmp;
 	public UserScreen(MyVaadinApplication app)
 	{
-		super(app);
-		
-		Button create = new Button("Create items", new CreateListener(app, this));
+		super(app);		
+	}
+	
+	@Override
+    protected void initMainScreen()
+    {
+	    this.tmp = new HorizontalLayout();
+	    
+	    this.mainScreen = this.tmp;
+	    
+	    Button create = new Button("Create items", new CreateListener(app, this));
 		Button show = new Button("Show items", new ShowListener(app, this));
 
 		
 		this.tmp.addComponent(show);
 		this.tmp.addComponent(create);
-		
-	}
-	
-	@Override
-    protected void createMainScreen()
-    {
-	    this.tmp = new HorizontalLayout();
-	    
-	    this.mainScreen = this.tmp;
     }
 
 	private static class CreateListener implements Button.ClickListener

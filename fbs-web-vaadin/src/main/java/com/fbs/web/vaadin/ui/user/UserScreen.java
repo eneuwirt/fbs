@@ -1,35 +1,37 @@
 package com.fbs.web.vaadin.ui.user;
 
 import com.fbs.web.vaadin.MyVaadinApplication;
-import com.fbs.web.vaadin.ui.common.Header;
+import com.fbs.web.vaadin.ui.common.ScreenTemplate;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.HorizontalLayout;
 
-public class UserScreen extends VerticalLayout
+public class UserScreen extends ScreenTemplate
 {
 	private static final long serialVersionUID = 1L;
-	private MyVaadinApplication app;
 
-
-	public UserScreen(final MyVaadinApplication app)
+	private HorizontalLayout tmp;
+	public UserScreen(MyVaadinApplication app)
 	{
-		super();
-		this.app = app;
-
-		Header header = new Header(app);
-
-
+		super(app);
+		
 		Button create = new Button("Create items", new CreateListener(app, this));
 		Button show = new Button("Show items", new ShowListener(app, this));
 
 		
-		this.addComponent(header);
-		this.addComponent(show);
-		this.addComponent(create);
+		this.tmp.addComponent(show);
+		this.tmp.addComponent(create);
 		
 	}
+	
+	@Override
+    protected void createMainScreen()
+    {
+	    this.tmp = new HorizontalLayout();
+	    
+	    this.mainScreen = this.tmp;
+    }
 
 	private static class CreateListener implements Button.ClickListener
 	{

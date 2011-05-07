@@ -10,9 +10,6 @@ import com.vaadin.ui.Label;
 
 public class Header extends HorizontalLayout
 {
-	/**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
 	public Header(MyVaadinApplication app)
@@ -20,13 +17,15 @@ public class Header extends HorizontalLayout
 		String greetMessage = app.getMessage(ApplicationMessages.HeaderWelcome) + " " + app.getUser().getPrincipal();
 		Label  labelUser = new Label(greetMessage);
 		
-		Button logoutButton = new Button("logout");
+		Button logoutButton = new Button(app.getMessage(ApplicationMessages.LogoutButton));
 		logoutButton.addListener(new LogoutListener(app));
 		
 		this.setWidth("100%");
 
 		this.addComponent(labelUser);
 		this.addComponent(logoutButton);
+		
+		setComponentAlignment(labelUser, Alignment.MIDDLE_LEFT);
 		setComponentAlignment(logoutButton, Alignment.MIDDLE_RIGHT);
 	}
 }

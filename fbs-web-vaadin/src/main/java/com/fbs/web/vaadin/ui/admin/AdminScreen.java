@@ -24,8 +24,20 @@ public class AdminScreen extends ScreenTemplate
 		tabsheet = new TabSheet();
 		this.mainScreen = tabsheet;
 		
-		tabsheet.addTab(new Label("Contents of the first tab"), "First Tab", null);
+		tabsheet.setSizeFull();
+		
+		initClientTab();
+		
+		//tabsheet.addTab(new Label("Contents of the first tab"), "First Tab", null);
 		tabsheet.addTab(new Label("Contents of the second tab"), "Second Tab", null);
 		tabsheet.addTab(new Label("Contents of the third tab"), "Third tab", null);
 	}
+	
+	private  void initClientTab()
+	{
+		ClientScreen clientScreen = new ClientScreen();
+		
+		tabsheet.addTab(clientScreen, "First Tab", null);
+	}
+	
 }

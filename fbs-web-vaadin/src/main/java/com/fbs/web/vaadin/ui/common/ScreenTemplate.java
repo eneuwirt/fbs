@@ -2,6 +2,7 @@ package com.fbs.web.vaadin.ui.common;
 
 import com.fbs.web.vaadin.MyVaadinApplication;
 import com.vaadin.ui.AbstractComponentContainer;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 public abstract class ScreenTemplate extends VerticalLayout
@@ -22,11 +23,12 @@ public abstract class ScreenTemplate extends VerticalLayout
 		this.app = app;
 		this.header = new Header(app);
 		this.footer = new Footer(app);
-		
+
 		this.initComponents();
-		
+
 		this.initLayout();
 	}
+
 
 	/**
 	 * The inherited class shall instantiate the screen object in this method
@@ -40,16 +42,21 @@ public abstract class ScreenTemplate extends VerticalLayout
 
 		this.setMargin(true);
 		this.setSpacing(true);
-		
-		this.setExpandRatio(mainScreen, 1.0f);
+
+		//this.setExpandRatio(header, 1.0f);
+		this.setExpandRatio(this.mainScreen, 1.0f);
+		//this.setExpandRatio(this.footer, 1.0f);
 	}
-	
+
+
 	private void initComponents()
 	{
 		this.initMainScreen();
-		
-		this.addComponent(header);
-		this.addComponent(mainScreen);
-		this.addComponent(footer);
+
+		this.addComponent(this.header);
+		this.addComponent(new Label("---------------------------------------"));
+		this.addComponent(this.mainScreen);
+		this.addComponent(new Label("---------------------------------------"));
+		this.addComponent(this.footer);
 	}
 }

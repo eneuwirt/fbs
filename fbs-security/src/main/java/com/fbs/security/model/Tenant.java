@@ -3,9 +3,11 @@ package com.fbs.security.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Tenant implements Serializable
+
+public class Tenant implements Comparable<Tenant>, Serializable
 {
 	private static final long serialVersionUID = 1L;
+
 	private Integer id;
 	private String description;
 	private Date validFrom = new Date();
@@ -63,6 +65,20 @@ public class Tenant implements Serializable
 	public Date getValidTo()
     {
 	    return validTo;
+    }
+
+
+	@Override
+    public int compareTo(Tenant o)
+    {
+	    //see documentation
+		if (o == null)
+	    {
+	    	throw new NullPointerException();
+	    }
+	    
+	   
+	    return (this.getId() - o.getId());
     }
 
 }

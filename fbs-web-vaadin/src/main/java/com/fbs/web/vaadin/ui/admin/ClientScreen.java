@@ -1,8 +1,14 @@
 package com.fbs.web.vaadin.ui.admin;
 
+import java.util.List;
+
+import com.fbs.security.model.Tenant;
+import com.fbs.web.vaadin.MyVaadinApplication;
+import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.data.util.BeanItem;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Form;
@@ -15,157 +21,277 @@ import com.vaadin.ui.Table;
 public class ClientScreen extends HorizontalSplitPanel
 {
 	private static final long serialVersionUID = 1L;
-	private static String[] fields =
-	{ "First Name", "Last Name", "Company", "Mobile Phone", "Work Phone", "Home Phone", "Work Email", "Home Email",
-	        "Street", "Zip", "City", "State", "Country" };
-	private static String[] visibleCols = new String[]
-	{ "Last Name", "First Name", "Company" };
+	private static final String COL_ID = "id";
+	private static final String COL_DESCR = "description";
+	private static String[] visibleColumns = new String[] { COL_ID, COL_DESCR };
+	private MyVaadinApplication app;
+	private Table table;
+	private Form form;
+	private BeanItemContainer<Tenant> beanItemContainer;
+	private Button itemAddButton;
+	private Button itemRemovalButton;
+	private Button itemSaveButton;
+	private Button cancelButton;
+	private Button deleteButton;
 
-	private Table contactList = new Table();
-	private Form contactEditor = new Form();
-	private HorizontalLayout bottomLeftCorner = new HorizontalLayout();
-	private Button contactRemovalButton;
-	private IndexedContainer addressBookData = createDummyData();
 
-
-	public ClientScreen()
+	public ClientScreen(MyVaadinApplication app)
 	{
 		super();
 
+		this.app = app;
+		
+		this.table = new Table();
+		this.table.addListener(new Property.ValueChangeListener()
+		{
+			private static final long serialVersionUID = 1L;
+
+
+			public void valueChange(ValueChangeEvent event)
+			{
+				Object id = table.getValue();
+
+				form.setItemDataSource(id == null ? new BeanItem<Tenant>(new Tenant()) : table.getItem(id));
+
+				itemRemovalButton.setEnabled(id != null);
+				itemSaveButton.setEnabled(id != null);
+				cancelButton.setEnabled(id != null);
+				deleteButton.setEnabled(id != null);
+			}
+		});
+		
+		this.form = new Form();
+		
+		this.beanItemContainer = new BeanItemContainer<Tenant>(Tenant.class);
+		this.getItems();
+
+		this.itemAddButton = new Button("+");
+		this.itemAddButton.addListener(new AddItemListener(this.table, this.form, this.beanItemContainer));
+		
+		this.itemRemovalButton = new Button("-");
+		this.itemRemovalButton.addListener(new RemoveItemListener(this.table, this.beanItemContainer));
+		
+		this.itemSaveButton = new Button(this.app.getMessage(ApplicationMessages.CommonSave));
+		this.itemSaveButton.addListener(new SaveItemListener());
+		
+		this.cancelButton = new Button(this.app.getMessage(ApplicationMessages.CommonCancel));
+		this.cancelButton.addListener(new CancelButtonListener());
+		
+		this.deleteButton = new Button(this.app.getMessage(ApplicationMessages.CommonDelete));
+		this.deleteButton.addListener(new RemoveItemListener(this.table, this.beanItemContainer));
+
 		this.initLayout();
-		this.initContactAddRemoveButtons();
-		this.initAddressList();
-		this.initFilteringControls();
 	}
 
 
 	private void initLayout()
-	{		        
-        contactList.setSizeFull();
-        
-        bottomLeftCorner.setWidth("100%");
-        
-        contactEditor.setSizeFull();
-        contactEditor.setImmediate(true);
-        
-        VerticalLayout left = new VerticalLayout();
-        left.setSizeFull();   
-        left.setSpacing(true);
-        left.setMargin(true);
-        left.addComponent(contactList);
-        left.addComponent(bottomLeftCorner);
-        
-        VerticalLayout right = new VerticalLayout();
-        right.setSizeFull();
-        right.addComponent(contactEditor);
-        
-        this.addComponent(left);
-        this.addComponent(right);
-        
-        
-        //as last
-        left.setExpandRatio(contactList, 1.0f);
-        right.setExpandRatio(contactEditor, 1.0f);
+	{
+		VerticalLayout left = new VerticalLayout();
+		VerticalLayout right = new VerticalLayout();
+
+		this.layoutLeft(left);
+		this.layoutRight(right);
+
+		this.addComponent(left);
+		this.addComponent(right);
 	}
 
 
-	private void initFilteringControls()
+	private void layoutLeft(VerticalLayout left)
 	{
-		for (final String pn : visibleCols)
-		{
-			final TextField sf = new TextField();
-			bottomLeftCorner.addComponent(sf);
-			sf.setWidth("100%");
-			sf.setInputPrompt(pn);
-			sf.setImmediate(true);
-			bottomLeftCorner.setExpandRatio(sf, 1);
+		HorizontalLayout bottomLeftCorner = new HorizontalLayout();
 
-			sf.addListener(new Property.ValueChangeListener()
+		left.setSizeFull();
+		left.setSpacing(true);
+		left.setMargin(true);
+
+		this.layoutTable();
+		this.layoutButtomLeftCorner(bottomLeftCorner);
+
+		left.addComponent(this.table);
+		left.addComponent(bottomLeftCorner);
+
+		left.setExpandRatio(table, 1.0f);
+	}
+
+
+	private void layoutTable()
+	{
+		this.table.setSizeFull();
+		
+		//this.table.setNullSelectionAllowed(false);
+		this.table.setSelectable(true);
+		this.table.setMultiSelect(false);
+		
+		this.table.setImmediate(true);
+		this.table.setContainerDataSource(beanItemContainer);
+		this.table.setVisibleColumns(visibleColumns);
+
+		// Set nicer header names
+		this.table.setColumnHeader(COL_ID, this.app.getMessage(ApplicationMessages.TenantId));
+		this.table.setColumnHeader(COL_DESCR, this.app.getMessage(ApplicationMessages.TenantDescription));
+
+		this.table.setVisibleColumns(visibleColumns);
+	}
+
+
+	private void layoutButtomLeftCorner(HorizontalLayout bottomLeftCorner)
+	{
+		bottomLeftCorner.setWidth("100%");
+
+		this.itemRemovalButton.setEnabled(false);
+		
+		bottomLeftCorner.addComponent(this.itemAddButton);
+		bottomLeftCorner.addComponent(this.itemRemovalButton);
+		//Add search fields
+		for (final String visibleColumn : visibleColumns)
+		{
+			final TextField searchField = new TextField();
+
+			searchField.setWidth("100%");
+			searchField.setInputPrompt(visibleColumn);
+			searchField.setImmediate(true);
+
+			searchField.addListener(new Property.ValueChangeListener()
 			{
+				private static final long serialVersionUID = 1L;
+
+
 				public void valueChange(ValueChangeEvent event)
 				{
-					addressBookData.removeContainerFilters(pn);
-					if (sf.toString().length() > 0 && !pn.equals(sf.toString()))
+					beanItemContainer.removeContainerFilters(visibleColumn);
+
+					if (searchField.toString().length() > 0 && !visibleColumn.equals(searchField.toString()))
 					{
-						addressBookData.addContainerFilter(pn, sf.toString(), true, false);
+						beanItemContainer.addContainerFilter(visibleColumn, searchField.toString(), true, false);
 					}
-					// getMainWindow().showNotification("" +
-					// addressBookData.size() + " matches found");
 				}
 			});
+
+			bottomLeftCorner.addComponent(searchField);
+
+			bottomLeftCorner.setExpandRatio(searchField, 1);
 		}
 	}
 
 
-	private void initContactAddRemoveButtons()
+	private void getItems()
 	{
-		// New item button
-		bottomLeftCorner.addComponent(new Button("+", new Button.ClickListener()
-		{
-			public void buttonClick(ClickEvent event)
-			{
-				Object id = contactList.addItem();
-				contactList.setValue(id);
-			}
-		}));
+		List<Tenant> tenants;
 
-		// Remove item button
-		contactRemovalButton = new Button("-", new Button.ClickListener()
+		tenants = this.app.getTenantService().findAll();
+
+		for (Tenant tenant : tenants)
 		{
-			public void buttonClick(ClickEvent event)
-			{
-				contactList.removeItem(contactList.getValue());
-				contactList.select(null);
-			}
-		});
-		contactRemovalButton.setVisible(false);
-		bottomLeftCorner.addComponent(contactRemovalButton);
+			this.beanItemContainer.addBean(tenant);
+		}
 	}
 
 
-	private String[] initAddressList()
+	private void layoutRight(VerticalLayout right)
 	{
-		contactList.setContainerDataSource(addressBookData);
-		contactList.setVisibleColumns(visibleCols);
-		contactList.setSelectable(true);
-		contactList.setImmediate(true);
-		contactList.addListener(new Property.ValueChangeListener()
-		{
-			public void valueChange(ValueChangeEvent event)
-			{
-				Object id = contactList.getValue();
-				contactEditor.setItemDataSource(id == null ? null : contactList.getItem(id));
-				contactRemovalButton.setVisible(id != null);
-			}
-		});
-		return visibleCols;
+		this.form.setSizeFull();
+		this.form.setImmediate(true);
+		this.form.setCaption(this.app.getMessage(ApplicationMessages.CommonDetails));
+		this.form.setDescription(this.app.getMessage(ApplicationMessages.CommonDetailsDescription));
+
+		BeanItem<Tenant> dummy = new BeanItem<Tenant>(new Tenant());
+		this.form.setItemDataSource(dummy);
+
+		this.itemSaveButton.setEnabled(false);
+		this.cancelButton.setEnabled(false);
+		this.deleteButton.setEnabled(false);
+
+		HorizontalLayout buttonRow = new HorizontalLayout();
+		buttonRow.addComponent(this.itemSaveButton);
+		buttonRow.addComponent(this.cancelButton);
+		buttonRow.addComponent(this.deleteButton);
+
+		// right.setSizeFull();
+		right.addComponent(this.form);
+		right.addComponent(buttonRow);
+
+		right.setExpandRatio(this.form, 1.0f);
 	}
 
-
-	private static IndexedContainer createDummyData()
+	private static class AddItemListener implements Button.ClickListener
 	{
+		private static final long serialVersionUID = 1L;
+		private Table table;
+		private BeanItemContainer<Tenant> beanItemContainer = null;
+		private Form form;
 
-		String[] fnames =
-		{ "Peter", "Alice", "Joshua", "Mike", "Olivia", "Nina", "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene",
-		        "Lisa", "Marge" };
-		String[] lnames =
-		{ "Smith", "Gordon", "Simpson", "Brown", "Clavel", "Simons", "Verne", "Scott", "Allison", "Gates", "Rowling",
-		        "Barks", "Ross", "Schneider", "Tate" };
 
-		IndexedContainer ic = new IndexedContainer();
-
-		for (String p : fields)
+		public AddItemListener(Table table, Form form, BeanItemContainer<Tenant> beanItemContainer)
 		{
-			ic.addContainerProperty(p, String.class, "");
+			this.beanItemContainer = beanItemContainer;
+			this.form = form;
+			this.table = table;
 		}
 
-		for (int i = 0; i < 1000; i++)
+
+		@Override
+		public void buttonClick(ClickEvent event)
 		{
-			Object id = ic.addItem();
-			ic.getContainerProperty(id, "First Name").setValue(fnames[(int) (fnames.length * Math.random())]);
-			ic.getContainerProperty(id, "Last Name").setValue(lnames[(int) (lnames.length * Math.random())]);
+			Tenant t = new Tenant();
+			t.setDescription("Bitte pflegen");
+
+			this.beanItemContainer.addBean(t);
+			this.table.select(null);
+			this.table.select(t);
+
+			BeanItem<Tenant> beanItem = new BeanItem<Tenant>(t);
+			this.form.setItemDataSource(beanItem);
+		}
+	}
+
+	private static class RemoveItemListener implements Button.ClickListener
+	{
+		private static final long serialVersionUID = 1L;
+		private BeanItemContainer<Tenant> beanItemContainer = null;
+		private Table table;
+
+
+		public RemoveItemListener(Table table, BeanItemContainer<Tenant> beanItemContainer)
+		{
+			this.beanItemContainer = beanItemContainer;
+
+			this.table = table;
 		}
 
-		return ic;
+
+		@Override
+		public void buttonClick(ClickEvent event)
+		{
+			this.beanItemContainer.removeItem(table.getValue());
+
+			table.select(null);
+		}
+	}
+
+	private static class SaveItemListener implements Button.ClickListener
+	{
+		private static final long serialVersionUID = 1L;
+
+
+		@Override
+		public void buttonClick(ClickEvent event)
+		{
+			// TODO Auto-generated method stub
+
+		}
+	}
+	
+	private static class CancelButtonListener implements Button.ClickListener
+	{
+		private static final long serialVersionUID = 1L;
+
+
+		@Override
+		public void buttonClick(ClickEvent event)
+		{
+			// TODO Auto-generated method stub
+
+		}
 	}
 }

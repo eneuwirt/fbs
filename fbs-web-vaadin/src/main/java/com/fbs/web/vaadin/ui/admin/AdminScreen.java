@@ -11,7 +11,6 @@ public class AdminScreen extends ScreenTemplate
 
 	private TabSheet tabsheet;
 
-
 	public AdminScreen(MyVaadinApplication app)
 	{
 		super(app);
@@ -35,7 +34,7 @@ public class AdminScreen extends ScreenTemplate
 	
 	private  void initClientTab()
 	{
-		ClientScreen clientScreen = new ClientScreen();
+		ClientScreen clientScreen = new ClientScreen(this.app);
 		
 		tabsheet.addTab(clientScreen, "First Tab", null);
 	}

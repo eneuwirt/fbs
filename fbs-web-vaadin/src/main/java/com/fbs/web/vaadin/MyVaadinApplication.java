@@ -16,6 +16,7 @@ import com.fbs.datasource.TenantContextHolder;
 import com.fbs.datasource.Item;
 import com.fbs.security.service.Authentication;
 import com.fbs.security.service.SecurityService;
+import com.fbs.security.service.TenantService;
 import com.fbs.security.service.UserRole;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.ViewManager;
@@ -48,6 +49,20 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 	@Resource
 	transient SecurityService securityService;
+	@Resource
+	transient private TenantService tenantService;
+
+
+	public TenantService getTenantService()
+    {
+    	return tenantService;
+    }
+
+
+	public void setTenantService(TenantService tenantService)
+    {
+    	this.tenantService = tenantService;
+    }
 
 
 	@Override
@@ -93,9 +108,9 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		Authentication authentication;
 
 		authentication = this.securityService.login(userName, password);
-		
-		this.setUser(authentication);	
-		
+
+		this.setUser(authentication);
+
 		TenantContextHolder.setTenant(authentication.getTenantId());
 
 		// Switch to the protected view
@@ -187,7 +202,8 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 			}
 		}
 	}
-	
+
+
 	@Override
 	public Authentication getUser()
 	{
@@ -215,7 +231,8 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 		return result;
 	}
-	
+
+
 	// TODO remove it
 	public void doCreate()
 	{

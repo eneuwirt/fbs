@@ -207,7 +207,8 @@ public class LoginScreen extends VerticalLayout
 			}
 			catch (Exception ex)
 			{
-				this.loginForm.getWindow().showNotification(this.app.getMessage(ApplicationMessages.CommonException),
+				this.loginForm.getWindow().showNotification(
+				        this.app.getMessage(ApplicationMessages.CommonException) + ex.getMessage(),
 				        Notification.TYPE_ERROR_MESSAGE);
 			}
 		}

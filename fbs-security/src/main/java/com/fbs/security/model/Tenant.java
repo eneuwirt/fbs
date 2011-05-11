@@ -3,7 +3,6 @@ package com.fbs.security.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
 public class Tenant implements Comparable<Tenant>, Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -45,40 +44,78 @@ public class Tenant implements Comparable<Tenant>, Serializable
 
 
 	public void setValidFrom(Date validFrom)
-    {
-	    this.validFrom = validFrom;
-    }
+	{
+		this.validFrom = validFrom;
+	}
 
 
 	public Date getValidFrom()
-    {
-	    return validFrom;
-    }
+	{
+		return validFrom;
+	}
 
 
 	public void setValidTo(Date validTo)
-    {
-	    this.validTo = validTo;
-    }
+	{
+		this.validTo = validTo;
+	}
 
 
 	public Date getValidTo()
-    {
-	    return validTo;
-    }
+	{
+		return validTo;
+	}
 
 
 	@Override
-    public int compareTo(Tenant o)
-    {
-	    //see documentation
+	public int compareTo(Tenant o)
+	{
+		// see documentation
 		if (o == null)
-	    {
-	    	throw new NullPointerException();
-	    }
-	    
-	   
-	    return (this.getId() - o.getId());
-    }
+		{
+			throw new NullPointerException();
+		}
 
+		return (this.getId() - o.getId());
+	}
+
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj == null)
+		{
+			return false;
+		}
+
+		if (this == obj)
+		{
+			return true;
+		}
+
+		Tenant other = (Tenant) obj;
+		if (id == null)
+		{
+			if (other.id != null)
+				return false;
+		}
+		else if (!id.equals(other.id))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		
+		result = prime * result + ((id == null) ? super.hashCode() : id.hashCode());
+		
+		return result;
+	}
 }

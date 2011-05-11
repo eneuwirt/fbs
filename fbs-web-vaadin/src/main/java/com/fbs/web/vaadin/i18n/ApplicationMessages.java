@@ -7,7 +7,12 @@ public interface ApplicationMessages extends Serializable
 	// Application
 	public static String ApplicationTitle = "Application.Title";
 
+	public static String CommonCancel = "Common.Cancel";
+	public static String CommonDelete = "Common.Delete";
+	public static String CommonDetails = "Common.Details";
+	public static String CommonDetailsDescription = "Common.DetailsDescription";
 	public static String CommonException = "Common.Exception";
+	public static String CommonSave = "Common.Save";
 
 	public static String FooterCopyRight = "Footer.CopyRight";
 
@@ -38,4 +43,9 @@ public interface ApplicationMessages extends Serializable
 	public static String SecurityExcessiveAttempts = "Security.ExcessiveAttempts";
 	public static String SecurityInvalidCredentials = "Security.InvalidCredentials";
 	public static String SecurityUnknownAccount = "Security.UnknownAccount";
+
+	public static String TenantId = "Tenant.Id";
+	public static String TenantDescription = "Tenant.Description";
+
+	public static String TenantScreenTitle = "TenantScreen.Title";
 }

@@ -34,7 +34,7 @@ public class AdminScreen extends ScreenTemplate
 	
 	private  void initClientTab()
 	{
-		ClientScreen clientScreen = new ClientScreen(this.app);
+		TenantsScreen clientScreen = new TenantsScreen(this.app);
 		
 		tabsheet.addTab(clientScreen, "First Tab", null);
 	}

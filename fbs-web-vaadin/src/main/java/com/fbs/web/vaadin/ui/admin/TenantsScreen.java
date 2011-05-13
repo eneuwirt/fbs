@@ -88,4 +88,15 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 		return result;
     }
 
+
+	@Override
+    protected Tenant readBean(Tenant t)
+    {
+	    Tenant result;
+	    
+	    result = this.app.getTenantService().read(t.getId());
+	    
+	    return result;
+    }
+
 }

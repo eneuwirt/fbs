@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.fbs.web.vaadin.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
-import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
@@ -31,13 +30,12 @@ import com.vaadin.ui.Button.ClickEvent;
 public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 {
 	private static final long serialVersionUID = 1L;
-	public enum ButtonElement
+
+	public enum Action
 	{
-		CREATE,
-		SAVE,
-		DELETE,
-		CANCEL;
+		CREATE, SAVE, DELETE, CANCEL, SELECT, SELECT_NULL;
 	}
+
 	private Class<T> clazz;
 	protected MyVaadinApplication app;
 	// Elements
@@ -45,20 +43,21 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	private Form form;
 	private BeanItemContainer<T> beanItemContainer;
 	// Additional buttons
-	private Button itemAddButton;
-	private Button itemDeleteButton;
+	private Button buttonItemAdd;
+	private Button buttonItemDelete;
 	// Form buttons
-	private Button saveButton;
-	private Button cancelButton;
-	private Button deleteButton;
+	private Button buttonSave;
+	private Button buttonCancel;
+	private Button buttonDelete;
 	// remember the clicked button
-	protected ButtonElement clickedButton;
-	protected ButtonElement clickedButtonPrev; // Previously clicked button
-	
-	private void notifyClick(ButtonElement button)
+	protected Action actionCurrent;
+	protected Action actionPrevious; // Previously clicked button
+
+
+	private void notifyClick(Action action)
 	{
-		this.clickedButtonPrev = this.clickedButton;
-		this.clickedButton = button;
+		this.actionPrevious = this.actionCurrent;
+		this.actionCurrent = action;
 	}
 
 
@@ -89,6 +88,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 
 	protected abstract void updateBean(T t);
+
+
+	protected abstract T readBean(T t);
 
 
 	protected abstract void deleteBean(T t);
@@ -139,24 +141,24 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.table.setContainerDataSource(beanItemContainer);
 		this.table.addListener(new LocalValueChangeListener<T>(this));
 
-		this.itemAddButton = new Button("+");
-		this.itemAddButton.addListener(new CreateItemListener<T>(this));
+		this.buttonItemAdd = new Button("+");
+		this.buttonItemAdd.addListener(new CreateItemListener<T>(this));
 
-		this.itemDeleteButton = new Button("-");
-		this.itemDeleteButton.addListener(new DeleteItemListener<T>(this));
-		this.itemDeleteButton.setEnabled(false);
+		this.buttonItemDelete = new Button("-");
+		this.buttonItemDelete.addListener(new DeleteItemListener<T>(this));
+		this.buttonItemDelete.setEnabled(false);
 
-		this.saveButton = new Button(this.app.getMessage(ApplicationMessages.CommonSave));
-		this.saveButton.addListener(new SaveItemListener<T>(this));
-		this.saveButton.setEnabled(false);
+		this.buttonSave = new Button(this.app.getMessage(ApplicationMessages.CommonSave));
+		this.buttonSave.addListener(new SaveItemListener<T>(this));
+		this.buttonSave.setEnabled(false);
 
-		this.cancelButton = new Button(this.app.getMessage(ApplicationMessages.CommonCancel));
-		this.cancelButton.addListener(new CancelButtonListener<T>(this));
-		this.cancelButton.setEnabled(false);
+		this.buttonCancel = new Button(this.app.getMessage(ApplicationMessages.CommonCancel));
+		this.buttonCancel.addListener(new CancelButtonListener<T>(this));
+		this.buttonCancel.setEnabled(false);
 
-		this.deleteButton = new Button(this.app.getMessage(ApplicationMessages.CommonDelete));
-		this.deleteButton.addListener(new DeleteItemListener<T>(this));	
-		this.deleteButton.setEnabled(false);
+		this.buttonDelete = new Button(this.app.getMessage(ApplicationMessages.CommonDelete));
+		this.buttonDelete.addListener(new DeleteItemListener<T>(this));
+		this.buttonDelete.setEnabled(false);
 
 		this.initLayout();
 	}
@@ -213,10 +215,10 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	{
 		bottomLeftCorner.setWidth("100%");
 
-		this.itemDeleteButton.setEnabled(false);
+		this.buttonItemDelete.setEnabled(false);
 
-		bottomLeftCorner.addComponent(this.itemAddButton);
-		bottomLeftCorner.addComponent(this.itemDeleteButton);
+		bottomLeftCorner.addComponent(this.buttonItemAdd);
+		bottomLeftCorner.addComponent(this.buttonItemDelete);
 		// Add search fields
 		for (final String visibleColumn : this.getVisibleColumns())
 		{
@@ -261,11 +263,10 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		BeanItem<T> dummy = new BeanItem<T>(t);
 		this.form.setItemDataSource(dummy);
 
-
 		HorizontalLayout buttonRow = new HorizontalLayout();
-		buttonRow.addComponent(this.saveButton);
-		buttonRow.addComponent(this.cancelButton);
-		buttonRow.addComponent(this.deleteButton);
+		buttonRow.addComponent(this.buttonSave);
+		buttonRow.addComponent(this.buttonCancel);
+		buttonRow.addComponent(this.buttonDelete);
 
 		// right.setSizeFull();
 		right.addComponent(this.form);
@@ -291,8 +292,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		{
 			T bean;
 			BeanItem<T> beanItem;
-			
-			this.itemsListScreen.notifyClick(ButtonElement.CREATE);
+
+			this.itemsListScreen.notifyClick(Action.CREATE);
 
 			bean = this.itemsListScreen.createBeanInstance();
 			beanItem = new BeanItem<T>(bean);
@@ -300,14 +301,15 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			this.itemsListScreen.form.setEnabled(true);
 			this.itemsListScreen.form.setItemDataSource(beanItem);
 
-			this.itemsListScreen.itemAddButton.setEnabled(false);
-			this.itemsListScreen.saveButton.setEnabled(true);
-			this.itemsListScreen.itemDeleteButton.setEnabled(false);
-			this.itemsListScreen.cancelButton.setEnabled(true);
+			this.itemsListScreen.buttonItemAdd.setEnabled(false);
+			this.itemsListScreen.buttonItemDelete.setEnabled(false);
 
-			this.itemsListScreen.table.select(null);
-			
-			
+			this.itemsListScreen.buttonSave.setEnabled(true);
+			this.itemsListScreen.buttonDelete.setEnabled(false);
+			this.itemsListScreen.buttonCancel.setEnabled(true);
+
+			//this.itemsListScreen.table.select(null);
+			this.itemsListScreen.table.setEnabled(false);
 		}
 	}
 
@@ -328,10 +330,10 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		public void buttonClick(ClickEvent event)
 		{
 			BeanItem<T> beanItemSuc;
-			T bean;
+			T bean =null;
 			T beanSuc = null;
-			
-			this.itemsListScreen.notifyClick(ButtonElement.DELETE);
+
+			this.itemsListScreen.notifyClick(Action.DELETE);
 
 			// Get selected element
 			bean = (T) this.itemsListScreen.table.getValue();
@@ -347,14 +349,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			this.itemsListScreen.deleteBean(bean);
 			this.itemsListScreen.beanItemContainer.removeItem(bean);
 
-			// set selection to the neighbor entry. if it was the last element
-			// in the list, do not select anything
-			if (beanItemSuc != null)
-			{
-				beanSuc = beanItemSuc.getBean();
-			}
-			this.itemsListScreen.table.select(beanSuc);
-
+		
 			// and fill the form out. If the list does not contain any entries
 			// provide dummy and disable the form
 			if (this.itemsListScreen.beanItemContainer.size() == 0)
@@ -362,6 +357,21 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				beanItemSuc = new BeanItem<T>(this.itemsListScreen.createBeanInstance());
 
 				this.itemsListScreen.form.setEnabled(false);
+				
+				this.itemsListScreen.buttonSave.setEnabled(false);
+				this.itemsListScreen.buttonCancel.setEnabled(false);
+				this.itemsListScreen.buttonDelete.setEnabled(false);
+				
+				this.itemsListScreen.buttonItemAdd.setEnabled(true);
+				this.itemsListScreen.buttonItemDelete.setEnabled(false);
+			}
+			else
+			{
+				// set selection to the neighbor entry. if it was the last element
+				// in the list, do not select anything
+				beanSuc = beanItemSuc.getBean();
+				
+				this.itemsListScreen.table.select(beanSuc);
 			}
 
 			this.itemsListScreen.form.setItemDataSource(beanItemSuc);
@@ -385,13 +395,13 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		public void buttonClick(ClickEvent event)
 		{
 			BeanItem<T> beanItem;
-			
-			this.itemsListScreen.notifyClick(ButtonElement.SAVE);
-			
+
+			this.itemsListScreen.notifyClick(Action.SAVE);
+
 			beanItem = (BeanItem<T>) this.itemsListScreen.form.getItemDataSource();
 
 			// Save the new created bean ?
-			if (this.itemsListScreen.clickedButtonPrev == ButtonElement.CREATE)
+			if (this.itemsListScreen.actionPrevious == Action.CREATE)
 			{
 				T bean;
 
@@ -405,14 +415,17 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			{
 				this.itemsListScreen.updateBean(beanItem.getBean());
 			}
-
+			
+			this.itemsListScreen.table.setEnabled(true);
 			this.itemsListScreen.table.select(beanItem.getBean());
 			this.itemsListScreen.form.setItemDataSource(beanItem);
 
-			this.itemsListScreen.saveButton.setEnabled(true);
-			this.itemsListScreen.cancelButton.setEnabled(true);
-			this.itemsListScreen.itemAddButton.setEnabled(true);
-			this.itemsListScreen.itemDeleteButton.setEnabled(true);
+			this.itemsListScreen.buttonSave.setEnabled(true);
+			this.itemsListScreen.buttonCancel.setEnabled(true);
+			this.itemsListScreen.buttonDelete.setEnabled(true);
+			
+			this.itemsListScreen.buttonItemAdd.setEnabled(true);
+			this.itemsListScreen.buttonItemDelete.setEnabled(true);
 		}
 	}
 
@@ -432,34 +445,39 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
-			this.itemsListScreen.notifyClick(ButtonElement.CANCEL);
-			
-			if (this.itemsListScreen.clickedButtonPrev == ButtonElement.CREATE)
-			{
-				T bean;
-				BeanItem<T> beanItem;
+			T bean;
+			BeanItem<T> beanItem;
+			boolean enableSave = true;
+			boolean enableCancel = true;
+			boolean enableDelete = true;
+			boolean enableItemDelete = true;
 
+			this.itemsListScreen.notifyClick(Action.CANCEL);
+
+			if (this.itemsListScreen.actionPrevious == Action.CREATE)
+			{
 				bean = this.itemsListScreen.createBeanInstance();
 				beanItem = new BeanItem<T>(bean);
-
+				
 				this.itemsListScreen.form.setEnabled(false);
 				this.itemsListScreen.form.setItemDataSource(beanItem);
 
-				this.itemsListScreen.saveButton.setEnabled(false);
-				this.itemsListScreen.itemDeleteButton.setEnabled(false);
-				this.itemsListScreen.cancelButton.setEnabled(false);
+				enableSave = false;
+				enableDelete = false;
+				enableCancel = false;
+				enableItemDelete = false;
+
+				this.itemsListScreen.table.select(null);
 			}
-			else
-			{		
-				this.itemsListScreen.saveButton.setEnabled(true);
-				this.itemsListScreen.itemDeleteButton.setEnabled(true);
-				this.itemsListScreen.cancelButton.setEnabled(true);
-				
-			}
-			this.itemsListScreen.itemAddButton.setEnabled(true);
 			
-			
-			this.itemsListScreen.table.select(null);
+			this.itemsListScreen.table.setEnabled(true);
+
+			this.itemsListScreen.buttonSave.setEnabled(enableSave);
+			this.itemsListScreen.buttonCancel.setEnabled(enableCancel);
+			this.itemsListScreen.buttonDelete.setEnabled(enableDelete);
+
+			this.itemsListScreen.buttonItemAdd.setEnabled(true);
+			this.itemsListScreen.buttonItemDelete.setEnabled(enableItemDelete);
 		}
 	}
 
@@ -481,23 +499,27 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		{
 			BeanItem<T> beanItem;
 			T bean;
-			boolean createClicked = this.itemsListScreen.clickedButton == ButtonElement.CREATE;
-			
+
 			bean = (T) this.itemsListScreen.table.getValue();
 
 			// we have really clicked a row in the table
 			if (bean != null)
 			{
+				this.itemsListScreen.notifyClick(Action.SELECT);
+
 				beanItem = (BeanItem<T>) this.itemsListScreen.table.getItem(bean);
 
 				this.itemsListScreen.form.setItemDataSource(beanItem);
+
+				this.itemsListScreen.form.setEnabled(true);
+
+				this.itemsListScreen.buttonItemAdd.setEnabled(true);
+				this.itemsListScreen.buttonItemDelete.setEnabled(true);
+
+				this.itemsListScreen.buttonSave.setEnabled(true);
+				this.itemsListScreen.buttonCancel.setEnabled(true);
+				this.itemsListScreen.buttonDelete.setEnabled(true);
 			}
-			
-			this.itemsListScreen.form.setEnabled(bean != null|| createClicked);
-			this.itemsListScreen.itemDeleteButton.setEnabled(bean != null);
-			this.itemsListScreen.saveButton.setEnabled(bean != null || createClicked);
-			this.itemsListScreen.cancelButton.setEnabled(bean != null || createClicked);
-			this.itemsListScreen.deleteButton.setEnabled(bean != null);
 		}
 
 	}

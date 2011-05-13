@@ -16,5 +16,8 @@
             type="javax.sql.DataSource" 
             driverClassName="org.hsqldb.jdbcDriver" 
             url="jdbc:hsqldb:mem:shiro-spring" 
-            username="sa" /> 
+            username="sa" 
+            maxActive="20" 
+            maxIdle="10"
+    maxWait="-1" /> 
 </Context>

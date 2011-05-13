@@ -27,7 +27,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 		Tenant result;
 
 		result = new Tenant();
-		result.setDescription("Bidde pflegen");
+		result.setDescription("");
 
 		return result;
 	}
@@ -62,5 +62,30 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 		
 		return propertyId;
 	}
+
+
+	@Override
+    protected void updateBean(Tenant t)
+    {
+	   this.app.getTenantService().update(t);
+    }
+
+
+	@Override
+    protected void deleteBean(Tenant t)
+    {
+	    this.app.getTenantService().delete(t.getId());
+    }
+
+
+	@Override
+    protected Tenant createBean(Tenant tenant)
+    {
+	    Tenant result;
+	    
+		result = this.app.getTenantService().create(tenant);
+		
+		return result;
+    }
 
 }

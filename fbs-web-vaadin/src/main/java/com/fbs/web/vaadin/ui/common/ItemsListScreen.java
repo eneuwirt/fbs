@@ -115,7 +115,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		return propertyId;
 	}
 
-
 	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz)
 	{
 		super();
@@ -308,7 +307,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			this.itemsListScreen.buttonDelete.setEnabled(false);
 			this.itemsListScreen.buttonCancel.setEnabled(true);
 
-			//this.itemsListScreen.table.select(null);
+			// this.itemsListScreen.table.select(null);
 			this.itemsListScreen.table.setEnabled(false);
 		}
 	}
@@ -330,7 +329,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		public void buttonClick(ClickEvent event)
 		{
 			BeanItem<T> beanItemSuc;
-			T bean =null;
+			T bean = null;
 			T beanSuc = null;
 
 			this.itemsListScreen.notifyClick(Action.DELETE);
@@ -349,7 +348,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			this.itemsListScreen.deleteBean(bean);
 			this.itemsListScreen.beanItemContainer.removeItem(bean);
 
-		
 			// and fill the form out. If the list does not contain any entries
 			// provide dummy and disable the form
 			if (this.itemsListScreen.beanItemContainer.size() == 0)
@@ -357,20 +355,21 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				beanItemSuc = new BeanItem<T>(this.itemsListScreen.createBeanInstance());
 
 				this.itemsListScreen.form.setEnabled(false);
-				
+
 				this.itemsListScreen.buttonSave.setEnabled(false);
 				this.itemsListScreen.buttonCancel.setEnabled(false);
 				this.itemsListScreen.buttonDelete.setEnabled(false);
-				
+
 				this.itemsListScreen.buttonItemAdd.setEnabled(true);
 				this.itemsListScreen.buttonItemDelete.setEnabled(false);
 			}
 			else
 			{
-				// set selection to the neighbor entry. if it was the last element
+				// set selection to the neighbor entry. if it was the last
+				// element
 				// in the list, do not select anything
 				beanSuc = beanItemSuc.getBean();
-				
+
 				this.itemsListScreen.table.select(beanSuc);
 			}
 
@@ -415,7 +414,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			{
 				this.itemsListScreen.updateBean(beanItem.getBean());
 			}
-			
+
 			this.itemsListScreen.table.setEnabled(true);
 			this.itemsListScreen.table.select(beanItem.getBean());
 			this.itemsListScreen.form.setItemDataSource(beanItem);
@@ -423,7 +422,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			this.itemsListScreen.buttonSave.setEnabled(true);
 			this.itemsListScreen.buttonCancel.setEnabled(true);
 			this.itemsListScreen.buttonDelete.setEnabled(true);
-			
+
 			this.itemsListScreen.buttonItemAdd.setEnabled(true);
 			this.itemsListScreen.buttonItemDelete.setEnabled(true);
 		}
@@ -442,7 +441,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		}
 
 
-		@Override
+		@SuppressWarnings("unchecked")
+        @Override
 		public void buttonClick(ClickEvent event)
 		{
 			T bean;
@@ -458,7 +458,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			{
 				bean = this.itemsListScreen.createBeanInstance();
 				beanItem = new BeanItem<T>(bean);
-				
+
 				this.itemsListScreen.form.setEnabled(false);
 				this.itemsListScreen.form.setItemDataSource(beanItem);
 
@@ -469,7 +469,26 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 				this.itemsListScreen.table.select(null);
 			}
-			
+			// refuse the current selected bean (cancel)
+			// read it persistent version from database and update 
+			else if (this.itemsListScreen.actionPrevious == Action.SELECT)
+			{
+			    T beanPersistent;
+				// retrieve selected item
+				beanItem = (BeanItem<T>) this.itemsListScreen.form.getItemDataSource();	
+				bean = beanItem.getBean();
+				
+				beanPersistent = this.itemsListScreen.readBean(bean);
+				//remove the changed from list and add the refreshed
+				this.itemsListScreen.beanItemContainer.removeItem(bean);
+				this.itemsListScreen.beanItemContainer.addBean(beanPersistent);		
+				
+				beanItem = (BeanItem<T>) this.itemsListScreen.table.getItem(beanPersistent);		
+				this.itemsListScreen.form.setItemDataSource(beanItem);
+				
+				this.itemsListScreen.table.select(beanPersistent);
+			}
+
 			this.itemsListScreen.table.setEnabled(true);
 
 			this.itemsListScreen.buttonSave.setEnabled(enableSave);

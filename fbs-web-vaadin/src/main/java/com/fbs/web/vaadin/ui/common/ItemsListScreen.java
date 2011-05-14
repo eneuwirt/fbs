@@ -54,13 +54,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected Action actionPrevious; // Previously clicked button
 
 
-	private void notifyClick(Action action)
-	{
-		this.actionPrevious = this.actionCurrent;
-		this.actionCurrent = action;
-	}
-
-
 	/**
 	 * Creates new bean instance with default values.
 	 * 
@@ -115,6 +108,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		return propertyId;
 	}
 
+
 	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz)
 	{
 		super();
@@ -136,7 +130,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.table.setSelectable(true);
 		this.table.setMultiSelect(false);
 		this.table.setImmediate(true);
-		// this.table.setNullSelectionAllowed(true);
 		this.table.setContainerDataSource(beanItemContainer);
 		this.table.addListener(new LocalValueChangeListener<T>(this));
 
@@ -274,6 +267,13 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		right.setExpandRatio(this.form, 1.0f);
 	}
 
+
+	private void notifyClick(Action action)
+	{
+		this.actionPrevious = this.actionCurrent;
+		this.actionCurrent = action;
+	}
+
 	private static class CreateItemListener<T> implements Button.ClickListener
 	{
 		private static final long serialVersionUID = 1L;
@@ -337,7 +337,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			// Get selected element
 			bean = (T) this.itemsListScreen.table.getValue();
 
-			// Determine neighbor entry (either successor or the previous
+			// Determine neighbor entry (either successor or predecessor)
 			beanItemSuc = (BeanItem<T>) this.itemsListScreen.table.getItem(this.itemsListScreen.table.nextItemId(bean));
 			if (beanItemSuc == null)
 			{
@@ -348,7 +348,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			this.itemsListScreen.deleteBean(bean);
 			this.itemsListScreen.beanItemContainer.removeItem(bean);
 
-			// and fill the form out. If the list does not contain any entries
+			// fill the form out. If the list does not contain any entries
 			// provide dummy and disable the form
 			if (this.itemsListScreen.beanItemContainer.size() == 0)
 			{
@@ -365,9 +365,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			}
 			else
 			{
-				// set selection to the neighbor entry. if it was the last
-				// element
-				// in the list, do not select anything
+				// Set selection to the neighbor entry.
+				// If there were no elements more, select nothing
 				beanSuc = beanItemSuc.getBean();
 
 				this.itemsListScreen.table.select(beanSuc);
@@ -399,7 +398,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 			beanItem = (BeanItem<T>) this.itemsListScreen.form.getItemDataSource();
 
-			// Save the new created bean ?
+			// Save bean. Distinguish between create and update
 			if (this.itemsListScreen.actionPrevious == Action.CREATE)
 			{
 				T bean;
@@ -442,7 +441,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 
 		@SuppressWarnings("unchecked")
-        @Override
+		@Override
 		public void buttonClick(ClickEvent event)
 		{
 			T bean;
@@ -470,22 +469,22 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				this.itemsListScreen.table.select(null);
 			}
 			// refuse the current selected bean (cancel)
-			// read it persistent version from database and update 
+			// read it persistent version from database and update
 			else if (this.itemsListScreen.actionPrevious == Action.SELECT)
 			{
-			    T beanPersistent;
+				T beanPersistent;
 				// retrieve selected item
-				beanItem = (BeanItem<T>) this.itemsListScreen.form.getItemDataSource();	
+				beanItem = (BeanItem<T>) this.itemsListScreen.form.getItemDataSource();
 				bean = beanItem.getBean();
-				
+
 				beanPersistent = this.itemsListScreen.readBean(bean);
-				//remove the changed from list and add the refreshed
+				// remove the changed from list and add the refreshed
 				this.itemsListScreen.beanItemContainer.removeItem(bean);
-				this.itemsListScreen.beanItemContainer.addBean(beanPersistent);		
-				
-				beanItem = (BeanItem<T>) this.itemsListScreen.table.getItem(beanPersistent);		
+				this.itemsListScreen.beanItemContainer.addBean(beanPersistent);
+
+				beanItem = (BeanItem<T>) this.itemsListScreen.table.getItem(beanPersistent);
 				this.itemsListScreen.form.setItemDataSource(beanItem);
-				
+
 				this.itemsListScreen.table.select(beanPersistent);
 			}
 
@@ -521,7 +520,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 			bean = (T) this.itemsListScreen.table.getValue();
 
-			// we have really clicked a row in the table
+			// we have really clicked a row in the table or have to select an
+			// entry
 			if (bean != null)
 			{
 				this.itemsListScreen.notifyClick(Action.SELECT);

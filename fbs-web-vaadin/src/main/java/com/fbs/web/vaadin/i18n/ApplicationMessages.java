@@ -6,6 +6,9 @@ public interface ApplicationMessages extends Serializable
 {
 	// Application
 	public static String ApplicationTitle = "Application.Title";
+	
+	public static String AdminTabTitleUser = "Admin.TabTitleUser";
+	public static String AdminTabTitleTenant = "Admin.TabTitleTenant";
 
 	public static String CommonCancel = "Common.Cancel";
 	public static String CommonDelete = "Common.Delete";
@@ -46,6 +49,5 @@ public interface ApplicationMessages extends Serializable
 
 	public static String TenantId = "Tenant.Id";
 	public static String TenantDescription = "Tenant.Description";
-
 	public static String TenantScreenTitle = "TenantScreen.Title";
 }

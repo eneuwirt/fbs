@@ -1,6 +1,7 @@
 package com.fbs.web.vaadin.ui.admin;
 
 import com.fbs.web.vaadin.MyVaadinApplication;
+import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ScreenTemplate;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
@@ -20,23 +21,18 @@ public class AdminScreen extends ScreenTemplate
 	@Override
 	protected void initMainScreen()
 	{
-		tabsheet = new TabSheet();
+		TenantsScreen clientScreen;
+		
+		this.tabsheet = new TabSheet();
 		this.mainScreen = tabsheet;
 		
 		tabsheet.setSizeFull();
 		
-		initClientTab();
+		clientScreen = new TenantsScreen(this.app);
 		
-		//tabsheet.addTab(new Label("Contents of the first tab"), "First Tab", null);
-		tabsheet.addTab(new Label("Contents of the second tab"), "Second Tab", null);
+		tabsheet.addTab(clientScreen, this.app.getMessage(ApplicationMessages.AdminTabTitleTenant), null);
+		tabsheet.addTab(new Label("Contents of the second tab"), this.app.getMessage(ApplicationMessages.AdminTabTitleUser), null);
 		tabsheet.addTab(new Label("Contents of the third tab"), "Third tab", null);
 	}
-	
-	private  void initClientTab()
-	{
-		TenantsScreen clientScreen = new TenantsScreen(this.app);
-		
-		tabsheet.addTab(clientScreen, "First Tab", null);
-	}
-	
+
 }

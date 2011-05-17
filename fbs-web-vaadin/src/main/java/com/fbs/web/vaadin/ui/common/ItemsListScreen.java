@@ -540,6 +540,5 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				this.itemsListScreen.buttonDelete.setEnabled(true);
 			}
 		}
-
 	}
 }

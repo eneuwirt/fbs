@@ -107,16 +107,6 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 		return result;
 	}
 
-
-	protected void layoutForm()
-	{
-		super.layoutForm();
-		
-		this.form.setFormFieldFactory(new TenantFormFieldFactory(this.app));
-		
-		this.form.setVisibleItemProperties(this.getVisibleItemProperties());
-	}
-
 	private static class TenantFormFieldFactory implements FormFieldFactory
 	{
 		private static final long serialVersionUID = 1L;
@@ -156,5 +146,12 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
     protected Collection<String> getVisibleItemProperties()
     {
 	    return Arrays.asList(visibleItemProperties);
+    }
+
+
+	@Override
+    protected FormFieldFactory getFormFieldFactory()
+    {
+	    return new TenantFormFieldFactory(this.app);
     }
 }

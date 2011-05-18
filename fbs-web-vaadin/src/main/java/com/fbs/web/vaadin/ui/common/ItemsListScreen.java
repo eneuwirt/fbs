@@ -11,6 +11,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Form;
+import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Table;
@@ -98,6 +99,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected abstract String[] getVisibleColumns();
 	
 	protected abstract Collection<String> getVisibleItemProperties();
+	
+	protected abstract FormFieldFactory getFormFieldFactory();
 
 
 	/**
@@ -122,6 +125,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.form = new Form();
 		this.form.setImmediate(true);
 		this.form.setEnabled(false);
+		this.form.setFormFieldFactory(this.getFormFieldFactory());
 
 		this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
 
@@ -489,13 +493,17 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				bean = beanItem.getBean();
 
 				beanPersistent = this.screen.readBean(bean);
-				// remove the changed from list and add the refreshed
+				// remove the changed from list and add the refreshed bean
 				this.screen.beanItemContainer.removeItem(bean);
 				this.screen.beanItemContainer.addBean(beanPersistent);
-
 				beanItem = (BeanItem<T>) this.screen.table.getItem(beanPersistent);
 
 				this.screen.table.select(beanPersistent);
+			}
+			else
+			{
+				// retrieve selected item
+				beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
 			}
 			
 			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());

@@ -1,5 +1,6 @@
 package com.fbs.web.vaadin.ui.common;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.fbs.web.vaadin.MyVaadinApplication;
@@ -39,16 +40,16 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	private Class<T> clazz;
 	protected MyVaadinApplication app;
 	// Elements
-	private Table table;
-	private Form form;
+	protected Table table;
+	protected Form form;
 	private BeanItemContainer<T> beanItemContainer;
 	// Additional buttons
-	private Button buttonItemAdd;
-	private Button buttonItemDelete;
+	protected Button buttonItemAdd;
+	protected Button buttonItemDelete;
 	// Form buttons
-	private Button buttonSave;
-	private Button buttonCancel;
-	private Button buttonDelete;
+	protected Button buttonSave;
+	protected Button buttonCancel;
+	protected Button buttonDelete;
 	// remember the clicked button
 	protected Action actionCurrent;
 	protected Action actionPrevious; // Previously clicked button
@@ -95,6 +96,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 * @return
 	 */
 	protected abstract String[] getVisibleColumns();
+	
+	protected abstract Collection<String> getVisibleItemProperties();
 
 
 	/**
@@ -121,10 +124,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.form.setEnabled(false);
 
 		this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
-		for (T t : this.getAllBeans())
-		{
-			this.beanItemContainer.addBean(t);
-		}
 
 		this.table = new Table();
 		this.table.setSelectable(true);
@@ -153,10 +152,16 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.buttonDelete.setEnabled(false);
 
 		this.initLayout();
+		
+		// fill up with data
+		for (T t : this.getAllBeans())
+		{
+			this.beanItemContainer.addBean(t);
+		}
 	}
 
 
-	private void initLayout()
+	protected void initLayout()
 	{
 		VerticalLayout left = new VerticalLayout();
 		VerticalLayout right = new VerticalLayout();
@@ -169,7 +174,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	}
 
 
-	private void layoutLeft(VerticalLayout left)
+	protected void layoutLeft(VerticalLayout left)
 	{
 		HorizontalLayout bottomLeftCorner = new HorizontalLayout();
 
@@ -187,7 +192,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	}
 
 
-	private void layoutTable()
+	protected void layoutTable()
 	{
 		this.table.setSizeFull();
 
@@ -203,7 +208,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	}
 
 
-	private void layoutButtomLeftCorner(HorizontalLayout bottomLeftCorner)
+	protected void layoutButtomLeftCorner(HorizontalLayout bottomLeftCorner)
 	{
 		bottomLeftCorner.setWidth("100%");
 
@@ -243,24 +248,30 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	}
 
 
-	private void layoutRight(VerticalLayout right)
+	protected void layoutForm()
 	{
 		this.form.setSizeFull();
-		this.form.setImmediate(true);
 		this.form.setCaption(this.app.getMessage(ApplicationMessages.CommonDetails));
 		this.form.setDescription(this.app.getMessage(ApplicationMessages.CommonDetailsDescription));
 
 		// fill with dummy
 		T t = this.createBeanInstance();
 		BeanItem<T> dummy = new BeanItem<T>(t);
-		this.form.setItemDataSource(dummy);
+		
+		this.form.setItemDataSource(dummy, this.getVisibleItemProperties());
+	}
 
+
+	protected void layoutRight(VerticalLayout right)
+	{
 		HorizontalLayout buttonRow = new HorizontalLayout();
+
+		this.layoutForm();
+
 		buttonRow.addComponent(this.buttonSave);
 		buttonRow.addComponent(this.buttonCancel);
 		buttonRow.addComponent(this.buttonDelete);
 
-		// right.setSizeFull();
 		right.addComponent(this.form);
 		right.addComponent(buttonRow);
 
@@ -277,12 +288,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	private static class CreateItemListener<T> implements Button.ClickListener
 	{
 		private static final long serialVersionUID = 1L;
-		private ItemsListScreen<T> itemsListScreen;
+		private ItemsListScreen<T> screen;
 
 
 		public CreateItemListener(ItemsListScreen<T> itemListScreen)
 		{
-			this.itemsListScreen = itemListScreen;
+			this.screen = itemListScreen;
 		}
 
 
@@ -292,35 +303,35 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			T bean;
 			BeanItem<T> beanItem;
 
-			this.itemsListScreen.notifyClick(Action.CREATE);
+			this.screen.notifyClick(Action.CREATE);
 
-			bean = this.itemsListScreen.createBeanInstance();
+			bean = this.screen.createBeanInstance();
 			beanItem = new BeanItem<T>(bean);
 
-			this.itemsListScreen.form.setEnabled(true);
-			this.itemsListScreen.form.setItemDataSource(beanItem);
+			this.screen.form.setEnabled(true);
+			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
 
-			this.itemsListScreen.buttonItemAdd.setEnabled(false);
-			this.itemsListScreen.buttonItemDelete.setEnabled(false);
+			this.screen.buttonItemAdd.setEnabled(false);
+			this.screen.buttonItemDelete.setEnabled(false);
 
-			this.itemsListScreen.buttonSave.setEnabled(true);
-			this.itemsListScreen.buttonDelete.setEnabled(false);
-			this.itemsListScreen.buttonCancel.setEnabled(true);
+			this.screen.buttonSave.setEnabled(true);
+			this.screen.buttonDelete.setEnabled(false);
+			this.screen.buttonCancel.setEnabled(true);
 
 			// this.itemsListScreen.table.select(null);
-			this.itemsListScreen.table.setEnabled(false);
+			this.screen.table.setEnabled(false);
 		}
 	}
 
 	private static class DeleteItemListener<T> implements Button.ClickListener
 	{
 		private static final long serialVersionUID = 1L;
-		private ItemsListScreen<T> itemsListScreen;
+		private ItemsListScreen<T> screen;
 
 
 		public DeleteItemListener(ItemsListScreen<T> itemsListScreen)
 		{
-			this.itemsListScreen = itemsListScreen;
+			this.screen = itemsListScreen;
 		}
 
 
@@ -332,36 +343,36 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			T bean = null;
 			T beanSuc = null;
 
-			this.itemsListScreen.notifyClick(Action.DELETE);
+			this.screen.notifyClick(Action.DELETE);
 
 			// Get selected element
-			bean = (T) this.itemsListScreen.table.getValue();
+			bean = (T) this.screen.table.getValue();
 
 			// Determine neighbor entry (either successor or predecessor)
-			beanItemSuc = (BeanItem<T>) this.itemsListScreen.table.getItem(this.itemsListScreen.table.nextItemId(bean));
+			beanItemSuc = (BeanItem<T>) this.screen.table.getItem(this.screen.table.nextItemId(bean));
 			if (beanItemSuc == null)
 			{
-				beanItemSuc = (BeanItem<T>) this.itemsListScreen.table.getItem(this.itemsListScreen.table
+				beanItemSuc = (BeanItem<T>) this.screen.table.getItem(this.screen.table
 				        .prevItemId(bean));
 			}
 
-			this.itemsListScreen.deleteBean(bean);
-			this.itemsListScreen.beanItemContainer.removeItem(bean);
+			this.screen.deleteBean(bean);
+			this.screen.beanItemContainer.removeItem(bean);
 
 			// fill the form out. If the list does not contain any entries
 			// provide dummy and disable the form
-			if (this.itemsListScreen.beanItemContainer.size() == 0)
+			if (this.screen.beanItemContainer.size() == 0)
 			{
-				beanItemSuc = new BeanItem<T>(this.itemsListScreen.createBeanInstance());
+				beanItemSuc = new BeanItem<T>(this.screen.createBeanInstance());
 
-				this.itemsListScreen.form.setEnabled(false);
+				this.screen.form.setEnabled(false);
 
-				this.itemsListScreen.buttonSave.setEnabled(false);
-				this.itemsListScreen.buttonCancel.setEnabled(false);
-				this.itemsListScreen.buttonDelete.setEnabled(false);
+				this.screen.buttonSave.setEnabled(false);
+				this.screen.buttonCancel.setEnabled(false);
+				this.screen.buttonDelete.setEnabled(false);
 
-				this.itemsListScreen.buttonItemAdd.setEnabled(true);
-				this.itemsListScreen.buttonItemDelete.setEnabled(false);
+				this.screen.buttonItemAdd.setEnabled(true);
+				this.screen.buttonItemDelete.setEnabled(false);
 			}
 			else
 			{
@@ -369,22 +380,22 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				// If there were no elements more, select nothing
 				beanSuc = beanItemSuc.getBean();
 
-				this.itemsListScreen.table.select(beanSuc);
+				this.screen.table.select(beanSuc);
 			}
 
-			this.itemsListScreen.form.setItemDataSource(beanItemSuc);
+			this.screen.form.setItemDataSource(beanItemSuc, this.screen.getVisibleItemProperties());
 		}
 	}
 
 	private static class SaveItemListener<T> implements Button.ClickListener
 	{
 		private static final long serialVersionUID = 1L;
-		private ItemsListScreen<T> itemsListScreen;
+		private ItemsListScreen<T> screen;
 
 
 		public SaveItemListener(ItemsListScreen<T> itemsListScreen)
 		{
-			this.itemsListScreen = itemsListScreen;
+			this.screen = itemsListScreen;
 		}
 
 
@@ -394,36 +405,36 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		{
 			BeanItem<T> beanItem;
 
-			this.itemsListScreen.notifyClick(Action.SAVE);
+			this.screen.notifyClick(Action.SAVE);
 
-			beanItem = (BeanItem<T>) this.itemsListScreen.form.getItemDataSource();
+			beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
 
 			// Save bean. Distinguish between create and update
-			if (this.itemsListScreen.actionPrevious == Action.CREATE)
+			if (this.screen.actionPrevious == Action.CREATE)
 			{
 				T bean;
 
-				bean = this.itemsListScreen.createBean(beanItem.getBean());
+				bean = this.screen.createBean(beanItem.getBean());
 
 				beanItem = new BeanItem<T>(bean);
 
-				this.itemsListScreen.beanItemContainer.addBean(bean);
+				this.screen.beanItemContainer.addBean(bean);
 			}
 			else
 			{
-				this.itemsListScreen.updateBean(beanItem.getBean());
+				this.screen.updateBean(beanItem.getBean());
 			}
 
-			this.itemsListScreen.table.setEnabled(true);
-			this.itemsListScreen.table.select(beanItem.getBean());
-			this.itemsListScreen.form.setItemDataSource(beanItem);
+			this.screen.table.setEnabled(true);
+			this.screen.table.select(beanItem.getBean());
+			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
 
-			this.itemsListScreen.buttonSave.setEnabled(true);
-			this.itemsListScreen.buttonCancel.setEnabled(true);
-			this.itemsListScreen.buttonDelete.setEnabled(true);
+			this.screen.buttonSave.setEnabled(true);
+			this.screen.buttonCancel.setEnabled(true);
+			this.screen.buttonDelete.setEnabled(true);
 
-			this.itemsListScreen.buttonItemAdd.setEnabled(true);
-			this.itemsListScreen.buttonItemDelete.setEnabled(true);
+			this.screen.buttonItemAdd.setEnabled(true);
+			this.screen.buttonItemDelete.setEnabled(true);
 		}
 	}
 
@@ -431,12 +442,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	{
 		private static final long serialVersionUID = 1L;
 
-		private ItemsListScreen<T> itemsListScreen;
+		private ItemsListScreen<T> screen;
 
 
 		public CancelButtonListener(ItemsListScreen<T> itemsListScreen)
 		{
-			this.itemsListScreen = itemsListScreen;
+			this.screen = itemsListScreen;
 		}
 
 
@@ -445,69 +456,70 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		public void buttonClick(ClickEvent event)
 		{
 			T bean;
-			BeanItem<T> beanItem;
+			BeanItem<T> beanItem = null;
 			boolean enableSave = true;
 			boolean enableCancel = true;
 			boolean enableDelete = true;
 			boolean enableItemDelete = true;
 
-			this.itemsListScreen.notifyClick(Action.CANCEL);
+			this.screen.notifyClick(Action.CANCEL);
 
-			if (this.itemsListScreen.actionPrevious == Action.CREATE)
+			if (this.screen.actionPrevious == Action.CREATE)
 			{
-				bean = this.itemsListScreen.createBeanInstance();
+				bean = this.screen.createBeanInstance();
 				beanItem = new BeanItem<T>(bean);
 
-				this.itemsListScreen.form.setEnabled(false);
-				this.itemsListScreen.form.setItemDataSource(beanItem);
+				this.screen.form.setEnabled(false);
 
 				enableSave = false;
 				enableDelete = false;
 				enableCancel = false;
 				enableItemDelete = false;
 
-				this.itemsListScreen.table.select(null);
+				this.screen.table.select(null);
 			}
 			// refuse the current selected bean (cancel)
 			// read it persistent version from database and update
-			else if (this.itemsListScreen.actionPrevious == Action.SELECT)
+			else if (this.screen.actionPrevious == Action.SELECT)
 			{
 				T beanPersistent;
+				
 				// retrieve selected item
-				beanItem = (BeanItem<T>) this.itemsListScreen.form.getItemDataSource();
+				beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
 				bean = beanItem.getBean();
 
-				beanPersistent = this.itemsListScreen.readBean(bean);
+				beanPersistent = this.screen.readBean(bean);
 				// remove the changed from list and add the refreshed
-				this.itemsListScreen.beanItemContainer.removeItem(bean);
-				this.itemsListScreen.beanItemContainer.addBean(beanPersistent);
+				this.screen.beanItemContainer.removeItem(bean);
+				this.screen.beanItemContainer.addBean(beanPersistent);
 
-				beanItem = (BeanItem<T>) this.itemsListScreen.table.getItem(beanPersistent);
-				this.itemsListScreen.form.setItemDataSource(beanItem);
+				beanItem = (BeanItem<T>) this.screen.table.getItem(beanPersistent);
 
-				this.itemsListScreen.table.select(beanPersistent);
+				this.screen.table.select(beanPersistent);
 			}
+			
+			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
 
-			this.itemsListScreen.table.setEnabled(true);
+			this.screen.table.setEnabled(true);
 
-			this.itemsListScreen.buttonSave.setEnabled(enableSave);
-			this.itemsListScreen.buttonCancel.setEnabled(enableCancel);
-			this.itemsListScreen.buttonDelete.setEnabled(enableDelete);
+			this.screen.buttonSave.setEnabled(enableSave);
+			this.screen.buttonCancel.setEnabled(enableCancel);
+			this.screen.buttonDelete.setEnabled(enableDelete);
 
-			this.itemsListScreen.buttonItemAdd.setEnabled(true);
-			this.itemsListScreen.buttonItemDelete.setEnabled(enableItemDelete);
+			this.screen.buttonItemAdd.setEnabled(true);
+			this.screen.buttonItemDelete.setEnabled(enableItemDelete);
 		}
 	}
 
 	private static class LocalValueChangeListener<T> implements Property.ValueChangeListener
 	{
 		private static final long serialVersionUID = 1L;
-		private ItemsListScreen<T> itemsListScreen;
+		private ItemsListScreen<T> screen;
 
 
 		public LocalValueChangeListener(ItemsListScreen<T> itemsListScreen)
 		{
-			this.itemsListScreen = itemsListScreen;
+			this.screen = itemsListScreen;
 		}
 
 
@@ -518,26 +530,25 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			BeanItem<T> beanItem;
 			T bean;
 
-			bean = (T) this.itemsListScreen.table.getValue();
+			bean = (T) this.screen.table.getValue();
 
 			// we have really clicked a row in the table or have to select an
 			// entry
 			if (bean != null)
 			{
-				this.itemsListScreen.notifyClick(Action.SELECT);
+				this.screen.notifyClick(Action.SELECT);
 
-				beanItem = (BeanItem<T>) this.itemsListScreen.table.getItem(bean);
+				beanItem = (BeanItem<T>) this.screen.table.getItem(bean);
 
-				this.itemsListScreen.form.setItemDataSource(beanItem);
+				this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
+				this.screen.form.setEnabled(true);
 
-				this.itemsListScreen.form.setEnabled(true);
+				this.screen.buttonItemAdd.setEnabled(true);
+				this.screen.buttonItemDelete.setEnabled(true);
 
-				this.itemsListScreen.buttonItemAdd.setEnabled(true);
-				this.itemsListScreen.buttonItemDelete.setEnabled(true);
-
-				this.itemsListScreen.buttonSave.setEnabled(true);
-				this.itemsListScreen.buttonCancel.setEnabled(true);
-				this.itemsListScreen.buttonDelete.setEnabled(true);
+				this.screen.buttonSave.setEnabled(true);
+				this.screen.buttonCancel.setEnabled(true);
+				this.screen.buttonDelete.setEnabled(true);
 			}
 		}
 	}

@@ -76,7 +76,20 @@ public class Tenant implements Comparable<Tenant>, Serializable
 			throw new NullPointerException();
 		}
 
-		return (this.getId() - o.getId());
+		if (this.getId() != null && o.getId() != null)
+		{
+			return (this.getId() - o.getId());
+		}
+		else if (this.getId() == null && o.getId() == null)
+		{
+			return this.description.compareTo(o.description);
+		}
+		else if (this.id == null)
+		{
+			return 1;
+		}
+		
+		return -1;
 	}
 
 
@@ -113,9 +126,9 @@ public class Tenant implements Comparable<Tenant>, Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		
+
 		result = prime * result + ((id == null) ? super.hashCode() : id.hashCode());
-		
+
 		return result;
 	}
 }

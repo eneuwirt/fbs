@@ -155,12 +155,12 @@ public class UserServiceImpl implements UserService
 
 
 	@Override
-	public void delete(String id)
+	public void delete(User user)
 	{
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		
-		if (id == null)
+		if (user == null)
 		{
 			throw new IllegalArgumentException("user id null");
 		}
@@ -170,7 +170,7 @@ public class UserServiceImpl implements UserService
 			conn = dataSource.getConnection();
 
 			pstmt = conn.prepareStatement(DELETE_USER);
-			pstmt.setString(1, id);
+			pstmt.setString(1, user.getUserName());
 
 			pstmt.executeUpdate();
 		}

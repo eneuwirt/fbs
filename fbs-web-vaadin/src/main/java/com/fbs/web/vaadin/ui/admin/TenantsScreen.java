@@ -82,7 +82,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 	@Override
 	protected void deleteBean(Tenant t)
 	{
-		this.app.getTenantService().delete(t.getId());
+		this.app.getTenantService().delete(t);
 	}
 
 

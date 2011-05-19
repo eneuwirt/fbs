@@ -159,21 +159,21 @@ public class TenantServiceImpl implements TenantService, Serializable
 
 
 	@Override
-	public void delete(Integer id)
+	public void delete(Tenant tenant)
 	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		if (id == null)
+		if (tenant == null)
 		{
-			throw new IllegalArgumentException("id null");
+			throw new IllegalArgumentException("tenant null");
 		}
 		
 		try
 		{
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(DELETE_TENANT);
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, tenant.getId());
 
 			pstmt.executeUpdate();
 

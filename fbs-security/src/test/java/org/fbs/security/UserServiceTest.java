@@ -83,7 +83,7 @@ public class UserServiceTest
 		Assert.assertEquals(userName1, user2.getUserName());
 		Assert.assertEquals(salt1, user2.getSalt());
 		
-		this.userService.delete(userName1);
+		this.userService.delete(user1);
 		user1 = this.userService.read(userName1);
 		Assert.assertNull(user1);
 	}

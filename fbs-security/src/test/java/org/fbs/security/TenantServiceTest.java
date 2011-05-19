@@ -70,7 +70,7 @@ public class TenantServiceTest
 		Assert.assertEquals(tenant1.getId(), new Integer(id));
 		Assert.assertEquals(description, tenant1.getDescription());
 
-		this.tenantService.delete(id);
+		this.tenantService.delete(tenant1);
 		tenant1 = this.tenantService.read(id);
 		Assert.assertNull(tenant1);
 	}

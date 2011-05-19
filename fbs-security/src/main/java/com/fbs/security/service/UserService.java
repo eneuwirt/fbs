@@ -15,7 +15,7 @@ public interface UserService
 	public void update(User tenant);
 
 
-	public void delete(String id);
+	public void delete(User user);
 
 
 	public List<User> findAll();

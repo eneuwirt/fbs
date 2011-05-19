@@ -15,7 +15,7 @@ public interface TenantService
 	public void update(Tenant tenant);
 
 
-	public void delete(Integer id);
+	public void delete(Tenant tenant);
 
 
 	public List<Tenant> findAll();

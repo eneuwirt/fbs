@@ -18,6 +18,7 @@ import com.fbs.security.service.Authentication;
 import com.fbs.security.service.SecurityService;
 import com.fbs.security.service.TenantService;
 import com.fbs.security.service.UserRole;
+import com.fbs.security.service.UserService;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.ViewManager;
 import com.fbs.web.vaadin.ui.admin.AdminScreen;
@@ -51,13 +52,15 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	transient SecurityService securityService;
 	@Resource
 	transient private TenantService tenantService;
+	@Resource
+	transient private UserService userService;
 
 
 	public TenantService getTenantService()
     {
     	return tenantService;
     }
-
+	
 
 	public void setTenantService(TenantService tenantService)
     {
@@ -255,4 +258,16 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 			        Notification.TYPE_ERROR_MESSAGE);
 		}
 	}
+
+
+	public void setUserService(UserService userService)
+    {
+	    this.userService = userService;
+    }
+
+
+	public UserService getUserService()
+    {
+	    return userService;
+    }
 }

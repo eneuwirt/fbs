@@ -22,6 +22,7 @@ public class AdminScreen extends ScreenTemplate
 	protected void initMainScreen()
 	{
 		TenantsScreen clientScreen;
+		UserScreen	userScreen;
 		
 		this.tabsheet = new TabSheet();
 		this.mainScreen = tabsheet;
@@ -29,9 +30,10 @@ public class AdminScreen extends ScreenTemplate
 		tabsheet.setSizeFull();
 		
 		clientScreen = new TenantsScreen(this.app);
+		userScreen = new UserScreen(this.app);
 		
 		tabsheet.addTab(clientScreen, this.app.getMessage(ApplicationMessages.AdminTabTitleTenant), null);
-		tabsheet.addTab(new Label("Contents of the second tab"), this.app.getMessage(ApplicationMessages.AdminTabTitleUser), null);
+		tabsheet.addTab(userScreen, this.app.getMessage(ApplicationMessages.AdminTabTitleUser), null);
 		tabsheet.addTab(new Label("Contents of the third tab"), "Third tab", null);
 	}
 

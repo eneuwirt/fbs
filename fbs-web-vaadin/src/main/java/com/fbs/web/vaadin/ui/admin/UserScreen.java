@@ -1,0 +1,146 @@
+package com.fbs.web.vaadin.ui.admin;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import com.fbs.security.model.User;
+import com.fbs.web.vaadin.MyVaadinApplication;
+import com.fbs.web.vaadin.i18n.ApplicationMessages;
+import com.fbs.web.vaadin.ui.common.ItemsListScreen;
+import com.vaadin.data.Item;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.FormFieldFactory;
+import com.vaadin.ui.PasswordField;
+import com.vaadin.ui.TextField;
+
+public class UserScreen extends ItemsListScreen<User>
+{
+    private static final long serialVersionUID = 1L;
+    private static String COL_USERNAME = "userName";
+    private static String COL_PASSWORD = "password";
+    private static String COL_TENANTID = "tenantId";
+    private static String[] visibleColumns = new String[] { COL_USERNAME, COL_TENANTID };
+    private static String[] visibleItemProperties = new String[] { COL_USERNAME, COL_PASSWORD, COL_TENANTID };
+
+	public UserScreen(MyVaadinApplication app)
+    {
+	    super(app, User.class);
+    }
+
+	@Override
+    protected User createBeanInstance()
+    {
+	    User user;
+	    
+	    user = new User();
+	    
+	    return user;
+    }
+
+	@Override
+    protected List<User> getAllBeans()
+    {
+		List<User> users;
+		users = this.app.getUserService().findAll();
+
+		return users;
+    }
+
+	@Override
+    protected User createBean(User t)
+    {
+	    // TODO Auto-generated method stub
+	    return null;
+    }
+
+	@Override
+    protected void updateBean(User t)
+    {
+	    // TODO Auto-generated method stub
+	    
+    }
+
+	@Override
+    protected User readBean(User t)
+    {
+	    // TODO Auto-generated method stub
+	    return null;
+    }
+
+	@Override
+    protected void deleteBean(User t)
+    {
+	    // TODO Auto-generated method stub
+	    
+    }
+
+	@Override
+    protected String[] getVisibleColumns()
+    {
+	    return visibleColumns;
+    }
+
+	@Override
+    protected Collection<String> getVisibleItemProperties()
+    {
+		 return Arrays.asList(visibleItemProperties);
+    }
+	
+	@Override
+	protected String getColumnName(String propertyId)
+	{
+		if (propertyId.equals(COL_USERNAME))
+			return this.app.getMessage(ApplicationMessages.UserName);
+
+		if (propertyId.equals(COL_TENANTID))
+			return this.app.getMessage(ApplicationMessages.TenantId);
+
+		return propertyId;
+	}
+
+	@Override
+    protected FormFieldFactory getFormFieldFactory()
+    {
+		return new UserFormFieldFactory(this.app);
+    }
+	
+	private static class UserFormFieldFactory implements FormFieldFactory
+	{
+		private static final long serialVersionUID = 1L;
+		private MyVaadinApplication app;
+		
+		public UserFormFieldFactory(MyVaadinApplication app)
+		{
+			this.app = app;
+		}
+
+		@Override
+		public Field createField(Item item, Object propertyId, Component uiContext)
+		{
+			// Identify the fields by their Property ID.
+			Field result = null;
+			
+			String pid = (String) propertyId;
+			
+			if (COL_USERNAME.equals(pid))
+			{
+				result = new TextField(this.app.getMessage(ApplicationMessages.UserName));
+			}
+			else if (COL_PASSWORD.equals(pid))
+			{
+				result = new PasswordField(this.app.getMessage(ApplicationMessages.UserPassword));
+			}
+			else if (COL_TENANTID.equals(pid))
+			{
+				result = new TextField("tenantId");
+			}
+			
+			
+			return result;
+		}
+
+	}
+
+}

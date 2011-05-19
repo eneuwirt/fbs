@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.fbs.security.model.Tenant;
 import com.fbs.security.model.User;
 import com.fbs.security.service.UserService;
 import com.fbs.security.util.JDBCFinalizer;
@@ -18,7 +17,10 @@ public class UserServiceImpl implements UserService
 {
 	private static final long serialVersionUID = 1L;
 	private static final String CREATE_USER = "INSERT INTO users (userName, password, salt, tenant_id) VALUES (?, ?, ?, ?)";
-	private static final String SELECT_TENANTS = "SELECT username, password, salt, tenant_id  FROM users";
+	private static final String SELECT_USERS = "SELECT username, password, salt, tenant_id  FROM users";
+	private static final String SELECT_USER = "SELECT username, password, salt, tenant_id  FROM users WHERE username = ?";
+	private static final String UPDATE_USER = "UPDATE users SET password = ?, salt = ?, tenant_id = ? WHERE username = ?";
+	private static final String DELETE_USER = "DELETE FROM users WHERE username = ?";
 	private DataSource dataSource;
 
 
@@ -44,9 +46,6 @@ public class UserServiceImpl implements UserService
 			pstmt.setInt(4, user.getTenantId());
 
 			pstmt.executeUpdate();
-
-			pstmt.close();
-
 		}
 		catch (SQLException e)
 		{
@@ -65,24 +64,125 @@ public class UserServiceImpl implements UserService
 	@Override
 	public User read(String id)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		User result = null;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+
+		if (id == null)
+		{
+			throw new IllegalArgumentException("id null");
+		}
+
+		try
+		{
+			conn = dataSource.getConnection();
+			
+			pstmt = conn.prepareStatement(SELECT_USER);
+			pstmt.setString(1, id);
+
+			rs = pstmt.executeQuery();			
+			
+			if (rs.next())
+			{
+				String userName;
+				String password;
+				String salt;
+				Integer tenantId;
+
+				userName = rs.getString("username");
+				password = rs.getString("password");
+				salt = rs.getString("salt");
+				tenantId = rs.getInt("tenant_id");
+
+				result = new User();
+				result.setPassword(password);
+				result.setSalt(salt);
+				result.setUserName(userName);
+				result.setTenantId(tenantId);
+			}
+		}
+		catch (SQLException e)
+		{
+			// ignore
+		}
+		finally
+		{
+			JDBCFinalizer.close(rs);
+			JDBCFinalizer.close(pstmt);
+			JDBCFinalizer.close(conn);
+		}
+
+		return result;
 	}
 
 
 	@Override
-	public void update(User tenant)
+	public void update(User user)
 	{
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		if (user == null)
+		{
+			throw new IllegalArgumentException("user null");
+		}
 
+		try
+		{
+			conn = dataSource.getConnection();
+
+			pstmt = conn.prepareStatement(UPDATE_USER);
+			pstmt.setString(1, user.getPassword());
+			pstmt.setString(2, user.getSalt());
+			pstmt.setInt(3, user.getTenantId());
+			pstmt.setString(4, user.getUserName());
+
+			pstmt.executeUpdate();
+		}
+		catch (SQLException sqlEx)
+		{
+			//ignore
+		}
+		finally
+		{
+			JDBCFinalizer.close(pstmt);
+			JDBCFinalizer.close(conn);
+		}
+
+		return;
 	}
 
 
 	@Override
 	public void delete(String id)
 	{
-		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		
+		if (id == null)
+		{
+			throw new IllegalArgumentException("user id null");
+		}
+		
+		try
+		{
+			conn = dataSource.getConnection();
 
+			pstmt = conn.prepareStatement(DELETE_USER);
+			pstmt.setString(1, id);
+
+			pstmt.executeUpdate();
+		}
+		catch (SQLException sqlEx)
+		{
+			//ignore
+		}
+		finally
+		{
+			JDBCFinalizer.close(pstmt);
+			JDBCFinalizer.close(conn);
+		}
 	}
 
 
@@ -97,7 +197,7 @@ public class UserServiceImpl implements UserService
 		try
 		{
 			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(SELECT_TENANTS);
+			pstmt = conn.prepareStatement(SELECT_USERS);
 
 			rs = pstmt.executeQuery();
 			while (rs.next())

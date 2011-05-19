@@ -118,17 +118,12 @@ public class User implements Comparable<User>, Serializable
 		}
 
 		User other = (User) obj;
-		if (userName == null)
-		{
-			if (other.userName != null)
-				return false;
-		}
-		else if (!userName.equals(other.userName))
+		if (userName == null || other.userName == null)
 		{
 			return false;
 		}
 
-		return true;
+		return this.userName.equals(other.userName);
 	}
 
 

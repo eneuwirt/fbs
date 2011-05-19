@@ -4,8 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +41,7 @@ public class UserServiceTest
 		User user2;
 		String userName2 = "user 2";
 		String password2 = "passwd 2";
+		String password3 = "passwd 3";
 		String salt2 = "salt 2";
 		Integer tenantId2 = 2;
 		List<User> users;
@@ -67,5 +67,24 @@ public class UserServiceTest
 		users = this.userService.findAll();
 		Assert.assertNotNull(users);
 		Assert.assertEquals(users.size(), 2);
+		
+		user1 = this.userService.read("HDSH");
+		Assert.assertNull(user1);
+		
+		user1 = this.userService.read(userName1);
+		Assert.assertNotNull(user1);
+		Assert.assertEquals(password1, user1.getPassword());
+		
+		user1.setPassword(password3);
+		this.userService.update(user1);
+		user2 = this.userService.read(userName1);
+		Assert.assertNotNull(user2);
+		Assert.assertEquals(password3, user2.getPassword());
+		Assert.assertEquals(userName1, user2.getUserName());
+		Assert.assertEquals(salt1, user2.getSalt());
+		
+		this.userService.delete(userName1);
+		user1 = this.userService.read(userName1);
+		Assert.assertNull(user1);
 	}
 }

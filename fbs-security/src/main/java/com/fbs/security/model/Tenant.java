@@ -88,7 +88,7 @@ public class Tenant implements Comparable<Tenant>, Serializable
 		{
 			return 1;
 		}
-		
+
 		return -1;
 	}
 
@@ -107,17 +107,12 @@ public class Tenant implements Comparable<Tenant>, Serializable
 		}
 
 		Tenant other = (Tenant) obj;
-		if (id == null)
-		{
-			if (other.id != null)
-				return false;
-		}
-		else if (!id.equals(other.id))
-		{
+		if (id == null || other.id == null)
+		{			
 			return false;
 		}
 
-		return true;
+		return id.equals(other.id);
 	}
 
 

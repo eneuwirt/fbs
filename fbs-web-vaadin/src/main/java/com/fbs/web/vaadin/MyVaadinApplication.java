@@ -1,5 +1,6 @@
 package com.fbs.web.vaadin;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -28,6 +29,8 @@ import com.fbs.web.vaadin.ui.user.UserScreen;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext;
 import com.vaadin.terminal.Terminal;
+import com.vaadin.terminal.UserError;
+import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
 
@@ -57,15 +60,15 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 
 	public TenantService getTenantService()
-    {
-    	return tenantService;
-    }
-	
+	{
+		return tenantService;
+	}
+
 
 	public void setTenantService(TenantService tenantService)
-    {
-    	this.tenantService = tenantService;
-    }
+	{
+		this.tenantService = tenantService;
+	}
 
 
 	@Override
@@ -261,13 +264,26 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 
 	public void setUserService(UserService userService)
-    {
-	    this.userService = userService;
-    }
+	{
+		this.userService = userService;
+	}
 
 
 	public UserService getUserService()
-    {
-	    return userService;
-    }
+	{
+		return userService;
+	}
+
+
+	public void showErrorMessage(AbstractComponent component, Exception ex)
+	{
+		String msg = this.getMessage(ApplicationMessages.ErrorCommon);
+
+		if (ex instanceof SQLException)
+		{
+			msg = this.getMessage(ApplicationMessages.ErrorDatabase);
+		}
+		
+		component.setComponentError(new UserError(msg));
+	}
 }

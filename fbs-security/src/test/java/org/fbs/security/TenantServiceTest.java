@@ -33,15 +33,18 @@ public class TenantServiceTest
 		Assert.assertNotNull(this.tenantService);
 	}
 
-
 	@Test
-	public void testDataAccess()
+	public void testDataAccess() throws Exception
 	{
 		Tenant tenant1;
 		Tenant tenant2;
 		String description = "Description tenant 1";
 		String description2 = "Description tenant 2";
 		List<Tenant> tenants;
+		
+		int notExists = 23;
+		tenant1 = this.tenantService.read(notExists);
+		Assert.assertNull(tenant1);
 
 		tenant1 = new Tenant();
 		tenant1.setDescription(description);
@@ -74,7 +77,6 @@ public class TenantServiceTest
 		tenant1 = this.tenantService.read(id);
 		Assert.assertNull(tenant1);
 	}
-
 
 	@After
 	public void tearDown()

@@ -1,5 +1,6 @@
 package com.fbs.web.vaadin.ui.common;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.terminal.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
@@ -68,8 +70,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 * Returns the list of beans to display
 	 * 
 	 * @return
+	 * @throws Exception
 	 */
-	protected abstract List<T> getAllBeans();
+	protected abstract List<T> getAllBeans() throws Exception;
 
 
 	/**
@@ -78,17 +81,18 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 * @param t
 	 * @return created instance. It must not be the same as params instance,
 	 *         because several ids shall be generated etc.
+	 * @throws Exception
 	 */
-	protected abstract T createBean(T t);
+	protected abstract T createBean(T t) throws Exception;
 
 
-	protected abstract void updateBean(T t);
+	protected abstract void updateBean(T t) throws Exception;
 
 
-	protected abstract T readBean(T t);
+	protected abstract T readBean(T t) throws Exception;
 
 
-	protected abstract void deleteBean(T t);
+	protected abstract void deleteBean(T t) throws Exception;
 
 
 	/**
@@ -97,9 +101,11 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 * @return
 	 */
 	protected abstract String[] getVisibleColumns();
-	
+
+
 	protected abstract Collection<String> getVisibleItemProperties();
-	
+
+
 	protected abstract FormFieldFactory getFormFieldFactory();
 
 
@@ -156,11 +162,18 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.buttonDelete.setEnabled(false);
 
 		this.initLayout();
-		
+
 		// fill up with data
-		for (T t : this.getAllBeans())
+		try
 		{
-			this.beanItemContainer.addBean(t);
+			for (T t : this.getAllBeans())
+			{
+				this.beanItemContainer.addBean(t);
+			}
+		}
+		catch (Exception e)
+		{
+			// ignore at first time
 		}
 	}
 
@@ -261,7 +274,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		// fill with dummy
 		T t = this.createBeanInstance();
 		BeanItem<T> dummy = new BeanItem<T>(t);
-		
+
 		this.form.setItemDataSource(dummy, this.getVisibleItemProperties());
 	}
 
@@ -356,12 +369,19 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			beanItemSuc = (BeanItem<T>) this.screen.table.getItem(this.screen.table.nextItemId(bean));
 			if (beanItemSuc == null)
 			{
-				beanItemSuc = (BeanItem<T>) this.screen.table.getItem(this.screen.table
-				        .prevItemId(bean));
+				beanItemSuc = (BeanItem<T>) this.screen.table.getItem(this.screen.table.prevItemId(bean));
 			}
 
-			this.screen.deleteBean(bean);
-			this.screen.beanItemContainer.removeItem(bean);
+			try
+			{
+				this.screen.deleteBean(bean);
+
+				this.screen.beanItemContainer.removeItem(bean);
+			}
+			catch (Exception ex)
+			{
+				this.screen.app.showErrorMessage(this.screen.form, ex);
+			}
 
 			// fill the form out. If the list does not contain any entries
 			// provide dummy and disable the form
@@ -413,20 +433,27 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 			beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
 
-			// Save bean. Distinguish between create and update
-			if (this.screen.actionPrevious == Action.CREATE)
+			try
 			{
-				T bean;
+				// Save bean. Distinguish between create and update
+				if (this.screen.actionPrevious == Action.CREATE)
+				{
+					T bean;
 
-				bean = this.screen.createBean(beanItem.getBean());
+					bean = this.screen.createBean(beanItem.getBean());
 
-				beanItem = new BeanItem<T>(bean);
+					beanItem = new BeanItem<T>(bean);
 
-				this.screen.beanItemContainer.addBean(bean);
+					this.screen.beanItemContainer.addBean(bean);
+				}
+				else
+				{
+					this.screen.updateBean(beanItem.getBean());
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				this.screen.updateBean(beanItem.getBean());
+				this.screen.app.showErrorMessage(this.screen.form, ex);
 			}
 
 			this.screen.table.setEnabled(true);
@@ -487,25 +514,33 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			else if (this.screen.actionPrevious == Action.SELECT)
 			{
 				T beanPersistent;
-				
+
 				// retrieve selected item
 				beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
 				bean = beanItem.getBean();
 
-				beanPersistent = this.screen.readBean(bean);
-				// remove the changed from list and add the refreshed bean
-				this.screen.beanItemContainer.removeItem(bean);
-				this.screen.beanItemContainer.addBean(beanPersistent);
-				beanItem = (BeanItem<T>) this.screen.table.getItem(beanPersistent);
+				try
+                {
+	                beanPersistent = this.screen.readBean(bean);
+	                
+	             // remove the changed from list and add the refreshed bean
+					this.screen.beanItemContainer.removeItem(bean);
+					this.screen.beanItemContainer.addBean(beanPersistent);
+					beanItem = (BeanItem<T>) this.screen.table.getItem(beanPersistent);
 
-				this.screen.table.select(beanPersistent);
+					this.screen.table.select(beanPersistent);
+                }
+                catch (Exception ex)
+                {
+                	this.screen.app.showErrorMessage(this.screen.form, ex);
+                }
 			}
 			else
 			{
 				// retrieve selected item
 				beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
 			}
-			
+
 			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
 
 			this.screen.table.setEnabled(true);

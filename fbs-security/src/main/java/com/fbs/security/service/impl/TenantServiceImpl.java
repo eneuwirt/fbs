@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +26,17 @@ public class TenantServiceImpl implements TenantService, Serializable
 
 
 	@Override
-	public Tenant create(Tenant tenant)
+	public Tenant create(Tenant tenant) throws Exception
 	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet keys = null;
-		
+
 		if (tenant == null)
 		{
 			throw new IllegalArgumentException("tenant null");
 		}
-		
+
 		try
 		{
 			conn = dataSource.getConnection();
@@ -56,10 +55,6 @@ public class TenantServiceImpl implements TenantService, Serializable
 			pstmt.close();
 
 		}
-		catch (SQLException e)
-		{
-			//ignore 
-		}
 		finally
 		{
 			JDBCFinalizer.close(keys);
@@ -72,13 +67,13 @@ public class TenantServiceImpl implements TenantService, Serializable
 
 
 	@Override
-	public Tenant read(Integer id)
+	public Tenant read(Integer id) throws Exception
 	{
 		Tenant result = null;
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		
+
 		if (id == null)
 		{
 			throw new IllegalArgumentException("id null");
@@ -93,17 +88,15 @@ public class TenantServiceImpl implements TenantService, Serializable
 			pstmt.setInt(1, id);
 
 			rs = pstmt.executeQuery();
-			rs.next();
 
-			description = rs.getString("description");
+			if (rs.next())
+			{
+				description = rs.getString("description");
 
-			result = new Tenant();
-			result.setId(id);
-			result.setDescription(description);
-		}
-		catch (SQLException e)
-		{
-			//Ignore
+				result = new Tenant();
+				result.setId(id);
+				result.setDescription(description);
+			}
 		}
 		finally
 		{
@@ -117,11 +110,11 @@ public class TenantServiceImpl implements TenantService, Serializable
 
 
 	@Override
-	public void update(Tenant tenant)
+	public void update(Tenant tenant) throws Exception
 	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+
 		if (tenant == null)
 		{
 			throw new IllegalArgumentException("tenant null");
@@ -137,10 +130,6 @@ public class TenantServiceImpl implements TenantService, Serializable
 
 			pstmt.executeUpdate();
 
-		}
-		catch (SQLException sqlEx)
-		{
-			//ignore
 		}
 		finally
 		{
@@ -159,16 +148,16 @@ public class TenantServiceImpl implements TenantService, Serializable
 
 
 	@Override
-	public void delete(Tenant tenant)
+	public void delete(Tenant tenant) throws Exception
 	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+
 		if (tenant == null)
 		{
 			throw new IllegalArgumentException("tenant null");
 		}
-		
+
 		try
 		{
 			conn = dataSource.getConnection();
@@ -178,10 +167,6 @@ public class TenantServiceImpl implements TenantService, Serializable
 			pstmt.executeUpdate();
 
 			pstmt.close();
-		}
-		catch (SQLException ex)
-		{
-			//ignore
 		}
 		finally
 		{
@@ -194,7 +179,7 @@ public class TenantServiceImpl implements TenantService, Serializable
 
 
 	@Override
-	public List<Tenant> findAll()
+	public List<Tenant> findAll() throws Exception
 	{
 		List<Tenant> result = new ArrayList<Tenant>();
 		PreparedStatement pstmt = null;
@@ -221,10 +206,6 @@ public class TenantServiceImpl implements TenantService, Serializable
 
 				result.add(tenant);
 			}
-		}
-		catch (SQLException e)
-		{
-			// ignore
 		}
 		finally
 		{

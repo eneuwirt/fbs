@@ -3,12 +3,12 @@ package com.fbs.security.service.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.fbs.security.exception.AlreadyExists;
 import com.fbs.security.model.User;
 import com.fbs.security.service.UserService;
 import com.fbs.security.util.JDBCFinalizer;
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService
 
 
 	@Override
-	public User create(User user)
+	public User create(User user) throws Exception
 	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService
 		if (user == null)
 		{
 			throw new IllegalArgumentException("user null");
+		}
+		
+		if (this.read(user.getUserName()) != null)
+		{
+			throw new AlreadyExists();
 		}
 
 		try
@@ -47,10 +52,6 @@ public class UserServiceImpl implements UserService
 
 			pstmt.executeUpdate();
 		}
-		catch (SQLException e)
-		{
-			// ignore
-		}
 		finally
 		{
 			JDBCFinalizer.close(pstmt);
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService
 
 
 	@Override
-	public User read(String id)
+	public User read(String id) throws Exception
 	{
 		User result = null;
 		PreparedStatement pstmt = null;
@@ -102,10 +103,6 @@ public class UserServiceImpl implements UserService
 				result.setTenantId(tenantId);
 			}
 		}
-		catch (SQLException e)
-		{
-			// ignore
-		}
 		finally
 		{
 			JDBCFinalizer.close(rs);
@@ -118,7 +115,7 @@ public class UserServiceImpl implements UserService
 
 
 	@Override
-	public void update(User user)
+	public void update(User user) throws Exception
 	{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -140,10 +137,6 @@ public class UserServiceImpl implements UserService
 
 			pstmt.executeUpdate();
 		}
-		catch (SQLException sqlEx)
-		{
-			//ignore
-		}
 		finally
 		{
 			JDBCFinalizer.close(pstmt);
@@ -155,7 +148,7 @@ public class UserServiceImpl implements UserService
 
 
 	@Override
-	public void delete(User user)
+	public void delete(User user) throws Exception
 	{
 		PreparedStatement pstmt = null;
 		Connection conn = null;
@@ -174,10 +167,6 @@ public class UserServiceImpl implements UserService
 
 			pstmt.executeUpdate();
 		}
-		catch (SQLException sqlEx)
-		{
-			//ignore
-		}
 		finally
 		{
 			JDBCFinalizer.close(pstmt);
@@ -187,7 +176,7 @@ public class UserServiceImpl implements UserService
 
 
 	@Override
-	public List<User> findAll()
+	public List<User> findAll() throws Exception
 	{
 		List<User> result = new ArrayList<User>();
 
@@ -221,10 +210,6 @@ public class UserServiceImpl implements UserService
 
 				result.add(user);
 			}
-		}
-		catch (SQLException e)
-		{
-			// ignore
 		}
 		finally
 		{

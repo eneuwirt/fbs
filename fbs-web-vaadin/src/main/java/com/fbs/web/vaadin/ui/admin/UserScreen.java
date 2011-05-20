@@ -40,7 +40,7 @@ public class UserScreen extends ItemsListScreen<User>
     }
 
 	@Override
-    protected List<User> getAllBeans()
+    protected List<User> getAllBeans() throws Exception
     {
 		List<User> users;
 		users = this.app.getUserService().findAll();

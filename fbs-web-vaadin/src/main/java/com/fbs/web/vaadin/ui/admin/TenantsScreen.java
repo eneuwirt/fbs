@@ -42,7 +42,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 
 
 	@Override
-	protected List<Tenant> getAllBeans()
+	protected List<Tenant> getAllBeans() throws Exception
 	{
 		List<Tenant> result;
 
@@ -73,21 +73,21 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 
 
 	@Override
-	protected void updateBean(Tenant t)
+	protected void updateBean(Tenant t) throws Exception
 	{
 		this.app.getTenantService().update(t);
 	}
 
 
 	@Override
-	protected void deleteBean(Tenant t)
+	protected void deleteBean(Tenant t) throws Exception
 	{
 		this.app.getTenantService().delete(t);
 	}
 
 
 	@Override
-	protected Tenant createBean(Tenant tenant)
+	protected Tenant createBean(Tenant tenant) throws Exception
 	{
 		Tenant result;
 
@@ -98,7 +98,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 
 
 	@Override
-	protected Tenant readBean(Tenant t)
+	protected Tenant readBean(Tenant t) throws Exception
 	{
 		Tenant result;
 

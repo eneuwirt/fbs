@@ -33,8 +33,13 @@ public class UserScreen extends ItemsListScreen<User>
     protected User createBeanInstance()
     {
 	    User user;
+	    String password;
 	    
 	    user = new User();
+	    
+	    //password = this.app.getSecurityService().generatePassword();
+	    password = "123";
+	    user.setPasswordPlain(password);	    
 	    
 	    return user;
     }

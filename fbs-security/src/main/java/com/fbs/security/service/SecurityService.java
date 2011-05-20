@@ -11,6 +11,13 @@ public interface SecurityService
 	 * @throws Exception
 	 */
 	public Authentication login(String userName, String userPassword) throws Exception;
+	
+	/**
+	 * Generates random password
+	 * 
+	 * @return generated password
+	 */
+	public String generatePassword();
 
 
 	public void logout();

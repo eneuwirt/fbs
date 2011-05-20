@@ -35,7 +35,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 	public enum Action
 	{
-		CREATE, SAVE, DELETE, CANCEL, SELECT, SELECT_NULL;
+		CREATE, SAVE, SAVE_FAILURE, DELETE, CANCEL, SELECT, SELECT_NULL;
 	}
 
 	private Class<T> clazz;
@@ -136,6 +136,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.form.setImmediate(true);
 		this.form.setEnabled(false);
 		this.form.setFormFieldFactory(this.getFormFieldFactory());
+		this.resetForm();
 
 		this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
 
@@ -274,12 +275,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.form.setSizeFull();
 		this.form.setCaption(this.app.getMessage(ApplicationMessages.CommonDetails));
 		this.form.setDescription(this.app.getMessage(ApplicationMessages.CommonDetailsDescription));
-
-		// fill with dummy
-		T t = this.createBeanInstance();
-		BeanItem<T> dummy = new BeanItem<T>(t);
-
-		this.form.setItemDataSource(dummy, this.getVisibleItemProperties());
 	}
 
 
@@ -442,9 +437,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				// Save bean. Distinguish between create and update
 				if (this.screen.actionPrevious == Action.CREATE)
 				{
-					T bean;
-
-					bean = this.screen.createBean(beanItem.getBean());
+					T bean= this.screen.createBean(beanItem.getBean());
 
 					beanItem = new BeanItem<T>(bean);
 
@@ -454,22 +447,36 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				{
 					this.screen.updateBean(beanItem.getBean());
 				}
+				
+				this.screen.table.select(beanItem.getBean());
+				this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
+
+				this.screen.buttonSave.setEnabled(true);
+				this.screen.buttonCancel.setEnabled(true);
+				this.screen.buttonDelete.setEnabled(true);
+
+				this.screen.buttonItemAdd.setEnabled(true);
+				this.screen.buttonItemDelete.setEnabled(true);
 			}
 			catch (Exception ex)
 			{
+				this.screen.notifyClick(Action.SAVE_FAILURE);
+				
 				this.screen.app.showErrorMessage(this.screen.form, ex);
+				
+				this.screen.table.select(null);
+				
+				this.screen.form.setEnabled(false);
+				
+				this.screen.buttonSave.setEnabled(false);
+				this.screen.buttonCancel.setEnabled(true);
+				this.screen.buttonDelete.setEnabled(false);
+
+				this.screen.buttonItemAdd.setEnabled(true);
+				this.screen.buttonItemDelete.setEnabled(false);
 			}
-
-			this.screen.table.setEnabled(true);
-			this.screen.table.select(beanItem.getBean());
-			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
-
-			this.screen.buttonSave.setEnabled(true);
-			this.screen.buttonCancel.setEnabled(true);
-			this.screen.buttonDelete.setEnabled(true);
-
-			this.screen.buttonItemAdd.setEnabled(true);
-			this.screen.buttonItemDelete.setEnabled(true);
+			
+			this.screen.table.setEnabled(true);			
 		}
 	}
 
@@ -539,6 +546,20 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 					this.screen.app.showErrorMessage(this.screen.form, ex);
 				}
 			}
+			else if (this.screen.actionPrevious == Action.SAVE_FAILURE)
+			{
+				this.screen.resetForm();
+				this.screen.form.setEnabled(false);
+				
+				beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
+				
+				enableSave = false;
+				enableDelete = false;
+				enableCancel = false;
+				enableItemDelete = false;
+
+				this.screen.table.select(null);
+			}
 			else
 			{
 				// retrieve selected item
@@ -599,4 +620,13 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			}
 		}
 	}
+
+	protected void resetForm()
+    {
+		// fill with dummy
+		T t = this.createBeanInstance();
+		BeanItem<T> dummy = new BeanItem<T>(t);
+
+		this.form.setItemDataSource(dummy, this.getVisibleItemProperties());
+    }
 }

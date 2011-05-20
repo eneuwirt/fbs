@@ -3,9 +3,14 @@ package com.fbs.security.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.shiro.crypto.RandomNumberGenerator;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.Sha256Hash;
+
 public class User implements Comparable<User>, Serializable
 {
 	private static final long serialVersionUID = 1L;
+	private static final int ITERATIONS = 1024;
 
 	private String userName;
 	private String password;
@@ -13,75 +18,99 @@ public class User implements Comparable<User>, Serializable
 	private Integer tenantId;
 	private Date validFrom = new Date();
 	private Date validTo = new Date();
-	
+
+
 	public User()
 	{
-		
 	}
-	
+
+
+	public void setPasswordPlain(String passwordPlain)
+	{
+		RandomNumberGenerator rng = new SecureRandomNumberGenerator();
+		String salt = rng.nextBytes().toBase64();
+		String passwordHash = new Sha256Hash(passwordPlain, salt, ITERATIONS).toBase64();
+
+		this.salt = salt;
+		this.password = passwordHash;
+	}
+
+
 	public String getUserName()
-    {
-    	return userName;
-    }
+	{
+		return userName;
+	}
+
 
 	public void setUserName(String userName)
-    {
-    	this.userName = userName;
-    }
+	{
+		this.userName = userName;
+	}
+
 
 	public String getPassword()
-    {
-    	return password;
-    }
+	{
+		return password;
+	}
+
 
 	public void setPassword(String password)
-    {
-    	this.password = password;
-    }
+	{
+		this.password = password;
+	}
+
 
 	public String getSalt()
-    {
-    	return salt;
-    }
+	{
+		return salt;
+	}
+
 
 	public void setSalt(String salt)
-    {
-    	this.salt = salt;
-    }
+	{
+		this.salt = salt;
+	}
+
 
 	public Integer getTenantId()
-    {
-    	return tenantId;
-    }
+	{
+		return tenantId;
+	}
+
 
 	public void setTenantId(Integer tenantId)
-    {
-    	this.tenantId = tenantId;
-    }
+	{
+		this.tenantId = tenantId;
+	}
+
 
 	public Date getValidFrom()
-    {
-    	return validFrom;
-    }
+	{
+		return validFrom;
+	}
+
 
 	public void setValidFrom(Date validFrom)
-    {
-    	this.validFrom = validFrom;
-    }
+	{
+		this.validFrom = validFrom;
+	}
+
 
 	public Date getValidTo()
-    {
-    	return validTo;
-    }
+	{
+		return validTo;
+	}
+
 
 	public void setValidTo(Date validTo)
-    {
-    	this.validTo = validTo;
-    }
+	{
+		this.validTo = validTo;
+	}
+
 
 	@Override
-    public int compareTo(User o)
-    {
+	public int compareTo(User o)
+	{
 		// see documentation
 		if (o == null)
 		{
@@ -100,10 +129,11 @@ public class User implements Comparable<User>, Serializable
 		{
 			return 1;
 		}
-		
+
 		return -1;
-    }
-	
+	}
+
+
 	@Override
 	public boolean equals(Object obj)
 	{

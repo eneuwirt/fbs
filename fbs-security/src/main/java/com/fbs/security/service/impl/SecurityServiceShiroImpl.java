@@ -11,6 +11,8 @@ import javax.sql.DataSource;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.RandomNumberGenerator;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.subject.Subject;
 
 import com.fbs.security.service.Authentication;
@@ -58,7 +60,6 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 		{
 			result = UserRole.ROLE_ADMIN;
 		}
-		
 
 		return result;
 	}
@@ -73,7 +74,7 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
 			Connection conn = null;
-			
+
 			conn = this.dataSource.getConnection();
 
 			statement = conn.prepareStatement(tenantQuery);
@@ -82,12 +83,12 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 			resultSet = statement.executeQuery();
 
 			boolean hasEntry = resultSet.next();
-			
+
 			if (!hasEntry)
 			{
 				throw new AuthenticationException("Could not retrieve tenant for [" + username + "].");
 			}
-			
+
 			result = resultSet.getInt(1);
 
 			if (resultSet.next())
@@ -136,5 +137,15 @@ public class SecurityServiceShiroImpl implements SecurityService, Serializable
 	public void setDataSource(DataSource dataSource)
 	{
 		this.dataSource = dataSource;
+	}
+
+
+	@Override
+	public String generatePassword()
+	{
+		RandomNumberGenerator rng = new SecureRandomNumberGenerator();
+		String result = rng.nextBytes().toBase64();
+		
+		return result;
 	}
 }

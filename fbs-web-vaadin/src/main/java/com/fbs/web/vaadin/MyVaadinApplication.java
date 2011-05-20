@@ -30,7 +30,6 @@ import com.fbs.web.vaadin.ui.user.UserScreen;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext;
 import com.vaadin.terminal.Terminal;
-import com.vaadin.terminal.UserError;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.Notification;
@@ -53,11 +52,24 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	transient Catalog catalog;
 
 	@Resource
-	transient SecurityService securityService;
+	transient private SecurityService securityService;
+
 	@Resource
 	transient private TenantService tenantService;
 	@Resource
 	transient private UserService userService;
+
+
+	public SecurityService getSecurityService()
+	{
+		return this.securityService;
+	}
+
+
+	public void setSecurityService(SecurityService securityService)
+	{
+		this.securityService = securityService;
+	}
 
 
 	public TenantService getTenantService()
@@ -279,6 +291,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	public void showErrorMessage(AbstractComponent component, Exception ex)
 	{
 		String msg = this.getMessage(ApplicationMessages.ErrorCommon);
+		int notificationType = Notification.TYPE_ERROR_MESSAGE;
 
 		if (ex instanceof SQLException)
 		{
@@ -288,7 +301,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		{
 			msg = this.getMessage(ApplicationMessages.UserAlreadyExists);
 		}
-		
-		component.setComponentError(new UserError(msg));
+
+		getMainWindow().showNotification(msg, notificationType);
 	}
 }

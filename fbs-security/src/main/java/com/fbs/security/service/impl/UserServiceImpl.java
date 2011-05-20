@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+
 import com.fbs.security.exception.AlreadyExists;
 import com.fbs.security.model.User;
 import com.fbs.security.service.UserService;
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService
 
 	@Override
 	public User create(User user) throws Exception
-	{
+	{		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 

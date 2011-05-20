@@ -16,7 +16,8 @@ public class CatalogImpl implements Catalog, Serializable
     private static final long serialVersionUID = 1L;
     private EntityManager em;
 
-	@Override
+	@SuppressWarnings("unchecked")
+    @Override
 	public List<Item> getItems()
 	{
 		List<Item> result = new ArrayList<Item>();

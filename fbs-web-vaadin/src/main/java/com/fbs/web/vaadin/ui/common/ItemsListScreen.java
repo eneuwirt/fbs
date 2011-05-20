@@ -1,6 +1,5 @@
 package com.fbs.web.vaadin.ui.common;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.terminal.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
@@ -56,6 +54,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	// remember the clicked button
 	protected Action actionCurrent;
 	protected Action actionPrevious; // Previously clicked button
+
+
+	public Action getActionCurrent()
+	{
+		return this.actionCurrent;
+	}
 
 
 	/**
@@ -520,20 +524,20 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				bean = beanItem.getBean();
 
 				try
-                {
-	                beanPersistent = this.screen.readBean(bean);
-	                
-	             // remove the changed from list and add the refreshed bean
+				{
+					beanPersistent = this.screen.readBean(bean);
+
+					// remove the changed from list and add the refreshed bean
 					this.screen.beanItemContainer.removeItem(bean);
 					this.screen.beanItemContainer.addBean(beanPersistent);
 					beanItem = (BeanItem<T>) this.screen.table.getItem(beanPersistent);
 
 					this.screen.table.select(beanPersistent);
-                }
-                catch (Exception ex)
-                {
-                	this.screen.app.showErrorMessage(this.screen.form, ex);
-                }
+				}
+				catch (Exception ex)
+				{
+					this.screen.app.showErrorMessage(this.screen.form, ex);
+				}
 			}
 			else
 			{

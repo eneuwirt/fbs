@@ -22,7 +22,7 @@ public class UserScreen extends ItemsListScreen<User>
     private static String COL_PASSWORD = "password";
     private static String COL_TENANTID = "tenantId";
     private static String[] visibleColumns = new String[] { COL_USERNAME, COL_TENANTID };
-    private static String[] visibleItemProperties = new String[] { COL_USERNAME, COL_PASSWORD, COL_TENANTID };
+    private static String[] visibleItemProperties = new String[] { COL_USERNAME, COL_TENANTID };
 
 	public UserScreen(MyVaadinApplication app)
     {
@@ -49,31 +49,31 @@ public class UserScreen extends ItemsListScreen<User>
     }
 
 	@Override
-    protected User createBean(User t)
+    protected User createBean(User user) throws Exception
     {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
-
-	@Override
-    protected void updateBean(User t)
-    {
-	    // TODO Auto-generated method stub
+	    User result = this.app.getUserService().create(user);
 	    
+	    return result;
     }
 
 	@Override
-    protected User readBean(User t)
+    protected void updateBean(User user) throws Exception
     {
-	    // TODO Auto-generated method stub
-	    return null;
+		this.app.getUserService().update(user);
     }
 
 	@Override
-    protected void deleteBean(User t)
+    protected User readBean(User user) throws Exception
     {
-	    // TODO Auto-generated method stub
+	    User result = this.app.getUserService().read(user.getUserName());
 	    
+	    return result;
+    }
+
+	@Override
+    protected void deleteBean(User user) throws Exception
+    {
+		this.app.getUserService().delete(user);
     }
 
 	@Override
@@ -103,16 +103,19 @@ public class UserScreen extends ItemsListScreen<User>
 	@Override
     protected FormFieldFactory getFormFieldFactory()
     {
-		return new UserFormFieldFactory(this.app);
+		return new UserFormFieldFactory(this, this.app);
     }
 	
 	private static class UserFormFieldFactory implements FormFieldFactory
 	{
 		private static final long serialVersionUID = 1L;
 		private MyVaadinApplication app;
+		private ItemsListScreen<User> screen;
 		
-		public UserFormFieldFactory(MyVaadinApplication app)
+		public UserFormFieldFactory(ItemsListScreen<User> screen, MyVaadinApplication app)
 		{
+			this.screen = screen;
+			
 			this.app = app;
 		}
 
@@ -127,6 +130,11 @@ public class UserScreen extends ItemsListScreen<User>
 			if (COL_USERNAME.equals(pid))
 			{
 				result = new TextField(this.app.getMessage(ApplicationMessages.UserName));
+				
+				if (this.screen.getActionCurrent() != Action.CREATE)
+				{
+					result.setReadOnly(true);
+				}
 			}
 			else if (COL_PASSWORD.equals(pid))
 			{
@@ -136,7 +144,6 @@ public class UserScreen extends ItemsListScreen<User>
 			{
 				result = new TextField("tenantId");
 			}
-			
 			
 			return result;
 		}

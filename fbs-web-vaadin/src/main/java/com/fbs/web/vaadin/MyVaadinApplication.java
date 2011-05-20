@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.fbs.datasource.Catalog;
 import com.fbs.datasource.TenantContextHolder;
 import com.fbs.datasource.Item;
+import com.fbs.security.exception.*;
 import com.fbs.security.service.Authentication;
 import com.fbs.security.service.SecurityService;
 import com.fbs.security.service.TenantService;
@@ -282,6 +283,10 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		if (ex instanceof SQLException)
 		{
 			msg = this.getMessage(ApplicationMessages.ErrorDatabase);
+		}
+		else if (ex instanceof AlreadyExists)
+		{
+			msg = this.getMessage(ApplicationMessages.UserAlreadyExists);
 		}
 		
 		component.setComponentError(new UserError(msg));

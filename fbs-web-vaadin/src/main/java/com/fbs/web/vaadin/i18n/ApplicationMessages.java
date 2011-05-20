@@ -54,7 +54,7 @@ public interface ApplicationMessages extends Serializable
 	public static String TenantDescription = "Tenant.Description";
 	public static String TenantScreenTitle = "TenantScreen.Title";
 
+	public static String UserAlreadyExists = "User.AlreadyExists";
 	public static String UserName = "User.Name";
 	public static String UserPassword = "User.Password";
-
 }

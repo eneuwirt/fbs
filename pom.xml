@@ -12,6 +12,7 @@
     <module>fbs-dependencies-shiro</module>
     <module>fbs-dependencies-spring</module>
     <module>fbs-dependencies-spring-security</module>
+    <module>fbs-dmr-universal</module>
     <module>fbs-rest</module>
     <module>fbs-security</module>
     <module>fbs-web-vaadin</module>
@@ -20,6 +21,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <slf4j.version>1.5.8</slf4j.version>
+    <hsqldb.version>2.2.1</hsqldb.version>
   </properties>
 
   <repositories>

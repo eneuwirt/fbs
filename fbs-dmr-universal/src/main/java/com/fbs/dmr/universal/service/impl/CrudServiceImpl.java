@@ -6,14 +6,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fbs.dmr.universal.service.Crud;
 
-@Transactional
 public abstract class CrudServiceImpl<T, ID extends Serializable> implements Crud<T, ID>
 {
-	@PersistenceUnit
 	protected EntityManagerFactory emf;
 	private Class<T> entityClass;
 	
@@ -24,6 +24,7 @@ public abstract class CrudServiceImpl<T, ID extends Serializable> implements Cru
 	
 	
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
     public T create(T t)
     {
 		EntityManager em = this.emf.createEntityManager();
@@ -68,6 +69,7 @@ public abstract class CrudServiceImpl<T, ID extends Serializable> implements Cru
 		em.remove(entity);
     }
 
+	@PersistenceUnit
 	public void setEntityManagerFactory(EntityManagerFactory emf)
     {
 	    this.emf = emf;

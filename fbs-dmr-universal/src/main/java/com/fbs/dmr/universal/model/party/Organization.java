@@ -1,5 +1,10 @@
 package com.fbs.dmr.universal.model.party;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="ORGANIZATIONS")
 public class Organization extends Party
 {
 	private static final long serialVersionUID = 1L;

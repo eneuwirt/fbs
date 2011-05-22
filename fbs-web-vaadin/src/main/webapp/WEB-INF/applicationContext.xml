@@ -19,7 +19,7 @@
   <!-- Use annotations to configure our components -->
   <context:annotation-config />
   <context:component-scan base-package="com.fbs.web.vaadin" />
-  <tx:annotation-driven />
+  <tx:annotation-driven transaction-manager="transactionManager" />
 
   <!-- Sample RDBMS data source that would exist in any application, not Shiro related. -->
   <bean id="dataSourceSecurity" class="org.springframework.jndi.JndiObjectFactoryBean">
@@ -78,7 +78,6 @@
       <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
         <property name="showSql" value="true" />
-        <!-- hibernate.hbm2ddl.auto=update -->
         <property name="generateDdl" value="true" />
       </bean>
     </property>
@@ -87,13 +86,13 @@
   <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
     <property name="entityManagerFactory" ref="entityManagerFactory" />
   </bean>
-  
+
   <bean id="catalog" class="com.fbs.datasource.CatalogImpl" />
-  
+
   <bean id="tenantService" class="com.fbs.security.service.impl.TenantServiceImpl">
     <property name="dataSource" ref="dataSourceSecurity" />
   </bean>
-  
+
   <bean id="userService" class="com.fbs.security.service.impl.UserServiceImpl">
     <property name="dataSource" ref="dataSourceSecurity" />
   </bean>

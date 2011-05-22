@@ -19,7 +19,7 @@
   <!-- Use annotations to configure our components -->
   <context:annotation-config />
   <context:component-scan base-package="com.fbs.web.vaadin" />
-  <tx:annotation-driven transaction-manager="transactionManager" />
+  <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
   <!-- Sample RDBMS data source that would exist in any application, not Shiro related. -->
   <bean id="dataSourceSecurity" class="org.springframework.jndi.JndiObjectFactoryBean">

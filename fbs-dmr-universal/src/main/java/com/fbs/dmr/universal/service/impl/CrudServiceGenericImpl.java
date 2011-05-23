@@ -9,13 +9,13 @@ import javax.persistence.Query;
 
 import com.fbs.dmr.universal.service.CrudService;
 
-public class CrudServiceImpl<T, ID extends Serializable> implements CrudService<T, ID>
+public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudService<T, ID>
 {
 	protected EntityManager em;
 	private Class<T> entityClass;
 
 
-	public CrudServiceImpl(Class<T> entityClass)
+	public CrudServiceGenericImpl(Class<T> entityClass)
 	{
 		this.entityClass = entityClass;
 	}

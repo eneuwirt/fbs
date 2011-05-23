@@ -84,33 +84,33 @@ public class PartyTest
 	@Test
 	public void testEqualsAndHashCode()
 	{
-		Party p1 = null;
-		Party p2 = null;
+		Party obj1 = null;
+		Party obj2 = null;
 
-		p1 = new Party();
-		p2 = new Party();
+		obj1 = new Party();
+		obj2 = new Party();
 
-		assertTrue(p1.equals(p1));
-		assertTrue(p1.equals(p2));
-		assertTrue(p2.equals(p1));
-		assertEquals(p1.hashCode(), p2.hashCode());
+		assertTrue(obj1.equals(obj1));
+		assertTrue(obj1.equals(obj2));
+		assertTrue(obj2.equals(obj1));
+		assertEquals(obj1.hashCode(), obj2.hashCode());
 
-		p1.setId(1);
-		assertTrue(p1.equals(p1));
-		assertFalse(p1.equals(p2));
-		assertFalse(p2.equals(p1));
-		assertFalse(p1.hashCode() == p2.hashCode());
+		obj1.setId(1);
+		assertTrue(obj1.equals(obj1));
+		assertFalse(obj1.equals(obj2));
+		assertFalse(obj2.equals(obj1));
+		assertFalse(obj1.hashCode() == obj2.hashCode());
 
-		p2.setId(1);
-		assertTrue(p2.equals(p2));
-		assertTrue(p1.equals(p2));
-		assertTrue(p2.equals(p1));
-		assertEquals(p1.hashCode(), p2.hashCode());
+		obj2.setId(1);
+		assertTrue(obj2.equals(obj2));
+		assertTrue(obj1.equals(obj2));
+		assertTrue(obj2.equals(obj1));
+		assertEquals(obj1.hashCode(), obj2.hashCode());
 
-		p2.setId(3);
-		assertTrue(p2.equals(p2));
-		assertFalse(p2.equals(p1));
-		assertFalse(p1.equals(p2));
-		assertFalse(p1.hashCode() == p2.hashCode());
+		obj2.setId(3);
+		assertTrue(obj2.equals(obj2));
+		assertFalse(obj2.equals(obj1));
+		assertFalse(obj1.equals(obj2));
+		assertFalse(obj1.hashCode() == obj2.hashCode());
 	}
 }

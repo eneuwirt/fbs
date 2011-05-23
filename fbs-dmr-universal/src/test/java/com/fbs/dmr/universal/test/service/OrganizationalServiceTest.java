@@ -1,5 +1,7 @@
 package com.fbs.dmr.universal.test.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.Assert;
@@ -42,17 +44,18 @@ public class OrganizationalServiceTest
 		String name2 = "ABCDEF";
 		Integer id;
 		Integer id2;
+		List<Organization> organizations = null;
 		
 		
 		org = new Organization();
 		org.setName(name);
-		org = this.crudServiceOrganization.create(org);
+		this.crudServiceOrganization.save(org);
 		Assert.assertNotNull(org.getId());
 		id = org.getId();
 
 		org2 = new Organization();
 		org2.setName(name2);
-		org2 = this.crudServiceOrganization.create(org2);
+		this.crudServiceOrganization.save(org2);
 		Assert.assertNotNull(org2.getId());
 		id2 = org2.getId();
 
@@ -61,13 +64,17 @@ public class OrganizationalServiceTest
 		Assert.assertEquals(org.getName(), name);
 
 		org.setName(name2);
-		this.crudServiceOrganization.update(org);
+		this.crudServiceOrganization.save(org);
 		org = this.crudServiceOrganization.read(id);
 		Assert.assertNotNull(org);
 		Assert.assertNotNull(org.getId());
 		Assert.assertEquals(org.getId(), id);
 		Assert.assertEquals(org.getName(), name2);
-
+		
+		organizations = this.crudServiceOrganization.findAll();
+		Assert.assertNotNull(organizations);
+		Assert.assertEquals(organizations.size(), 2);
+		
 		this.crudServiceOrganization.delete(id);
 		org = this.crudServiceOrganization.read(id);
 		Assert.assertNull(org);

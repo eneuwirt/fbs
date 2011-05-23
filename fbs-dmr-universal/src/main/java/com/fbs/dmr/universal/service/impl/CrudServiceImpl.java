@@ -3,17 +3,13 @@ package com.fbs.dmr.universal.service.impl;
 import java.io.Serializable;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.PersistenceContext;
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import com.fbs.dmr.universal.service.CrudService;
 
-import com.fbs.dmr.universal.service.Crud;
-
-public class CrudServiceImpl<T, ID extends Serializable> implements Crud<T, ID>
+public class CrudServiceImpl<T, ID extends Serializable> implements CrudService<T, ID>
 {
-	protected EntityManagerFactory emf;
+	protected EntityManager em;
 	private Class<T> entityClass;
 	
 	public CrudServiceImpl(Class<T> entityClass)
@@ -23,21 +19,18 @@ public class CrudServiceImpl<T, ID extends Serializable> implements Crud<T, ID>
 	
 	
 	@Override
-	@Transactional(propagation=Propagation.REQUIRED)
     public T create(T t)
     {
-		EntityManager em = this.emf.createEntityManager();
-		
 		em.persist(t);
+		
+		em.flush();
 	       
 	    return t;
     }
 
 	@Override
     public void update(T t)
-    {
-		EntityManager em = this.emf.createEntityManager();
-		
+    {		
 		em.persist(t);
     }
 
@@ -45,8 +38,7 @@ public class CrudServiceImpl<T, ID extends Serializable> implements Crud<T, ID>
     public T read(ID id)
     {
 	    T result;
-	    EntityManager em = this.emf.createEntityManager();
-	    
+	   	    
 	    result = em.find(entityClass, id);
 	    
 	    return result;
@@ -56,7 +48,6 @@ public class CrudServiceImpl<T, ID extends Serializable> implements Crud<T, ID>
     public void delete(ID id)
     {
 		T entity;
-		EntityManager em = this.emf.createEntityManager();
 		
 		entity = this.read(id);
 		
@@ -68,9 +59,9 @@ public class CrudServiceImpl<T, ID extends Serializable> implements Crud<T, ID>
 		em.remove(entity);
     }
 
-	@PersistenceUnit
-	public void setEntityManagerFactory(EntityManagerFactory emf)
+	@PersistenceContext
+	public void setEntityManager(EntityManager em)
     {
-	    this.emf = emf;
+	    this.em = em;
     }
 }

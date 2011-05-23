@@ -18,11 +18,13 @@
                       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 
-  <!-- Use annotations to configure our components -->
+  <!-- post-processors for all standard config annotations -->
   <context:annotation-config />
-  <tx:annotation-driven transaction-manager="transactionManager"/>
+  <tx:annotation-driven transaction-manager="transactionManager" />
 
-  <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+  <!-- Exception translation bean post processor -->
+  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
 
   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
     <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
@@ -48,11 +50,6 @@
   </bean>
 
 
-  <bean id="organizationCrudService" class="com.fbs.dmr.universal.service.impl.CrudServiceOrganizationImpl">
-    <property name="entityManagerFactory" ref="entityManagerFactory" />
-  </bean>
+  <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.CrudServiceOrganizationImpl" />
 
-  <bean id="crudParty" class="com.fbs.dmr.universal.service.impl.CrudParty">
-    
-  </bean>
 </beans>

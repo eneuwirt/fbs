@@ -11,6 +11,7 @@ import com.fbs.dmr.universal.service.CrudService;
 
 public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudService<T, ID>
 {
+    private static final long serialVersionUID = 1L;
 	protected EntityManager em;
 	private Class<T> entityClass;
 

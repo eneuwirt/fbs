@@ -9,6 +9,8 @@ import com.fbs.dmr.universal.service.CrudService;
 public class CrudServiceOrganizationImpl extends CrudServiceGenericImpl<Organization, Integer> implements
         CrudService<Organization, Integer>
 {
+    private static final long serialVersionUID = 1L;
+
 	public CrudServiceOrganizationImpl()
 	{
 		super(Organization.class);

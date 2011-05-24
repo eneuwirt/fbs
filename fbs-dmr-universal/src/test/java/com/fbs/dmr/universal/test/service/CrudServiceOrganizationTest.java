@@ -20,7 +20,7 @@ import com.fbs.dmr.universal.service.CrudService;
 @ContextConfiguration("classpath:/applicationContext-test.xml")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
-public class OrganizationalServiceTest
+public class CrudServiceOrganizationTest
 {
 	@Resource(name="crudServiceOrganization")
 	CrudService<Organization, Integer> crudServiceOrganization;

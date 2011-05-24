@@ -7,27 +7,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fbs.dmr.util.DateUtils;
 
 @Entity
-@Table(name = "PARTy_CLASSIFICATIONS")
+@Table(name = "PARTY_CLASSIFICATIONS")
 public class PartyClassification implements Serializable
 {
-    private static final long serialVersionUID = 1L;
-    @Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-    private Date dateFrom = new Date();
-    private Date dateTo = DateUtils.getEndOfDays();
-    
-    public PartyClassification()
-    {
-    	
-    }
+	@ManyToOne
+	private PartyType partyType;
+	private Date dateFrom = new Date();
+	private Date dateTo = DateUtils.getEndOfDays();
 
-    public void setId(Integer id)
+
+	public PartyClassification()
+	{
+
+	}
+
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -38,25 +43,42 @@ public class PartyClassification implements Serializable
 		return id;
 	}
 
+
+	public void setPartyType(PartyType partyType)
+	{
+		this.partyType = partyType;
+	}
+
+
+	public PartyType getPartyType()
+	{
+		return partyType;
+	}
+
+
 	public void setDateTo(Date dateTo)
-    {
-	    this.dateTo = dateTo;
-    }
+	{
+		this.dateTo = dateTo;
+	}
+
 
 	public Date getDateTo()
-    {
-	    return dateTo;
-    }
+	{
+		return dateTo;
+	}
+
 
 	public void setDateFrom(Date dateFrom)
-    {
-	    this.dateFrom = dateFrom;
-    }
+	{
+		this.dateFrom = dateFrom;
+	}
+
 
 	public Date getDateFrom()
-    {
-	    return dateFrom;
-    }
+	{
+		return dateFrom;
+	}
+
 
 	@Override
 	public boolean equals(Object obj)
@@ -77,7 +99,7 @@ public class PartyClassification implements Serializable
 		{
 			return false;
 		}
-		
+
 		return true;
 	}
 

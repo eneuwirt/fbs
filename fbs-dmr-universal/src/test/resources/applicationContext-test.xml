@@ -51,5 +51,7 @@
 
 
   <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.CrudServiceOrganizationImpl" />
+  <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.CrudServicePartyClassificationImpl" />
+  <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyTypeImpl" />
 
 </beans>

@@ -21,6 +21,8 @@ public class PartyClassification implements Serializable
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@ManyToOne
+	private Party party;
+	@ManyToOne
 	private PartyType partyType;
 	private Date dateFrom = new Date();
 	private Date dateTo = DateUtils.getEndOfDays();
@@ -42,6 +44,18 @@ public class PartyClassification implements Serializable
 	{
 		return id;
 	}
+
+
+	public void setParty(Party party)
+    {
+	    this.party = party;
+    }
+
+
+	public Party getParty()
+    {
+	    return party;
+    }
 
 
 	public void setPartyType(PartyType partyType)

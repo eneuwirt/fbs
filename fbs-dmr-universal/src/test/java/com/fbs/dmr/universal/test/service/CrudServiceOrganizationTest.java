@@ -14,6 +14,9 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fbs.dmr.universal.model.party.Organization;
+import com.fbs.dmr.universal.model.party.Party;
+import com.fbs.dmr.universal.model.party.PartyClassification;
+import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.service.CrudService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,6 +27,8 @@ public class CrudServiceOrganizationTest
 {
 	@Resource(name="crudServiceOrganization")
 	CrudService<Organization, Integer> crudServiceOrganization;
+	@Resource(name="crudServicePartyType")
+	CrudService<PartyType, Integer> crudServicePartyType;
 	
 
 
@@ -31,13 +36,25 @@ public class CrudServiceOrganizationTest
 	public void setUp()
 	{
 		Assert.assertNotNull(crudServiceOrganization);
+		Assert.assertNotNull(crudServicePartyType);
 	}
 	
+	private void createClassifications(Party party, PartyType partyType)
+	{
+		PartyClassification pC = new PartyClassification();
+		
+		pC.setParty(party);
+		pC.setPartyType(partyType);
 	
+		
+		party.getPartyClassifications().add(pC);
+	}
 
 	@Test
 	public void testCrud()
 	{
+		PartyType pT;
+		PartyType pT2;
 		Organization org;
 		Organization org2;
 		String name = "Test";
@@ -46,22 +63,35 @@ public class CrudServiceOrganizationTest
 		Integer id2;
 		List<Organization> organizations = null;
 		
+		pT = new PartyType();
+		pT.setDescription("Party Type lol");
+		this.crudServicePartyType.save(pT);
+
+		pT2 = new PartyType();
+		pT2.setDescription("Party Type 2 lol");
+		this.crudServicePartyType.save(pT2);
+		
 		
 		org = new Organization();
 		org.setName(name);
 		this.crudServiceOrganization.save(org);
 		Assert.assertNotNull(org.getId());
 		id = org.getId();
+		this.createClassifications(org, pT);	
+		this.createClassifications(org, pT2);
 
 		org2 = new Organization();
 		org2.setName(name2);
 		this.crudServiceOrganization.save(org2);
 		Assert.assertNotNull(org2.getId());
 		id2 = org2.getId();
+		
 
 		org = this.crudServiceOrganization.read(1);
 		Assert.assertNotNull(org);
 		Assert.assertEquals(org.getName(), name);
+		Assert.assertNotNull(org.getPartyClassifications());
+		Assert.assertEquals(org.getPartyClassifications().size(), 2);
 
 		org.setName(name2);
 		this.crudServiceOrganization.save(org);

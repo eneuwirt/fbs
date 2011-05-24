@@ -3,7 +3,7 @@ package com.fbs.web.vaadin.ui.common;
 import java.util.Collection;
 import java.util.List;
 
-import com.fbs.web.vaadin.MyVaadinApplication;
+import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;

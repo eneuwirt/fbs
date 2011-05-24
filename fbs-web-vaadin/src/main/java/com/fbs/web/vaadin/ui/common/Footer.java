@@ -1,6 +1,6 @@
 package com.fbs.web.vaadin.ui.common;
 
-import com.fbs.web.vaadin.MyVaadinApplication;
+import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;

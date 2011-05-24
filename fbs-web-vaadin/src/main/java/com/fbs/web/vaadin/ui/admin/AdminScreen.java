@@ -1,6 +1,6 @@
 package com.fbs.web.vaadin.ui.admin;
 
-import com.fbs.web.vaadin.MyVaadinApplication;
+import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ScreenTemplate;
 import com.vaadin.ui.Label;

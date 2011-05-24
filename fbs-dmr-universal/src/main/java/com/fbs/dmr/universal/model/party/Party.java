@@ -56,6 +56,10 @@ public class Party implements Serializable
 	    return partyClassifications;
     }
 
+	public String getName()
+	{
+		return (this.id == 0) ? "0" : this.id.toString();
+	}
 
 	@Override
 	public boolean equals(Object obj)

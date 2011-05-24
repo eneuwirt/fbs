@@ -1,17 +1,17 @@
 package com.fbs.web.vaadin.ui.user;
 
-import com.fbs.web.vaadin.MyVaadinApplication;
+import com.fbs.web.vaadin.application.MyVaadinApplication;
+import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ScreenTemplate;
 
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TabSheet;
 
 public class UserScreen extends ScreenTemplate
 {
 	private static final long serialVersionUID = 1L;
 
-	private HorizontalLayout tmp;
+	private TabSheet tabsheet;
 	public UserScreen(MyVaadinApplication app)
 	{
 		super(app);		
@@ -20,59 +20,17 @@ public class UserScreen extends ScreenTemplate
 	@Override
     protected void initMainScreen()
     {
-	    this.tmp = new HorizontalLayout();
-	    
-	    this.mainScreen = this.tmp;
-	    
-	    Button create = new Button("Create items", new CreateListener(app, this));
-		Button show = new Button("Show items", new ShowListener(app, this));
-
+		PartyScreen partyScreen;
 		
-		this.tmp.addComponent(show);
-		this.tmp.addComponent(create);
+		this.tabsheet = new TabSheet();
+		this.mainScreen = tabsheet;
+		
+		tabsheet.setSizeFull();
+		
+		partyScreen = new PartyScreen(this.app);
+		
+		tabsheet.addTab(partyScreen, this.app.getMessage(ApplicationMessages.UserTabTitleParty), null);
+		tabsheet.addTab(new Label("Contents of the third tab"), "Second tab", null);
+		tabsheet.addTab(new Label("Contents of the third tab"), "Third tab", null);
     }
-
-	private static class CreateListener implements Button.ClickListener
-	{
-		private static final long serialVersionUID = 1L;
-		MyVaadinApplication app;
-		UserScreen userScreen;
-
-
-		public CreateListener(MyVaadinApplication app, UserScreen userScreen)
-		{
-			this.app = app;
-			this.userScreen = userScreen;
-		}
-
-
-		@Override
-		public void buttonClick(ClickEvent event)
-		{
-			app.doCreate();
-		}
-
-	}
-	
-	private static class ShowListener implements Button.ClickListener
-	{
-		private static final long serialVersionUID = 1L;
-		MyVaadinApplication app;
-		UserScreen userScreen;
-
-
-		public ShowListener(MyVaadinApplication app, UserScreen userScreen)
-		{
-			this.app = app;
-			this.userScreen = userScreen;
-		}
-
-
-		@Override
-		public void buttonClick(ClickEvent event)
-		{
-			app.doShow();
-		}
-
-	}
 }

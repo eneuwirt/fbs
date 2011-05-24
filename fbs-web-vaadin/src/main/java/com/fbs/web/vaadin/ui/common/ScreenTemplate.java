@@ -1,6 +1,6 @@
 package com.fbs.web.vaadin.ui.common;
 
-import com.fbs.web.vaadin.MyVaadinApplication;
+import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;

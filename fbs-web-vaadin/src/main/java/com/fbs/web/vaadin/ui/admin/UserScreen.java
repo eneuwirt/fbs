@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.fbs.security.model.User;
-import com.fbs.web.vaadin.MyVaadinApplication;
+import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
 import com.vaadin.data.Item;

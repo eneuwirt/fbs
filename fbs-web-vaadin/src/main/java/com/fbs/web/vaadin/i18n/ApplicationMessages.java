@@ -57,4 +57,6 @@ public interface ApplicationMessages extends Serializable
 	public static String UserAlreadyExists = "User.AlreadyExists";
 	public static String UserName = "User.Name";
 	public static String UserPassword = "User.Password";
+
+	public static String UserTabTitleParty = "UserTab.TitleParty";
 }

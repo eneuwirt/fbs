@@ -23,10 +23,12 @@ public class SeedServiceImpl implements SeedService
 		List<PartyType> partyTypes;
 
 		partyTypes = this.servicePartyType.findAll();
-		if (partyTypes.size() > 0)
+		
+		if (partyTypes.size() == 0)
 		{
 			PartyType pType1;
 			String pTypeDescription1 = "Default";
+			
 			pType1 = new PartyType();
 			pType1.setDescription(pTypeDescription1);
 			

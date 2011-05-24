@@ -1,4 +1,4 @@
-package com.fbs.web.vaadin;
+package com.fbs.web.vaadin.application;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,6 +15,9 @@ import org.springframework.stereotype.Component;
 import com.fbs.datasource.Catalog;
 import com.fbs.datasource.TenantContextHolder;
 import com.fbs.datasource.Item;
+import com.fbs.dmr.universal.model.party.Party;
+import com.fbs.dmr.universal.service.CrudService;
+import com.fbs.dmr.universal.service.SeedService;
 import com.fbs.security.exception.*;
 import com.fbs.security.service.Authentication;
 import com.fbs.security.service.SecurityService;
@@ -50,14 +53,39 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 	@Resource
 	transient Catalog catalog;
-
 	@Resource
 	transient private SecurityService securityService;
-
 	@Resource
 	transient private TenantService tenantService;
 	@Resource
 	transient private UserService userService;
+	@Resource
+	transient private SeedService seedService;
+	@Resource(name="crudServiceParty")
+	transient private CrudService<Party, Integer> crudPartyService;
+
+	public void setCrudPartyService(CrudService<Party, Integer> crudPartyService)
+    {
+	    this.crudPartyService = crudPartyService;
+    }
+
+
+	public CrudService<Party, Integer> getCrudPartyService()
+    {
+	    return crudPartyService;
+    }
+
+
+	public void setSeedService(SeedService seedService)
+    {
+	    this.seedService = seedService;
+    }
+
+
+	public SeedService getSeedService()
+    {
+	    return seedService;
+    }
 
 
 	public SecurityService getSecurityService()
@@ -141,6 +169,10 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		{
 			this.getViewManager().switchScreen(UserScreen.class.getName(), new AdminScreen(this));
 		}
+		
+		this.seedService.defaultFill();
+		
+		return;
 	}
 
 

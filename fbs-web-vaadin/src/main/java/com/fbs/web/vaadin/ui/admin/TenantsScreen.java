@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.fbs.security.model.Tenant;
-import com.fbs.web.vaadin.MyVaadinApplication;
+import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
 import com.vaadin.data.Item;
@@ -107,6 +107,20 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 		return result;
 	}
 
+
+	@Override
+    protected Collection<String> getVisibleItemProperties()
+    {
+	    return Arrays.asList(visibleItemProperties);
+    }
+
+
+	@Override
+    protected FormFieldFactory getFormFieldFactory()
+    {
+	    return new TenantFormFieldFactory(this.app);
+    }
+	
 	private static class TenantFormFieldFactory implements FormFieldFactory
 	{
 		private static final long serialVersionUID = 1L;
@@ -141,17 +155,4 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 		}
 
 	}
-
-	@Override
-    protected Collection<String> getVisibleItemProperties()
-    {
-	    return Arrays.asList(visibleItemProperties);
-    }
-
-
-	@Override
-    protected FormFieldFactory getFormFieldFactory()
-    {
-	    return new TenantFormFieldFactory(this.app);
-    }
 }

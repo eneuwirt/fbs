@@ -87,7 +87,7 @@ public class CrudServiceOrganizationTest
 		id2 = org2.getId();
 		
 
-		org = this.crudServiceOrganization.read(1);
+		org = this.crudServiceOrganization.read(id);
 		Assert.assertNotNull(org);
 		Assert.assertEquals(org.getName(), name);
 		Assert.assertNotNull(org.getPartyClassifications());

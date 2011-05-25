@@ -13,7 +13,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>/WEB-INF/applicationContext.xml /WEB-INF/applicationContext-shiro.xml</param-value>
+    <param-value>/WEB-INF/applicationContext.xml /WEB-INF/applicationContext-shiro.xml /WEB-INF/applicationContext-dsSingleTenant.xml</param-value>
   </context-param>
 
   <listener>

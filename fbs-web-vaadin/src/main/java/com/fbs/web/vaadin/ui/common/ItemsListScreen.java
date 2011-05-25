@@ -14,6 +14,7 @@ import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -38,7 +39,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		CREATE, SAVE, SAVE_FAILURE, DELETE, CANCEL, SELECT, SELECT_NULL;
 	}
 
-	private Class<T> clazz;
+	protected Class<T> clazz;
 	protected MyVaadinApplication app;
 	// Elements
 	protected Table table;
@@ -80,7 +81,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 
 	/**
-	 * Creates new instance.
+	 * Persist new bean.
 	 * 
 	 * @param t
 	 * @return created instance. It must not be the same as params instance,
@@ -90,12 +91,31 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected abstract T createBean(T t) throws Exception;
 
 
+	/**
+	 * Persist bean
+	 * 
+	 * @param t
+	 * @throws Exception
+	 */
 	protected abstract void updateBean(T t) throws Exception;
 
 
+	/**
+	 * Read from database
+	 * 
+	 * @param t
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract T readBean(T t) throws Exception;
 
 
+	/**
+	 * Delete persistent bean
+	 * 
+	 * @param t
+	 * @throws Exception
+	 */
 	protected abstract void deleteBean(T t) throws Exception;
 
 
@@ -198,7 +218,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 	protected void layoutLeft(VerticalLayout left)
 	{
-		HorizontalLayout bottomLeftCorner = new HorizontalLayout();
+		VerticalLayout bottomLeftCorner = new VerticalLayout();
 
 		left.setSizeFull();
 		left.setSpacing(true);
@@ -230,14 +250,37 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	}
 
 
-	protected void layoutButtomLeftCorner(HorizontalLayout bottomLeftCorner)
+	protected void layoutButtomLeftCorner(VerticalLayout bottomLeftCorner)
 	{
+		HorizontalLayout searchRow = new HorizontalLayout();
+		HorizontalLayout buttonRow = new HorizontalLayout();
+
 		bottomLeftCorner.setWidth("100%");
 
-		this.buttonItemDelete.setEnabled(false);
+		this.buttonItemDelete.setEnabled(false);	
+		this.layoutSearchField(searchRow);
 
-		bottomLeftCorner.addComponent(this.buttonItemAdd);
-		bottomLeftCorner.addComponent(this.buttonItemDelete);
+		buttonRow.addComponent(this.buttonItemAdd);
+		buttonRow.addComponent(this.buttonItemDelete);
+
+		bottomLeftCorner.addComponent(searchRow);
+		bottomLeftCorner.addComponent(buttonRow);
+		
+		bottomLeftCorner.setExpandRatio(searchRow, 1);
+
+	}
+
+
+	protected void layoutSearchField(HorizontalLayout searchRow)
+	{
+		Label searchLabel;
+		
+		searchRow.setWidth("100%");
+		
+		searchLabel = new Label(this.app.getMessage(ApplicationMessages.CommonSearch));
+		searchRow.addComponent(searchLabel);
+		searchRow.setExpandRatio(searchLabel, 1);
+		
 		// Add search fields
 		for (final String visibleColumn : this.getVisibleColumns())
 		{
@@ -262,10 +305,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 					}
 				}
 			});
-
-			bottomLeftCorner.addComponent(searchField);
-
-			bottomLeftCorner.setExpandRatio(searchField, 1);
+			
+			searchRow.addComponent(searchField);
+			searchRow.setExpandRatio(searchField, 2);
 		}
 	}
 
@@ -437,7 +479,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				// Save bean. Distinguish between create and update
 				if (this.screen.actionPrevious == Action.CREATE)
 				{
-					T bean= this.screen.createBean(beanItem.getBean());
+					T bean = this.screen.createBean(beanItem.getBean());
 
 					beanItem = new BeanItem<T>(bean);
 
@@ -447,7 +489,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				{
 					this.screen.updateBean(beanItem.getBean());
 				}
-				
+
 				this.screen.table.select(beanItem.getBean());
 				this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
 
@@ -461,13 +503,13 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			catch (Exception ex)
 			{
 				this.screen.notifyClick(Action.SAVE_FAILURE);
-				
+
 				this.screen.app.showErrorMessage(this.screen.form, ex);
-				
+
 				this.screen.table.select(null);
-				
+
 				this.screen.form.setEnabled(false);
-				
+
 				this.screen.buttonSave.setEnabled(false);
 				this.screen.buttonCancel.setEnabled(true);
 				this.screen.buttonDelete.setEnabled(false);
@@ -475,8 +517,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				this.screen.buttonItemAdd.setEnabled(true);
 				this.screen.buttonItemDelete.setEnabled(false);
 			}
-			
-			this.screen.table.setEnabled(true);			
+
+			this.screen.table.setEnabled(true);
 		}
 	}
 
@@ -550,9 +592,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			{
 				this.screen.resetForm();
 				this.screen.form.setEnabled(false);
-				
+
 				beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
-				
+
 				enableSave = false;
 				enableDelete = false;
 				enableCancel = false;
@@ -621,12 +663,13 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		}
 	}
 
+
 	protected void resetForm()
-    {
+	{
 		// fill with dummy
 		T t = this.createBeanInstance();
 		BeanItem<T> dummy = new BeanItem<T>(t);
 
 		this.form.setItemDataSource(dummy, this.getVisibleItemProperties());
-    }
+	}
 }

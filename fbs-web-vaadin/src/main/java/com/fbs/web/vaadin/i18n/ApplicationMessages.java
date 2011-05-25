@@ -16,6 +16,7 @@ public interface ApplicationMessages extends Serializable
 	public static String CommonDetailsDescription = "Common.DetailsDescription";
 	public static String CommonException = "Common.Exception";
 	public static String CommonSave = "Common.Save";
+	public static String CommonSearch = "Common.Search";
 	
 	public static String ErrorCommon = "Error.Common";
 	public static String ErrorDatabase = "Error.Database";

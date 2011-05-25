@@ -30,7 +30,7 @@ public class PartyScreen extends ItemsListScreen<Party>
 
 	@Override
     protected Party createBeanInstance()
-    {
+    {	
 		return new Party();
     }
 

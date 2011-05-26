@@ -14,7 +14,7 @@ import com.fbs.dmr.universal.service.CrudService;
 @Transactional
 public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudService<T, ID>
 {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	protected EntityManager em;
 	private Class<T> entityClass;
 
@@ -26,7 +26,7 @@ public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudS
 
 
 	@Override
-	public void save(T t)
+	public void create(T t)
 	{
 		em.persist(t);
 	}
@@ -40,6 +40,13 @@ public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudS
 		result = em.find(entityClass, id);
 
 		return result;
+	}
+
+
+	@Override
+	public void update(T t)
+	{
+		em.merge(t);
 	}
 
 
@@ -71,7 +78,7 @@ public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudS
 	public List<T> findAll()
 	{
 		List<T> result = null;
-		Query query;		
+		Query query;
 
 		query = em.createQuery("FROM " + entityClass.getName());
 

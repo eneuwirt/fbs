@@ -65,16 +65,16 @@ public class CrudServiceOrganizationTest
 		
 		pT = new PartyType();
 		pT.setDescription("Party Type lol");
-		this.crudServicePartyType.save(pT);
+		this.crudServicePartyType.create(pT);
 
 		pT2 = new PartyType();
 		pT2.setDescription("Party Type 2 lol");
-		this.crudServicePartyType.save(pT2);
+		this.crudServicePartyType.create(pT2);
 		
 		
 		org = new Organization();
 		org.setName(name);
-		this.crudServiceOrganization.save(org);
+		this.crudServiceOrganization.create(org);
 		Assert.assertNotNull(org.getId());
 		id = org.getId();
 		this.createClassifications(org, pT);	
@@ -82,7 +82,7 @@ public class CrudServiceOrganizationTest
 
 		org2 = new Organization();
 		org2.setName(name2);
-		this.crudServiceOrganization.save(org2);
+		this.crudServiceOrganization.create(org2);
 		Assert.assertNotNull(org2.getId());
 		id2 = org2.getId();
 		
@@ -94,7 +94,7 @@ public class CrudServiceOrganizationTest
 		Assert.assertEquals(org.getPartyClassifications().size(), 2);
 
 		org.setName(name2);
-		this.crudServiceOrganization.save(org);
+		this.crudServiceOrganization.update(org);
 		org = this.crudServiceOrganization.read(id);
 		Assert.assertNotNull(org);
 		Assert.assertNotNull(org.getId());

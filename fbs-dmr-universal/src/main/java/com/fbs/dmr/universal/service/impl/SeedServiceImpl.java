@@ -32,7 +32,7 @@ public class SeedServiceImpl implements SeedService
 			pType1 = new PartyType();
 			pType1.setDescription(pTypeDescription1);
 			
-			this.servicePartyType.save(pType1);
+			//this.servicePartyType.create(pType1);
 		}
 	}
 

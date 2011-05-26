@@ -9,8 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation=Propagation.REQUIRED)
 public interface CrudService<T, ID extends Serializable>
 {
-	public void save(T t);
+	public void create(T t);
 	public T read(ID id);
+	public void update(T t);
 	public void delete(ID id);
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	public List<T> findAll();

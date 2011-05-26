@@ -55,20 +55,20 @@ public class CrudServicePartyClassificationTest
 		pType2 = new PartyType();
 		pType2.setDescription(pTypeDescription2);
 		
-		this.serviceType.save(pType1);
-		this.serviceType.save(pType2);
+		this.serviceType.create(pType1);
+		this.serviceType.create(pType2);
 		Assert.assertNotNull(pType1.getId());
 		Assert.assertNotNull(pType2.getId());
 		Assert.assertFalse(pType1.getId() == pType2.getId());
 		
 		pC1 = new PartyClassification();
 		pC1.setPartyType(pType1);
-		this.serviceClassification.save(pC1);
+		this.serviceClassification.create(pC1);
 		Assert.assertNotNull(pC1.getId());
 		id1 = pC1.getId();
 		
 		pC1.setDateTo(further);
-		this.serviceClassification.save(pC1);
+		this.serviceClassification.create(pC1);
 		
 		pC2 = this.serviceClassification.read(id1);
 		Assert.assertNotNull(pC2);

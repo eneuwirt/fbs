@@ -52,7 +52,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	@Override
 	protected PartyType createBean(PartyType t) throws Exception
 	{
-		this.app.getCrudPartyTypeService().save(t);
+		this.app.getCrudPartyTypeService().create(t);
 
 		return t;
 	}
@@ -61,7 +61,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	@Override
 	protected void updateBean(PartyType t) throws Exception
 	{
-		this.app.getCrudPartyTypeService().save(t);
+		this.app.getCrudPartyTypeService().update(t);
 	}
 
 

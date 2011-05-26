@@ -259,7 +259,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 		bottomLeftCorner.setWidth("100%");
 
-		this.buttonItemDelete.setEnabled(false);	
+		this.buttonItemDelete.setEnabled(false);
 		this.layoutSearchField(searchRow);
 
 		buttonRow.addComponent(this.buttonItemAdd);
@@ -267,7 +267,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 		bottomLeftCorner.addComponent(searchRow);
 		bottomLeftCorner.addComponent(buttonRow);
-		
+
 		bottomLeftCorner.setExpandRatio(searchRow, 1);
 
 	}
@@ -276,13 +276,13 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected void layoutSearchField(HorizontalLayout searchRow)
 	{
 		Label searchLabel;
-		
+
 		searchRow.setWidth("100%");
-		
+
 		searchLabel = new Label(this.app.getMessage(ApplicationMessages.CommonSearch));
 		searchRow.addComponent(searchLabel);
 		searchRow.setExpandRatio(searchLabel, 1);
-		
+
 		// Add search fields
 		for (final String visibleColumn : this.getVisibleColumns())
 		{
@@ -307,7 +307,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 					}
 				}
 			});
-			
+
 			searchRow.addComponent(searchField);
 			searchRow.setExpandRatio(searchField, 2);
 		}
@@ -458,7 +458,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	{
 		private static final long serialVersionUID = 1L;
 		private static Logger logger = Logger.getLogger(SaveItemListener.class.getName());
-		
+
 		private ItemsListScreen<T> screen;
 
 
@@ -483,15 +483,18 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				// Save bean. Distinguish between create and update
 				if (this.screen.actionPrevious == Action.CREATE)
 				{
-					T bean = this.screen.createBean(beanItem.getBean());
-
-					beanItem = new BeanItem<T>(bean);
-
-					this.screen.beanItemContainer.addBean(bean);
+					this.screen.createBean(beanItem.getBean());
 				}
 				else
 				{
 					this.screen.updateBean(beanItem.getBean());
+				}
+
+				// I had several problem with table refresh, so this hard action
+				this.screen.beanItemContainer.removeAllItems();
+				for (T t : this.screen.getAllBeans())
+				{
+					this.screen.beanItemContainer.addBean(t);
 				}
 
 				this.screen.table.select(beanItem.getBean());
@@ -507,7 +510,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			catch (Exception ex)
 			{
 				logger.log(Level.SEVERE, "Exception: " + ex.getMessage());
-				
+
 				this.screen.notifyClick(Action.SAVE_FAILURE);
 
 				this.screen.app.showErrorMessage(this.screen.form, ex);

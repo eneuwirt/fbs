@@ -98,6 +98,6 @@ public class PartyType implements Serializable
 	@Override
 	public String toString()
 	{
-		return String.format("PartyType [id=%s]", this.id);
+		return String.format("PartyType [id=%s, description=%s]", this.id, this.description);
 	}
 }

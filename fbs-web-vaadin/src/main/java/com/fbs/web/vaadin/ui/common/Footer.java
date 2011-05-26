@@ -17,6 +17,9 @@ public class Footer extends HorizontalLayout
 			
 		
 		this.setWidth("100%");
+		//this.setMargin(true);
+		this.setSpacing(true);
+
 		this.addComponent(labelUser);
 		
 		setComponentAlignment(labelUser, Alignment.MIDDLE_CENTER);

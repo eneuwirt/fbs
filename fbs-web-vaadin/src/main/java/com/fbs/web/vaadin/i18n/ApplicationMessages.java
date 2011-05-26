@@ -40,6 +40,14 @@ public interface ApplicationMessages extends Serializable
 
 	// Logout
 	public static String LogoutButton = "Logout.Button";
+	
+	// Party
+	public static String PartyTitle = "Party.Title";
+	
+	// PartyType
+	public static String PartyTypeTitle = "PartyType.Title";
+	public static String PartyTypeId = "PartyType.Id";
+	public static String PartyTypeDescription = "PartyType.Description";
 
 	// Register Form
 	public static String RegisterTitle = "Register.Title";

@@ -16,6 +16,7 @@ import com.fbs.datasource.Catalog;
 import com.fbs.datasource.TenantContextHolder;
 import com.fbs.datasource.Item;
 import com.fbs.dmr.universal.model.party.Party;
+import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.SeedService;
 import com.fbs.security.exception.*;
@@ -63,6 +64,8 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	transient private SeedService seedService;
 	@Resource(name="crudServiceParty")
 	transient private CrudService<Party, Integer> crudPartyService;
+	@Resource(name="crudServicePartyType")
+	transient private CrudService<PartyType, Integer> crudPartyTypeService;
 
 	public void setCrudPartyService(CrudService<Party, Integer> crudPartyService)
     {
@@ -73,6 +76,16 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	public CrudService<Party, Integer> getCrudPartyService()
     {
 	    return crudPartyService;
+    }
+	
+	public CrudService<PartyType, Integer> getCrudPartyTypeService()
+    {   
+	    return crudPartyTypeService;
+    }
+	
+	public void setCrudPartyTypeService(CrudService<PartyType, Integer> crudPartyTypeService)
+    {
+	    this.crudPartyTypeService = crudPartyTypeService;
     }
 
 

@@ -1,4 +1,4 @@
-package com.fbs.web.vaadin.ui.user;
+package com.fbs.web.vaadin.ui.user.party;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -120,6 +120,5 @@ public class PartyScreen extends ItemsListScreen<Party>
 			
 			return result;
 		}
-
 	}
 }

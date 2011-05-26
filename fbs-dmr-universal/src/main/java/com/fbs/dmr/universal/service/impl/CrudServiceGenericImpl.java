@@ -7,8 +7,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.fbs.dmr.universal.service.CrudService;
 
+@Transactional
 public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudService<T, ID>
 {
     private static final long serialVersionUID = 1L;

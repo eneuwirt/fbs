@@ -2,6 +2,8 @@ package com.fbs.web.vaadin.ui.common;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
@@ -455,6 +457,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	private static class SaveItemListener<T> implements Button.ClickListener
 	{
 		private static final long serialVersionUID = 1L;
+		private static Logger logger = Logger.getLogger(SaveItemListener.class.getName());
+		
 		private ItemsListScreen<T> screen;
 
 
@@ -502,6 +506,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			}
 			catch (Exception ex)
 			{
+				logger.log(Level.SEVERE, "Exception: " + ex.getMessage());
+				
 				this.screen.notifyClick(Action.SAVE_FAILURE);
 
 				this.screen.app.showErrorMessage(this.screen.form, ex);

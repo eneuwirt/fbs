@@ -21,6 +21,8 @@ public class Header extends HorizontalLayout
 		logoutButton.addListener(new LogoutListener(app));
 		
 		this.setWidth("100%");
+		//this.setMargin(true);
+		this.setSpacing(true);
 
 		this.addComponent(labelUser);
 		this.addComponent(logoutButton);

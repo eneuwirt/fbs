@@ -11,26 +11,29 @@ public class UserScreen extends ScreenTemplate
 {
 	private static final long serialVersionUID = 1L;
 
-	private TabSheet tabsheet;
+	private TabSheet tabsheet = new TabSheet();
+
+	private PartyAccordion partyAccordion;
+
+
 	public UserScreen(MyVaadinApplication app)
 	{
-		super(app);		
+		super(app);
 	}
-	
+
+
 	@Override
-    protected void initMainScreen()
-    {
-		PartyScreen partyScreen;
-		
-		this.tabsheet = new TabSheet();
+	protected void initMainScreen()
+	{
+		tabsheet = new TabSheet();
 		this.mainScreen = tabsheet;
 		
+		this.partyAccordion = new PartyAccordion(this.app);
+
 		tabsheet.setSizeFull();
-		
-		partyScreen = new PartyScreen(this.app);
-		
-		tabsheet.addTab(partyScreen, this.app.getMessage(ApplicationMessages.UserTabTitleParty), null);
+
+		tabsheet.addTab(partyAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleParty), null);
 		tabsheet.addTab(new Label("Contents of the third tab"), "Second tab", null);
 		tabsheet.addTab(new Label("Contents of the third tab"), "Third tab", null);
-    }
+	}
 }

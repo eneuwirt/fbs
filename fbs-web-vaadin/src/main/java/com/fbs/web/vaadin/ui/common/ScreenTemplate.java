@@ -2,7 +2,6 @@ package com.fbs.web.vaadin.ui.common;
 
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.vaadin.ui.AbstractComponentContainer;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 public abstract class ScreenTemplate extends VerticalLayout
@@ -36,16 +35,13 @@ public abstract class ScreenTemplate extends VerticalLayout
 	protected abstract void initMainScreen();
 
 
-	private void initLayout()
+	protected void initLayout()
 	{
 		this.setSizeFull();
-
 		this.setMargin(true);
 		this.setSpacing(true);
 
-		//this.setExpandRatio(header, 1.0f);
 		this.setExpandRatio(this.mainScreen, 1.0f);
-		//this.setExpandRatio(this.footer, 1.0f);
 	}
 
 
@@ -54,9 +50,7 @@ public abstract class ScreenTemplate extends VerticalLayout
 		this.initMainScreen();
 
 		this.addComponent(this.header);
-		this.addComponent(new Label("---------------------------------------"));
 		this.addComponent(this.mainScreen);
-		this.addComponent(new Label("---------------------------------------"));
 		this.addComponent(this.footer);
 	}
 }

@@ -1,4 +1,4 @@
-package com.fbs.web.vaadin.ui;
+package com.fbs.web.vaadin.application;
 
 import java.io.Serializable;
 import java.util.HashMap;

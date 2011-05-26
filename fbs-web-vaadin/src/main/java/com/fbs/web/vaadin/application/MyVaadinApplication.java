@@ -1,9 +1,7 @@
 package com.fbs.web.vaadin.application;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PreDestroy;
@@ -12,9 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.fbs.datasource.Catalog;
 import com.fbs.datasource.TenantContextHolder;
-import com.fbs.datasource.Item;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.service.CrudService;
@@ -26,7 +22,6 @@ import com.fbs.security.service.TenantService;
 import com.fbs.security.service.UserRole;
 import com.fbs.security.service.UserService;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
-import com.fbs.web.vaadin.ui.ViewManager;
 import com.fbs.web.vaadin.ui.admin.AdminScreen;
 import com.fbs.web.vaadin.ui.auth.LoginScreen;
 import com.fbs.web.vaadin.ui.user.UserScreen;
@@ -52,8 +47,6 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	// UI Components
 	private Window mainWindow;
 
-	@Resource
-	transient Catalog catalog;
 	@Resource
 	transient private SecurityService securityService;
 	@Resource
@@ -279,32 +272,6 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	{
 		return MyVaadinApplication.currentApplication.get();
 	}
-
-
-	// TODO remove it
-	public String doShow()
-	{
-		String result;
-		List<Item> goldItems = catalog.getItems();
-
-		goldItems = catalog.getItems();
-
-		result = "gold items: " + goldItems;
-
-		logger.log(Level.SEVERE, "did Something: " + result);
-
-		return result;
-	}
-
-
-	// TODO remove it
-	public void doCreate()
-	{
-		catalog.createItem();
-
-		logger.log(Level.SEVERE, "created ");
-	}
-
 
 	@Override
 	public void terminalError(Terminal.ErrorEvent event)

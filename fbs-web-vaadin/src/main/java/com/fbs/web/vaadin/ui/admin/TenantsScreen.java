@@ -46,7 +46,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 	{
 		List<Tenant> result;
 
-		result = this.app.getTenantService().findAll();
+		result = this.services.getTenantService().findAll();
 
 		return result;
 	}
@@ -75,14 +75,14 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 	@Override
 	protected void updateBean(Tenant t) throws Exception
 	{
-		this.app.getTenantService().update(t);
+		this.services.getTenantService().update(t);
 	}
 
 
 	@Override
 	protected void deleteBean(Tenant t) throws Exception
 	{
-		this.app.getTenantService().delete(t);
+		this.services.getTenantService().delete(t);
 	}
 
 
@@ -91,7 +91,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 	{
 		Tenant result;
 
-		result = this.app.getTenantService().create(tenant);
+		result = this.services.getTenantService().create(tenant);
 
 		return result;
 	}
@@ -102,7 +102,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 	{
 		Tenant result;
 
-		result = this.app.getTenantService().read(t.getId());
+		result = this.services.getTenantService().read(t.getId());
 
 		return result;
 	}

@@ -37,7 +37,7 @@ public class PartyScreen extends ItemsListScreen<Party>
 	@Override
     protected List<Party> getAllBeans() throws Exception
     {
-		List<Party> result = this.app.getCrudPartyService().findAll();
+		List<Party> result = this.services.getCrudPartyService().findAll();
 		
 	    return result;
     }

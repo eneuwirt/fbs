@@ -43,7 +43,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	@Override
 	protected List<PartyType> getAllBeans() throws Exception
 	{
-		List<PartyType> partyTypes = this.app.getCrudPartyTypeService().findAll();
+		List<PartyType> partyTypes = this.services.getCrudPartyTypeService().findAll();
 
 		return partyTypes;
 	}
@@ -52,7 +52,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	@Override
 	protected PartyType createBean(PartyType t) throws Exception
 	{
-		this.app.getCrudPartyTypeService().create(t);
+		this.services.getCrudPartyTypeService().create(t);
 
 		return t;
 	}
@@ -61,7 +61,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	@Override
 	protected void updateBean(PartyType t) throws Exception
 	{
-		this.app.getCrudPartyTypeService().update(t);
+		this.services.getCrudPartyTypeService().update(t);
 	}
 
 
@@ -70,7 +70,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	{
 		PartyType result;
 		
-		result = this.app.getCrudPartyTypeService().read(t.getId());
+		result = this.services.getCrudPartyTypeService().read(t.getId());
 		
 		return result;
 	}
@@ -79,7 +79,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	@Override
 	protected void deleteBean(PartyType t) throws Exception
 	{
-		this.app.getCrudPartyTypeService().delete(t.getId());
+		this.services.getCrudPartyTypeService().delete(t.getId());
 	}
 
 

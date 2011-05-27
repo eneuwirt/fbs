@@ -48,7 +48,7 @@ public class UserScreen extends ItemsListScreen<User>
     protected List<User> getAllBeans() throws Exception
     {
 		List<User> users;
-		users = this.app.getUserService().findAll();
+		users = this.services.getUserService().findAll();
 
 		return users;
     }
@@ -56,7 +56,7 @@ public class UserScreen extends ItemsListScreen<User>
 	@Override
     protected User createBean(User user) throws Exception
     {
-	    User result = this.app.getUserService().create(user);
+	    User result = this.services.getUserService().create(user);
 	    
 	    return result;
     }
@@ -64,13 +64,13 @@ public class UserScreen extends ItemsListScreen<User>
 	@Override
     protected void updateBean(User user) throws Exception
     {
-		this.app.getUserService().update(user);
+		this.services.getUserService().update(user);
     }
 
 	@Override
     protected User readBean(User user) throws Exception
     {
-	    User result = this.app.getUserService().read(user.getUserName());
+	    User result = this.services.getUserService().read(user.getUserName());
 	    
 	    return result;
     }
@@ -78,7 +78,7 @@ public class UserScreen extends ItemsListScreen<User>
 	@Override
     protected void deleteBean(User user) throws Exception
     {
-		this.app.getUserService().delete(user);
+		this.services.getUserService().delete(user);
     }
 
 	@Override

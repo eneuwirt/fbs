@@ -11,16 +11,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.fbs.datasource.TenantContextHolder;
-import com.fbs.dmr.universal.model.party.Party;
-import com.fbs.dmr.universal.model.party.PartyType;
-import com.fbs.dmr.universal.service.CrudService;
-import com.fbs.dmr.universal.service.SeedService;
 import com.fbs.security.exception.*;
 import com.fbs.security.service.Authentication;
-import com.fbs.security.service.SecurityService;
-import com.fbs.security.service.TenantService;
 import com.fbs.security.service.UserRole;
-import com.fbs.security.service.UserService;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.admin.AdminScreen;
 import com.fbs.web.vaadin.ui.auth.LoginScreen;
@@ -48,74 +41,23 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	private Window mainWindow;
 
 	@Resource
-	transient private SecurityService securityService;
-	@Resource
-	transient private TenantService tenantService;
-	@Resource
-	transient private UserService userService;
-	@Resource
-	transient private SeedService seedService;
-	@Resource(name="crudServiceParty")
-	transient private CrudService<Party, Integer> crudPartyService;
-	@Resource(name="crudServicePartyType")
-	transient private CrudService<PartyType, Integer> crudPartyTypeService;
-
-	public void setCrudPartyService(CrudService<Party, Integer> crudPartyService)
-    {
-	    this.crudPartyService = crudPartyService;
-    }
-
-
-	public CrudService<Party, Integer> getCrudPartyService()
-    {
-	    return crudPartyService;
-    }
+	transient private ApplicationServices services;
 	
-	public CrudService<PartyType, Integer> getCrudPartyTypeService()
-    {   
-	    return crudPartyTypeService;
-    }
-	
-	public void setCrudPartyTypeService(CrudService<PartyType, Integer> crudPartyTypeService)
+	public MyVaadinApplication()
+	{
+		super();
+	}
+
+	public void setServices(ApplicationServices services)
     {
-	    this.crudPartyTypeService = crudPartyTypeService;
+	    this.services = services;
     }
 
 
-	public void setSeedService(SeedService seedService)
+	public ApplicationServices getServices()
     {
-	    this.seedService = seedService;
+	    return this.services;
     }
-
-
-	public SeedService getSeedService()
-    {
-	    return seedService;
-    }
-
-
-	public SecurityService getSecurityService()
-	{
-		return this.securityService;
-	}
-
-
-	public void setSecurityService(SecurityService securityService)
-	{
-		this.securityService = securityService;
-	}
-
-
-	public TenantService getTenantService()
-	{
-		return tenantService;
-	}
-
-
-	public void setTenantService(TenantService tenantService)
-	{
-		this.tenantService = tenantService;
-	}
 
 
 	@Override
@@ -160,7 +102,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	{
 		Authentication authentication;
 
-		authentication = this.securityService.login(userName, password);
+		authentication = this.services.getSecurityService().login(userName, password);
 
 		this.setUser(authentication);
 
@@ -176,7 +118,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 			this.getViewManager().switchScreen(UserScreen.class.getName(), new AdminScreen(this));
 		}
 		
-		this.seedService.defaultFill();
+		this.services.getSeedService().defaultFill();
 		
 		return;
 	}
@@ -203,7 +145,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 		this.getContext().removeTransactionListener(this);
 
-		this.securityService.logout();
+		this.services.getSecurityService().logout();
 	}
 
 
@@ -232,9 +174,9 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 			 * by different threads, we have to update the security context
 			 * holder in the beginning of each transaction.
 			 */
-			if (this.securityService != null)
+			if (this.services.getSecurityService() != null)
 			{
-				this.securityService.rollContextIn(application.getUser());
+				this.services.getSecurityService().rollContextIn(application.getUser());
 			}
 		}
 
@@ -253,9 +195,9 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 
 			TenantContextHolder.clearTenant();
 
-			if (this.securityService != null)
+			if (this.services.getSecurityService() != null)
 			{
-				this.securityService.rollContextOut();
+				this.services.getSecurityService().rollContextOut();
 			}
 		}
 	}
@@ -286,19 +228,6 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 			        Notification.TYPE_ERROR_MESSAGE);
 		}
 	}
-
-
-	public void setUserService(UserService userService)
-	{
-		this.userService = userService;
-	}
-
-
-	public UserService getUserService()
-	{
-		return userService;
-	}
-
 
 	public void showErrorMessage(AbstractComponent component, Exception ex)
 	{

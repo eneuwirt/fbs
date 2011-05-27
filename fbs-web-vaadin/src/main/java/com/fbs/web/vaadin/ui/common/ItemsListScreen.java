@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+import com.fbs.web.vaadin.application.ApplicationServices;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.vaadin.data.Property;
@@ -43,6 +44,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 	protected Class<T> clazz;
 	protected MyVaadinApplication app;
+	protected ApplicationServices services;
 	// Elements
 	protected Table table;
 	protected Form form;
@@ -153,6 +155,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 		this.app = app;
 		this.clazz = clazz;
+		this.services = this.app.getServices();
 
 		this.form = new Form();
 		this.form.setImmediate(true);

@@ -1,7 +1,5 @@
 package com.fbs.web.vaadin.ui.admin;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import com.fbs.security.model.Tenant;
@@ -19,13 +17,14 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 	private static final long serialVersionUID = 1L;
 	private static final String COL_ID = "id";
 	private static final String COL_DESCR = "description";
-	private static String[] visibleColumns = new String[] { COL_ID, COL_DESCR };
-	private static String[] visibleItemProperties = new String[] { COL_ID, COL_DESCR };
+	private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID, COL_DESCR };
+	private static final String[] VISIBLE_ITEM_PROPERTIES =  new String[] { COL_ID, COL_DESCR };
+
 
 
 	public TenantsScreen(MyVaadinApplication app)
 	{
-		super(app, Tenant.class);
+		super(app, Tenant.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES );
 	}
 
 
@@ -50,14 +49,6 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 
 		return result;
 	}
-
-
-	@Override
-	protected String[] getVisibleColumns()
-	{
-		return visibleColumns;
-	}
-
 
 	@Override
 	protected String getColumnName(String propertyId)
@@ -106,14 +97,6 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 
 		return result;
 	}
-
-
-	@Override
-    protected Collection<String> getVisibleItemProperties()
-    {
-	    return Arrays.asList(visibleItemProperties);
-    }
-
 
 	@Override
     protected FormFieldFactory getFormFieldFactory()

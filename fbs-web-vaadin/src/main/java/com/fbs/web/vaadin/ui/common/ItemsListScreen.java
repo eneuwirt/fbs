@@ -1,5 +1,6 @@
 package com.fbs.web.vaadin.ui.common;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
@@ -45,6 +46,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected Class<T> clazz;
 	protected MyVaadinApplication app;
 	protected ApplicationServices services;
+	// Some metadata
+	protected String[] visibleColumns;
+	protected String[] visibleItemProperties;
 	// Elements
 	protected Table table;
 	protected Form form;
@@ -123,15 +127,10 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected abstract void deleteBean(T t) throws Exception;
 
 
-	/**
-	 * returns the visible columns as required by Table.
-	 * 
-	 * @return
-	 */
-	protected abstract String[] getVisibleColumns();
-
-
-	protected abstract Collection<String> getVisibleItemProperties();
+	private Collection<String> getVisibleItemProperties()
+	{
+		return Arrays.asList(visibleItemProperties);
+	}
 
 
 	protected abstract FormFieldFactory getFormFieldFactory();
@@ -149,13 +148,16 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	}
 
 
-	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz)
+	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns,
+	        String[] visibleItemProperties)
 	{
 		super();
 
 		this.app = app;
 		this.clazz = clazz;
 		this.services = this.app.getServices();
+		this.visibleColumns = visibleColumns;
+		this.visibleItemProperties = visibleItemProperties;
 
 		this.form = new Form();
 		this.form.setImmediate(true);
@@ -243,10 +245,10 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	{
 		this.table.setSizeFull();
 
-		this.table.setVisibleColumns(this.getVisibleColumns());
+		this.table.setVisibleColumns(this.visibleColumns);
 
 		// Set nicer header names
-		for (String propertyId : this.getVisibleColumns())
+		for (String propertyId : this.visibleColumns)
 		{
 			String columnName = this.getColumnName(propertyId);
 
@@ -287,7 +289,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		searchRow.setExpandRatio(searchLabel, 1);
 
 		// Add search fields
-		for (final String visibleColumn : this.getVisibleColumns())
+		for (final String visibleColumn : this.visibleColumns)
 		{
 			final TextField searchField = new TextField();
 

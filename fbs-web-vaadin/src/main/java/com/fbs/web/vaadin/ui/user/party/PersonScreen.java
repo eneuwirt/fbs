@@ -1,7 +1,5 @@
 package com.fbs.web.vaadin.ui.user.party;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import com.fbs.dmr.universal.model.party.Person;
@@ -20,13 +18,13 @@ public class PersonScreen extends ItemsListScreen<Person>
 	private static final String COL_ID = "id";
 	private static final String COL_FIRST_NAME = "firstName";
 	private static final String COL_LAST_NAME = "lastName";
-	private static String[] visibleColumns = new String[] { COL_ID, COL_FIRST_NAME, COL_LAST_NAME };
-	private static String[] visibleItemProperties = new String[] { COL_ID, COL_FIRST_NAME, COL_LAST_NAME };
+	private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID, COL_FIRST_NAME, COL_LAST_NAME };
+	private static final String[] VISIBLE_ITEM_PROPERTIES =  new String[] { COL_ID, COL_FIRST_NAME, COL_LAST_NAME };
 
 
 	public PersonScreen(MyVaadinApplication app)
 	{
-		super(app, Person.class);
+		super(app, Person.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
 	}
 
 
@@ -68,7 +66,7 @@ public class PersonScreen extends ItemsListScreen<Person>
 		Person result;
 
 		result = this.services.getCrudPersonService().read(t.getId());
-		
+
 		return result;
 	}
 
@@ -77,13 +75,6 @@ public class PersonScreen extends ItemsListScreen<Person>
 	protected void deleteBean(Person t) throws Exception
 	{
 		this.services.getCrudPersonService().delete(t.getId());
-	}
-
-
-	@Override
-	protected String[] getVisibleColumns()
-	{
-		return visibleColumns;
 	}
 
 
@@ -100,13 +91,6 @@ public class PersonScreen extends ItemsListScreen<Person>
 			return this.app.getMessage(ApplicationMessages.PersonLastName);
 
 		return propertyId;
-	}
-
-
-	@Override
-	protected Collection<String> getVisibleItemProperties()
-	{
-		return Arrays.asList(visibleItemProperties);
 	}
 
 

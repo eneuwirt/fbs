@@ -1,7 +1,5 @@
 package com.fbs.web.vaadin.ui.admin;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import com.fbs.security.model.User;
@@ -21,12 +19,10 @@ public class UserScreen extends ItemsListScreen<User>
     private static String COL_USERNAME = "userName";
     private static String COL_PASSWORD = "password";
     private static String COL_TENANTID = "tenantId";
-    private static String[] visibleColumns = new String[] { COL_USERNAME, COL_TENANTID };
-    private static String[] visibleItemProperties = new String[] { COL_USERNAME, COL_TENANTID };
 
 	public UserScreen(MyVaadinApplication app)
     {
-	    super(app, User.class);
+	    super(app, User.class, new String[] { COL_USERNAME, COL_TENANTID }, new String[] { COL_USERNAME, COL_TENANTID });
     }
 
 	@Override
@@ -81,17 +77,6 @@ public class UserScreen extends ItemsListScreen<User>
 		this.services.getUserService().delete(user);
     }
 
-	@Override
-    protected String[] getVisibleColumns()
-    {
-	    return visibleColumns;
-    }
-
-	@Override
-    protected Collection<String> getVisibleItemProperties()
-    {
-		 return Arrays.asList(visibleItemProperties);
-    }
 	
 	@Override
 	protected String getColumnName(String propertyId)

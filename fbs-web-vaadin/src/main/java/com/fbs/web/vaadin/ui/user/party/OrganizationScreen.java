@@ -1,6 +1,5 @@
 package com.fbs.web.vaadin.ui.user.party;
 
-import java.util.Collection;
 import java.util.List;
 
 import com.fbs.dmr.universal.model.party.Organization;
@@ -11,10 +10,13 @@ import com.vaadin.ui.FormFieldFactory;
 public class OrganizationScreen  extends ItemsListScreen<Organization>
 {
     private static final long serialVersionUID = 1L;
+    private static final String COL_ID = "id";
+    private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID};
+	private static final String[] VISIBLE_ITEM_PROPERTIES =  new String[] { COL_ID};
 
 	public OrganizationScreen(MyVaadinApplication app)
     {
-	    super(app, Organization.class);
+	    super(app, Organization.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
     }
 
 	@Override
@@ -63,19 +65,6 @@ public class OrganizationScreen  extends ItemsListScreen<Organization>
 		this.services.getCrudServiceOrganization().delete(t.getId());
     }
 
-	@Override
-    protected String[] getVisibleColumns()
-    {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
-
-	@Override
-    protected Collection<String> getVisibleItemProperties()
-    {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
 
 	@Override
     protected FormFieldFactory getFormFieldFactory()

@@ -1,7 +1,5 @@
 package com.fbs.web.vaadin.ui.user.party;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import com.fbs.dmr.universal.model.party.PartyType;
@@ -19,13 +17,13 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	private static final long serialVersionUID = 1L;
 	private static final String COL_ID = "id";
 	private static final String COL_DESC = "description";
-	private static String[] visibleColumns = new String[] { COL_ID, COL_DESC };
-	private static String[] visibleItemProperties = new String[] { COL_ID, COL_DESC };
+	private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID, COL_DESC };
+	private static final String[] VISIBLE_ITEM_PROPERTIES = new String[] { COL_ID, COL_DESC };
 
 
 	public PartyTypeScreen(MyVaadinApplication app)
 	{
-		super(app, PartyType.class);
+		super(app, PartyType.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
 	}
 
 
@@ -69,9 +67,9 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	protected PartyType readBean(PartyType t) throws Exception
 	{
 		PartyType result;
-		
+
 		result = this.services.getCrudPartyTypeService().read(t.getId());
-		
+
 		return result;
 	}
 
@@ -80,20 +78,6 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	protected void deleteBean(PartyType t) throws Exception
 	{
 		this.services.getCrudPartyTypeService().delete(t.getId());
-	}
-
-
-	@Override
-	protected String[] getVisibleColumns()
-	{
-		return visibleColumns;
-	}
-
-
-	@Override
-	protected Collection<String> getVisibleItemProperties()
-	{
-		return Arrays.asList(visibleItemProperties);
 	}
 
 

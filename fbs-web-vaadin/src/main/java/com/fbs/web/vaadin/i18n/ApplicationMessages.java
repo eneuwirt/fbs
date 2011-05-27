@@ -43,6 +43,7 @@ public interface ApplicationMessages extends Serializable
 	
 	// Organization
 	public static String OrgId = "Organization.Id";
+	public static String OrgName = "Organization.Name";
 	public static String OrgTitle = "Organization.Title";
 	
 	// Party
@@ -52,6 +53,9 @@ public interface ApplicationMessages extends Serializable
 	public static String PartyTypeDescription = "PartyType.Description";
 	public static String PartyTypeId = "PartyType.Id";
 	public static String PartyTypeTitle = "PartyType.Title";
+	
+	//PartyTypeClassification
+	public static String PartyTypeClassificationTitle = "PartyTypeClassification.Title";
 	
 	//Person
 	public static String PersonFirstName = "Person.FirstName";

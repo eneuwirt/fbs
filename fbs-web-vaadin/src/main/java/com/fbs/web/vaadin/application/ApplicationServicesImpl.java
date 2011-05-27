@@ -2,6 +2,7 @@ package com.fbs.web.vaadin.application;
 
 import javax.annotation.Resource;
 
+import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
@@ -22,6 +23,8 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private UserService userService;
 	@Resource
 	private SeedService seedService;
+	@Resource(name = "crudServiceOrganization")
+	private CrudService<Organization, Integer> crudServiceOrganization;
 	@Resource(name = "crudServiceParty")
 	private CrudService<Party, Integer> crudPartyService;
 	@Resource(name = "crudServicePartyType")
@@ -104,5 +107,16 @@ public class ApplicationServicesImpl implements ApplicationServices
 	public void setCrudPersonService(CrudService<Person, Integer> crudPersonService)
     {
 	    this.crudPersonService = crudPersonService;
+    }
+
+	public void setCrudServiceOrganization(CrudService<Organization, Integer> crudServiceOrganization)
+    {
+	    this.crudServiceOrganization = crudServiceOrganization;
+    }
+
+	@Override
+	public CrudService<Organization, Integer> getCrudServiceOrganization()
+    {
+	    return crudServiceOrganization;
     }
 }

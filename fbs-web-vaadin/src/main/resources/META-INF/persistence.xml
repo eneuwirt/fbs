@@ -7,5 +7,6 @@
     <class>com.fbs.dmr.universal.model.party.Party</class>
     <class>com.fbs.dmr.universal.model.party.PartyClassification</class>
     <class>com.fbs.dmr.universal.model.party.PartyType</class>
+    <class>com.fbs.dmr.universal.model.party.Person</class>
   </persistence-unit>
 </persistence>

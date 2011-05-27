@@ -45,9 +45,15 @@ public interface ApplicationMessages extends Serializable
 	public static String PartyTitle = "Party.Title";
 	
 	// PartyType
-	public static String PartyTypeTitle = "PartyType.Title";
-	public static String PartyTypeId = "PartyType.Id";
 	public static String PartyTypeDescription = "PartyType.Description";
+	public static String PartyTypeId = "PartyType.Id";
+	public static String PartyTypeTitle = "PartyType.Title";
+	
+	//Person
+	public static String PersonFirstName = "Person.FirstName";
+	public static String PersonId = "Person.Id";
+	public static String PersonLastName = "Person.LastName";
+	public static String PersonTitle = "Person.Title";
 
 	// Register Form
 	public static String RegisterTitle = "Register.Title";

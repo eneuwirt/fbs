@@ -22,6 +22,8 @@
   <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.CrudServicePartyClassificationImpl" />
 
   <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyTypeImpl" />
+  
+  <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.CrudServicePersonImpl" />
 
   <bean id="seedService" class="com.fbs.dmr.universal.service.impl.SeedServiceImpl">
     <property name="servicePartyType" ref="crudServicePartyType" />

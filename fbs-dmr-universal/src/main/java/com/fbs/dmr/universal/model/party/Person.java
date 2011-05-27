@@ -1,5 +1,6 @@
 package com.fbs.dmr.universal.model.party;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -8,13 +9,38 @@ import javax.persistence.Table;
 public class Person extends Party
 {
     private static final long serialVersionUID = 1L;
+    @Column(name="first_name")
+    private String firstName = "";
+    @Column(name="last_name")
+    private String lastName = "";
 
     public Person()
     {
     	
     }
     
-    @Override
+    public void setFirstName(String firstName)
+    {
+	    this.firstName = firstName;
+    }
+
+	public String getFirstName()
+    {
+	    return firstName;
+    }
+
+    
+    public void setLastName(String lastName)
+    {
+	    this.lastName = lastName;
+    }
+
+	public String getLastName()
+    {
+	    return lastName;
+    }
+
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj == null)
@@ -48,9 +74,8 @@ public class Person extends Party
 		return result;
 	}
 
-
 	public String toString()
 	{
-		return String.format("Person [id=%s]", this.getId());
+		return String.format("Person [id=%s, name=%s]", this.getId(), this.firstName);
 	}
 }

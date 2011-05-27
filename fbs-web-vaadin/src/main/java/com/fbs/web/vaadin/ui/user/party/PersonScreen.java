@@ -24,7 +24,7 @@ public class PersonScreen extends ItemsListScreen<Person>
 
 	public PersonScreen(MyVaadinApplication app)
 	{
-		super(app, Person.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+		super(app, Person.class, new PartyForm(), VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
 	}
 
 

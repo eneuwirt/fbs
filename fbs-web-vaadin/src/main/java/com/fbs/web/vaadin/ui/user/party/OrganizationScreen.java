@@ -21,7 +21,7 @@ public class OrganizationScreen  extends ItemsListScreen<Organization>
 
 	public OrganizationScreen(MyVaadinApplication app)
     {
-	    super(app, Organization.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+	    super(app, Organization.class, new PartyForm(), VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
     }
 
 	@Override

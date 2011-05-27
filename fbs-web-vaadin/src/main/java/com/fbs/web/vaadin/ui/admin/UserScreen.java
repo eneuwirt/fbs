@@ -19,10 +19,12 @@ public class UserScreen extends ItemsListScreen<User>
     private static String COL_USERNAME = "userName";
     private static String COL_PASSWORD = "password";
     private static String COL_TENANTID = "tenantId";
+    private static final String[] VISIBLE_COLUMNS = { COL_USERNAME, COL_TENANTID };
+	private static final String[] VISIBLE_ITEM_PROPERTIES =  new String[] { COL_USERNAME, COL_TENANTID };
 
 	public UserScreen(MyVaadinApplication app)
     {
-	    super(app, User.class, new String[] { COL_USERNAME, COL_TENANTID }, new String[] { COL_USERNAME, COL_TENANTID });
+	    super(app, User.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
     }
 
 	@Override

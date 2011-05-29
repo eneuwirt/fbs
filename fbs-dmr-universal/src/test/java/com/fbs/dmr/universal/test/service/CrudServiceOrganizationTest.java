@@ -1,5 +1,6 @@
 package com.fbs.dmr.universal.test.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyClassification;
+import com.fbs.dmr.universal.model.party.PartyRole;
+import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.service.CrudService;
 
@@ -29,6 +32,8 @@ public class CrudServiceOrganizationTest
 	CrudService<Organization, Integer> crudServiceOrganization;
 	@Resource(name="crudServicePartyType")
 	CrudService<PartyType, Integer> crudServicePartyType;
+	@Resource(name="crudServicePartyRoleType")
+	CrudService<PartyRoleType, Integer> crudServicePartyRoleType;
 	
 
 
@@ -49,6 +54,16 @@ public class CrudServiceOrganizationTest
 		
 		party.getPartyClassifications().add(pC);
 	}
+	
+	private void createRoles(Party party, PartyRoleType prt)
+	{
+		PartyRole pr = new PartyRole();
+		
+		pr.setParty(party);
+		pr.setPartyRoleType(prt);
+		
+		party.getPartyRoles().add(pr);
+	}
 
 	@Test
 	public void testCrud()
@@ -62,6 +77,17 @@ public class CrudServiceOrganizationTest
 		Integer id;
 		Integer id2;
 		List<Organization> organizations = null;
+		PartyRoleType prt1, prt2;
+		List<PartyRole> roles = null;
+		
+		prt1 = new PartyRoleType();
+		prt1.setDescription("Party Role Type 1");
+		this.crudServicePartyRoleType.create(prt1);
+
+		prt2 = new PartyRoleType();
+		prt2.setDescription("Party Role Type 2");
+		this.crudServicePartyRoleType.create(prt2);
+		
 		
 		pT = new PartyType();
 		pT.setDescription("Party Type lol");
@@ -74,11 +100,21 @@ public class CrudServiceOrganizationTest
 		
 		org = new Organization();
 		org.setName(name);
-		this.crudServiceOrganization.create(org);
-		Assert.assertNotNull(org.getId());
-		id = org.getId();
 		this.createClassifications(org, pT);	
 		this.createClassifications(org, pT2);
+		this.createRoles(org, prt1);
+		this.createRoles(org, prt2);
+		this.crudServiceOrganization.create(org);
+		Assert.assertNotNull(org.getId());
+		for (PartyClassification pc : org.getPartyClassifications())
+		{
+			Assert.assertNotNull(pc.getId());
+		}
+		for (PartyRole pr : org.getPartyRoles())
+		{
+			Assert.assertNotNull(pr.getId());
+		}
+		id = org.getId();
 
 		org2 = new Organization();
 		org2.setName(name2);
@@ -92,6 +128,7 @@ public class CrudServiceOrganizationTest
 		Assert.assertEquals(org.getName(), name);
 		Assert.assertNotNull(org.getPartyClassifications());
 		Assert.assertEquals(org.getPartyClassifications().size(), 2);
+		Assert.assertEquals(org.getPartyRoles().size(), 2);
 
 		org.setName(name2);
 		this.crudServiceOrganization.update(org);

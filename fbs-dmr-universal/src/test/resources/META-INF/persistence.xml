@@ -6,6 +6,8 @@
     <class>com.fbs.dmr.universal.model.party.Organization</class>
     <class>com.fbs.dmr.universal.model.party.Party</class>
     <class>com.fbs.dmr.universal.model.party.PartyClassification</class>
+    <class>com.fbs.dmr.universal.model.party.PartyRole</class>
+    <class>com.fbs.dmr.universal.model.party.PartyRoleType</class>
     <class>com.fbs.dmr.universal.model.party.PartyType</class>
     <class>com.fbs.dmr.universal.model.party.Person</class>
   </persistence-unit>

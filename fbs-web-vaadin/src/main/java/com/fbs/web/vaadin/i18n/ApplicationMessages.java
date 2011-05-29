@@ -46,6 +46,11 @@ public interface ApplicationMessages extends Serializable
 	public static String OrgName = "Organization.Name";
 	public static String OrgTitle = "Organization.Title";
 	
+	// PartyRoleType
+	public static String PartyRoleTypeDescription = "PartyRoleType.Description";
+	public static String PartyRoleTypeId = "PartyRoleType.Id";
+	public static String PartyRoleTypeTitle = "PartyRoleType.Title";
+	
 	// Party
 	public static String PartyTitle = "Party.Title";
 	

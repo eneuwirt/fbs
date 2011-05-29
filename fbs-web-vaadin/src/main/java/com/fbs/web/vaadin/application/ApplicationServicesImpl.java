@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
+import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.service.CrudService;
@@ -31,6 +32,8 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private CrudService<PartyType, Integer> crudPartyTypeService;
 	@Resource (name="crudServicePerson")
 	private CrudService<Person, Integer> crudPersonService;
+	@Resource(name = "crudServicePartyRoleType")
+	private CrudService<PartyRoleType, Integer>crudServicePartyRoleType;
 
 	@Override
 	public SecurityService getSecurityService()
@@ -118,5 +121,11 @@ public class ApplicationServicesImpl implements ApplicationServices
 	public CrudService<Organization, Integer> getCrudServiceOrganization()
     {
 	    return crudServiceOrganization;
+    }
+
+	@Override
+    public CrudService<PartyRoleType, Integer> getCrudServicePartyRoleType()
+    {
+	    return crudServicePartyRoleType;
     }
 }

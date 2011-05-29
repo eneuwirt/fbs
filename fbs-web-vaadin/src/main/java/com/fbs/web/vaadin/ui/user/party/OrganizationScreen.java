@@ -14,7 +14,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Select;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 
 public class OrganizationScreen extends ItemsListScreen<Organization>

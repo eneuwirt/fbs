@@ -1,6 +1,5 @@
 package com.fbs.dmr.universal.test.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -78,7 +77,6 @@ public class CrudServiceOrganizationTest
 		Integer id2;
 		List<Organization> organizations = null;
 		PartyRoleType prt1, prt2;
-		List<PartyRole> roles = null;
 		
 		prt1 = new PartyRoleType();
 		prt1.setDescription("Party Role Type 1");
@@ -106,6 +104,8 @@ public class CrudServiceOrganizationTest
 		this.createRoles(org, prt2);
 		this.crudServiceOrganization.create(org);
 		Assert.assertNotNull(org.getId());
+		Assert.assertEquals(org.getPartyClassifications().size(), 2);
+		Assert.assertEquals(org.getPartyRoles().size(), 2);
 		for (PartyClassification pc : org.getPartyClassifications())
 		{
 			Assert.assertNotNull(pc.getId());
@@ -129,6 +129,16 @@ public class CrudServiceOrganizationTest
 		Assert.assertNotNull(org.getPartyClassifications());
 		Assert.assertEquals(org.getPartyClassifications().size(), 2);
 		Assert.assertEquals(org.getPartyRoles().size(), 2);
+		Assert.assertEquals(org.getPartyClassifications().size(), 2);
+		Assert.assertEquals(org.getPartyRoles().size(), 2);
+		for (PartyClassification pc : org.getPartyClassifications())
+		{
+			Assert.assertNotNull(pc.getId());
+		}
+		for (PartyRole pr : org.getPartyRoles())
+		{
+			Assert.assertNotNull(pr.getId());
+		}
 
 		org.setName(name2);
 		this.crudServiceOrganization.update(org);

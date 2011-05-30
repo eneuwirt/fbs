@@ -1,8 +1,6 @@
 package com.fbs.dmr.universal.model.party;
 
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import com.fbs.dmr.universal.model.type.RoleType;

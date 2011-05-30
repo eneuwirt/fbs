@@ -97,16 +97,16 @@ public class PersonScreen extends ItemsListScreen<Person>
 	@Override
 	protected FormFieldFactory getFormFieldFactory()
 	{
-		return new PartyFormFieldFactory(this.app);
+		return new PersonFormFieldFactory(this.app);
 	}
 
-	private static class PartyFormFieldFactory implements FormFieldFactory
+	private static class PersonFormFieldFactory implements FormFieldFactory
 	{
 		private static final long serialVersionUID = 1L;
 		private MyVaadinApplication app;
 
 
-		public PartyFormFieldFactory(MyVaadinApplication app)
+		public PersonFormFieldFactory(MyVaadinApplication app)
 		{
 			this.app = app;
 		}

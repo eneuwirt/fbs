@@ -3,6 +3,7 @@ package com.fbs.web.vaadin.ui.user.party;
 import java.util.List;
 
 import com.fbs.dmr.universal.model.party.Organization;
+import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
@@ -22,8 +23,9 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 	private static final String COL_ID = "id";
 	private static final String COL_NAME = "name";
 	private static final String COL_CLASS = "partyClassifications";
+	private static final String COL_ROLES = "partyRoles";
 	private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID, COL_NAME };
-	private static final String[] VISIBLE_ITEM_PROPERTIES = new String[] { COL_ID, COL_NAME, COL_CLASS };
+	private static final String[] VISIBLE_ITEM_PROPERTIES = new String[] { COL_ID, COL_NAME, COL_CLASS, COL_ROLES };
 
 
 	public OrganizationScreen(MyVaadinApplication app)
@@ -145,6 +147,31 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 
 				optionGroup = new OptionGroup(this.app.getMessage(ApplicationMessages.PartyTypeClassificationTitle),
 				        container);
+
+				// Set the caption mode to read the caption directly
+				// from the 'name' property of the bean
+				optionGroup.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
+				optionGroup.setItemCaptionPropertyId("description");
+				optionGroup.setMultiSelect(true);
+				optionGroup.setNullSelectionAllowed(false);
+				optionGroup.setImmediate(true);
+
+				result = optionGroup;
+			}
+			else if (COL_ROLES.equals(pid))
+			{
+				OptionGroup optionGroup;
+				// Have a bean container to put the beans in
+				BeanItemContainer<PartyRoleType> container = new BeanItemContainer<PartyRoleType>(PartyRoleType.class);
+				List<PartyRoleType> partyRoleTypes;
+
+				partyRoleTypes = this.app.getServices().getCrudServicePartyRoleType().findAll();
+				for (PartyRoleType partyRoleType : partyRoleTypes)
+				{
+					container.addBean(partyRoleType);
+				}
+
+				optionGroup = new OptionGroup(this.app.getMessage(ApplicationMessages.PartyRoleTypeTitle), container);
 
 				// Set the caption mode to read the caption directly
 				// from the 'name' property of the bean

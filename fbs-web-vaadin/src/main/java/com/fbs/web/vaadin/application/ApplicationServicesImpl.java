@@ -27,11 +27,11 @@ public class ApplicationServicesImpl implements ApplicationServices
 	@Resource(name = "crudServiceOrganization")
 	private CrudService<Organization, Integer> crudServiceOrganization;
 	@Resource(name = "crudServiceParty")
-	private CrudService<Party, Integer> crudPartyService;
+	private CrudService<Party, Integer> crudServiceParty;
 	@Resource(name = "crudServicePartyType")
-	private CrudService<PartyType, Integer> crudPartyTypeService;
+	private CrudService<PartyType, Integer> crudServicePartyType;
 	@Resource (name="crudServicePerson")
-	private CrudService<Person, Integer> crudPersonService;
+	private CrudService<Person, Integer> crudServicePerson;
 	@Resource(name = "crudServicePartyRoleType")
 	private CrudService<PartyRoleType, Integer>crudServicePartyRoleType;
 
@@ -80,36 +80,36 @@ public class ApplicationServicesImpl implements ApplicationServices
 	}
 
 	@Override
-	public CrudService<Party, Integer> getCrudPartyService()
+	public CrudService<Party, Integer> getCrudServiceParty()
 	{
-		return crudPartyService;
+		return crudServiceParty;
 	}
 
 	public void setCrudPartyService(CrudService<Party, Integer> crudPartyService)
 	{
-		this.crudPartyService = crudPartyService;
+		this.crudServiceParty = crudPartyService;
 	}
 
 	@Override
-	public CrudService<PartyType, Integer> getCrudPartyTypeService()
+	public CrudService<PartyType, Integer> getCrudServicePartyType()
 	{
-		return crudPartyTypeService;
+		return crudServicePartyType;
 	}
 
 	public void setCrudPartyTypeService(CrudService<PartyType, Integer> crudPartyTypeService)
 	{
-		this.crudPartyTypeService = crudPartyTypeService;
+		this.crudServicePartyType = crudPartyTypeService;
 	}
 
 	@Override
-	public CrudService<Person, Integer> getCrudPersonService()
+	public CrudService<Person, Integer> getCrudServicePerson()
     {
-	    return crudPersonService;
+	    return crudServicePerson;
     }
 	
 	public void setCrudPersonService(CrudService<Person, Integer> crudPersonService)
     {
-	    this.crudPersonService = crudPersonService;
+	    this.crudServicePerson = crudPersonService;
     }
 
 	public void setCrudServiceOrganization(CrudService<Organization, Integer> crudServiceOrganization)

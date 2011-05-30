@@ -22,13 +22,13 @@ public interface ApplicationServices
 
 	public SeedService getSeedService();
 
-	public CrudService<Party, Integer> getCrudPartyService();
+	public CrudService<Party, Integer> getCrudServiceParty();
 
-	public CrudService<PartyType, Integer> getCrudPartyTypeService();
+	public CrudService<PartyType, Integer> getCrudServicePartyType();
 	
 	public CrudService<PartyRoleType, Integer> getCrudServicePartyRoleType();
 	
-	public CrudService<Person, Integer> getCrudPersonService();
+	public CrudService<Person, Integer> getCrudServicePerson();
 	
 	public CrudService<Organization, Integer> getCrudServiceOrganization();
 }

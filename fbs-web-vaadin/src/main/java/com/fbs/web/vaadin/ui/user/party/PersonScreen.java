@@ -38,7 +38,7 @@ public class PersonScreen extends ItemsListScreen<Person>
 	@Override
 	protected List<Person> getAllBeans() throws Exception
 	{
-		List<Person> result = this.services.getCrudPersonService().findAll();
+		List<Person> result = this.services.getCrudServicePerson().findAll();
 
 		return result;
 	}
@@ -47,7 +47,7 @@ public class PersonScreen extends ItemsListScreen<Person>
 	@Override
 	protected Person createBean(Person t) throws Exception
 	{
-		this.services.getCrudPersonService().create(t);
+		this.services.getCrudServicePerson().create(t);
 
 		return t;
 	}
@@ -56,7 +56,7 @@ public class PersonScreen extends ItemsListScreen<Person>
 	@Override
 	protected void updateBean(Person t) throws Exception
 	{
-		this.services.getCrudPersonService().update(t);
+		this.services.getCrudServicePerson().update(t);
 	}
 
 
@@ -65,7 +65,7 @@ public class PersonScreen extends ItemsListScreen<Person>
 	{
 		Person result;
 
-		result = this.services.getCrudPersonService().read(t.getId());
+		result = this.services.getCrudServicePerson().read(t.getId());
 
 		return result;
 	}
@@ -74,7 +74,7 @@ public class PersonScreen extends ItemsListScreen<Person>
 	@Override
 	protected void deleteBean(Person t) throws Exception
 	{
-		this.services.getCrudPersonService().delete(t.getId());
+		this.services.getCrudServicePerson().delete(t.getId());
 	}
 
 

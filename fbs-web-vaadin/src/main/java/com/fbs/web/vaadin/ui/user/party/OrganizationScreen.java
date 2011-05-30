@@ -139,7 +139,7 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 				BeanItemContainer<PartyType> container = new BeanItemContainer<PartyType>(PartyType.class);
 				List<PartyType> partyTypes;
 
-				partyTypes = this.app.getServices().getCrudPartyTypeService().findAll();
+				partyTypes = this.app.getServices().getCrudServicePartyType().findAll();
 				for (PartyType partyType : partyTypes)
 				{
 					container.addBean(partyType);

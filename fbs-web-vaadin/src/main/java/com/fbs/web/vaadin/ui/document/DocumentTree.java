@@ -1,10 +1,16 @@
 package com.fbs.web.vaadin.ui.document;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.vaadin.event.Action;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.Tree;
 
 public class DocumentTree extends HorizontalLayout implements Action.Handler
@@ -28,6 +34,7 @@ public class DocumentTree extends HorizontalLayout implements Action.Handler
 	private Panel panelRight;
 
 	private Button createButton;
+	private Button createButton2;
 	private Button deleteButton;
 	private Button moveButton;
 
@@ -39,11 +46,13 @@ public class DocumentTree extends HorizontalLayout implements Action.Handler
 
 		panelLeft = new Panel("Aktenverwaltung");
 		panelLeft.setSizeFull();
-		
-		this.createButton = new Button("Anlegen");
-		this.deleteButton = new Button ("Löschen");
+
+		this.createButton = new Button("Anlegen Ordner");
+		this.createButton2 = new Button("Anlegen Document");
+		this.deleteButton = new Button("Löschen");
 		this.moveButton = new Button("Verschieben");
 		HorizontalLayout buttonRow = new HorizontalLayout();
+		buttonRow.addComponent(this.createButton2);
 		buttonRow.addComponent(this.createButton);
 		buttonRow.addComponent(this.deleteButton);
 		buttonRow.addComponent(this.moveButton);
@@ -51,10 +60,62 @@ public class DocumentTree extends HorizontalLayout implements Action.Handler
 		panelRight = new Panel("Details");
 		panelRight.setSizeFull();
 
-		// Let's add a few rows to provoke scrollbars:
-		for (int i = 0; i < 20; i++)
+		Panel panelDocDet = new Panel("Dokumentdetails");
+		panelDocDet.setSizeFull();
+		panelDocDet.addComponent(new Label("Akte X"));
+		panelDocDet.addComponent(new Button("Neue Dokumentenversion Uploaden"));
+		panelDocDet.addComponent(new Label("Dokumentname: Vorbereitung zum Termin am 24.12.2011."));
+		panelDocDet.addComponent(new Label("Aktuelle Version 10"));
+		panelDocDet.addComponent(new Label("Status: in Bearbeitung"));
+		panelDocDet.addComponent(new Label("Angeleget von Agent Mulder"));
+		TextArea ta = new TextArea("Bemerkungen",
+        "Ist sehr wichtig die neuen Regeln vom ... zu beachten. Die Aliens reagieren allergisch auf Birkenpollen");
+		ta.setWidth("100%");
+		ta.setRows(4);
+
+		panelDocDet.addComponent(ta);
+
+		HorizontalLayout permissions = new HorizontalLayout();
+		permissions.setSizeFull();
+		permissions.setMargin(true);
+		permissions.setSpacing(true);
+		final List<String> cities = Arrays.asList(new String[] { "Agent Mulder", "Agent Scully", "Irmgard Unglück",
+		        "Peter van Bethooven", "Otto der Hausmeister", "Helge Stengel", "Jeder" });
+		OptionGroup citySelect = new OptionGroup("Lesen und Schreiben", cities);
+		citySelect.setNullSelectionAllowed(true); // user can not 'unselect'
+		citySelect.setMultiSelect(true);
+		citySelect.select("Agent Mulder"); // select this by default
+		citySelect.select("Agent Scully"); // select this by default
+		citySelect.setImmediate(true); // send the change to the server at once
+
+		OptionGroup citySelect2 = new OptionGroup("Nur Lesen", cities);
+		citySelect2.setNullSelectionAllowed(true); // user can not 'unselect'
+		citySelect2.setMultiSelect(true);
+		citySelect2.select("Agent Mulder"); // select this by default
+		citySelect2.select("Agent Scully"); // select this by default
+		citySelect2.setImmediate(true); // send the change to the server at once
+
+		permissions.addComponent(citySelect);
+		permissions.addComponent(citySelect2);
+
+		panelDocDet.addComponent(permissions);
+		panelDocDet.addComponent(new Button("Speichern"));
+
+		panelRight.addComponent(panelDocDet);
+
+		for (int i = 10; i > 0; i--)
 		{
-			panelRight.addComponent(new Label("The quick brown fox jumps over the lazy dog."));
+			HorizontalLayout hl1 = new HorizontalLayout();
+
+			hl1.setMargin(true);
+			hl1.setSpacing(true);
+			hl1.addComponent(new Label("Schreiben an die Galaktische Allianz"));
+			hl1.addComponent(new Label("Version " + i));
+			hl1.addComponent(new Label("Angelegt von Mulder"));
+			hl1.addComponent(new Button("Download"));
+			hl1.addComponent(new Button("Löschen"));
+
+			panelRight.addComponent(hl1);
 		}
 
 		// Create new Tree object using a hierarchical container from

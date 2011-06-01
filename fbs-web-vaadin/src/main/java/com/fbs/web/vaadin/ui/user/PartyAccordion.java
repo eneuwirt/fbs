@@ -23,10 +23,10 @@ public class PartyAccordion extends Accordion
 		super();
 		this.app = app;
 
-		orgScreen = new OrganizationScreen(this.app);
-		personScreen = new PersonScreen(this.app);
-		partyTypeScreen = new PartyTypeScreen(this.app);
-		partyRoleTypeScreen = new PartyRoleTypeScreen(this.app);
+		this.orgScreen = new OrganizationScreen(this.app);
+		this.personScreen = new PersonScreen(this.app);
+		this.partyTypeScreen = new PartyTypeScreen(this.app);
+		this.partyRoleTypeScreen = new PartyRoleTypeScreen(this.app);
 
 		this.addTab(personScreen, this.app.getMessage(ApplicationMessages.PersonTitle), null);
 		this.addTab(orgScreen, this.app.getMessage(ApplicationMessages.OrgTitle), null);

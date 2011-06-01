@@ -14,6 +14,8 @@ public class UserScreen extends ScreenTemplate
 	private TabSheet tabsheet = new TabSheet();
 
 	private PartyAccordion partyAccordion;
+	private RelationshipAccordion relAccordion;
+	private DocumentsAccordion docAccordion;
 
 
 	public UserScreen(MyVaadinApplication app)
@@ -29,11 +31,13 @@ public class UserScreen extends ScreenTemplate
 		this.mainScreen = tabsheet;
 		
 		this.partyAccordion = new PartyAccordion(this.app);
+		this.relAccordion = new RelationshipAccordion(this.app);
+		this.docAccordion = new  DocumentsAccordion(this.app);
 
 		tabsheet.setSizeFull();
 
 		tabsheet.addTab(partyAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleParty), null);
-		tabsheet.addTab(new Label("Contents of the third tab"), "Second tab", null);
-		tabsheet.addTab(new Label("Contents of the third tab"), "Third tab", null);
+		tabsheet.addTab(relAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleRelationships), null);
+		tabsheet.addTab(docAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleDocuments), null);
 	}
 }

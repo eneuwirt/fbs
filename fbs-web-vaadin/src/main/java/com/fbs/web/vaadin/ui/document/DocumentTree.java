@@ -38,33 +38,15 @@ public class DocumentTree extends HorizontalLayout implements Action.Handler
 	private Button deleteButton;
 	private Button moveButton;
 
-
-	public DocumentTree()
-	{
-		this.setSizeFull();
-		setSpacing(true);
-
-		panelLeft = new Panel("Aktenverwaltung");
-		panelLeft.setSizeFull();
-
-		this.createButton = new Button("Anlegen Ordner");
-		this.createButton2 = new Button("Anlegen Document");
-		this.deleteButton = new Button("Löschen");
-		this.moveButton = new Button("Verschieben");
-		HorizontalLayout buttonRow = new HorizontalLayout();
-		buttonRow.addComponent(this.createButton2);
-		buttonRow.addComponent(this.createButton);
-		buttonRow.addComponent(this.deleteButton);
-		buttonRow.addComponent(this.moveButton);
-
-		panelRight = new Panel("Details");
+	private void createRight()
+	{		
 		panelRight.setSizeFull();
 
 		Panel panelDocDet = new Panel("Dokumentdetails");
 		panelDocDet.setSizeFull();
 		panelDocDet.addComponent(new Label("Akte X"));
 		panelDocDet.addComponent(new Button("Neue Dokumentenversion Uploaden"));
-		panelDocDet.addComponent(new Label("Dokumentname: Vorbereitung zum Termin am 24.12.2011."));
+		panelDocDet.addComponent(new Label("Dokumentname: Schreiben an die Galaktische Allianz."));
 		panelDocDet.addComponent(new Label("Aktuelle Version 10"));
 		panelDocDet.addComponent(new Label("Status: in Bearbeitung"));
 		panelDocDet.addComponent(new Label("Angeleget von Agent Mulder"));
@@ -91,8 +73,8 @@ public class DocumentTree extends HorizontalLayout implements Action.Handler
 		OptionGroup citySelect2 = new OptionGroup("Nur Lesen", cities);
 		citySelect2.setNullSelectionAllowed(true); // user can not 'unselect'
 		citySelect2.setMultiSelect(true);
-		citySelect2.select("Agent Mulder"); // select this by default
-		citySelect2.select("Agent Scully"); // select this by default
+		citySelect2.select("Otto der Hausmeister"); // select this by default
+		citySelect2.select("Peter van Bethooven"); // select this by default
 		citySelect2.setImmediate(true); // send the change to the server at once
 
 		permissions.addComponent(citySelect);
@@ -117,7 +99,23 @@ public class DocumentTree extends HorizontalLayout implements Action.Handler
 
 			panelRight.addComponent(hl1);
 		}
+		
+	}
+	
+	private void createLeft()
+	{
+		panelLeft.setSizeFull();
 
+		this.createButton = new Button("Anlegen Ordner");
+		this.createButton2 = new Button("Anlegen Document");
+		this.deleteButton = new Button("Löschen");
+		this.moveButton = new Button("Verschieben");
+		HorizontalLayout buttonRow = new HorizontalLayout();
+		buttonRow.addComponent(this.createButton2);
+		buttonRow.addComponent(this.createButton);
+		buttonRow.addComponent(this.deleteButton);
+		buttonRow.addComponent(this.moveButton);
+		
 		// Create new Tree object using a hierarchical container from
 		// ExampleUtil class
 		tree = new Tree("Akten");
@@ -162,6 +160,19 @@ public class DocumentTree extends HorizontalLayout implements Action.Handler
 
 		this.panelLeft.addComponent(tree);
 		this.panelLeft.addComponent(buttonRow);
+	}
+
+	public DocumentTree()
+	{
+		this.setSizeFull();
+		setSpacing(true);
+
+		panelLeft = new Panel("Aktenverwaltung");
+		this.createLeft();
+
+		panelRight = new Panel("Details");
+		this.createRight();
+		
 
 		this.addComponent(panelLeft);
 		this.addComponent(panelRight);

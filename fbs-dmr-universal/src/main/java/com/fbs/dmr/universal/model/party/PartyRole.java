@@ -3,6 +3,7 @@ package com.fbs.dmr.universal.model.party;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,9 @@ public class PartyRole implements Serializable
 	@ManyToOne
 	private PartyRoleType partyRoleType;
 	@Temporal(TemporalType.DATE)
+	@Column(name="date_from")
 	private Date dateFrom = new Date();
+	@Column(name="date_to")
 	@Temporal(TemporalType.DATE)
 	private Date dateTo = new Date(DateUtils.getEndOfDays().getTime());
 	

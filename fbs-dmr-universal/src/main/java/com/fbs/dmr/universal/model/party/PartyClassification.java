@@ -3,12 +3,15 @@ package com.fbs.dmr.universal.model.party;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fbs.dmr.util.DateUtils;
 
@@ -24,7 +27,11 @@ public class PartyClassification implements Serializable
 	private Party party;
 	@ManyToOne
 	private PartyType partyType;
+	@Temporal(TemporalType.DATE)
+	@Column(name="date_from")
 	private Date dateFrom = new Date();
+	@Temporal(TemporalType.DATE)
+	@Column(name="date_to")
 	private Date dateTo = DateUtils.getEndOfDays();
 
 

@@ -33,6 +33,7 @@
 
   <bean id="seedService" class="com.fbs.dmr.universal.service.impl.SeedServiceImpl">
     <property name="servicePartyType" ref="crudServicePartyType" />
+    <property name="servicePartyRoleType" ref="crudServicePartyRoleType"/>
   </bean>
 
   <bean id="tenantService" class="com.fbs.security.service.impl.TenantServiceImpl">

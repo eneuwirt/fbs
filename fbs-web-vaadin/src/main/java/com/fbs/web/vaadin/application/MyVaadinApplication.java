@@ -107,6 +107,8 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		this.setUser(authentication);
 
 		TenantContextHolder.setTenant(authentication.getTenantId());
+		
+		this.services.getSeedService().defaultFill();
 
 		// Switch to the protected view
 		if (authentication.getUserRole() == UserRole.ROLE_USER)
@@ -117,8 +119,6 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		{
 			this.getViewManager().switchScreen(UserScreen.class.getName(), new AdminScreen(this));
 		}
-		
-		this.services.getSeedService().defaultFill();
 		
 		return;
 	}

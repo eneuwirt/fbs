@@ -3,6 +3,7 @@ package com.fbs.web.vaadin.application;
 
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
+import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
@@ -31,4 +32,6 @@ public interface ApplicationServices
 	public CrudService<Person, Integer> getCrudServicePerson();
 	
 	public CrudService<Organization, Integer> getCrudServiceOrganization();
+	
+	public CrudService<PartyRelationshipType, Integer> getCrudServicePartyRelationshipType();
 }

@@ -4,7 +4,6 @@ import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ScreenTemplate;
 
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
 
 public class UserScreen extends ScreenTemplate

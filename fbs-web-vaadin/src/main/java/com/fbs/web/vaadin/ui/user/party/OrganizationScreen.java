@@ -136,14 +136,11 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 			{
 				OptionGroup optionGroup;
 				// Have a bean container to put the beans in
-				BeanItemContainer<PartyType> container = new BeanItemContainer<PartyType>(PartyType.class);
+				BeanItemContainer<PartyType> container;
 				List<PartyType> partyTypes;
 
 				partyTypes = this.app.getServices().getCrudServicePartyType().findAll();
-				for (PartyType partyType : partyTypes)
-				{
-					container.addBean(partyType);
-				}
+				container = new BeanItemContainer<PartyType>(PartyType.class, partyTypes);
 
 				optionGroup = new OptionGroup(this.app.getMessage(ApplicationMessages.PartyTypeClassificationTitle),
 				        container);
@@ -162,15 +159,12 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 			{
 				OptionGroup optionGroup;
 				// Have a bean container to put the beans in
-				BeanItemContainer<PartyRoleType> container = new BeanItemContainer<PartyRoleType>(PartyRoleType.class);
+				BeanItemContainer<PartyRoleType> container;
 				List<PartyRoleType> partyRoleTypes;
 
 				partyRoleTypes = this.app.getServices().getCrudServicePartyRoleType().findAll();
-				for (PartyRoleType partyRoleType : partyRoleTypes)
-				{
-					container.addBean(partyRoleType);
-				}
-
+				container = new BeanItemContainer<PartyRoleType>(PartyRoleType.class, partyRoleTypes);
+				
 				optionGroup = new OptionGroup(this.app.getMessage(ApplicationMessages.PartyRoleTypeTitle), container);
 
 				// Set the caption mode to read the caption directly

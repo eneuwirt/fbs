@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
+import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
@@ -31,12 +32,14 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private CrudService<Party, Integer> crudServiceParty;
 	@Resource(name = "crudServicePartyType")
 	private CrudService<PartyType, Integer> crudServicePartyType;
-	@Resource (name="crudServicePerson")
-	private CrudService<Person, Integer> crudServicePerson;
+	@Resource(name = "crudServicePartyRelationship")
+	private CrudService<PartyRelationship, Integer>crudServicePartyRelationship;
 	@Resource(name = "crudServicePartyRelationshipType")
 	private CrudService<PartyRelationshipType, Integer>crudServicePartyRelationshipType;
 	@Resource(name = "crudServicePartyRoleType")
 	private CrudService<PartyRoleType, Integer>crudServicePartyRoleType;
+	@Resource (name="crudServicePerson")
+	private CrudService<Person, Integer> crudServicePerson;
 
 	@Override
 	public SecurityService getSecurityService()
@@ -141,5 +144,16 @@ public class ApplicationServicesImpl implements ApplicationServices
 	public CrudService<PartyRelationshipType, Integer> getCrudServicePartyRelationshipType()
     {
 	    return crudServicePartyRelationshipType;
+    }
+
+	public void setCrudServicePartyRelationship(CrudService<PartyRelationship, Integer> crudServicePartyRelationship)
+    {
+	    this.crudServicePartyRelationship = crudServicePartyRelationship;
+    }
+
+	@Override
+	public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship()
+    {
+	    return crudServicePartyRelationship;
     }
 }

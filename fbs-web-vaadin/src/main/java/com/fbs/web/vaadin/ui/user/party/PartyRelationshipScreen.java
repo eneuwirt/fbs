@@ -35,7 +35,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<DtoPartyRelationshi
 
 	public PartyRelationshipScreen(MyVaadinApplication app)
 	{
-		super(app, DtoPartyRelationship.class, null, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+		super(app, DtoPartyRelationship.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
 	}
 
 

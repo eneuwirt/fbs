@@ -23,7 +23,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 
 	public PartyTypeScreen(MyVaadinApplication app)
 	{
-		super(app, PartyType.class, null, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+		super(app, PartyType.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
 	}
 
 

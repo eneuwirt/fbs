@@ -30,7 +30,7 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 
 	public OrganizationScreen(MyVaadinApplication app)
 	{
-		super(app, Organization.class, null, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+		super(app, Organization.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
 	}
 
 
@@ -174,7 +174,7 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 				// Set the caption mode to read the caption directly
 				// from the 'name' property of the bean
 				optionGroup.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
-				optionGroup.setItemCaptionPropertyId("description");
+				optionGroup.setItemCaptionPropertyId("partyRoles");
 				optionGroup.setMultiSelect(true);
 				optionGroup.setImmediate(true);
 				optionGroup.addListener(new PartyRoleSelectListener());

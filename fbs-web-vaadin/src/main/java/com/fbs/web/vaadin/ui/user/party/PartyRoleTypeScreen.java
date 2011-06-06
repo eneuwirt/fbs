@@ -22,7 +22,7 @@ public class PartyRoleTypeScreen extends ItemsListScreen<PartyRoleType>
 	
 	public PartyRoleTypeScreen(MyVaadinApplication app)
     {
-	    super(app, PartyRoleType.class, null, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+	    super(app, PartyRoleType.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
     }
 
 	@Override

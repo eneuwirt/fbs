@@ -148,7 +148,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	}
 
 
-	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, Form form, String[] visibleColumns,
+	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns,
 	        String[] visibleItemProperties)
 	{
 		super();
@@ -159,14 +159,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.visibleColumns = visibleColumns;
 		this.visibleItemProperties = visibleItemProperties;
 
-		if (form == null)
-		{
-			this.form = new Form();
-		}
-		else
-		{
-			this.form = form;
-		}
+		this.form = new Form();
+		
 		this.form.setImmediate(true);
 		this.form.setEnabled(false);
 		this.form.setFormFieldFactory(this.getFormFieldFactory());

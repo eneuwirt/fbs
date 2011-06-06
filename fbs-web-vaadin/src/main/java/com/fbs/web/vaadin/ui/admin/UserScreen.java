@@ -24,7 +24,7 @@ public class UserScreen extends ItemsListScreen<User>
 
 	public UserScreen(MyVaadinApplication app)
     {
-	    super(app, User.class, null, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+	    super(app, User.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
     }
 
 	@Override

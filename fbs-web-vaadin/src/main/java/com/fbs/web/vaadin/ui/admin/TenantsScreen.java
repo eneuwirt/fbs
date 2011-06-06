@@ -24,7 +24,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 
 	public TenantsScreen(MyVaadinApplication app)
 	{
-		super(app, Tenant.class, null,  VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES );
+		super(app, Tenant.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES );
 	}
 
 

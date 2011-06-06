@@ -91,6 +91,9 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 	{
 		if (propertyId.equals(COL_ID))
 			return this.app.getMessage(ApplicationMessages.OrgId);
+		
+		if (propertyId.equals(COL_NAME))
+			return this.app.getMessage(ApplicationMessages.OrgName);
 
 		return propertyId;
 	}

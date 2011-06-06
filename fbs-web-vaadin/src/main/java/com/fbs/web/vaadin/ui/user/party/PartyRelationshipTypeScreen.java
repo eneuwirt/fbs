@@ -71,6 +71,18 @@ public class PartyRelationshipTypeScreen extends ItemsListScreen<PartyRelationsh
 	{
 		this.services.getCrudServicePartyRelationshipType().delete(t.getId());
 	}
+	
+	@Override
+	protected String getColumnName(String propertyId)
+	{
+		if (propertyId.equals(COL_ID))
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeId);
+
+		if (propertyId.equals(COL_NAME))
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeName);
+
+		return propertyId;
+	}
 
 	@Override
 	protected FormFieldFactory getFormFieldFactory()

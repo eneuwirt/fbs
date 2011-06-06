@@ -74,6 +74,18 @@ public class PartyRoleTypeScreen extends ItemsListScreen<PartyRoleType>
     {
 	    return new PartyRoleTypeFormFieldFactory(this.app);
     }
+	
+	@Override
+	protected String getColumnName(String propertyId)
+	{
+		if (propertyId.equals(COL_ID))
+			return this.app.getMessage(ApplicationMessages.PartyRoleTypeId);
+
+		if (propertyId.equals(COL_DESC))
+			return this.app.getMessage(ApplicationMessages.PartyRoleTypeDescription);
+
+		return propertyId;
+	}
 
 	private static class PartyRoleTypeFormFieldFactory implements FormFieldFactory
 	{

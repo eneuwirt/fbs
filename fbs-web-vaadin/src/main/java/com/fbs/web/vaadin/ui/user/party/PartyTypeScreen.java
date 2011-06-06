@@ -86,6 +86,18 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	{
 		return new PartyTypeFormFieldFactory(this.app);
 	}
+	
+	@Override
+	protected String getColumnName(String propertyId)
+	{
+		if (propertyId.equals(COL_ID))
+			return this.app.getMessage(ApplicationMessages.PartyTypeId);
+
+		if (propertyId.equals(COL_DESC))
+			return this.app.getMessage(ApplicationMessages.PartyTypeDescription);
+
+		return propertyId;
+	}
 
 	private static class PartyTypeFormFieldFactory implements FormFieldFactory
 	{

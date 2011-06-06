@@ -19,9 +19,9 @@ public class PartyRelationshipType implements Serializable
 	private Integer id;
 	private String description = "";
 	private String name = "";
-	@ManyToOne
+	@ManyToOne(optional=true)
 	private PartyRoleType partyRoleTypeTo;
-	@ManyToOne
+	@ManyToOne(optional=true)
 	private PartyRoleType partyRoleTypeFrom;
 
 	public PartyRelationshipType()

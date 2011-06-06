@@ -153,8 +153,9 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 				optionGroup.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
 				optionGroup.setItemCaptionPropertyId("description");
 				optionGroup.setMultiSelect(true);
-				optionGroup.setNullSelectionAllowed(false);
 				optionGroup.setImmediate(true);
+				
+				optionGroup.addListener(new PartyRoleSelectListener());
 
 				result = optionGroup;
 			}
@@ -175,8 +176,8 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 				optionGroup.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
 				optionGroup.setItemCaptionPropertyId("description");
 				optionGroup.setMultiSelect(true);
-				optionGroup.setNullSelectionAllowed(false);
 				optionGroup.setImmediate(true);
+				optionGroup.addListener(new PartyRoleSelectListener());
 
 				result = optionGroup;
 			}

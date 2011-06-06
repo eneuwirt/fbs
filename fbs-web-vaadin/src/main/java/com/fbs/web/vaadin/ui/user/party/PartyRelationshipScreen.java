@@ -25,9 +25,10 @@ public class PartyRelationshipScreen extends ItemsListScreen<DtoPartyRelationshi
 	private static final String COL_ID = "id";
 	private static final String COL_COMMENT = "comment";
 	private static final String COL_REL_TYPE = "partyRelationshipType";
+	private static final String COL_REL_TYPE_NAME = "partyRelationshipTypeName";
 	private static final String COL_DATE_FROM = "dateFrom";
 	private static final String COL_DATE_TO = "dateTo";
-	private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID, COL_REL_TYPE };
+	private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID, COL_REL_TYPE_NAME };
 	private static final String[] VISIBLE_ITEM_PROPERTIES = new String[] { COL_ID, COL_COMMENT, COL_REL_TYPE,
 	        COL_DATE_FROM, COL_DATE_TO };
 
@@ -70,7 +71,17 @@ public class PartyRelationshipScreen extends ItemsListScreen<DtoPartyRelationshi
 	@Override
 	protected DtoPartyRelationship createBean(DtoPartyRelationship t) throws Exception
 	{
-		throw new IllegalArgumentException("Not implemnted");
+		PartyRelationship partyRelationship;
+		
+		partyRelationship = new PartyRelationship();
+		partyRelationship.setComment(t.getComment());
+		partyRelationship.setDateFrom(t.getDateFrom());
+		partyRelationship.setDateTo(t.getDateTo());
+		partyRelationship.setPartyRelationshipType(t.getPartyRelationshipType());
+		
+		this.app.getServices().getCrudServicePartyRelationship().create(partyRelationship);
+		
+		return t;
 	}
 
 

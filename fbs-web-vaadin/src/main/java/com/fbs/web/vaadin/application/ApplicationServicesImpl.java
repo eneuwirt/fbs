@@ -6,6 +6,7 @@ import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
+import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
@@ -38,6 +39,8 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private CrudService<PartyRelationshipType, Integer>crudServicePartyRelationshipType;
 	@Resource(name = "crudServicePartyRoleType")
 	private CrudService<PartyRoleType, Integer>crudServicePartyRoleType;
+	@Resource(name = "crudServicePartyRole")
+	private CrudService<PartyRole, Integer>crudServicePartyRole;
 	@Resource (name="crudServicePerson")
 	private CrudService<Person, Integer> crudServicePerson;
 
@@ -155,5 +158,16 @@ public class ApplicationServicesImpl implements ApplicationServices
 	public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship()
     {
 	    return crudServicePartyRelationship;
+    }
+
+	@Override
+    public CrudService<PartyRole, Integer> getCrudServicePartyRole()
+    {
+	    return this.crudServicePartyRole;
+    }
+
+	public void setCrudServicePartyRole(CrudService<PartyRole, Integer> crudServicePartyRole)
+    {
+    	this.crudServicePartyRole = crudServicePartyRole;
     }
 }

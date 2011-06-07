@@ -25,6 +25,8 @@
 
   <bean id="crudServicePartyRelationshipType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipTypeImpl" />
 
+  <bean id="crudServicePartyRole" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleImpl" />
+
   <bean id="crudServicePartyRoleType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleTypeImpl" />
 
   <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyTypeImpl" />

@@ -49,10 +49,11 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	// Visible columns for table and visible fields for form
 	protected String[] visibleColumns;
 	protected String[] visibleFields;
+	protected String[] nestedContainerProperties;
 	// Elements
 	protected Table table;
 	protected Form form;
-	private BeanItemContainer<T> beanItemContainer;
+	protected BeanItemContainer<T> beanItemContainer;
 	// Additional buttons
 	protected Button buttonItemAdd;
 	protected Button buttonItemDelete;
@@ -147,13 +148,22 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		return propertyId;
 	}
 
+
 	protected Form getForm()
 	{
 		return new Form();
-		
+
 	}
-	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns,
-	        String[] visibleFields)
+
+
+	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields)
+	{
+		this(app, clazz, visibleColumns, visibleFields, null);
+	}
+
+
+	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields,
+	        String[] nestedContainerProperties)
 	{
 		super();
 
@@ -162,14 +172,16 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.services = this.app.getServices();
 		this.visibleColumns = visibleColumns;
 		this.visibleFields = visibleFields;
+		this.nestedContainerProperties = nestedContainerProperties;
 
-		this.form = this.getForm();		
+		this.form = this.getForm();
 		this.form.setImmediate(true);
 		this.form.setEnabled(false);
 		this.form.setFormFieldFactory(this.getFormFieldFactory());
 		this.resetForm();
 
 		this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
+		this.addNestedContainerProperties();
 
 		this.table = new Table();
 		this.table.setSelectable(true);
@@ -210,6 +222,20 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		catch (Exception e)
 		{
 			// ignore at first time
+		}
+	}
+
+
+	private void addNestedContainerProperties()
+	{
+		if (this.nestedContainerProperties == null)
+		{
+			return;
+		}
+
+		for (int i = 0; i < this.nestedContainerProperties.length; i++)
+		{
+			this.beanItemContainer.addNestedContainerProperty(nestedContainerProperties[i]);
 		}
 	}
 

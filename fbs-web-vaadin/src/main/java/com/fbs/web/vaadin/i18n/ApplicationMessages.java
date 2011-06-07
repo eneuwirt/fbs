@@ -46,6 +46,9 @@ public interface ApplicationMessages extends Serializable
 	public static String OrgName = "Organization.Name";
 	public static String OrgTitle = "Organization.Title";
 	
+	//Party
+	public static String PartyName = "Party.Name";
+	
 	// PartyRelationship
 	public static String PartyRelationshipComment = "PartyRelationship.Comment";
 	public static String PartyRelationshipDateFrom = "PartyRelationshipDate.From";
@@ -61,13 +64,15 @@ public interface ApplicationMessages extends Serializable
 	public static String PartyRelationshipTypeTitle = "PartyRelationshipType.Title";
 	public static String PartyRelationshipTypeName = "PartyRelationshipType.Name";
 	
+	//PartyRole
+	public static String PartyRoleId = "PartyRole.Id";
+	public static String PartyRoleParty = "PartyRole.Party";
+	public static String PartyRoleTitle = "PartyRole.Title";
+	
 	// PartyRoleType
 	public static String PartyRoleTypeDescription = "PartyRoleType.Description";
 	public static String PartyRoleTypeId = "PartyRoleType.Id";
 	public static String PartyRoleTypeTitle = "PartyRoleType.Title";
-	
-	// Party
-	public static String PartyTitle = "Party.Title";
 	
 	// PartyType
 	public static String PartyTypeDescription = "PartyType.Description";

@@ -39,6 +39,12 @@ public class Person extends Party
     {
 	    return lastName;
     }
+	
+	@Override
+	public String getName()
+	{
+		return this.firstName + " " + this.lastName;
+	}
 
 	@Override
 	public boolean equals(Object obj)

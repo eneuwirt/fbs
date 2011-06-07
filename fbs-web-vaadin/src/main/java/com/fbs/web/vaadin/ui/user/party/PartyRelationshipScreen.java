@@ -1,11 +1,10 @@
 package com.fbs.web.vaadin.ui.user.party;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
-import com.fbs.web.dto.DtoPartyRelationship;
+import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
@@ -19,95 +18,71 @@ import com.vaadin.ui.Select;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class PartyRelationshipScreen extends ItemsListScreen<DtoPartyRelationship>
+public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 {
 	private static final long serialVersionUID = 1L;
-	private static final String COL_ID = "id";
-	private static final String COL_COMMENT = "comment";
-	private static final String COL_REL_TYPE = "partyRelationshipType";
-	private static final String COL_REL_TYPE_NAME = "partyRelationshipTypeName";
-	private static final String COL_DATE_FROM = "dateFrom";
-	private static final String COL_DATE_TO = "dateTo";
-	private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID, COL_REL_TYPE_NAME };
-	private static final String[] VISIBLE_ITEM_PROPERTIES = new String[] { COL_ID, COL_COMMENT, COL_REL_TYPE,
-	        COL_DATE_FROM, COL_DATE_TO };
+	private static final String ID = "id";
+	private static final String COMMENT = "comment";
+	private static final String RELTYPE = "partyRelationshipType";
+	private static final String RELTYPE_NAME = "partyRelationshipType.name";
+	private static final String DATE_FROM = "dateFrom";
+	private static final String DATE_TO = "dateTo";
+	private static final String ROLE_FROMNAME = "partyRoleFrom.name";
+	private static final String ROLE_FROM = "partyRoleFrom";
+	private static final String ROLE_TO = "partyRoleTo";
+	private static final String[] NESTED_PROPERTIES = new String[] { RELTYPE_NAME };
+	private static final String[] VISIBLE_COLUMNS = new String[] { ID, RELTYPE_NAME };
+	private static final String[] VISIBLE_ITEM_PROPERTIES = new String[] { ID, COMMENT, RELTYPE, ROLE_FROM, ROLE_TO,
+	        DATE_FROM, DATE_TO };
 
 
 	public PartyRelationshipScreen(MyVaadinApplication app)
 	{
-		super(app, DtoPartyRelationship.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+		super(app, PartyRelationship.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES, NESTED_PROPERTIES);
 	}
 
 
 	@Override
-	protected DtoPartyRelationship createBeanInstance()
+	protected PartyRelationship createBeanInstance()
 	{
-		DtoPartyRelationship result = new DtoPartyRelationship();
+		PartyRelationship result = new PartyRelationship();
 
 		return result;
 	}
 
 
 	@Override
-	protected List<DtoPartyRelationship> getAllBeans() throws Exception
+	protected List<PartyRelationship> getAllBeans() throws Exception
 	{
-		List<DtoPartyRelationship> result = new ArrayList<DtoPartyRelationship>();
-		List<PartyRelationship> partyRelationships;
-
-		partyRelationships = this.app.getServices().getCrudServicePartyRelationship().findAll();
-		for (PartyRelationship partyRelationship : partyRelationships)
-		{
-			DtoPartyRelationship dto;
-
-			dto = new DtoPartyRelationship(partyRelationship);
-
-			result.add(dto);
-		}
-
-		return result;
+		return this.app.getServices().getCrudServicePartyRelationship().findAll();
 	}
 
 
 	@Override
-	protected DtoPartyRelationship createBean(DtoPartyRelationship t) throws Exception
+	protected PartyRelationship createBean(PartyRelationship t) throws Exception
 	{
-		PartyRelationship partyRelationship;
-		
-		partyRelationship = new PartyRelationship();
-		partyRelationship.setComment(t.getComment());
-		partyRelationship.setDateFrom(t.getDateFrom());
-		partyRelationship.setDateTo(t.getDateTo());
-		partyRelationship.setPartyRelationshipType(t.getPartyRelationshipType());
-		
-		this.app.getServices().getCrudServicePartyRelationship().create(partyRelationship);
-		
+		this.app.getServices().getCrudServicePartyRelationship().create(t);
+
 		return t;
 	}
 
 
 	@Override
-	protected void updateBean(DtoPartyRelationship t) throws Exception
+	protected void updateBean(PartyRelationship t) throws Exception
 	{
-		throw new IllegalArgumentException("Not implemnted");
+		this.app.getServices().getCrudServicePartyRelationship().update(t);
 	}
 
 
 	@Override
-	protected DtoPartyRelationship readBean(DtoPartyRelationship t) throws Exception
+	protected PartyRelationship readBean(PartyRelationship t) throws Exception
 	{
-		DtoPartyRelationship result;
-		PartyRelationship partyRelationship;
-
-		partyRelationship = this.app.getServices().getCrudServicePartyRelationship().read(t.getId());
-
-		result = new DtoPartyRelationship(partyRelationship);
-
-		return result;
+		return this.app.getServices().getCrudServicePartyRelationship().read(t.getId());
 	}
 
 
 	@Override
-	protected void deleteBean(DtoPartyRelationship t) throws Exception
+	protected void deleteBean(PartyRelationship t) throws Exception
 	{
 		this.app.getServices().getCrudServicePartyRelationship().delete(t.getId());
 	}
@@ -116,13 +91,10 @@ public class PartyRelationshipScreen extends ItemsListScreen<DtoPartyRelationshi
 	@Override
 	protected String getColumnName(String propertyId)
 	{
-		if (propertyId.equals(COL_ID))
+		if (propertyId.equals(ID))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipId);
 
-		if (propertyId.equals(COL_COMMENT))
-			return this.app.getMessage(ApplicationMessages.PartyRelationshipComment);
-
-		if (propertyId.equals(COL_REL_TYPE))
+		if (propertyId.equals(RELTYPE_NAME))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeTitle);
 
 		return propertyId;
@@ -155,13 +127,13 @@ public class PartyRelationshipScreen extends ItemsListScreen<DtoPartyRelationshi
 
 			String pid = (String) propertyId;
 
-			if (COL_ID.equals(pid))
+			if (ID.equals(pid))
 			{
 				result = new TextField(this.app.getMessage(ApplicationMessages.PartyRelationshipId));
 
 				result.setReadOnly(true);
 			}
-			else if (COL_COMMENT.equals(pid))
+			else if (COMMENT.equals(pid))
 			{
 				TextArea textArea;
 
@@ -172,7 +144,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<DtoPartyRelationshi
 
 				result = textArea;
 			}
-			else if (COL_REL_TYPE.equals(pid))
+			else if (RELTYPE.equals(pid))
 			{
 				BeanItemContainer<PartyRelationshipType> container;
 				List<PartyRelationshipType> partyRelationshipTypes;
@@ -191,12 +163,39 @@ public class PartyRelationshipScreen extends ItemsListScreen<DtoPartyRelationshi
 
 				result = select;
 			}
-			else if (COL_DATE_FROM.equals(pid) || COL_DATE_TO.equals(pid))
+			else if (ROLE_FROM.equals(pid) || ROLE_TO.equals(pid))
+			{
+				Select select;
+				String caption;
+				BeanItemContainer<PartyRole> container;
+				List<PartyRole> partyRoles;
+
+				partyRoles = this.app.getServices().getCrudServicePartyRole().findAll();
+				container = new BeanItemContainer<PartyRole>(PartyRole.class, partyRoles);
+				container.addNestedContainerProperty("party.name");
+				
+				if (ROLE_FROM.equals(pid))
+				{
+					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipRoleFrom);
+					
+				}
+				else
+				{
+					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipRoleTo);
+				}
+
+				select = new Select(caption, container);
+				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
+				select.setItemCaptionPropertyId("party.name");
+
+				result = select;
+			}
+			else if (DATE_FROM.equals(pid) || DATE_TO.equals(pid))
 			{
 				DateField date;
 				String caption;
-				
-				if (COL_DATE_FROM.equals(pid))
+
+				if (DATE_FROM.equals(pid))
 				{
 					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipDateFrom);
 				}
@@ -204,10 +203,10 @@ public class PartyRelationshipScreen extends ItemsListScreen<DtoPartyRelationshi
 				{
 					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipDateTo);
 				}
-				
+
 				date = new DateField(caption);
 				date.setResolution(DateField.RESOLUTION_DAY);
-					
+
 				result = date;
 			}
 

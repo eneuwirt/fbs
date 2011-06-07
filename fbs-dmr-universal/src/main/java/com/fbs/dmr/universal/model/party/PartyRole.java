@@ -106,6 +106,11 @@ public class PartyRole implements Serializable
 		}
 
 		PartyRole other = (PartyRole) obj;
+		
+		if (this.id == null || other.id == null)
+		{
+			return (this.partyRoleType.equals(other.partyRoleType) && this.party.equals(other.party));
+		}
 
 		if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id))
 		{

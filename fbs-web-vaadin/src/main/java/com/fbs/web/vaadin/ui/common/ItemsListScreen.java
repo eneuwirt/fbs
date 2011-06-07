@@ -46,9 +46,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected Class<T> clazz;
 	protected MyVaadinApplication app;
 	protected ApplicationServices services;
-	// Some metadata
+	// Visible columns for table and visible fields for form
 	protected String[] visibleColumns;
-	protected String[] visibleItemProperties;
+	protected String[] visibleFields;
 	// Elements
 	protected Table table;
 	protected Form form;
@@ -127,9 +127,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected abstract void deleteBean(T t) throws Exception;
 
 
-	private Collection<String> getVisibleItemProperties()
+	private Collection<String> getVisibleFields()
 	{
-		return Arrays.asList(visibleItemProperties);
+		return Arrays.asList(visibleFields);
 	}
 
 
@@ -147,9 +147,13 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		return propertyId;
 	}
 
-
+	protected Form getForm()
+	{
+		return new Form();
+		
+	}
 	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns,
-	        String[] visibleItemProperties)
+	        String[] visibleFields)
 	{
 		super();
 
@@ -157,10 +161,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.clazz = clazz;
 		this.services = this.app.getServices();
 		this.visibleColumns = visibleColumns;
-		this.visibleItemProperties = visibleItemProperties;
+		this.visibleFields = visibleFields;
 
-		this.form = new Form();
-		
+		this.form = this.getForm();		
 		this.form.setImmediate(true);
 		this.form.setEnabled(false);
 		this.form.setFormFieldFactory(this.getFormFieldFactory());
@@ -375,7 +378,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			beanItem = new BeanItem<T>(bean);
 
 			this.screen.form.setEnabled(true);
-			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
+			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleFields());
 
 			this.screen.buttonItemAdd.setEnabled(false);
 			this.screen.buttonItemDelete.setEnabled(false);
@@ -456,7 +459,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				this.screen.table.select(beanSuc);
 			}
 
-			this.screen.form.setItemDataSource(beanItemSuc, this.screen.getVisibleItemProperties());
+			this.screen.form.setItemDataSource(beanItemSuc, this.screen.getVisibleFields());
 		}
 	}
 
@@ -504,7 +507,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				}
 
 				this.screen.table.select(beanItem.getBean());
-				this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
+				this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleFields());
 
 				this.screen.buttonSave.setEnabled(true);
 				this.screen.buttonCancel.setEnabled(true);
@@ -623,7 +626,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
 			}
 
-			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
+			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleFields());
 
 			this.screen.table.setEnabled(true);
 
@@ -665,7 +668,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 				beanItem = (BeanItem<T>) this.screen.table.getItem(bean);
 
-				this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleItemProperties());
+				this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleFields());
 				this.screen.form.setEnabled(true);
 
 				this.screen.buttonItemAdd.setEnabled(true);
@@ -685,6 +688,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		T t = this.createBeanInstance();
 		BeanItem<T> dummy = new BeanItem<T>(t);
 
-		this.form.setItemDataSource(dummy, this.getVisibleItemProperties());
+		this.form.setItemDataSource(dummy, this.getVisibleFields());
 	}
 }

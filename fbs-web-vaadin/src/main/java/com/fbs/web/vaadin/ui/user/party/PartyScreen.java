@@ -5,23 +5,23 @@ import java.util.Collection;
 import java.util.List;
 
 import com.fbs.dmr.universal.model.party.Party;
+import com.fbs.dmr.universal.model.party.PartyClassification;
 import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
+import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.OptionGroup;
-import com.vaadin.ui.Select;
 
 public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 {
 	private static final long serialVersionUID = 1L;
+	protected OptionGroup rolesGroup;
+	protected OptionGroup classificationsGroup;
 
 
 	public PartyScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields)
@@ -35,11 +35,17 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	{
 		super(app, clazz, visibleColumns, visibleFields, nestedContainerProperties);
 	}
-
-
-	private OptionGroup getOptionGroupRoles(Party party)
+	
+	@Override
+	protected void resetComponent()
 	{
-		OptionGroup rolesGroup;
+		this.rolesGroup.select(null);
+		this.classificationsGroup.select(null);
+	}
+
+
+	private void getOptionGroupRoles(Party party)
+	{
 		List<String> partyRoles = new ArrayList<String>();
 		List<PartyRoleType> partyRoleTypes;
 		String caption;
@@ -52,32 +58,58 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 		caption = this.app.getMessage(ApplicationMessages.PartyRoleTitle);
 
-		rolesGroup = new OptionGroup(caption, partyRoles);
-		rolesGroup.setMultiSelect(true);
-		rolesGroup.setNullSelectionAllowed(true);
-		rolesGroup.setImmediate(true);
-		rolesGroup.addListener(new PartyRolesValueChangeListener());
-		rolesGroup.addListener(new PartyRolesValueChangeListener());
-
+		this.rolesGroup = new OptionGroup(caption, partyRoles);
+		this.rolesGroup.setMultiSelect(true);
+		this.rolesGroup.setNullSelectionAllowed(true);
+		this.rolesGroup.setImmediate(true);
+		
 		// set selection
 		if (party != null)
 		{
 			for (PartyRole p : party.getPartyRoles())
 			{
-				rolesGroup.select(p.getPartyRoleType().getDescription());
+				this.rolesGroup.select(p.getPartyRoleType().getDescription());
 			}
 		}
-
-		return rolesGroup;
 	}
+	
+	private void getOptionGroupClassification(Party party)
+    {
+		List<String> partyClassifications = new ArrayList<String>();
+		List<PartyType> partyTypes;
+		String caption;
+		
+		caption = this.app.getMessage(ApplicationMessages.PartyTypeTitle);
+		
+		partyTypes = this.app.getServices().getCrudServicePartyType().findAll();
+		for (PartyType partyType : partyTypes)
+		{
+			partyClassifications.add(partyType.getDescription());
+		}
+		
+		this.classificationsGroup = new OptionGroup(caption, partyClassifications);
+		this.classificationsGroup.setCaption(caption);
+		this.classificationsGroup.setMultiSelect(true);
+		this.classificationsGroup.setNullSelectionAllowed(true); 
+		this.classificationsGroup.setImmediate(true); 
+		
+		// set selection
+		if (party != null)
+		{
+			for (PartyClassification p : party.getPartyClassifications())
+			{
+				this.rolesGroup.select(p.getPartyType().getDescription());
+			}
+		}
+    }
 
 
-	@Override
+
+	@SuppressWarnings("unchecked")
+    @Override
 	protected Component getComponent()
 	{
 		HorizontalLayout layout;
-		OptionGroup rolesGroup;
-		OptionGroup classificationsGroup;
 		BeanItem<T> beanItem;
 		Party party = null;
 
@@ -93,36 +125,14 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 			party = beanItem.getBean();
 		}
 
-		rolesGroup = this.getOptionGroupRoles(party);
-
-		/*
-		 * classificationsGroup = new OptionGroup("Rollllllleeen", null);
-		 * classificationsGroup.setMultiSelect(true);
-		 * classificationsGroup.setNullSelectionAllowed(false); // user can not
-		 * // 'unselect' classificationsGroup.select("Berlin"); // select this
-		 * by default classificationsGroup.setImmediate(true); // send the
-		 * change to the // server at once
-		 */
+		this.getOptionGroupRoles(party);
+		
+		this.getOptionGroupClassification(party);
+		
+		
 		layout.addComponent(rolesGroup);
-		// layout.addComponent(classificationsGroup);
+		layout.addComponent(classificationsGroup);
 
 		return layout;
 	}
-
-	private static class PartyRolesValueChangeListener implements Property.ValueChangeListener
-	{
-		private static final long serialVersionUID = 1L;
-
-
-		@Override
-		public void valueChange(ValueChangeEvent event)
-		{
-			OptionGroup optionGroup;
-			Collection<String >selList;
-
-			optionGroup = (OptionGroup) event.getProperty();
-			selList = (Collection<String>) optionGroup.getValue();
-		}
-	}
-
 }

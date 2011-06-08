@@ -20,6 +20,7 @@ import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -183,6 +184,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.resetForm();
 		
 		this.component = this.getComponent();
+		this.component.setEnabled(false);
+		this.resetComponent();
 
 		this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
 		this.addNestedContainerProperties();
@@ -230,9 +233,19 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	}
 
 
+	protected void resetComponent()
+    {
+	    return;
+    }
+
+
 	protected Component getComponent()
     {
-	    return null;
+	    Panel p = new Panel();
+	    
+	    p.setVisible(false);
+	    
+	    return p;
     }
 
 
@@ -381,10 +394,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		buttonRow.addComponent(this.buttonDelete);
 
 		right.addComponent(this.form);
-		if (this.component != null)
-		{
-			right.addComponent(this.component);
-		}
+		right.addComponent(this.component);
+
 		right.addComponent(buttonRow);
 
 		right.setExpandRatio(this.form, 1.0f);
@@ -412,16 +423,14 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
-			T bean;
-			BeanItem<T> beanItem;
-
 			this.screen.notifyClick(Action.CREATE);
 
-			bean = this.screen.createBeanInstance();
-			beanItem = new BeanItem<T>(bean);
-
+			
+			this.screen.resetForm();
 			this.screen.form.setEnabled(true);
-			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleFields());
+			
+			this.screen.resetComponent();
+			this.screen.component.setEnabled(true);
 
 			this.screen.buttonItemAdd.setEnabled(false);
 			this.screen.buttonItemDelete.setEnabled(false);
@@ -485,6 +494,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				beanItemSuc = new BeanItem<T>(this.screen.createBeanInstance());
 
 				this.screen.form.setEnabled(false);
+				this.screen.component.setEnabled(false);
 
 				this.screen.buttonSave.setEnabled(false);
 				this.screen.buttonCancel.setEnabled(false);
@@ -570,6 +580,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				this.screen.table.select(null);
 
 				this.screen.form.setEnabled(false);
+				this.screen.component.setEnabled(false);
 
 				this.screen.buttonSave.setEnabled(false);
 				this.screen.buttonCancel.setEnabled(true);
@@ -615,6 +626,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				beanItem = new BeanItem<T>(bean);
 
 				this.screen.form.setEnabled(false);
+				this.screen.component.setEnabled(false);
 
 				enableSave = false;
 				enableDelete = false;
@@ -653,6 +665,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			{
 				this.screen.resetForm();
 				this.screen.form.setEnabled(false);
+				
+				this.screen.resetComponent();
+				this.screen.component.setEnabled(false);
 
 				beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
 
@@ -713,6 +728,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 				this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleFields());
 				this.screen.form.setEnabled(true);
+				
+				this.screen.component.setEnabled(true);
 
 				this.screen.buttonItemAdd.setEnabled(true);
 				this.screen.buttonItemDelete.setEnabled(true);

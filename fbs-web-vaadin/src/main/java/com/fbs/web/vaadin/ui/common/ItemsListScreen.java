@@ -14,6 +14,7 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
@@ -53,6 +54,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	// Elements
 	protected Table table;
 	protected Form form;
+	protected Component component;
 	protected BeanItemContainer<T> beanItemContainer;
 	// Additional buttons
 	protected Button buttonItemAdd;
@@ -179,6 +181,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.form.setEnabled(false);
 		this.form.setFormFieldFactory(this.getFormFieldFactory());
 		this.resetForm();
+		
+		this.component = this.getComponent();
 
 		this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
 		this.addNestedContainerProperties();
@@ -224,6 +228,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			// ignore at first time
 		}
 	}
+
+
+	protected Component getComponent()
+    {
+	    return null;
+    }
 
 
 	private void addNestedContainerProperties()
@@ -360,6 +370,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected void layoutRight(VerticalLayout right)
 	{
 		HorizontalLayout buttonRow = new HorizontalLayout();
+		
+		right.setMargin(true);
+		right.setSpacing(true);
 
 		this.layoutForm();
 
@@ -368,6 +381,10 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		buttonRow.addComponent(this.buttonDelete);
 
 		right.addComponent(this.form);
+		if (this.component != null)
+		{
+			right.addComponent(this.component);
+		}
 		right.addComponent(buttonRow);
 
 		right.setExpandRatio(this.form, 1.0f);

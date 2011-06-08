@@ -5,14 +5,14 @@ import java.util.List;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
-import com.fbs.web.vaadin.ui.common.ItemsListScreen;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.TextField;
 
-public class OrganizationScreen extends ItemsListScreen<Organization>
+
+public class OrganizationScreen extends PartyScreen<Organization>
 {
 	private static final long serialVersionUID = 1L;
 	private static final String ID = "id";

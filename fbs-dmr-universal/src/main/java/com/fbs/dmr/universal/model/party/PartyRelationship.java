@@ -36,6 +36,10 @@ public class PartyRelationship implements Serializable
 	private PartyRole partyRoleTo;
 	@ManyToOne(optional=false)
 	private PartyRole partyRoleFrom;
+	@ManyToOne
+	private PartyRelationshipStatusType partyRelationshipStatusType;
+	@ManyToOne
+	private PriorityType priorityType;
 
 	public PartyRelationship()
 	{
@@ -112,6 +116,26 @@ public class PartyRelationship implements Serializable
     	this.partyRoleFrom = partyRoleFrom;
     }
 	
+	public void setPartyRelationshipStatusType(PartyRelationshipStatusType partyRelationshipStatusType)
+    {
+	    this.partyRelationshipStatusType = partyRelationshipStatusType;
+    }
+
+	public PartyRelationshipStatusType getPartyRelationshipStatusType()
+    {
+	    return partyRelationshipStatusType;
+    }
+
+	public void setPriorityType(PriorityType priorityType)
+    {
+	    this.priorityType = priorityType;
+    }
+
+	public PriorityType getPriorityType()
+    {
+	    return priorityType;
+    }
+
 	@Override
 	public boolean equals(Object obj)
 	{

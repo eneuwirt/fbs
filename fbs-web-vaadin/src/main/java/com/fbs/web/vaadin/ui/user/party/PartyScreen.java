@@ -1,7 +1,5 @@
 package com.fbs.web.vaadin.ui.user.party;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import com.fbs.dmr.universal.model.party.Party;

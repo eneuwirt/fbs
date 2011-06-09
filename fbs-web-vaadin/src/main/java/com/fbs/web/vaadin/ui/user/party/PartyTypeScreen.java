@@ -18,12 +18,12 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	private static final String COL_ID = "id";
 	private static final String COL_DESC = "description";
 	private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID, COL_DESC };
-	private static final String[] VISIBLE_ITEM_PROPERTIES = new String[] { COL_ID, COL_DESC };
+	private static final String[] VISIBLE_FIELDS = new String[] { COL_ID, COL_DESC };
 
 
 	public PartyTypeScreen(MyVaadinApplication app)
 	{
-		super(app, PartyType.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+		super(app, PartyType.class, VISIBLE_COLUMNS, VISIBLE_FIELDS);
 	}
 
 

@@ -26,12 +26,12 @@ public class PartyRelationshipTypeScreen extends ItemsListScreen<PartyRelationsh
 	private static final String COL_ROLETYPE_TO = "partyRoleTypeTo";
 	private static final String[] VISIBLE_COLUMNS = new String[]
 		{ COL_ID, COL_NAME };
-	private static final String[] VISIBLE_ITEM_PROPERTIES = new String[]
+	private static final String[] VISIBLE_FIELDS = new String[]
 		{ COL_ID, COL_NAME, COL_DESC, COL_ROLETYPE_FROM, COL_ROLETYPE_TO };
 
 	public PartyRelationshipTypeScreen(MyVaadinApplication app)
 	{
-		super(app, PartyRelationshipType.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+		super(app, PartyRelationshipType.class, VISIBLE_COLUMNS, VISIBLE_FIELDS);
 	}
 
 	@Override

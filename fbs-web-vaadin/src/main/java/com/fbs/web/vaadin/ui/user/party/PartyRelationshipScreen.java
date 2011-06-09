@@ -32,13 +32,13 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 	private static final String ROLE_TO = "partyRoleTo";
 	private static final String[] NESTED_PROPERTIES = new String[] { RELTYPE_NAME };
 	private static final String[] VISIBLE_COLUMNS = new String[] { ID, RELTYPE_NAME };
-	private static final String[] VISIBLE_ITEM_PROPERTIES = new String[] { ID, COMMENT, RELTYPE, ROLE_FROM, ROLE_TO,
+	private static final String[] VISIBLE_FIELDS = new String[] { ID, COMMENT, RELTYPE, ROLE_FROM, ROLE_TO,
 	        DATE_FROM, DATE_TO };
 
 
 	public PartyRelationshipScreen(MyVaadinApplication app)
 	{
-		super(app, PartyRelationship.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES, NESTED_PROPERTIES);
+		super(app, PartyRelationship.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
 	}
 
 

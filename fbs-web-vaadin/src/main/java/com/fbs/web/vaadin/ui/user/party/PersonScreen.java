@@ -18,12 +18,12 @@ public class PersonScreen extends PartyScreen<Person>
 	private static final String COL_FIRST_NAME = "firstName";
 	private static final String COL_LAST_NAME = "lastName";
 	private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID, COL_FIRST_NAME, COL_LAST_NAME };
-	private static final String[] VISIBLE_ITEM_PROPERTIES =  new String[] { COL_ID, COL_FIRST_NAME, COL_LAST_NAME };
+	private static final String[] VISIBLE_FIELDS =  new String[] { COL_ID, COL_FIRST_NAME, COL_LAST_NAME };
 
 
 	public PersonScreen(MyVaadinApplication app)
 	{
-		super(app, Person.class, VISIBLE_COLUMNS, VISIBLE_ITEM_PROPERTIES);
+		super(app, Person.class, VISIBLE_COLUMNS, VISIBLE_FIELDS);
 	}
 
 

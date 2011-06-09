@@ -39,29 +39,27 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	@Override
 	protected void resetComponent()
 	{
-		this.rolesGroup.select(null);
-		this.classificationsGroup.select(null);
+		this.rolesGroup.setValue(null);
+		this.classificationsGroup.setValue(null);
 	}
 
 
-	private void getOptionGroupRoles(Party party)
+	private void setOptionGroupRoles(Party party)
 	{
-		List<String> partyRoles = new ArrayList<String>();
 		List<PartyRoleType> partyRoleTypes;
 		String caption;
 
-		partyRoleTypes = this.app.getServices().getCrudServicePartyRoleType().findAll();
-		for (PartyRoleType partyRoleType : partyRoleTypes)
-		{
-			partyRoles.add(partyRoleType.getDescription());
-		}
-
 		caption = this.app.getMessage(ApplicationMessages.PartyRoleTitle);
-
-		this.rolesGroup = new OptionGroup(caption, partyRoles);
+		this.rolesGroup.setCaption(caption);
 		this.rolesGroup.setMultiSelect(true);
 		this.rolesGroup.setNullSelectionAllowed(true);
 		this.rolesGroup.setImmediate(true);
+		
+		partyRoleTypes = this.app.getServices().getCrudServicePartyRoleType().findAll();
+		for (PartyRoleType partyRoleType : partyRoleTypes)
+		{
+			this.rolesGroup.addItem(partyRoleType.getDescription());
+		}
 		
 		// set selection
 		if (party != null)
@@ -73,32 +71,29 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		}
 	}
 	
-	private void getOptionGroupClassification(Party party)
+	private void setOptionGroupClassification(Party party)
     {
-		List<String> partyClassifications = new ArrayList<String>();
 		List<PartyType> partyTypes;
 		String caption;
 		
 		caption = this.app.getMessage(ApplicationMessages.PartyTypeTitle);
-		
-		partyTypes = this.app.getServices().getCrudServicePartyType().findAll();
-		for (PartyType partyType : partyTypes)
-		{
-			partyClassifications.add(partyType.getDescription());
-		}
-		
-		this.classificationsGroup = new OptionGroup(caption, partyClassifications);
 		this.classificationsGroup.setCaption(caption);
 		this.classificationsGroup.setMultiSelect(true);
 		this.classificationsGroup.setNullSelectionAllowed(true); 
 		this.classificationsGroup.setImmediate(true); 
+		
+		partyTypes = this.app.getServices().getCrudServicePartyType().findAll();
+		for (PartyType partyType : partyTypes)
+		{
+			this.classificationsGroup.addItem(partyType.getDescription());
+		}
 		
 		// set selection
 		if (party != null)
 		{
 			for (PartyClassification p : party.getPartyClassifications())
 			{
-				this.rolesGroup.select(p.getPartyType().getDescription());
+				this.classificationsGroup.select(p.getPartyType().getDescription());
 			}
 		}
     }
@@ -125,9 +120,11 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 			party = beanItem.getBean();
 		}
 
-		this.getOptionGroupRoles(party);
+		this.rolesGroup = new OptionGroup();
+		this.setOptionGroupRoles(party);
 		
-		this.getOptionGroupClassification(party);
+		this.classificationsGroup = new OptionGroup();
+		this.setOptionGroupClassification(party);
 		
 		
 		layout.addComponent(rolesGroup);

@@ -27,11 +27,12 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 	private static final String RELTYPE_NAME = "partyRelationshipType.name";
 	private static final String DATE_FROM = "dateFrom";
 	private static final String DATE_TO = "dateTo";
-	private static final String ROLE_FROMNAME = "partyRoleFrom.name";
 	private static final String ROLE_FROM = "partyRoleFrom";
+	private static final String ROLE_FROMNAME = "partyRoleFrom.party.name";
+	private static final String ROLE_TONAME = "partyRoleTo.party.name";
 	private static final String ROLE_TO = "partyRoleTo";
-	private static final String[] NESTED_PROPERTIES = new String[] { RELTYPE_NAME };
-	private static final String[] VISIBLE_COLUMNS = new String[] { ID, RELTYPE_NAME };
+	private static final String[] NESTED_PROPERTIES = new String[] { RELTYPE_NAME, ROLE_FROMNAME , ROLE_TONAME};
+	private static final String[] VISIBLE_COLUMNS = new String[] { ID, RELTYPE_NAME, ROLE_FROMNAME, ROLE_TONAME };
 	private static final String[] VISIBLE_FIELDS = new String[] { ID, COMMENT, RELTYPE, ROLE_FROM, ROLE_TO,
 	        DATE_FROM, DATE_TO };
 
@@ -96,6 +97,12 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 
 		if (propertyId.equals(RELTYPE_NAME))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeTitle);
+		
+		if (propertyId.equals(ROLE_FROMNAME))
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipRoleFrom);
+		
+		if (propertyId.equals(ROLE_TONAME))
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipRoleTo);
 
 		return propertyId;
 	}

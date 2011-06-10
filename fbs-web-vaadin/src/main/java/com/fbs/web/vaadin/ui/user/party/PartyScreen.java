@@ -1,7 +1,9 @@
 package com.fbs.web.vaadin.ui.user.party;
 
 import java.util.List;
+import java.util.Set;
 
+import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyClassification;
 import com.fbs.dmr.universal.model.party.PartyRole;
@@ -11,6 +13,7 @@ import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.OptionGroup;
@@ -35,23 +38,36 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	}
 	
 	@Override
+	protected void updateBean(Party party) throws Exception
+	{
+		Set<String> selectedRoles = (Set<String>) this.rolesGroup.getValue();
+		
+		Object obj2 = this.classificationsGroup.getValue();
+	}
+	
+	@SuppressWarnings("unchecked")
+    @Override
 	protected void resetComponent()
 	{
-		this.rolesGroup.setValue(null);
-		this.classificationsGroup.setValue(null);
+		BeanItem<T> beanItem;
+		Party party = null;
+		
+		beanItem = (BeanItem<T>) this.form.getItemDataSource();
+
+		if (beanItem != null)
+		{
+			party = beanItem.getBean();
+		}
+		
+		this.resetOptionGroupRoles(party);
+		
+		this.resetOptionGroupClassification(party);
 	}
 
 
-	private void setOptionGroupRoles(Party party)
+	private void resetOptionGroupRoles(Party party)
 	{
 		List<PartyRoleType> partyRoleTypes;
-		String caption;
-
-		caption = this.app.getMessage(ApplicationMessages.PartyRoleTitle);
-		this.rolesGroup.setCaption(caption);
-		this.rolesGroup.setMultiSelect(true);
-		this.rolesGroup.setNullSelectionAllowed(true);
-		this.rolesGroup.setImmediate(true);
 		
 		partyRoleTypes = this.app.getServices().getCrudServicePartyRoleType().findAll();
 		for (PartyRoleType partyRoleType : partyRoleTypes)
@@ -60,6 +76,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		}
 		
 		// set selection
+		this.rolesGroup.setValue(null);
 		if (party != null)
 		{
 			for (PartyRole p : party.getPartyRoles())
@@ -69,24 +86,22 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		}
 	}
 	
-	private void setOptionGroupClassification(Party party)
+	private void resetOptionGroupClassification(Party party)
     {
 		List<PartyType> partyTypes;
-		String caption;
+		BeanItemContainer<String> container;	
 		
-		caption = this.app.getMessage(ApplicationMessages.PartyTypeTitle);
-		this.classificationsGroup.setCaption(caption);
-		this.classificationsGroup.setMultiSelect(true);
-		this.classificationsGroup.setNullSelectionAllowed(true); 
-		this.classificationsGroup.setImmediate(true); 
 		
 		partyTypes = this.app.getServices().getCrudServicePartyType().findAll();
-		for (PartyType partyType : partyTypes)
+		container = new BeanItemContainer<String>(String.class);
+		for (PartyType t : partyTypes)
 		{
-			this.classificationsGroup.addItem(partyType.getDescription());
+			container.addBean(t.getDescription());
 		}
+		this.classificationsGroup.setContainerDataSource(container);
 		
 		// set selection
+		this.classificationsGroup.setValue(null);
 		if (party != null)
 		{
 			for (PartyClassification p : party.getPartyClassifications())
@@ -97,33 +112,30 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
     }
 
 
-
-	@SuppressWarnings("unchecked")
     @Override
 	protected Component getComponent()
 	{
 		HorizontalLayout layout;
-		BeanItem<T> beanItem;
-		Party party = null;
+		String caption;
 
 		layout = new HorizontalLayout();
 		layout.setSizeFull();
 		layout.setMargin(true);
 		layout.setSpacing(true);
-
-		beanItem = (BeanItem<T>) this.form.getItemDataSource();
-
-		if (beanItem != null)
-		{
-			party = beanItem.getBean();
-		}
-
-		this.rolesGroup = new OptionGroup();
-		this.setOptionGroupRoles(party);
 		
 		this.classificationsGroup = new OptionGroup();
-		this.setOptionGroupClassification(party);
+		caption = this.app.getMessage(ApplicationMessages.PartyTypeClassificationTitle);
+		this.classificationsGroup.setCaption(caption);
+		this.classificationsGroup.setMultiSelect(true);
+		this.classificationsGroup.setNullSelectionAllowed(true); 
+		this.classificationsGroup.setImmediate(true);
 		
+		this.rolesGroup = new OptionGroup();
+		caption = this.app.getMessage(ApplicationMessages.PartyRoleTitle);
+		this.rolesGroup.setCaption(caption);
+		this.rolesGroup.setMultiSelect(true);
+		this.rolesGroup.setNullSelectionAllowed(true);
+		this.rolesGroup.setImmediate(true);		
 		
 		layout.addComponent(rolesGroup);
 		layout.addComponent(classificationsGroup);

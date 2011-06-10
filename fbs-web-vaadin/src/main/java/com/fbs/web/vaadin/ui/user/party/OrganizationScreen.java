@@ -58,6 +58,7 @@ public class OrganizationScreen extends PartyScreen<Organization>
 	@Override
 	protected void updateBean(Organization t) throws Exception
 	{
+		super.updateBean(t);
 		this.services.getCrudServiceOrganization().update(t);
 	}
 

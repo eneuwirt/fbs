@@ -15,4 +15,17 @@ public class CrudServiceOrganizationImpl extends CrudServiceGenericImpl<Organiza
 	{
 		super(Organization.class);
 	}
+	
+	@Override
+	public Organization read(Integer id)
+	{
+		Organization result;
+		
+		result = super.read(id);
+		
+		result.getPartyClassifications().size();
+		result.getPartyRoles().size();
+		
+		return result;
+	}
 }

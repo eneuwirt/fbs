@@ -6,10 +6,11 @@ import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
-import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.SeedService;
+import com.fbs.dmr.universal.service.ServicePartyClassification;
+import com.fbs.dmr.universal.service.ServicePartyRole;
 import com.fbs.dmr.universal.service.ServicePartyRoleType;
 import com.fbs.dmr.universal.service.ServicePartyType;
 import com.fbs.security.service.SecurityService;
@@ -34,15 +35,17 @@ public class ApplicationServicesImpl implements ApplicationServices
 	@Resource(name = "crudServicePartyType")
 	private ServicePartyType crudServicePartyType;
 	@Resource(name = "crudServicePartyRelationship")
-	private CrudService<PartyRelationship, Integer>crudServicePartyRelationship;
+	private CrudService<PartyRelationship, Integer> crudServicePartyRelationship;
 	@Resource(name = "crudServicePartyRelationshipType")
-	private CrudService<PartyRelationshipType, Integer>crudServicePartyRelationshipType;
+	private CrudService<PartyRelationshipType, Integer> crudServicePartyRelationshipType;
 	@Resource(name = "crudServicePartyRoleType")
 	private ServicePartyRoleType crudServicePartyRoleType;
 	@Resource(name = "crudServicePartyRole")
-	private CrudService<PartyRole, Integer>crudServicePartyRole;
-	@Resource (name="crudServicePerson")
+	private ServicePartyRole crudServicePartyRole;
+	@Resource(name = "crudServicePerson")
 	private CrudService<Person, Integer> crudServicePerson;
+	@Resource
+	ServicePartyClassification servicePartyClassification;
 
 	@Override
 	public SecurityService getSecurityService()
@@ -112,67 +115,81 @@ public class ApplicationServicesImpl implements ApplicationServices
 
 	@Override
 	public CrudService<Person, Integer> getCrudServicePerson()
-    {
-	    return crudServicePerson;
-    }
-	
+	{
+		return crudServicePerson;
+	}
+
 	public void setCrudPersonService(CrudService<Person, Integer> crudPersonService)
-    {
-	    this.crudServicePerson = crudPersonService;
-    }
+	{
+		this.crudServicePerson = crudPersonService;
+	}
 
 	public void setCrudServiceOrganization(CrudService<Organization, Integer> crudServiceOrganization)
-    {
-	    this.crudServiceOrganization = crudServiceOrganization;
-    }
+	{
+		this.crudServiceOrganization = crudServiceOrganization;
+	}
 
 	@Override
 	public CrudService<Organization, Integer> getCrudServiceOrganization()
-    {
-	    return crudServiceOrganization;
-    }
+	{
+		return crudServiceOrganization;
+	}
 
 	public void setCrudServicePartyRoleType(ServicePartyRoleType crudServicePartyRole)
-    {
-    	this.crudServicePartyRoleType = crudServicePartyRole;
-    }
-	
-	@Override
-    public ServicePartyRoleType getCrudServicePartyRoleType()
-    {
-	    return crudServicePartyRoleType;
-    }
+	{
+		this.crudServicePartyRoleType = crudServicePartyRole;
+	}
 
-	public void setCrudServicePartyRelationshipType(CrudService<PartyRelationshipType, Integer> crudServicePartyRelationshipType)
-    {
-	    this.crudServicePartyRelationshipType = crudServicePartyRelationshipType;
-    }
+	@Override
+	public ServicePartyRoleType getCrudServicePartyRoleType()
+	{
+		return crudServicePartyRoleType;
+	}
+
+	public void setCrudServicePartyRelationshipType(
+	        CrudService<PartyRelationshipType, Integer> crudServicePartyRelationshipType)
+	{
+		this.crudServicePartyRelationshipType = crudServicePartyRelationshipType;
+	}
 
 	@Override
 	public CrudService<PartyRelationshipType, Integer> getCrudServicePartyRelationshipType()
-    {
-	    return crudServicePartyRelationshipType;
-    }
+	{
+		return crudServicePartyRelationshipType;
+	}
 
 	public void setCrudServicePartyRelationship(CrudService<PartyRelationship, Integer> crudServicePartyRelationship)
-    {
-	    this.crudServicePartyRelationship = crudServicePartyRelationship;
-    }
+	{
+		this.crudServicePartyRelationship = crudServicePartyRelationship;
+	}
 
 	@Override
 	public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship()
-    {
-	    return crudServicePartyRelationship;
-    }
+	{
+		return crudServicePartyRelationship;
+	}
 
 	@Override
-    public CrudService<PartyRole, Integer> getCrudServicePartyRole()
-    {
-	    return this.crudServicePartyRole;
-    }
+	public ServicePartyRole getCrudServicePartyRole()
+	{
+		return this.crudServicePartyRole;
+	}
 
-	public void setCrudServicePartyRole(CrudService<PartyRole, Integer> crudServicePartyRole)
-    {
-    	this.crudServicePartyRole = crudServicePartyRole;
-    }
+	public void setCrudServicePartyRole(ServicePartyRole crudServicePartyRole)
+	{
+		this.crudServicePartyRole = crudServicePartyRole;
+	}
+
+	@Override
+	public ServicePartyClassification getCrudServicePartyClassification()
+	{
+
+		return this.servicePartyClassification;
+	}
+
+	public void setCrudServicePartyClassification(ServicePartyClassification servicePartyClassification)
+	{
+
+		this.servicePartyClassification = servicePartyClassification;
+	}
 }

@@ -57,6 +57,8 @@ public class PersonScreen extends PartyScreen<Person>
 	@Override
 	protected void updateBean(Person t) throws Exception
 	{
+		super.updateBean(t);
+		
 		this.services.getCrudServicePerson().update(t);
 	}
 

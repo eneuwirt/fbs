@@ -1,7 +1,9 @@
 package com.fbs.web.vaadin.ui.user.party;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyClassification;
@@ -20,6 +22,7 @@ import com.vaadin.ui.OptionGroup;
 public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 {
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = Logger.getLogger(PartyScreen.class.getName());
 	protected OptionGroup rolesGroup;
 	protected OptionGroup classificationsGroup;
 
@@ -35,14 +38,16 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	}
 
 	@SuppressWarnings("unchecked")
-    @Override
+	@Override
 	protected T createBean(T party) throws Exception
 	{
 		Set<String> selectedRoles;
-        Set<String> selectedClassiffcations;
+		Set<String> selectedClassiffcations;
+
+		logger.info(">createBean");
 
 		selectedRoles = (Set<String>) this.rolesGroup.getValue();
-		
+
 		for (String selectedRole : selectedRoles)
 		{
 			PartyRoleType partyRoleType;
@@ -57,21 +62,23 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 			party.getPartyRoles().add(partyRole);
 		}
 
-        selectedClassiffcations = (Set<String>) this.classificationsGroup.getValue();
-		
-        for (String selectedClassiffcation : selectedClassiffcations)
+		selectedClassiffcations = (Set<String>) this.classificationsGroup.getValue();
+
+		for (String selectedClassiffcation : selectedClassiffcations)
 		{
 			PartyType partyType;
 			PartyClassification partyClassification;
 
 			partyType = this.app.getServices().getCrudServicePartyType().findForDescription(selectedClassiffcation);
-			
+
 			partyClassification = new PartyClassification();
 			partyClassification.setParty(party);
 			partyClassification.setPartyType(partyType);
-			
+
 			party.getPartyClassifications().add(partyClassification);
 		}
+
+		logger.info("<createBean");
 
 		return party;
 	}
@@ -79,9 +86,86 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	@Override
 	protected void updateBean(Party party) throws Exception
 	{
+		List<PartyRole> partyRoles;
+		List<PartyClassification> classifications;
+
+		logger.info(">updateBean");
+
 		@SuppressWarnings("unchecked")
 		Set<String> selectedRoles = (Set<String>) this.rolesGroup.getValue();
 
+		// remove all unselected roles
+		partyRoles = this.app.getServices().getCrudServicePartyRole().findByParty(party.getId());
+		for (PartyRole partyRole : partyRoles)
+		{
+			if (!selectedRoles.contains(partyRole.getPartyRoleType().getDescription()))
+			{
+				this.app.getServices().getCrudServicePartyRole().delete(partyRole.getId());
+			}
+		}
+
+		// add all selected items to the party
+		partyRoles = new ArrayList<PartyRole>();
+		for (String selectedRole : selectedRoles)
+		{
+			PartyRole partyRole;
+
+			partyRole = this.app.getServices().getCrudServicePartyRole()
+			        .findByPartyRoleType(party.getId(), selectedRole);
+			if (partyRole == null)
+			{
+				PartyRoleType partyRoleType;
+
+				partyRoleType = this.app.getServices().getCrudServicePartyRoleType().findForDescription(selectedRole);
+
+				partyRole = new PartyRole();
+
+				partyRole.setParty(party);
+				partyRole.setPartyRoleType(partyRoleType);
+			}
+
+			partyRoles.add(partyRole);
+		}
+		party.getPartyRoles().clear();
+		party.getPartyRoles().addAll(partyRoles);
+
+		@SuppressWarnings("unchecked")
+		Set<String> selectedClassifications = (Set<String>) this.classificationsGroup.getValue();
+		// remove all unselected classifications
+		classifications = this.app.getServices().getCrudServicePartyClassification().findByParty(party.getId());
+		for (PartyClassification classification : classifications)
+		{
+			if (!selectedClassifications.contains(classification.getPartyType().getDescription()))
+			{
+				this.app.getServices().getCrudServicePartyClassification().delete(classification.getId());
+			}
+		}
+		// add selected items
+		classifications = new ArrayList<PartyClassification>();
+		for (String selectedClass : selectedClassifications)
+		{
+			PartyClassification partyClass;
+
+			partyClass = this.app.getServices().getCrudServicePartyClassification()
+			        .findByPartyType(party.getId(), selectedClass);
+			
+			if (partyClass == null)
+			{
+				PartyType partyType;
+				
+				partyType = this.app.getServices().getCrudServicePartyType().findForDescription(selectedClass);
+				
+				partyClass = new PartyClassification();
+				partyClass.setParty(party);
+				partyClass.setPartyType(partyType);
+			}
+			
+			classifications.add(partyClass);
+		}
+		party.getPartyClassifications().clear();
+		party.getPartyClassifications().addAll(classifications);
+		
+		logger.info("<updateBean");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -91,6 +175,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		BeanItem<T> beanItem;
 		Party party = null;
 		T bean;
+
+		logger.info(">resetComponent");
 
 		beanItem = (BeanItem<T>) this.form.getItemDataSource();
 
@@ -113,6 +199,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 				e.printStackTrace();
 			}
 		}
+
+		logger.info("<resetComponent");
 	}
 
 	private void resetOptionGroupRoles(Party party)
@@ -166,6 +254,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		HorizontalLayout layout;
 		String caption;
 
+		logger.info(">getComponent");
+
 		layout = new HorizontalLayout();
 		layout.setSizeFull();
 		layout.setMargin(true);
@@ -187,6 +277,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 		layout.addComponent(rolesGroup);
 		layout.addComponent(classificationsGroup);
+
+		logger.info("<getComponent");
 
 		return layout;
 	}

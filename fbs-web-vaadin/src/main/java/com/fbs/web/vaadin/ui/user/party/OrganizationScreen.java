@@ -1,6 +1,7 @@
 package com.fbs.web.vaadin.ui.user.party;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
@@ -15,6 +16,7 @@ import com.vaadin.ui.TextField;
 public class OrganizationScreen extends PartyScreen<Organization>
 {
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = Logger.getLogger(OrganizationScreen.class.getName());
 	private static final String ID = "id";
 	private static final String NAME = "name";
 
@@ -60,8 +62,11 @@ public class OrganizationScreen extends PartyScreen<Organization>
 	@Override
 	protected void updateBean(Organization t) throws Exception
 	{		
+		logger.info(">updateBean");
 		super.updateBean(t);
+		
 		this.services.getCrudServiceOrganization().update(t);
+		logger.info("<updateBean");
 	}
 
 

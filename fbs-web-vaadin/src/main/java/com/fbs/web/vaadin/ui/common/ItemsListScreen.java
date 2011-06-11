@@ -533,6 +533,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		public void buttonClick(ClickEvent event)
 		{
 			BeanItem<T> beanItem;
+			
+			logger.info(">buttonClick");
 
 			this.screen.notifyClick(Action.SAVE);
 
@@ -589,6 +591,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			}
 
 			this.screen.table.setEnabled(true);
+			
+			logger.info("<buttonClick");
+
 		}
 	}
 

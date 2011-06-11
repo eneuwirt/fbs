@@ -1,5 +1,6 @@
 package com.fbs.dmr.universal.test.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -29,18 +30,22 @@ public class CrudServiceOrganizationTest
 {
 	@Resource(name="crudServiceOrganization")
 	CrudService<Organization, Integer> crudServiceOrganization;
-	@Resource(name="crudServicePartyType")
-	CrudService<PartyType, Integer> crudServicePartyType;
 	@Resource(name="crudServicePartyRoleType")
 	CrudService<PartyRoleType, Integer> crudServicePartyRoleType;
-	
-
+	@Resource(name="crudServicePartyRole")
+	CrudService<PartyRole, Integer> crudServicePartyRole;
+	@Resource(name="crudServicePartyType")
+	CrudService<PartyType, Integer> crudServicePartyType;
+	@Resource(name="crudServicePartyClassification")
+	CrudService<PartyClassification, Integer> crudServicePartyClassification;
 
 	@Before
 	public void setUp()
 	{
 		Assert.assertNotNull(crudServiceOrganization);
 		Assert.assertNotNull(crudServicePartyType);
+		Assert.assertNotNull(crudServicePartyRole);
+		Assert.assertNotNull(crudServicePartyClassification);
 	}
 	
 	private void createClassifications(Party party, PartyType partyType)
@@ -77,6 +82,8 @@ public class CrudServiceOrganizationTest
 		Integer id2;
 		List<Organization> organizations = null;
 		PartyRoleType prt1, prt2;
+		List<Integer> roleIds = new ArrayList<Integer>();
+		List<Integer> classIds = new ArrayList<Integer>();
 		
 		prt1 = new PartyRoleType();
 		prt1.setDescription("Party Role Type 1");
@@ -109,10 +116,12 @@ public class CrudServiceOrganizationTest
 		for (PartyClassification pc : org.getPartyClassifications())
 		{
 			Assert.assertNotNull(pc.getId());
+			classIds.add(pc.getId());
 		}
 		for (PartyRole pr : org.getPartyRoles())
 		{
 			Assert.assertNotNull(pr.getId());
+			roleIds.add(pr.getId());
 		}
 		id = org.getId();
 
@@ -131,6 +140,7 @@ public class CrudServiceOrganizationTest
 		Assert.assertEquals(org.getPartyRoles().size(), 2);
 		Assert.assertEquals(org.getPartyClassifications().size(), 2);
 		Assert.assertEquals(org.getPartyRoles().size(), 2);
+		// Check cascade
 		for (PartyClassification pc : org.getPartyClassifications())
 		{
 			Assert.assertNotNull(pc.getId());
@@ -155,6 +165,21 @@ public class CrudServiceOrganizationTest
 		this.crudServiceOrganization.delete(id);
 		org = this.crudServiceOrganization.read(id);
 		Assert.assertNull(org);
+		// Check cascade
+		for (Integer roleId: roleIds)
+		{
+			PartyRole partyRole;
+			
+			partyRole = this.crudServicePartyRole.read(roleId);
+			Assert.assertNull(partyRole);
+		}
+		for (Integer classId : classIds)
+		{
+			PartyClassification partyClassification;
+			
+			partyClassification = this.crudServicePartyClassification.read(classId);
+			Assert.assertNull(partyClassification);
+		}
 
 		org2 = this.crudServiceOrganization.read(id2);
 		Assert.assertNotNull(org2);

@@ -7,11 +7,11 @@ import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.PartyRole;
-import com.fbs.dmr.universal.model.party.PartyRoleType;
-import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.SeedService;
+import com.fbs.dmr.universal.service.ServicePartyRoleType;
+import com.fbs.dmr.universal.service.ServicePartyType;
 import com.fbs.security.service.SecurityService;
 import com.fbs.security.service.TenantService;
 import com.fbs.security.service.UserService;
@@ -32,13 +32,13 @@ public class ApplicationServicesImpl implements ApplicationServices
 	@Resource(name = "crudServiceParty")
 	private CrudService<Party, Integer> crudServiceParty;
 	@Resource(name = "crudServicePartyType")
-	private CrudService<PartyType, Integer> crudServicePartyType;
+	private ServicePartyType crudServicePartyType;
 	@Resource(name = "crudServicePartyRelationship")
 	private CrudService<PartyRelationship, Integer>crudServicePartyRelationship;
 	@Resource(name = "crudServicePartyRelationshipType")
 	private CrudService<PartyRelationshipType, Integer>crudServicePartyRelationshipType;
 	@Resource(name = "crudServicePartyRoleType")
-	private CrudService<PartyRoleType, Integer>crudServicePartyRoleType;
+	private ServicePartyRoleType crudServicePartyRoleType;
 	@Resource(name = "crudServicePartyRole")
 	private CrudService<PartyRole, Integer>crudServicePartyRole;
 	@Resource (name="crudServicePerson")
@@ -100,12 +100,12 @@ public class ApplicationServicesImpl implements ApplicationServices
 	}
 
 	@Override
-	public CrudService<PartyType, Integer> getCrudServicePartyType()
+	public ServicePartyType getCrudServicePartyType()
 	{
 		return crudServicePartyType;
 	}
 
-	public void setCrudPartyTypeService(CrudService<PartyType, Integer> crudPartyTypeService)
+	public void setCrudPartyTypeService(ServicePartyType crudPartyTypeService)
 	{
 		this.crudServicePartyType = crudPartyTypeService;
 	}
@@ -132,8 +132,13 @@ public class ApplicationServicesImpl implements ApplicationServices
 	    return crudServiceOrganization;
     }
 
+	public void setCrudServicePartyRoleType(ServicePartyRoleType crudServicePartyRole)
+    {
+    	this.crudServicePartyRoleType = crudServicePartyRole;
+    }
+	
 	@Override
-    public CrudService<PartyRoleType, Integer> getCrudServicePartyRoleType()
+    public ServicePartyRoleType getCrudServicePartyRoleType()
     {
 	    return crudServicePartyRoleType;
     }

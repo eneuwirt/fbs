@@ -720,23 +720,32 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			// we have really clicked a row in the table or have to select an
 			// entry
 			if (bean != null)
-			{
-				this.screen.notifyClick(Action.SELECT);
+			{				
+				try
+                {
+					this.screen.notifyClick(Action.SELECT);
+	                
+					beanItem = (BeanItem<T>) this.screen.table.getItem(bean);
 
-				beanItem = (BeanItem<T>) this.screen.table.getItem(bean);
+					this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleFields());
+					this.screen.form.setEnabled(true);
+					
+					this.screen.resetComponent();
+					this.screen.component.setEnabled(true);
 
-				this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleFields());
-				this.screen.form.setEnabled(true);
-				
-				this.screen.resetComponent();
-				this.screen.component.setEnabled(true);
+					this.screen.buttonItemAdd.setEnabled(true);
+					this.screen.buttonItemDelete.setEnabled(true);
 
-				this.screen.buttonItemAdd.setEnabled(true);
-				this.screen.buttonItemDelete.setEnabled(true);
+					this.screen.buttonSave.setEnabled(true);
+					this.screen.buttonCancel.setEnabled(true);
+					this.screen.buttonDelete.setEnabled(true);
+                }
+                catch (Exception e)
+                {
+	                // TODO Auto-generated catch block
+	                e.printStackTrace();
+                }
 
-				this.screen.buttonSave.setEnabled(true);
-				this.screen.buttonCancel.setEnabled(true);
-				this.screen.buttonDelete.setEnabled(true);
 			}
 		}
 	}

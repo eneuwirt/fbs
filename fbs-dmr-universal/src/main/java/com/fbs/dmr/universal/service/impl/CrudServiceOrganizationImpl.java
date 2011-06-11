@@ -9,22 +9,25 @@ import com.fbs.dmr.universal.service.CrudService;
 public class CrudServiceOrganizationImpl extends CrudServiceGenericImpl<Organization, Integer> implements
         CrudService<Organization, Integer>
 {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	public CrudServiceOrganizationImpl()
 	{
 		super(Organization.class);
 	}
-	
+
 	@Override
 	public Organization read(Integer id)
 	{
 		Organization result;
-		
+
 		result = super.read(id);
-		
-		result.getPartyClassifications().size();
-		result.getPartyRoles().size();
+
+		if (result != null)
+		{
+			result.getPartyClassifications().size();
+			result.getPartyRoles().size();
+		}
 		
 		return result;
 	}

@@ -5,11 +5,11 @@ import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.PartyRole;
-import com.fbs.dmr.universal.model.party.PartyRoleType;
-import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.SeedService;
+import com.fbs.dmr.universal.service.ServicePartyRoleType;
+import com.fbs.dmr.universal.service.ServicePartyType;
 import com.fbs.security.service.SecurityService;
 import com.fbs.security.service.TenantService;
 import com.fbs.security.service.UserService;
@@ -28,13 +28,13 @@ public interface ApplicationServices
 
 	public CrudService<PartyRole, Integer> getCrudServicePartyRole();
 	
-	public CrudService<PartyRoleType, Integer> getCrudServicePartyRoleType();
+	public ServicePartyRoleType getCrudServicePartyRoleType();
 
 	public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship();
 	
 	public CrudService<PartyRelationshipType, Integer> getCrudServicePartyRelationshipType();
 
-	public CrudService<PartyType, Integer> getCrudServicePartyType();
+	public ServicePartyType getCrudServicePartyType();
 
 	public CrudService<Person, Integer> getCrudServicePerson();
 

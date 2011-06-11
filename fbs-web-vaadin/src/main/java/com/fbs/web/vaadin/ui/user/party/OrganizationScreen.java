@@ -49,6 +49,8 @@ public class OrganizationScreen extends PartyScreen<Organization>
 	@Override
 	protected Organization createBean(Organization t) throws Exception
 	{
+		super.createBean(t);
+		
 		this.services.getCrudServiceOrganization().create(t);
 
 		return t;
@@ -57,7 +59,7 @@ public class OrganizationScreen extends PartyScreen<Organization>
 
 	@Override
 	protected void updateBean(Organization t) throws Exception
-	{
+	{		
 		super.updateBean(t);
 		this.services.getCrudServiceOrganization().update(t);
 	}

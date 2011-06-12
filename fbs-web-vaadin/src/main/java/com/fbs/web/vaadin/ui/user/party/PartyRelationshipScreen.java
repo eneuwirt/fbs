@@ -3,8 +3,10 @@ package com.fbs.web.vaadin.ui.user.party;
 import java.util.List;
 
 import com.fbs.dmr.universal.model.party.PartyRelationship;
+import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.PartyRole;
+import com.fbs.dmr.universal.model.party.PriorityType;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
@@ -21,20 +23,24 @@ import com.vaadin.ui.TextField;
 public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 {
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "id";
 	private static final String COMMENT = "comment";
-	private static final String RELTYPE = "partyRelationshipType";
-	private static final String RELTYPE_NAME = "partyRelationshipType.name";
 	private static final String DATE_FROM = "dateFrom";
 	private static final String DATE_TO = "dateTo";
+	private static final String ID = "id";
+	private static final String RELTYPE = "partyRelationshipType";
+	private static final String RELTYPE_NAME = "partyRelationshipType.name";
+	private static final String PARTYFROM_NAME = "partyRoleFrom.party.name";
+	private static final String PARTYTO_NAME = "partyRoleTo.party.name";
+	private static final String PRIORITY_TYPE = "priorityType";
+	private static final String PRIORITY_TYPE_DESCRIPTION = "priorityType.description";
 	private static final String ROLE_FROM = "partyRoleFrom";
-	private static final String ROLE_FROMNAME = "partyRoleFrom.party.name";
-	private static final String ROLE_TONAME = "partyRoleTo.party.name";
 	private static final String ROLE_TO = "partyRoleTo";
-	private static final String[] NESTED_PROPERTIES = new String[] { RELTYPE_NAME, ROLE_FROMNAME , ROLE_TONAME};
-	private static final String[] VISIBLE_COLUMNS = new String[] { ID, RELTYPE_NAME, ROLE_FROMNAME, ROLE_TONAME };
+	private static final String STATUS = "partyRelationshipStatusType";
+	private static final String STATUS_DESCRIPTION = "partyRelationshipStatusType.description";
+	private static final String[] NESTED_PROPERTIES = new String[] { RELTYPE_NAME, PARTYFROM_NAME , PARTYTO_NAME, STATUS_DESCRIPTION, PRIORITY_TYPE_DESCRIPTION};
+	private static final String[] VISIBLE_COLUMNS = new String[] { ID, RELTYPE_NAME, PARTYFROM_NAME, PARTYTO_NAME, STATUS_DESCRIPTION };
 	private static final String[] VISIBLE_FIELDS = new String[] { ID, COMMENT, RELTYPE, ROLE_FROM, ROLE_TO,
-	        DATE_FROM, DATE_TO };
+	        DATE_FROM, DATE_TO, STATUS, PRIORITY_TYPE};
 
 
 	public PartyRelationshipScreen(MyVaadinApplication app)
@@ -98,11 +104,17 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 		if (propertyId.equals(RELTYPE_NAME))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeTitle);
 		
-		if (propertyId.equals(ROLE_FROMNAME))
-			return this.app.getMessage(ApplicationMessages.PartyRelationshipRoleFrom);
+		if (propertyId.equals(PARTYFROM_NAME))
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipPartyFrom);
 		
-		if (propertyId.equals(ROLE_TONAME))
-			return this.app.getMessage(ApplicationMessages.PartyRelationshipRoleTo);
+		if (propertyId.equals(PARTYTO_NAME))
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipPartyTo);
+		
+		if (propertyId.equals(STATUS_DESCRIPTION))
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipStatus);
+		
+		if (propertyId.equals(PRIORITY_TYPE_DESCRIPTION))
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipPriority);
 
 		return propertyId;
 	}
@@ -183,12 +195,12 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 				
 				if (ROLE_FROM.equals(pid))
 				{
-					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipRoleFrom);
+					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipPartyFrom);
 					
 				}
 				else
 				{
-					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipRoleTo);
+					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipPartyTo);
 				}
 
 				select = new Select(caption, container);
@@ -215,6 +227,42 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 				date.setResolution(DateField.RESOLUTION_DAY);
 
 				result = date;
+			}
+			else if (STATUS.equals(pid))
+			{
+				Select select;
+				String caption;
+				BeanItemContainer<PartyRelationshipStatusType> container;
+				List<PartyRelationshipStatusType> stati;
+				
+				caption = this.app.getMessage(ApplicationMessages.PartyRelationshipStatus);
+				
+				stati = this.app.getServices().getCrudServicePartyRelationshipStatusType().findAll();
+				container = new BeanItemContainer<PartyRelationshipStatusType>(PartyRelationshipStatusType.class, stati);
+				
+				select = new Select(caption, container);
+				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
+				select.setItemCaptionPropertyId("description");
+
+				result = select;
+			}
+			else if (PRIORITY_TYPE.equals(pid))
+			{
+				Select select;
+				String caption;
+				BeanItemContainer<PriorityType> container;
+				List<PriorityType> priorityTypes;
+				
+				caption = this.app.getMessage(ApplicationMessages.PartyRelationshipPriority);
+				
+				priorityTypes = this.app.getServices().getCrudServicePriorityType().findAll();
+				container = new BeanItemContainer<PriorityType> (PriorityType.class, priorityTypes);
+				
+				select = new Select(caption, container);
+				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
+				select.setItemCaptionPropertyId("description");
+
+				result = select;
 			}
 
 			return result;

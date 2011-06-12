@@ -9,4 +9,17 @@ public class CrudServicePartyImpl extends CrudServiceGenericImpl<Party, Integer>
 	    super(Party.class);
     }
 	
+	@Override
+	public Party read(Integer id)
+	{
+		Party result;
+		
+		result = super.read(id);
+		
+		result.getPartyClassifications().size();
+		
+		result.getPartyRoles().size();		
+		
+		return result;
+	}
 }

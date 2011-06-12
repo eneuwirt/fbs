@@ -135,6 +135,6 @@ public class PartyRole implements Serializable
 
 	public String toString()
 	{
-		return String.format("PartyRole [id=%s, roleType=%s", this.id, this.partyRoleType.getDescription());
+		return String.format("PartyRole [id=%s, roleType=%s]", this.id, this.partyRoleType.getDescription());
 	}
 }

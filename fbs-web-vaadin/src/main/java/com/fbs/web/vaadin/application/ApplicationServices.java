@@ -3,8 +3,10 @@ package com.fbs.web.vaadin.application;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
+import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.Person;
+import com.fbs.dmr.universal.model.party.PriorityType;
 import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.SeedService;
 import com.fbs.dmr.universal.service.ServicePartyClassification;
@@ -29,9 +31,13 @@ public interface ApplicationServices
 
 	public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship();
 	
+	public CrudService<PartyRelationshipStatusType, Integer> getCrudServicePartyRelationshipStatusType();
+	
 	public CrudService<PartyRelationshipType, Integer> getCrudServicePartyRelationshipType();
 
 	public CrudService<Person, Integer> getCrudServicePerson();
+	
+	public CrudService<PriorityType, Integer> getCrudServicePriorityType();
 
 	public CrudService<Organization, Integer> getCrudServiceOrganization();
 	

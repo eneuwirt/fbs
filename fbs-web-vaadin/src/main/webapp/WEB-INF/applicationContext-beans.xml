@@ -23,6 +23,8 @@
 
   <bean id="crudServicePartyRelationship" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipImpl" />
 
+  <bean id="crudServicePartyRelationshipStatusType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipStatusTypeImpl" />
+
   <bean id="crudServicePartyRelationshipType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipTypeImpl" />
 
   <bean id="crudServicePartyRole" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleImpl" />
@@ -33,9 +35,13 @@
 
   <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.CrudServicePersonImpl" />
 
+  <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.CrudServicePriorityTypeImpl" />
+
   <bean id="seedService" class="com.fbs.dmr.universal.service.impl.SeedServiceImpl">
+    <property name="servicePartyRelationshipStatusType" ref="crudServicePartyRelationshipStatusType"/>
     <property name="servicePartyType" ref="crudServicePartyType" />
     <property name="servicePartyRoleType" ref="crudServicePartyRoleType" />
+    <property name="servicePriorityType" ref="crudServicePriorityType" />
   </bean>
 
   <bean id="tenantService" class="com.fbs.security.service.impl.TenantServiceImpl">

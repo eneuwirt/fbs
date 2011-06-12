@@ -2,6 +2,7 @@ package com.fbs.dmr.universal.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +16,7 @@ import com.fbs.dmr.universal.service.CrudService;
 public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudService<T, ID>
 {
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = Logger.getLogger(CrudServiceGenericImpl.class.getName());
 	protected EntityManager em;
 	private Class<T> entityClass;
 
@@ -28,7 +30,9 @@ public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudS
 	@Override
 	public void create(T t)
 	{
+		logger.info(">create");
 		em.persist(t);
+		logger.info("<create");
 	}
 
 
@@ -36,8 +40,10 @@ public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudS
 	public T read(ID id)
 	{
 		T result;
-
+		
+		logger.info(">read");
 		result = em.find(entityClass, id);
+		logger.info("<read");
 
 		return result;
 	}
@@ -46,7 +52,9 @@ public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudS
 	@Override
 	public void update(T t)
 	{
+		logger.info(">update");
 		em.merge(t);
+		logger.info("<update");
 	}
 
 
@@ -61,8 +69,10 @@ public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudS
 		{
 			return;
 		}
-
+		
+		logger.info(">delete");
 		em.remove(entity);
+		logger.info("<delete");
 	}
 
 
@@ -80,10 +90,12 @@ public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudS
 		List<T> result = null;
 		Query query;
 
+		logger.info(">findAll");
 		query = em.createQuery("FROM " + entityClass.getName());
 
 		result = query.getResultList();
 
+		logger.info("<findAll");
 		return result;
 	}
 }

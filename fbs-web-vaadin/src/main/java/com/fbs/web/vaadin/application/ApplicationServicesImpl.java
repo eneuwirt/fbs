@@ -5,8 +5,10 @@ import javax.annotation.Resource;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
+import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.Person;
+import com.fbs.dmr.universal.model.party.PriorityType;
 import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.SeedService;
 import com.fbs.dmr.universal.service.ServicePartyClassification;
@@ -36,6 +38,8 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private ServicePartyType crudServicePartyType;
 	@Resource(name = "crudServicePartyRelationship")
 	private CrudService<PartyRelationship, Integer> crudServicePartyRelationship;
+	@Resource(name = "crudServicePartyRelationshipStatusType")
+	private CrudService<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType;
 	@Resource(name = "crudServicePartyRelationshipType")
 	private CrudService<PartyRelationshipType, Integer> crudServicePartyRelationshipType;
 	@Resource(name = "crudServicePartyRoleType")
@@ -44,6 +48,8 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private ServicePartyRole crudServicePartyRole;
 	@Resource(name = "crudServicePerson")
 	private CrudService<Person, Integer> crudServicePerson;
+	@Resource(name="crudServicePriorityType")
+	private CrudService<PriorityType, Integer> crudServicePriorityType;
 	@Resource
 	ServicePartyClassification servicePartyClassification;
 
@@ -191,5 +197,28 @@ public class ApplicationServicesImpl implements ApplicationServices
 	{
 
 		this.servicePartyClassification = servicePartyClassification;
+	}
+
+	public void setCrudServicePartyRelationshipStatusType(
+	        CrudService<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType)
+	{
+		this.crudServicePartyRelationshipStatusType = crudServicePartyRelationshipStatusType;
+	}
+
+	@Override
+	public CrudService<PartyRelationshipStatusType, Integer> getCrudServicePartyRelationshipStatusType()
+	{
+		return crudServicePartyRelationshipStatusType;
+	}
+
+	public void setCrudServicePriorityType(CrudService<PriorityType, Integer> crudServicePriorityType)
+	{
+		this.crudServicePriorityType = crudServicePriorityType;
+	}
+
+	@Override
+	public CrudService<PriorityType, Integer> getCrudServicePriorityType()
+	{
+		return this.crudServicePriorityType;
 	}
 }

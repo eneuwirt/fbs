@@ -18,6 +18,6 @@ public class PartyRelationshipStatusType extends StatusType
 
     public String toString()
 	{
-		return String.format("PartyRelationshipStatusType [id=%s]", this.getId());
+		return String.format("PartyRelationshipStatusType [id=%s descr=%s]", this.getId(), this.getDescription());
 	}
 }

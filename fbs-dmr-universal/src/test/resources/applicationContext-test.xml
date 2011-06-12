@@ -53,9 +53,11 @@
   <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.CrudServiceOrganizationImpl" />
   <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.CrudServicePartyClassificationImpl" />
   <bean id="crudServicePartyRelationship" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipImpl" />
+  <bean id="crudServicePartyRelationshipStatusType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipStatusTypeImpl" />
   <bean id="crudServicePartyRelationshipType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipTypeImpl" />
   <bean id="crudServicePartyRole" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleImpl" />
   <bean id="crudServicePartyRoleType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleTypeImpl" />
   <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyTypeImpl" />
   <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.CrudServicePersonImpl" />
+  <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.CrudServicePriorityTypeImpl" />
 </beans>

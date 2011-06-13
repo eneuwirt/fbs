@@ -15,8 +15,8 @@ public class GeographicBoundary implements Serializable
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
     private String name = "";
-    private String code;
-    private String abbreviation;
+    private String code = "";
+    private String abbreviation = "";
 	
     public GeographicBoundary()
     {
@@ -106,6 +106,6 @@ public class GeographicBoundary implements Serializable
 
     public String toString()
 	{
-		return String.format("GeographicBoundary [id=%s, name=%s]", this.id, this.name);
+		return String.format("%s [id=%s, name=%s]", this.getClass().getName(), this.id, this.name);
 	}
 }

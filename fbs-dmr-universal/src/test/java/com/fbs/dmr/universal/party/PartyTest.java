@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal;
+package com.fbs.dmr.universal.party;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

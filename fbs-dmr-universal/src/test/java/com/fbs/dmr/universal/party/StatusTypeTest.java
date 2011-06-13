@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal;
+package com.fbs.dmr.universal.party;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -6,18 +6,19 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.fbs.dmr.universal.model.party.Person;
+import com.fbs.dmr.universal.model.type.StatusType;
 
-public class PersonTest
+public class StatusTypeTest
 {
 	@Test
 	public void testEqualsAndHashCode()
 	{
-		Person obj1 = null;
-		Person obj2 = null;
+		StatusType obj1 = null;
+		StatusType obj2 = null;
+		String description1 = "Descr 1";
 
-		obj1 = new Person();
-		obj2 = new Person();
+		obj1 = new StatusType();
+		obj2 = new StatusType();
 
 		assertTrue(obj1.equals(obj1));
 		assertTrue(obj1.equals(obj2));
@@ -41,5 +42,20 @@ public class PersonTest
 		assertFalse(obj2.equals(obj1));
 		assertFalse(obj1.equals(obj2));
 		assertFalse(obj1.hashCode() == obj2.hashCode());
+
+		obj1 = new StatusType();
+		obj2 = new StatusType();
+		obj1.setDescription(description1);
+		assertTrue(obj1.equals(obj1));
+		assertFalse(obj2.equals(obj1));
+		assertFalse(obj1.equals(obj2));
+		assertFalse(obj1.hashCode() == obj2.hashCode());
+
+		obj1.setId(1);
+		obj2.setId(1);
+		assertTrue(obj1.equals(obj1));
+		assertTrue(obj1.equals(obj2));
+		assertTrue(obj2.equals(obj1));
+		assertEquals(obj1.hashCode(), obj2.hashCode());
 	}
 }

@@ -9,23 +9,23 @@ import javax.persistence.Table;
 @Table(name = "POSTAL_CODES")
 public class PostalCode extends GeographicBoundary
 {
-    private static final long serialVersionUID = 1L;
-    @JoinColumn(name = "country_id")
-    @ManyToOne(optional=false)
-    private Country country;
+	private static final long serialVersionUID = 1L;
+	@ManyToOne
+	@JoinColumn(name = "country_id")
+	private Country country;
 
-    public PostalCode()
-    {
-    	
-    }
+	public PostalCode()
+	{
+
+	}
 
 	public void setCountry(Country country)
-    {
-	    this.country = country;
-    }
+	{
+		this.country = country;
+	}
 
 	public Country getCountry()
-    {
-	    return country;
-    }
+	{
+		return country;
+	}
 }

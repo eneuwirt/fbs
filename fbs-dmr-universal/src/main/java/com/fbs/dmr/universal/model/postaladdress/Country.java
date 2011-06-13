@@ -1,5 +1,6 @@
 package com.fbs.dmr.universal.model.postaladdress;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,11 +13,11 @@ public class Country extends GeographicBoundary
 {
 	private static final long serialVersionUID = 1L;
 	@OneToMany(mappedBy = "country")
-	private List<PostalCode> postalCodes;
+	private List<PostalCode> postalCodes = new ArrayList<PostalCode>();
 	@OneToMany(mappedBy = "country")
-	private List<Province> provinces;
+	private List<Province> provinces = new ArrayList<Province>();
 	@OneToMany(mappedBy = "country")
-	private List<State> states;
+	private List<State> states = new ArrayList<State>();
 
 	public Country()
 	{

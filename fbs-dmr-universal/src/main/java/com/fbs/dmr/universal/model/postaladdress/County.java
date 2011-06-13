@@ -9,23 +9,23 @@ import javax.persistence.Table;
 @Table(name = "COUNTIES")
 public class County extends GeographicBoundary
 {
-    private static final long serialVersionUID = 1L;
-    @JoinColumn(name = "state_id")
-    @ManyToOne(optional=true)
-    private State state;
+	private static final long serialVersionUID = 1L;
+	@ManyToOne
+	@JoinColumn(name = "state_id")
+	private State state;
 
-    public County()
-    {
-    	
-    }
+	public County()
+	{
+
+	}
 
 	public void setState(State state)
-    {
-	    this.state = state;
-    }
+	{
+		this.state = state;
+	}
 
 	public State getState()
-    {
-	    return state;
-    }
+	{
+		return state;
+	}
 }

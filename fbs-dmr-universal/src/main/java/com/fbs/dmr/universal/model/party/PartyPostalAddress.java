@@ -18,91 +18,91 @@ import com.fbs.dmr.universal.model.postaladdress.PostalAddress;
 import com.fbs.dmr.util.DateUtils;
 
 @Entity
-@Table(name="PARTY_POSTAL_ADDRESS")
+@Table(name = "PARTY_POSTAL_ADDRESSES")
 public class PartyPostalAddress implements Serializable
 {
-    private static final long serialVersionUID = 1L;
-    @Id
+	private static final long serialVersionUID = 1L;
+	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-    private String comment = "";
-    @JoinColumn(name = "party_id")
+	private String comment = "";
 	@ManyToOne
-    private Party party;
-    @JoinColumn(name = "postal_address_id")
+	@JoinColumn(name = "party_id")
+	private Party party;
 	@ManyToOne
-    private PostalAddress postalAddress;
-    @Temporal(TemporalType.DATE)
-	@Column(name="date_from")
+	@JoinColumn(name = "postal_address_id")
+	private PostalAddress postalAddress;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "date_from")
 	private Date dateFrom = new Date();
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_to")
+	@Column(name = "date_to")
 	private Date dateTo = DateUtils.getEndOfDays();
-	
+
 	public PartyPostalAddress()
 	{
-		
+
 	}
-	
+
 	public Integer getId()
-    {
-    	return id;
-    }
+	{
+		return id;
+	}
 
 	public void setId(Integer id)
-    {
-    	this.id = id;
-    }
+	{
+		this.id = id;
+	}
 
 	public String getComment()
-    {
-    	return comment;
-    }
+	{
+		return comment;
+	}
 
 	public void setComment(String comment)
-    {
-    	this.comment = comment;
-    }
+	{
+		this.comment = comment;
+	}
 
 	public Party getParty()
-    {
-    	return party;
-    }
+	{
+		return party;
+	}
 
 	public void setParty(Party party)
-    {
-    	this.party = party;
-    }
+	{
+		this.party = party;
+	}
 
 	public void setPostalAddress(PostalAddress postalAddress)
-    {
-	    this.postalAddress = postalAddress;
-    }
+	{
+		this.postalAddress = postalAddress;
+	}
 
 	public PostalAddress getPostalAddress()
-    {
-	    return postalAddress;
-    }
+	{
+		return postalAddress;
+	}
 
 	public Date getDateFrom()
-    {
-    	return dateFrom;
-    }
+	{
+		return dateFrom;
+	}
 
 	public void setDateFrom(Date dateFrom)
-    {
-    	this.dateFrom = dateFrom;
-    }
+	{
+		this.dateFrom = dateFrom;
+	}
 
 	public Date getDateTo()
-    {
-    	return dateTo;
-    }
+	{
+		return dateTo;
+	}
 
 	public void setDateTo(Date dateTo)
-    {
-    	this.dateTo = dateTo;
-    }
+	{
+		this.dateTo = dateTo;
+	}
 
 	@Override
 	public boolean equals(Object obj)
@@ -118,7 +118,7 @@ public class PartyPostalAddress implements Serializable
 		}
 
 		PartyPostalAddress other = (PartyPostalAddress) obj;
-		
+
 		if (this.getId() == null && other.getId() == null)
 		{
 			return this.comment.equals(other.comment);
@@ -128,10 +128,9 @@ public class PartyPostalAddress implements Serializable
 		{
 			return false;
 		}
-		
+
 		return true;
 	}
-
 
 	@Override
 	public int hashCode()
@@ -143,7 +142,6 @@ public class PartyPostalAddress implements Serializable
 
 		return result;
 	}
-
 
 	public String toString()
 	{

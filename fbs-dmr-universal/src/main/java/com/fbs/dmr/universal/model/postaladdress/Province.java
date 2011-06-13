@@ -10,8 +10,8 @@ import javax.persistence.Table;
 public class Province extends GeographicBoundary
 {
 	private static final long serialVersionUID = 1L;
-	@JoinColumn(name = "country_id")
 	@ManyToOne(optional = false)
+	@JoinColumn(name = "country_id")
 	private Country country;
 
 	public Province()

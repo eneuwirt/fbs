@@ -2,18 +2,28 @@ package com.fbs.dmr.universal.model.postaladdress;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@MappedSuperclass
+@Entity
+@Table(name = "GEO_BOUNDARIES")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class GeographicBoundary implements Serializable
 {
     private static final long serialVersionUID = 1L;
     @Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "geo_boundary_type_id")
+    private GeographicBoundaryType geographicBoundaryType;
     private String name = "";
     private String code = "";
     private String abbreviation = "";
@@ -61,6 +71,16 @@ public class GeographicBoundary implements Serializable
 	public void setAbbreviation(String abbreviation)
     {
     	this.abbreviation = abbreviation;
+    }
+
+	public void setGeographicBoundaryType(GeographicBoundaryType geographicBoundaryType)
+    {
+	    this.geographicBoundaryType = geographicBoundaryType;
+    }
+
+	public GeographicBoundaryType getGeographicBoundaryType()
+    {
+	    return geographicBoundaryType;
     }
 
 	@Override

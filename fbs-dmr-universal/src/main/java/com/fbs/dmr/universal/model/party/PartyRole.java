@@ -29,8 +29,8 @@ public class PartyRole implements Serializable
 	private Integer id;
 	@ManyToOne
 	private Party party;
-	@JoinColumn(name = "partyroletype_id")
 	@ManyToOne
+	@JoinColumn(name = "partyroletype_id")
 	private PartyRoleType partyRoleType;
 	@Temporal(TemporalType.DATE)
 	@Column(name="date_from")

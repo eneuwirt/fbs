@@ -10,8 +10,8 @@ import javax.persistence.Table;
 public class City extends GeographicBoundary
 {
     private static final long serialVersionUID = 1L;
+    @ManyToOne
     @JoinColumn(name = "state_id")
-    @ManyToOne(optional=true)
     private State state;
 
     public City()

@@ -6,6 +6,8 @@
     <class>com.fbs.dmr.universal.model.party.Organization</class>
     <class>com.fbs.dmr.universal.model.party.Party</class>
     <class>com.fbs.dmr.universal.model.party.PartyClassification</class>
+    <class>com.fbs.dmr.universal.model.party.PartyPostalAddress</class>
+    <class>com.fbs.dmr.universal.model.party.PartyPostalAddress</class>
     <class>com.fbs.dmr.universal.model.party.PartyRelationship</class>
     <class>com.fbs.dmr.universal.model.party.PartyRelationshipStatusType</class>
     <class>com.fbs.dmr.universal.model.party.PartyRelationshipType</class>
@@ -14,5 +16,15 @@
     <class>com.fbs.dmr.universal.model.party.PartyType</class>
     <class>com.fbs.dmr.universal.model.party.Person</class>
     <class>com.fbs.dmr.universal.model.party.PriorityType</class>
+    <class>com.fbs.dmr.universal.model.postaladdress.City</class>
+    <class>com.fbs.dmr.universal.model.postaladdress.Country</class>
+    <class>com.fbs.dmr.universal.model.postaladdress.County</class>
+    <class>com.fbs.dmr.universal.model.postaladdress.GeographicBoundary</class>
+    <class>com.fbs.dmr.universal.model.postaladdress.GeographicBoundaryType</class>
+    <class>com.fbs.dmr.universal.model.postaladdress.PostalAddress</class>
+    <class>com.fbs.dmr.universal.model.postaladdress.PostalAddressBoundary</class>
+    <class>com.fbs.dmr.universal.model.postaladdress.PostalCode</class>
+    <class>com.fbs.dmr.universal.model.postaladdress.Province</class>
+    <class>com.fbs.dmr.universal.model.postaladdress.State</class>
   </persistence-unit>
 </persistence>

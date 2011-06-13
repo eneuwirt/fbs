@@ -10,7 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+/**
+ * Associative entity between postall address and geographic boundary
+ * 
+ * @author neuwirt
+ *
+ */
 @Entity
 @Table(name = "POSTAL_ADDRESS_BOUNDARIES")
 public class PostalAddressBoundary  implements Serializable

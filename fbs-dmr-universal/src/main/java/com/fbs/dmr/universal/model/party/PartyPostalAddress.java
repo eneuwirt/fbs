@@ -17,6 +17,15 @@ import javax.persistence.TemporalType;
 import com.fbs.dmr.universal.model.postaladdress.PostalAddress;
 import com.fbs.dmr.util.DateUtils;
 
+
+/**
+ * Shows which postal address relates to which party. 
+ * 
+ * S49
+ * 
+ * @author neuwirt
+ *
+ */
 @Entity
 @Table(name = "PARTY_POSTAL_ADDRESSES")
 public class PartyPostalAddress implements Serializable

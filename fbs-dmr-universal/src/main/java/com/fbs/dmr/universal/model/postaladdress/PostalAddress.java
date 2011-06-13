@@ -1,15 +1,12 @@
 package com.fbs.dmr.universal.model.postaladdress;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,8 +22,6 @@ public class PostalAddress implements Serializable
     @Column(name="address_2")
     private String address2;
     private String directions;
-    @OneToMany(mappedBy="postalAddress")
-    private List<PostalAddressBoundary> postalAddressBoundaries = new ArrayList<PostalAddressBoundary>();
     
     public PostalAddress()
     {
@@ -71,16 +66,6 @@ public class PostalAddress implements Serializable
 	public void setDirections(String directions)
     {
     	this.directions = directions;
-    }
-
-	public void setPostalAddressBoundaries(List<PostalAddressBoundary> postalAddressBoundaries)
-    {
-	    this.postalAddressBoundaries = postalAddressBoundaries;
-    }
-
-	public List<PostalAddressBoundary> getPostalAddressBoundaries()
-    {
-	    return postalAddressBoundaries;
     }
 
 	@Override

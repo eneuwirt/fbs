@@ -1,12 +1,8 @@
 package com.fbs.dmr.universal.model.postaladdress;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,34 +13,10 @@ public class State extends GeographicBoundary
 	@ManyToOne
 	@JoinColumn(name = "country_id")
 	private Country country;
-	@OneToMany(mappedBy="state")
-	private List<City> cities = new ArrayList<City>();
-	@OneToMany(mappedBy="state")
-	private List<County> counties = new ArrayList<County>();
 
 	public State()
 	{
 
-	}
-
-	public List<City> getCities()
-	{
-		return cities;
-	}
-
-	public void setCities(List<City> cities)
-	{
-		this.cities = cities;
-	}
-
-	public List<County> getCounties()
-	{
-		return counties;
-	}
-
-	public void setCounties(List<County> counties)
-	{
-		this.counties = counties;
 	}
 
 	public void setCountry(Country country)

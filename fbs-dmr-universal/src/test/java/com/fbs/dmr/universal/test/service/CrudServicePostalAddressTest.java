@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fbs.dmr.universal.model.party.PostalAddress;
+import com.fbs.dmr.universal.model.postaladdress.PostalAddress;
 import com.fbs.dmr.universal.service.CrudService;
 
 @RunWith(SpringJUnit4ClassRunner.class)

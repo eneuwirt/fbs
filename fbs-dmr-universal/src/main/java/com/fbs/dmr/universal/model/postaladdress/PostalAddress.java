@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal.model.party;
+package com.fbs.dmr.universal.model.postaladdress;
 
 import java.io.Serializable;
 

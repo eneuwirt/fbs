@@ -42,6 +42,9 @@ public class OrganizationTest
 		Organization obj2 = null;
 
 		obj1 = new Organization();
+		assertTrue(obj1.equals(obj1));
+		assertFalse(obj1.equals(obj2));
+		
 		obj2 = new Organization();
 
 		assertTrue(obj1.equals(obj1));

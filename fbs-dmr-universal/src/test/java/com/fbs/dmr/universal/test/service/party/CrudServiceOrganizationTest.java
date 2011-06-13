@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal.test.service;
+package com.fbs.dmr.universal.test.service.party;
 
 import java.util.ArrayList;
 import java.util.List;

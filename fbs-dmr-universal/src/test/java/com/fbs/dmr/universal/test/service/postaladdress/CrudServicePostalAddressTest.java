@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal.test.service;
+package com.fbs.dmr.universal.test.service.postaladdress;
 
 import javax.annotation.Resource;
 

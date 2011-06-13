@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,6 +29,7 @@ public class PartyRole implements Serializable
 	private Integer id;
 	@ManyToOne
 	private Party party;
+	@JoinColumn(name = "partyroletype_id")
 	@ManyToOne
 	private PartyRoleType partyRoleType;
 	@Temporal(TemporalType.DATE)

@@ -58,6 +58,7 @@
   <bean id="crudServicePartyRole" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleImpl" />
   <bean id="crudServicePartyRoleType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleTypeImpl" />
   <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyTypeImpl" />
+  <bean id="crudServicePostalAddress" class="com.fbs.dmr.universal.service.impl.CrudServicePostalAddressImpl" />
   <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.CrudServicePersonImpl" />
   <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.CrudServicePriorityTypeImpl" />
 </beans>

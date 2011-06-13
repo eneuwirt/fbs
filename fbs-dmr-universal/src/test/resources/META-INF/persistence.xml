@@ -6,6 +6,7 @@
      <class>com.fbs.dmr.universal.model.party.Organization</class>
     <class>com.fbs.dmr.universal.model.party.Party</class>
     <class>com.fbs.dmr.universal.model.party.PartyClassification</class>
+    <class>com.fbs.dmr.universal.model.party.PartyPostalAddress</class>
     <class>com.fbs.dmr.universal.model.party.PartyRelationship</class>
     <class>com.fbs.dmr.universal.model.party.PartyRelationshipStatusType</class>
     <class>com.fbs.dmr.universal.model.party.PartyRelationshipType</class>
@@ -13,6 +14,7 @@
     <class>com.fbs.dmr.universal.model.party.PartyRoleType</class>
     <class>com.fbs.dmr.universal.model.party.PartyType</class>
     <class>com.fbs.dmr.universal.model.party.Person</class>
+    <class>com.fbs.dmr.universal.model.party.PostalAddress</class>
     <class>com.fbs.dmr.universal.model.party.PriorityType</class>
   </persistence-unit>
 </persistence>

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,15 +30,20 @@ public class PartyRelationship implements Serializable
 	private Date dateFrom = new Date();
 	@Temporal(TemporalType.DATE)
 	@Column(name="date_to")
-	private Date dateTo = DateUtils.getEndOfDays();;
+	private Date dateTo = DateUtils.getEndOfDays();
+	@JoinColumn(name = "party_relshiptype_id")
 	@ManyToOne(optional=false)
 	private PartyRelationshipType partyRelationshipType;
+	@JoinColumn(name = "party_roleto_id")
 	@ManyToOne(optional=false)
 	private PartyRole partyRoleTo;
+	@JoinColumn(name = "party_rolefrom_id")
 	@ManyToOne(optional=false)
 	private PartyRole partyRoleFrom;
+	@JoinColumn(name = "party_relship_statustype_id")
 	@ManyToOne
 	private PartyRelationshipStatusType partyRelationshipStatusType;
+	@JoinColumn(name = "party_relship_prioritytype_id")
 	@ManyToOne
 	private PriorityType priorityType;
 

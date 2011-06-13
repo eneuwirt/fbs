@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -23,8 +24,10 @@ public class PartyClassification implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@JoinColumn(name = "party_id")
 	@ManyToOne
 	private Party party;
+	@JoinColumn(name = "party_type_id")
 	@ManyToOne
 	private PartyType partyType;
 	@Temporal(TemporalType.DATE)

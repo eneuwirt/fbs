@@ -29,6 +29,8 @@ public class Party implements Serializable
 	private List<PartyClassification> partyClassifications = new ArrayList<PartyClassification>();
 	@OneToMany(mappedBy="party", cascade=CascadeType.ALL)
 	private List<PartyRole> partyRoles = new ArrayList<PartyRole>();
+	@OneToMany(mappedBy="party", cascade=CascadeType.ALL)
+	private List<PartyPostalAddress> partyPostallAddresses;
 
 	public Party()
 	{
@@ -67,6 +69,18 @@ public class Party implements Serializable
 	public List<PartyRole> getPartyRoles()
     {
 	    return partyRoles;
+    }
+
+
+	public void setPartyPostallAddresses(List<PartyPostalAddress> partyPostallAddresses)
+    {
+	    this.partyPostallAddresses = partyPostallAddresses;
+    }
+
+
+	public List<PartyPostalAddress> getPartyPostallAddresses()
+    {
+	    return partyPostallAddresses;
     }
 
 

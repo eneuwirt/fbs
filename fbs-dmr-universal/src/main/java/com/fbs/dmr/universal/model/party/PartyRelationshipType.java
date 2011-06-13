@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,8 +20,10 @@ public class PartyRelationshipType implements Serializable
 	private Integer id;
 	private String description = "";
 	private String name = "";
+	@JoinColumn(name = "party_roletype_to_id")
 	@ManyToOne(optional=true)
 	private PartyRoleType partyRoleTypeTo;
+	@JoinColumn(name = "party_roletype_from_id")
 	@ManyToOne(optional=true)
 	private PartyRoleType partyRoleTypeFrom;
 

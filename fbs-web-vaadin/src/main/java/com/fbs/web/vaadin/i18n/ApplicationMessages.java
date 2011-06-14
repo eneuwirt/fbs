@@ -48,6 +48,8 @@ public interface ApplicationMessages extends Serializable
 	
 	//Party
 	public static String PartyName = "Party.Name";
+	public static String PartyPostalAddress = "Party.PostalAddress";
+	public static String PartyRelationships = "Party.Relationships";
 	
 	// PartyRelationship
 	public static String PartyRelationshipComment = "PartyRelationship.Comment";
@@ -113,4 +115,5 @@ public interface ApplicationMessages extends Serializable
 	public static String UserTabTitleDocuments = "UserTab.TitleDocuments";
 	public static String UserTabTitleParty = "UserTab.TitleParty";
 	public static String UserTabTitleRelationships = "UserTab.TitleRelationships";
+	public static String UserTabTitleTypes = "UserTab.TitleTypes";
 }

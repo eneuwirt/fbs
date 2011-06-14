@@ -17,7 +17,9 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
+import com.vaadin.ui.TabSheet;
 
 public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 {
@@ -148,23 +150,23 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 			partyClass = this.app.getServices().getCrudServicePartyClassification()
 			        .findByPartyType(party.getId(), selectedClass);
-			
+
 			if (partyClass == null)
 			{
 				PartyType partyType;
-				
+
 				partyType = this.app.getServices().getCrudServicePartyType().findForDescription(selectedClass);
-				
+
 				partyClass = new PartyClassification();
 				partyClass.setParty(party);
 				partyClass.setPartyType(partyType);
 			}
-			
+
 			classifications.add(partyClass);
 		}
 		party.getPartyClassifications().clear();
 		party.getPartyClassifications().addAll(classifications);
-		
+
 		logger.info("<updateBean");
 	}
 
@@ -251,35 +253,58 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	@Override
 	protected Component getComponent()
 	{
-		HorizontalLayout layout;
-		String caption;
+		HorizontalLayout hl;
+		TabSheet tabsheet = new TabSheet();
+		String captionClass;
+		String captionRoles;
+		String captionAddr;
+		String captionRelations;
 
 		logger.info(">getComponent");
 
-		layout = new HorizontalLayout();
-		layout.setSizeFull();
-		layout.setMargin(true);
-		layout.setSpacing(true);
+		captionClass = this.app.getMessage(ApplicationMessages.PartyTypeClassificationTitle);
+		captionRoles = this.app.getMessage(ApplicationMessages.PartyRoleTitle);
+		captionAddr = this.app.getMessage(ApplicationMessages.PartyPostalAddress);
+		captionRelations = this.app.getMessage(ApplicationMessages.PartyRelationships);
 
-		this.classificationsGroup = new OptionGroup();
-		caption = this.app.getMessage(ApplicationMessages.PartyTypeClassificationTitle);
-		this.classificationsGroup.setCaption(caption);
-		this.classificationsGroup.setMultiSelect(true);
-		this.classificationsGroup.setNullSelectionAllowed(true);
-		this.classificationsGroup.setImmediate(true);
+		this.createClassificationGroup();
+		this.createRolesGroup();
 
-		this.rolesGroup = new OptionGroup();
-		caption = this.app.getMessage(ApplicationMessages.PartyRoleTitle);
-		this.rolesGroup.setCaption(caption);
-		this.rolesGroup.setMultiSelect(true);
-		this.rolesGroup.setNullSelectionAllowed(true);
-		this.rolesGroup.setImmediate(true);
-
-		layout.addComponent(rolesGroup);
-		layout.addComponent(classificationsGroup);
+		tabsheet.addTab(new Label("Viele Adressen hier"), captionAddr, null);
+		tabsheet.addTab(new Label("Bezihungen zwischen mir und den andren"), captionRelations, null);
+		tabsheet.addTab(this.rolesGroup, captionRoles, null);
+		tabsheet.addTab(this.classificationsGroup, captionClass, null);
 
 		logger.info("<getComponent");
 
-		return layout;
+		hl = new HorizontalLayout();
+		hl.addComponent(tabsheet);
+
+		return hl;
+	}
+
+	@Override
+	protected void layoutComponent()
+	{
+		this.classificationsGroup.setSizeFull();
+		this.rolesGroup.setSizeFull();
+
+		this.component.setSizeFull();
+	}
+
+	private void createClassificationGroup()
+	{
+		this.classificationsGroup = new OptionGroup();
+		this.classificationsGroup.setMultiSelect(true);
+		this.classificationsGroup.setNullSelectionAllowed(true);
+		this.classificationsGroup.setImmediate(true);
+	}
+
+	private void createRolesGroup()
+	{
+		this.rolesGroup = new OptionGroup();
+		this.rolesGroup.setMultiSelect(true);
+		this.rolesGroup.setNullSelectionAllowed(true);
+		this.rolesGroup.setImmediate(true);
 	}
 }

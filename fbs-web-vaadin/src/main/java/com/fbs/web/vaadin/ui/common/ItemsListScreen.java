@@ -39,6 +39,7 @@ import com.vaadin.ui.Button.ClickEvent;
 public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 {
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = Logger.getLogger(ItemsListScreen.class.getName());
 
 	public enum Action
 	{
@@ -228,7 +229,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		}
 		catch (Exception e)
 		{
-			// ignore at first time
+			logger.log(Level.SEVERE, "Exception: " + e.getMessage());
 		}
 	}
 
@@ -243,10 +244,13 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
     {
 	    Panel p = new Panel();
 	    
-	    p.setVisible(false);
-	    
 	    return p;
     }
+	
+	protected void layoutComponent()
+	{
+		 this.component.setVisible(false);
+	}
 
 
 	private void addNestedContainerProperties()
@@ -384,10 +388,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	{
 		HorizontalLayout buttonRow = new HorizontalLayout();
 		
+		right.setSizeFull();
 		right.setMargin(true);
 		right.setSpacing(true);
-
+		
 		this.layoutForm();
+		this.layoutComponent();		
 
 		buttonRow.addComponent(this.buttonSave);
 		buttonRow.addComponent(this.buttonCancel);
@@ -395,10 +401,14 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 		right.addComponent(this.form);
 		right.addComponent(this.component);
-
 		right.addComponent(buttonRow);
 
 		right.setExpandRatio(this.form, 1.0f);
+		if (this.component.isVisible())
+		{
+			right.setExpandRatio(this.component, 1.0f);
+		}
+		//right.setExpandRatio(buttonRow, 0.5f);
 	}
 
 

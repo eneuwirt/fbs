@@ -2,6 +2,7 @@ package com.fbs.web.vaadin.application;
 
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PreDestroy;
@@ -220,6 +221,8 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	{
 		// Call the default implementation.
 		super.terminalError(event);
+		
+		logger.log(Level.ALL, "Exception: " + event.getThrowable().toString());
 
 		// Some custom behavior.
 		if (getMainWindow() != null)
@@ -233,6 +236,8 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 	{
 		String msg = this.getMessage(ApplicationMessages.ErrorCommon);
 		int notificationType = Notification.TYPE_ERROR_MESSAGE;
+		
+		logger.log(Level.ALL, "Exception: " + ex.getMessage());
 
 		if (ex instanceof SQLException)
 		{

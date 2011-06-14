@@ -50,15 +50,15 @@
   </bean>
 
 
-  <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.CrudServiceOrganizationImpl" />
-  <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.CrudServicePartyClassificationImpl" />
-  <bean id="crudServicePartyRelationship" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipImpl" />
-  <bean id="crudServicePartyRelationshipStatusType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipStatusTypeImpl" />
-  <bean id="crudServicePartyRelationshipType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipTypeImpl" />
-  <bean id="crudServicePartyRole" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleImpl" />
-  <bean id="crudServicePartyRoleType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleTypeImpl" />
-  <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyTypeImpl" />
-  <bean id="crudServicePostalAddress" class="com.fbs.dmr.universal.service.impl.CrudServicePostalAddressImpl" />
-  <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.CrudServicePersonImpl" />
-  <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.CrudServicePriorityTypeImpl" />
+  <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.party.CrudServiceOrganizationImpl" />
+  <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyClassificationImpl" />
+  <bean id="crudServicePartyRelationship" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipImpl" />
+  <bean id="crudServicePartyRelationshipStatusType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipStatusTypeImpl" />
+  <bean id="crudServicePartyRelationshipType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipTypeImpl" />
+  <bean id="crudServicePartyRole" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRoleImpl" />
+  <bean id="crudServicePartyRoleType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRoleTypeImpl" />
+  <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyTypeImpl" />
+  <bean id="crudServicePostalAddress" class="com.fbs.dmr.universal.service.impl.postaladdress.CrudServicePostalAddressImpl" />
+  <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.party.CrudServicePersonImpl" />
+  <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePriorityTypeImpl" />
 </beans>

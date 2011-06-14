@@ -15,27 +15,27 @@
                       http://www.springframework.org/schema/util 
                       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-  <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.CrudServiceOrganizationImpl" />
+  <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.party.CrudServiceOrganizationImpl" />
 
-  <bean id="crudServiceParty" class="com.fbs.dmr.universal.service.impl.CrudServicePartyImpl" />
+  <bean id="crudServiceParty" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyImpl" />
 
-  <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.CrudServicePartyClassificationImpl" />
+  <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyClassificationImpl" />
 
-  <bean id="crudServicePartyRelationship" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipImpl" />
+  <bean id="crudServicePartyRelationship" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipImpl" />
 
-  <bean id="crudServicePartyRelationshipStatusType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipStatusTypeImpl" />
+  <bean id="crudServicePartyRelationshipStatusType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipStatusTypeImpl" />
 
-  <bean id="crudServicePartyRelationshipType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRelationshipTypeImpl" />
+  <bean id="crudServicePartyRelationshipType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipTypeImpl" />
 
-  <bean id="crudServicePartyRole" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleImpl" />
+  <bean id="crudServicePartyRole" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRoleImpl" />
 
-  <bean id="crudServicePartyRoleType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyRoleTypeImpl" />
+  <bean id="crudServicePartyRoleType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRoleTypeImpl" />
 
-  <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.CrudServicePartyTypeImpl" />
+  <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyTypeImpl" />
 
-  <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.CrudServicePersonImpl" />
+  <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.party.CrudServicePersonImpl" />
 
-  <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.CrudServicePriorityTypeImpl" />
+  <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePriorityTypeImpl" />
 
   <bean id="seedService" class="com.fbs.dmr.universal.service.impl.SeedServiceImpl">
     <property name="servicePartyRelationshipStatusType" ref="crudServicePartyRelationshipStatusType"/>

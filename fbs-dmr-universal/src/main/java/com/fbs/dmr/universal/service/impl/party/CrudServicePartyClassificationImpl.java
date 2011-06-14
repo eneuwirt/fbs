@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal.service.impl;
+package com.fbs.dmr.universal.service.impl.party;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import javax.persistence.Query;
 
 import com.fbs.dmr.universal.model.party.PartyClassification;
 import com.fbs.dmr.universal.service.ServicePartyClassification;
+import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
 
 public class CrudServicePartyClassificationImpl extends CrudServiceGenericImpl<PartyClassification, Integer> implements
         ServicePartyClassification

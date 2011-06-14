@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal.service.impl;
+package com.fbs.dmr.universal.service.impl.party;
 
 import javax.persistence.Query;
 
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.service.ServicePartyRoleType;
+import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
 
 @Repository
 public class CrudServicePartyRoleTypeImpl extends CrudServiceGenericImpl<PartyRoleType, Integer> implements

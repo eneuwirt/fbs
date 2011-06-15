@@ -11,6 +11,7 @@ public interface ApplicationMessages extends Serializable
 	public static String AdminTabTitleTenant = "Admin.TabTitleTenant";
 
 	public static String CommonCancel = "Common.Cancel";
+	public static String CommonComment = "Common.Comment";
 	public static String CommonDelete = "Common.Delete";
 	public static String CommonDetails = "Common.Details";
 	public static String CommonDetailsDescription = "Common.DetailsDescription";
@@ -89,10 +90,16 @@ public interface ApplicationMessages extends Serializable
 	public static String PartyTypeClassificationTitle = "PartyTypeClassification.Title";
 	
 	//Person
+	public static String PersonBirthDate = "Person.BirthDate";
 	public static String PersonFirstName = "Person.FirstName";
+	public static String PersonGender = "Person.Gender";
+	public static String PersonGenderFemaleSalutation = "Person.GenderFemaleSalutation";
+	public static String PersonGenderMaleSalutation = "Person.GenderMaleSalutation";
 	public static String PersonId = "Person.Id";
 	public static String PersonLastName = "Person.LastName";
+	public static String PersonMiddleName = "Person.MiddleName";
 	public static String PersonTitle = "Person.Title";
+	public static String PersonTitleAcademic = "Person.TitleAcademic";
 
 	// Register Form
 	public static String RegisterTitle = "Register.Title";

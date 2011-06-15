@@ -31,6 +31,7 @@ public class Person extends Party
 	private String mothersMaidenname = "";
 	@Column(name = "marital_status")
 	private String maritalStaus = "";
+	private String comment;
 
 	public Person()
 	{
@@ -142,6 +143,16 @@ public class Person extends Party
 	{
 		this.maritalStaus = maritalStaus;
 	}
+
+	public void setComment(String comment)
+    {
+	    this.comment = comment;
+    }
+
+	public String getComment()
+    {
+	    return comment;
+    }
 
 	@Override
 	public boolean equals(Object obj)

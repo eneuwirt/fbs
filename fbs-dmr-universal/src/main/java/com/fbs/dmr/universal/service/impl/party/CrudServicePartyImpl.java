@@ -6,21 +6,23 @@ import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
 public class CrudServicePartyImpl extends CrudServiceGenericImpl<Party, Integer>
 {
 	public CrudServicePartyImpl()
-    {
-	    super(Party.class);
-    }
-	
+	{
+		super(Party.class);
+	}
+
 	@Override
 	public Party read(Integer id)
 	{
 		Party result;
-		
+
 		result = super.read(id);
-		
-		result.getPartyClassifications().size();
-		
-		result.getPartyRoles().size();		
-		
+
+		if (result != null)
+		{
+			result.getPartyClassifications().size();
+			result.getPartyRoles().size();
+		}
+
 		return result;
 	}
 }

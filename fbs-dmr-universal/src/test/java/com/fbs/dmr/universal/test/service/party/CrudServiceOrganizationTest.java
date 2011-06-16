@@ -83,6 +83,8 @@ public class CrudServiceOrganizationTest
 		
 		org = new Organization();
 		org.setName(name);
+		this.crudServiceOrganization.create(org);
+		Assert.assertNotNull(org.getId());
 		id = org.getId();
 
 		org2 = new Organization();

@@ -145,14 +145,14 @@ public class Person extends Party
 	}
 
 	public void setComment(String comment)
-    {
-	    this.comment = comment;
-    }
+	{
+		this.comment = comment;
+	}
 
 	public String getComment()
-    {
-	    return comment;
-    }
+	{
+		return comment;
+	}
 
 	@Override
 	public boolean equals(Object obj)
@@ -189,6 +189,6 @@ public class Person extends Party
 
 	public String toString()
 	{
-		return String.format("Person [id=%s, name=%s]", this.getId(), this.firstName);
+		return String.format("Person [id=%s, name=%s]", this.getId(), this.firstName + " " + this.lastName);
 	}
 }

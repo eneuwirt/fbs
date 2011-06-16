@@ -60,8 +60,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 			partyRole = new PartyRole();
 			partyRole.setParty(party);
 			partyRole.setPartyRoleType(partyRoleType);
-
-			party.getPartyRoles().add(partyRole);
+			
+			this.app.getServices().getCrudServicePartyRole().create(partyRole);
 		}
 
 		selectedClassiffcations = (Set<String>) this.classificationsGroup.getValue();
@@ -77,7 +77,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 			partyClassification.setParty(party);
 			partyClassification.setPartyType(partyType);
 
-			party.getPartyClassifications().add(partyClassification);
+			this.app.getServices().getCrudServicePartyClassification().create(partyClassification);
 		}
 
 		logger.info("<createBean");
@@ -124,12 +124,15 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 				partyRole.setParty(party);
 				partyRole.setPartyRoleType(partyRoleType);
+				
+				this.app.getServices().getCrudServicePartyRole().create(partyRole);
 			}
-
-			partyRoles.add(partyRole);
+			else
+			{
+				this.app.getServices().getCrudServicePartyRole().update(partyRole);
+			}
 		}
-		party.getPartyRoles().clear();
-		party.getPartyRoles().addAll(partyRoles);
+		
 
 		@SuppressWarnings("unchecked")
 		Set<String> selectedClassifications = (Set<String>) this.classificationsGroup.getValue();
@@ -160,13 +163,17 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 				partyClass = new PartyClassification();
 				partyClass.setParty(party);
 				partyClass.setPartyType(partyType);
+				
+				this.app.getServices().getCrudServicePartyClassification().create(partyClass);
+			}
+			else
+			{
+				this.app.getServices().getCrudServicePartyClassification().update(partyClass);
 			}
 
 			classifications.add(partyClass);
 		}
-		party.getPartyClassifications().clear();
-		party.getPartyClassifications().addAll(classifications);
-
+	
 		logger.info("<updateBean");
 	}
 
@@ -219,7 +226,10 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		this.rolesGroup.setValue(null);
 		if (party != null)
 		{
-			for (PartyRole p : party.getPartyRoles())
+			List<PartyRole> partyRoles;
+			partyRoles = this.app.getServices().getCrudServicePartyRole().findByParty(party.getId());
+			
+			for (PartyRole p : partyRoles)
 			{
 				this.rolesGroup.select(p.getPartyRoleType().getDescription());
 			}
@@ -243,7 +253,10 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		this.classificationsGroup.setValue(null);
 		if (party != null)
 		{
-			for (PartyClassification p : party.getPartyClassifications())
+			List<PartyClassification> classifications;
+			
+			classifications = this.app.getServices().getCrudServicePartyClassification().findByParty(party.getId());
+			for (PartyClassification p : classifications)
 			{
 				this.classificationsGroup.select(p.getPartyType().getDescription());
 			}

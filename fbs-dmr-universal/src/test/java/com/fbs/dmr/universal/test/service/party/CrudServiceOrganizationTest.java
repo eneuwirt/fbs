@@ -15,7 +15,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fbs.dmr.universal.model.party.Organization;
-import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyClassification;
 import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
@@ -46,27 +45,6 @@ public class CrudServiceOrganizationTest
 		Assert.assertNotNull(crudServicePartyType);
 		Assert.assertNotNull(crudServicePartyRole);
 		Assert.assertNotNull(crudServicePartyClassification);
-	}
-	
-	private void createClassifications(Party party, PartyType partyType)
-	{
-		PartyClassification pC = new PartyClassification();
-		
-		pC.setParty(party);
-		pC.setPartyType(partyType);
-	
-		
-		party.getPartyClassifications().add(pC);
-	}
-	
-	private void createRoles(Party party, PartyRoleType prt)
-	{
-		PartyRole pr = new PartyRole();
-		
-		pr.setParty(party);
-		pr.setPartyRoleType(prt);
-		
-		party.getPartyRoles().add(pr);
 	}
 
 	@Test
@@ -105,24 +83,6 @@ public class CrudServiceOrganizationTest
 		
 		org = new Organization();
 		org.setName(name);
-		this.createClassifications(org, pT);	
-		this.createClassifications(org, pT2);
-		this.createRoles(org, prt1);
-		this.createRoles(org, prt2);
-		this.crudServiceOrganization.create(org);
-		Assert.assertNotNull(org.getId());
-		Assert.assertEquals(org.getPartyClassifications().size(), 2);
-		Assert.assertEquals(org.getPartyRoles().size(), 2);
-		for (PartyClassification pc : org.getPartyClassifications())
-		{
-			Assert.assertNotNull(pc.getId());
-			classIds.add(pc.getId());
-		}
-		for (PartyRole pr : org.getPartyRoles())
-		{
-			Assert.assertNotNull(pr.getId());
-			roleIds.add(pr.getId());
-		}
 		id = org.getId();
 
 		org2 = new Organization();
@@ -135,20 +95,6 @@ public class CrudServiceOrganizationTest
 		org = this.crudServiceOrganization.read(id);
 		Assert.assertNotNull(org);
 		Assert.assertEquals(org.getName(), name);
-		Assert.assertNotNull(org.getPartyClassifications());
-		Assert.assertEquals(org.getPartyClassifications().size(), 2);
-		Assert.assertEquals(org.getPartyRoles().size(), 2);
-		Assert.assertEquals(org.getPartyClassifications().size(), 2);
-		Assert.assertEquals(org.getPartyRoles().size(), 2);
-		// Check cascade
-		for (PartyClassification pc : org.getPartyClassifications())
-		{
-			Assert.assertNotNull(pc.getId());
-		}
-		for (PartyRole pr : org.getPartyRoles())
-		{
-			Assert.assertNotNull(pr.getId());
-		}
 
 		org.setName(name2);
 		this.crudServiceOrganization.update(org);

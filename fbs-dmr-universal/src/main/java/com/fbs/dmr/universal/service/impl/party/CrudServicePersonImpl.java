@@ -10,20 +10,4 @@ public class CrudServicePersonImpl extends CrudServiceGenericImpl<Person, Intege
 	{
 		super(Person.class);
 	}
-
-	@Override
-	public Person read(Integer id)
-	{
-		Person result;
-
-		result = super.read(id);
-
-		if (result != null)
-		{
-			result.getPartyClassifications().size();
-			result.getPartyRoles().size();
-		}
-		
-		return result;
-	}
 }

@@ -3,6 +3,7 @@ package com.fbs.dmr.universal.service.impl;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
@@ -134,5 +135,17 @@ public class SeedServiceImpl implements SeedService
 	public void setServicePartyRelationshipStatusType(CrudService<PartyRelationshipStatusType, Integer> servicePartyRelationshipStatusType)
     {
 	    this.servicePartyRelationshipStatusType = servicePartyRelationshipStatusType;
+    }
+
+	@Override
+    public void demoFill()
+    {
+	    logger.info(">demoFill");
+	    
+	    Organization org;
+	    org = new Organization();
+	    org.setName("Bürogemeinschaft Klaglos & Ratlos");
+	    
+	    logger.info("<demoFill");
     }
 }

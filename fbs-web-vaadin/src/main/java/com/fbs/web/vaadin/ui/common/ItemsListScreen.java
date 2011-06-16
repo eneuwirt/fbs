@@ -69,12 +69,10 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected Action actionCurrent;
 	protected Action actionPrevious; // Previously clicked button
 
-
 	public Action getActionCurrent()
 	{
 		return this.actionCurrent;
 	}
-
 
 	/**
 	 * Creates new bean instance with default values.
@@ -83,7 +81,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 */
 	protected abstract T createBeanInstance();
 
-
 	/**
 	 * Returns the list of beans to display
 	 * 
@@ -91,7 +88,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 * @throws Exception
 	 */
 	protected abstract List<T> getAllBeans() throws Exception;
-
 
 	/**
 	 * Persist new bean.
@@ -103,7 +99,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 */
 	protected abstract T createBean(T t) throws Exception;
 
-
 	/**
 	 * Persist bean
 	 * 
@@ -111,7 +106,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 * @throws Exception
 	 */
 	protected abstract void updateBean(T t) throws Exception;
-
 
 	/**
 	 * Read from database
@@ -122,7 +116,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 */
 	protected abstract T readBean(T t) throws Exception;
 
-
 	/**
 	 * Delete persistent bean
 	 * 
@@ -131,15 +124,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 */
 	protected abstract void deleteBean(T t) throws Exception;
 
-
 	private Collection<String> getVisibleFields()
 	{
 		return Arrays.asList(visibleFields);
 	}
 
-
 	protected abstract FormFieldFactory getFormFieldFactory();
-
 
 	/**
 	 * Returns a nice name of column.
@@ -152,19 +142,16 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		return propertyId;
 	}
 
-
 	protected Form getForm()
 	{
 		return new Form();
 
 	}
 
-
 	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields)
 	{
 		this(app, clazz, visibleColumns, visibleFields, null);
 	}
-
 
 	public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields,
 	        String[] nestedContainerProperties)
@@ -183,7 +170,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.form.setEnabled(false);
 		this.form.setFormFieldFactory(this.getFormFieldFactory());
 		this.resetForm();
-		
+
 		this.component = this.getComponent();
 		this.component.setEnabled(false);
 		this.resetComponent();
@@ -233,25 +220,22 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		}
 	}
 
-
 	protected void resetComponent()
-    {
-	    return;
-    }
-
-
-	protected Component getComponent()
-    {
-	    Panel p = new Panel();
-	    
-	    return p;
-    }
-	
-	protected void layoutComponent()
 	{
-		 this.component.setVisible(false);
+		return;
 	}
 
+	protected Component getComponent()
+	{
+		Panel p = new Panel();
+
+		return p;
+	}
+
+	protected void layoutComponent()
+	{
+		this.component.setVisible(false);
+	}
 
 	private void addNestedContainerProperties()
 	{
@@ -266,7 +250,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		}
 	}
 
-
 	protected void initLayout()
 	{
 		VerticalLayout left = new VerticalLayout();
@@ -278,7 +261,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.addComponent(left);
 		this.addComponent(right);
 	}
-
 
 	protected void layoutLeft(VerticalLayout left)
 	{
@@ -297,7 +279,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		left.setExpandRatio(table, 1.0f);
 	}
 
-
 	protected void layoutTable()
 	{
 		this.table.setSizeFull();
@@ -312,7 +293,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			this.table.setColumnHeader(propertyId, columnName);
 		}
 	}
-
 
 	protected void layoutButtomLeftCorner(VerticalLayout bottomLeftCorner)
 	{
@@ -333,7 +313,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		bottomLeftCorner.setExpandRatio(searchRow, 1);
 
 	}
-
 
 	protected void layoutSearchField(HorizontalLayout searchRow)
 	{
@@ -358,7 +337,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			{
 				private static final long serialVersionUID = 1L;
 
-
 				public void valueChange(ValueChangeEvent event)
 				{
 					beanItemContainer.removeContainerFilters(visibleColumn);
@@ -375,7 +353,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		}
 	}
 
-
 	protected void layoutForm()
 	{
 		this.form.setSizeFull();
@@ -383,17 +360,16 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.form.setDescription(this.app.getMessage(ApplicationMessages.CommonDetailsDescription));
 	}
 
-
 	protected void layoutRight(VerticalLayout right)
 	{
 		HorizontalLayout buttonRow = new HorizontalLayout();
-		
+
 		right.setSizeFull();
 		right.setMargin(true);
 		right.setSpacing(true);
-		
+
 		this.layoutForm();
-		this.layoutComponent();		
+		this.layoutComponent();
 
 		buttonRow.addComponent(this.buttonSave);
 		buttonRow.addComponent(this.buttonCancel);
@@ -408,9 +384,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		{
 			right.setExpandRatio(this.component, 1.0f);
 		}
-		//right.setExpandRatio(buttonRow, 0.5f);
+		// right.setExpandRatio(buttonRow, 0.5f);
 	}
-
 
 	private void notifyClick(Action action)
 	{
@@ -423,21 +398,19 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		private static final long serialVersionUID = 1L;
 		private ItemsListScreen<T> screen;
 
-
 		public CreateItemListener(ItemsListScreen<T> itemListScreen)
 		{
 			this.screen = itemListScreen;
 		}
 
-
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
 			this.screen.notifyClick(Action.CREATE);
-			
+
 			this.screen.resetForm();
 			this.screen.form.setEnabled(true);
-			
+
 			this.screen.resetComponent();
 			this.screen.component.setEnabled(true);
 
@@ -457,12 +430,10 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		private static final long serialVersionUID = 1L;
 		private ItemsListScreen<T> screen;
 
-
 		public DeleteItemListener(ItemsListScreen<T> itemsListScreen)
 		{
 			this.screen = itemsListScreen;
 		}
-
 
 		@SuppressWarnings("unchecked")
 		@Override
@@ -531,19 +502,17 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 		private ItemsListScreen<T> screen;
 
-
 		public SaveItemListener(ItemsListScreen<T> itemsListScreen)
 		{
 			this.screen = itemsListScreen;
 		}
-
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
 			BeanItem<T> beanItem;
-			
+
 			logger.info(">buttonClick");
 
 			this.screen.notifyClick(Action.SAVE);
@@ -601,7 +570,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			}
 
 			this.screen.table.setEnabled(true);
-			
+
 			logger.info("<buttonClick");
 
 		}
@@ -613,12 +582,10 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 		private ItemsListScreen<T> screen;
 
-
 		public CancelButtonListener(ItemsListScreen<T> itemsListScreen)
 		{
 			this.screen = itemsListScreen;
 		}
-
 
 		@SuppressWarnings("unchecked")
 		@Override
@@ -678,7 +645,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			{
 				this.screen.resetForm();
 				this.screen.form.setEnabled(false);
-				
+
 				this.screen.component.setEnabled(false);
 
 				beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
@@ -697,7 +664,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			}
 
 			this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleFields());
-			
+
 			this.screen.resetComponent();
 
 			this.screen.table.setEnabled(true);
@@ -716,12 +683,10 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		private static final long serialVersionUID = 1L;
 		private ItemsListScreen<T> screen;
 
-
 		public LocalValueChangeListener(ItemsListScreen<T> itemsListScreen)
 		{
 			this.screen = itemsListScreen;
 		}
-
 
 		@SuppressWarnings("unchecked")
 		@Override
@@ -735,16 +700,16 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			// we have really clicked a row in the table or have to select an
 			// entry
 			if (bean != null)
-			{				
+			{
 				try
-                {
+				{
 					this.screen.notifyClick(Action.SELECT);
-	                
+
 					beanItem = (BeanItem<T>) this.screen.table.getItem(bean);
 
 					this.screen.form.setItemDataSource(beanItem, this.screen.getVisibleFields());
 					this.screen.form.setEnabled(true);
-					
+
 					this.screen.resetComponent();
 					this.screen.component.setEnabled(true);
 
@@ -754,17 +719,15 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 					this.screen.buttonSave.setEnabled(true);
 					this.screen.buttonCancel.setEnabled(true);
 					this.screen.buttonDelete.setEnabled(true);
-                }
-                catch (Exception e)
-                {
-	                // TODO Auto-generated catch block
-	                e.printStackTrace();
-                }
+				}
+				catch (Exception e)
+				{
+					logger.log(Level.SEVERE, "Exception: " + e.getMessage());
+				}
 
 			}
 		}
 	}
-
 
 	protected void resetForm()
 	{

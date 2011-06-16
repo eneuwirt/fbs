@@ -3,6 +3,7 @@ package com.fbs.web.vaadin.ui.user.party;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.fbs.dmr.universal.model.party.Party;
@@ -15,8 +16,7 @@ import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TabSheet;
@@ -179,13 +179,14 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void resetComponent()
+	protected void updateComponent(T party)
 	{
 		BeanItem<T> beanItem;
-		Party party = null;
 		T bean;
 
 		logger.info(">resetComponent");
+		
+		super.updateComponent(party);
 
 		beanItem = (BeanItem<T>) this.form.getItemDataSource();
 
@@ -194,6 +195,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 			try
 			{
 				bean = beanItem.getBean();
+				
 				if (bean.getId() != null)
 				{
 					party = this.readBean(bean);
@@ -205,7 +207,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace();
+				logger.log(Level.SEVERE, "Exception: " + e.getMessage());
 			}
 		}
 
@@ -264,10 +266,10 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	}
 
 	@Override
-	protected Component getComponent()
+	protected AbstractComponentContainer getComponent()
 	{
-		HorizontalLayout hl;
 		TabSheet tabsheet = new TabSheet();
+		String captionMasterData;
 		String captionClass;
 		String captionRoles;
 		String captionAddr;
@@ -275,6 +277,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 		logger.info(">getComponent");
 
+		captionMasterData = this.app.getMessage(ApplicationMessages.PartyMasterData);
 		captionClass = this.app.getMessage(ApplicationMessages.PartyTypeClassificationTitle);
 		captionRoles = this.app.getMessage(ApplicationMessages.PartyRoleTitle);
 		captionAddr = this.app.getMessage(ApplicationMessages.PartyPostalAddress);
@@ -283,6 +286,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		this.createClassificationGroup();
 		this.createRolesGroup();
 
+		tabsheet.addTab(this.form, captionMasterData, null);
 		tabsheet.addTab(new Label("Viele Adressen hier"), captionAddr, null);
 		tabsheet.addTab(new Label("Bezihungen zwischen mir und den andren"), captionRelations, null);
 		tabsheet.addTab(this.rolesGroup, captionRoles, null);
@@ -290,10 +294,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 		logger.info("<getComponent");
 
-		hl = new HorizontalLayout();
-		hl.addComponent(tabsheet);
-
-		return hl;
+		return tabsheet;
 	}
 
 	@Override

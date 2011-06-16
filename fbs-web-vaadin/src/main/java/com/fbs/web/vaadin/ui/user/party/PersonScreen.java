@@ -52,9 +52,9 @@ public class PersonScreen extends PartyScreen<Person>
 	@Override
 	protected Person createBean(Person t) throws Exception
 	{
-		super.createBean(t);
-
 		this.services.getCrudServicePerson().create(t);
+		
+		super.createBean(t);		
 
 		return t;
 	}

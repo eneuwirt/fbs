@@ -50,10 +50,10 @@ public class OrganizationScreen extends PartyScreen<Organization>
 
 	@Override
 	protected Organization createBean(Organization t) throws Exception
-	{
-		super.createBean(t);
-		
+	{		
 		this.services.getCrudServiceOrganization().create(t);
+		
+		super.createBean(t);
 
 		return t;
 	}

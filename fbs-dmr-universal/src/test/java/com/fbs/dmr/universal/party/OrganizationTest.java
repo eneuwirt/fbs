@@ -8,33 +8,6 @@ import com.fbs.dmr.universal.model.party.Organization;
 
 public class OrganizationTest
 {
-	/*
-	@Test
-	public void testCompareTo()
-	{
-		Organization p1 = null;
-		Organization p2 = null;
-
-		p1 = new Organization();
-		assertEquals(p1.compareTo(null), -1);
-
-		p2 = new Organization();
-		assertEquals(p1.compareTo(p2), 0);
-		
-		p1.setName("Name1");
-		assertEquals(p1.compareTo(p2), 1);
-
-		p1.setId(1);
-		assertEquals(p1.compareTo(p2), -1);
-
-		p2.setId(2);
-		assertEquals(p1.compareTo(p2), -1);
-
-		p2.setId(1);
-		assertEquals(p1.compareTo(p2), 0);
-	}
-	*/
-	
 	@Test
 	public void testEqualsAndHashCode()
 	{

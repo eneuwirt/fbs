@@ -21,7 +21,7 @@
     <class>com.fbs.dmr.universal.model.postaladdress.County</class>
     <class>com.fbs.dmr.universal.model.postaladdress.GeographicBoundary</class>
     <class>com.fbs.dmr.universal.model.postaladdress.GeographicBoundaryType</class>
-    <class>com.fbs.dmr.universal.model.postaladdress.PostalAddress</class>
+    <class>com.fbs.dmr.universal.model.contact.PostalAddress</class>
     <class>com.fbs.dmr.universal.model.postaladdress.PostalAddressBoundary</class>
     <class>com.fbs.dmr.universal.model.postaladdress.PostalCode</class>
     <class>com.fbs.dmr.universal.model.postaladdress.Province</class>

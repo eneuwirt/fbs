@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal.model.postaladdress;
+package com.fbs.dmr.universal.model.geoboundary;
 
 import java.io.Serializable;
 

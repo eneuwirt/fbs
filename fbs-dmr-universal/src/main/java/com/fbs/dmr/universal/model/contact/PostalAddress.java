@@ -1,6 +1,5 @@
-package com.fbs.dmr.universal.model.postaladdress;
+package com.fbs.dmr.universal.model.contact;
 
-import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="POSTAL_ADDRESSES")
-public class PostalAddress implements Serializable
+public class PostalAddress extends ContactMechanism
 {
     private static final long serialVersionUID = 1L;
     @Id

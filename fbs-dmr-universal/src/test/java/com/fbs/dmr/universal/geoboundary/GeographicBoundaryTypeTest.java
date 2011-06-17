@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal.postaladdress;
+package com.fbs.dmr.universal.geoboundary;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -6,27 +6,46 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.fbs.dmr.universal.model.postaladdress.PostalAddressBoundary;
+import com.fbs.dmr.universal.model.geoboundary.GeographicBoundaryType;
 
-public class PostalAddressBoundaryType
+public class GeographicBoundaryTypeTest
 {
 	@Test
 	public void testEqualsAndHashCode()
 	{
-		PostalAddressBoundary obj1 = null;
-		PostalAddressBoundary obj2 = null;
-		//String address1 = "address1";
+		GeographicBoundaryType obj1 = null;
+		GeographicBoundaryType obj2 = null;
 
-		obj1 = new PostalAddressBoundary();
+		obj1 = new GeographicBoundaryType();
 		assertTrue(obj1.equals(obj1));
 		assertFalse(obj1.equals(obj2));
-		
-		obj2 = new PostalAddressBoundary();
+		obj2 = new GeographicBoundaryType();
 
 		assertTrue(obj1.equals(obj1));
 		assertTrue(obj1.equals(obj2));
 		assertTrue(obj2.equals(obj1));
 		assertEquals(obj1.hashCode(), obj2.hashCode());
+
+		obj1.setDescription("Name1");
+		assertTrue(obj1.equals(obj1));
+		assertFalse(obj1.equals(obj2));
+		assertFalse(obj2.equals(obj1));
+		assertFalse(obj1.hashCode() == obj2.hashCode());
+
+		obj2.setDescription("Name1");
+		assertTrue(obj1.equals(obj1));
+		assertTrue(obj1.equals(obj2));
+		assertTrue(obj2.equals(obj1));
+		assertEquals(obj1.hashCode(), obj2.hashCode());
+
+		obj1.setId(1);
+		assertTrue(obj1.equals(obj1));
+		assertFalse(obj1.equals(obj2));
+		assertFalse(obj2.equals(obj1));
+		assertFalse(obj1.hashCode() == obj2.hashCode());
+
+		obj1 = new GeographicBoundaryType();
+		obj2 = new GeographicBoundaryType();
 
 		obj1.setId(1);
 		assertTrue(obj1.equals(obj1));
@@ -40,27 +59,16 @@ public class PostalAddressBoundaryType
 		assertTrue(obj2.equals(obj1));
 		assertEquals(obj1.hashCode(), obj2.hashCode());
 
-		obj2.setId(3);
+		obj2.setId(2);
 		assertTrue(obj2.equals(obj2));
 		assertFalse(obj2.equals(obj1));
 		assertFalse(obj1.equals(obj2));
 		assertFalse(obj1.hashCode() == obj2.hashCode());
 
-		obj1 = new PostalAddressBoundary();
-		obj2 = new PostalAddressBoundary();
-		/*
-		obj1.setAddress1(address1);
+		obj2.setDescription("Name1");
 		assertTrue(obj1.equals(obj1));
 		assertFalse(obj2.equals(obj1));
 		assertFalse(obj1.equals(obj2));
 		assertFalse(obj1.hashCode() == obj2.hashCode());
-		
-		obj1.setId(1);
-		obj2.setId(1);
-		assertTrue(obj1.equals(obj1));
-		assertTrue(obj1.equals(obj2));
-		assertTrue(obj2.equals(obj1));
-		assertEquals(obj1.hashCode(), obj2.hashCode());
-		*/
 	}
 }

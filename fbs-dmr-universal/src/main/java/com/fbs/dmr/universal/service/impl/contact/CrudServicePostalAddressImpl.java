@@ -1,6 +1,6 @@
-package com.fbs.dmr.universal.service.impl.postaladdress;
+package com.fbs.dmr.universal.service.impl.contact;
 
-import com.fbs.dmr.universal.model.postaladdress.PostalAddress;
+import com.fbs.dmr.universal.model.contact.PostalAddress;
 import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
 
 public class CrudServicePostalAddressImpl extends CrudServiceGenericImpl<PostalAddress, Integer>

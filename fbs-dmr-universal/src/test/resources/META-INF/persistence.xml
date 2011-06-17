@@ -4,6 +4,9 @@
   version="2.0">
   <persistence-unit name="punit" transaction-type="RESOURCE_LOCAL">
     <class>com.fbs.dmr.universal.model.contact.ContactMechanism</class>
+    <class>com.fbs.dmr.universal.model.contact.ContactMechanismType</class>
+    <class>com.fbs.dmr.universal.model.contact.ElectronicAddress</class>
+    <class>com.fbs.dmr.universal.model.contact.TelecommunicationNumber</class>
     <class>com.fbs.dmr.universal.model.contact.PostalAddress</class>
     <class>com.fbs.dmr.universal.model.geoboundary.City</class>
     <class>com.fbs.dmr.universal.model.geoboundary.Country</class>

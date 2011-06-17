@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal.party;
+package com.fbs.dmr.universal.type;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

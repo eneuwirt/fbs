@@ -31,7 +31,7 @@ public class Person extends Party
 	private String mothersMaidenname = "";
 	@Column(name = "marital_status")
 	private String maritalStaus = "";
-	private String comment;
+	private String comment = "";
 
 	public Person()
 	{

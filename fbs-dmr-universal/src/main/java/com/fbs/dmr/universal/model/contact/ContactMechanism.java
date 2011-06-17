@@ -2,18 +2,28 @@ package com.fbs.dmr.universal.model.contact;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@MappedSuperclass
+@Entity
+@Table(name = "CONTACTS")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class ContactMechanism implements Serializable
 {
     private static final long serialVersionUID = 1L;
     @Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "contact_type_id")
+    private ContactMechanismType contactMechanismType;
     
     public ContactMechanism()
     {
@@ -31,6 +41,16 @@ public class ContactMechanism implements Serializable
     	this.id = id;
     }
 
+
+	public void setContactMechanismType(ContactMechanismType contactMechanismType)
+    {
+	    this.contactMechanismType = contactMechanismType;
+    }
+
+	public ContactMechanismType getContactMechanismType()
+    {
+	    return contactMechanismType;
+    }
 
 	@Override
 	public boolean equals(Object obj)

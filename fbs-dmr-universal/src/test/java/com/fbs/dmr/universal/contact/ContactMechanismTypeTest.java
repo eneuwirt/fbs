@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal.geoboundary;
+package com.fbs.dmr.universal.contact;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -6,22 +6,19 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.fbs.dmr.universal.model.contact.PostalAddress;
+import com.fbs.dmr.universal.model.contact.ContactMechanismType;
 
-public class PostalAddressTest
+public class ContactMechanismTypeTest
 {
 	@Test
 	public void testEqualsAndHashCode()
 	{
-		PostalAddress obj1 = null;
-		PostalAddress obj2 = null;
-		String address1 = "address1";
+		ContactMechanismType obj1 = null;
+		ContactMechanismType obj2 = null;
+		String description1 = "Descr 1";
 
-		obj1 = new PostalAddress();
-		assertTrue(obj1.equals(obj1));
-		assertFalse(obj1.equals(obj2));
-		
-		obj2 = new PostalAddress();
+		obj1 = new ContactMechanismType();
+		obj2 = new ContactMechanismType();
 
 		assertTrue(obj1.equals(obj1));
 		assertTrue(obj1.equals(obj2));
@@ -46,9 +43,9 @@ public class PostalAddressTest
 		assertFalse(obj1.equals(obj2));
 		assertFalse(obj1.hashCode() == obj2.hashCode());
 
-		obj1 = new PostalAddress();
-		obj2 = new PostalAddress();
-		obj1.setAddress1(address1);
+		obj1 = new ContactMechanismType();
+		obj2 = new ContactMechanismType();
+		obj1.setDescription(description1);
 		assertTrue(obj1.equals(obj1));
 		assertFalse(obj2.equals(obj1));
 		assertFalse(obj1.equals(obj2));

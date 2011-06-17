@@ -3,9 +3,6 @@ package com.fbs.dmr.universal.model.contact;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -13,9 +10,6 @@ import javax.persistence.Table;
 public class PostalAddress extends ContactMechanism
 {
     private static final long serialVersionUID = 1L;
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
     @Column(name="address_1")
     private String address1 = "";
     @Column(name="address_2")
@@ -27,15 +21,6 @@ public class PostalAddress extends ContactMechanism
     	
     }
     
-    public Integer getId()
-    {
-    	return id;
-    }
-
-	public void setId(Integer id)
-    {
-    	this.id = id;
-    }
 
 	public String getAddress1()
     {
@@ -87,7 +72,7 @@ public class PostalAddress extends ContactMechanism
 			return this.address1.equals(other.address1);
 		}
 
-		if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id))
+		if ((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId()))
 		{
 			return false;
 		}
@@ -103,13 +88,13 @@ public class PostalAddress extends ContactMechanism
 		int result = 1;
 		int descrHashCode = (this.address1 == null) ? 0 : this.address1.hashCode();
 
-		result = prime * result + ((id == null) ? descrHashCode : id.hashCode());
+		result = prime * result + ((this.getId() == null) ? descrHashCode : this.getId().hashCode());
 
 		return result;
 	}
 
     public String toString()
 	{
-		return String.format("PostalAddress [id=%s, address1=%s]", this.id, this.address1);
+		return String.format("PostalAddress [id=%s, address1=%s]", this.getId(), this.address1);
 	}
 }

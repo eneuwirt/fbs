@@ -8,38 +8,38 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class StatusType implements Serializable
+public abstract class Type  implements Serializable
 {
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    private static final long serialVersionUID = 1L;
+    @Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	private String description = "";
+    private String description ="";
 
-	public StatusType()
+	public Type()
 	{
-
+		
 	}
-
+	
 	public Integer getId()
-	{
-		return id;
-	}
+    {
+    	return id;
+    }
 
 	public void setId(Integer id)
-	{
-		this.id = id;
-	}
+    {
+    	this.id = id;
+    }
 
 	public String getDescription()
-	{
-		return description;
-	}
+    {
+    	return description;
+    }
 
 	public void setDescription(String description)
-	{
-		this.description = description;
-	}
+    {
+    	this.description = description;
+    }
 
 	@Override
 	public boolean equals(Object obj)
@@ -49,13 +49,13 @@ public class StatusType implements Serializable
 			return false;
 		}
 
-		if (!(obj instanceof StatusType))
+		if (!(obj instanceof Type))
 		{
 			return false;
 		}
 
-		StatusType other = (StatusType) obj;
-
+		Type other = (Type) obj;
+		
 		if (this.getId() == null && other.getId() == null)
 		{
 			return this.getDescription().equals(other.getDescription());
@@ -65,9 +65,10 @@ public class StatusType implements Serializable
 		{
 			return false;
 		}
-
+		
 		return true;
 	}
+
 
 	@Override
 	public int hashCode()
@@ -81,8 +82,10 @@ public class StatusType implements Serializable
 		return result;
 	}
 
+
 	public String toString()
 	{
-		return String.format("StatusType [id=%s, description=%s]", this.id, this.description);
+		return String.format("Type [id=%s, description=%s]", this.id, this.description);
 	}
 }
+

@@ -181,7 +181,6 @@ public class SeedServiceImpl implements SeedService
 		for (Organization o : this.crudServiceOrganization.findAll())
 		{
 			if (o.getName().equals("Querformat GmbH"))
-				;
 			{
 				return;
 			}

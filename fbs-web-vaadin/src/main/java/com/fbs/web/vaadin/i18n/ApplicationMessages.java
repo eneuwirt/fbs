@@ -120,6 +120,7 @@ public interface ApplicationMessages extends Serializable
 	public static String UserName = "User.Name";
 	public static String UserPassword = "User.Password";
 
+	public static String UserTabTitleContacts = "UserTab.TitleContacts";
 	public static String UserTabTitleDocuments = "UserTab.TitleDocuments";
 	public static String UserTabTitleParty = "UserTab.TitleParty";
 	public static String UserTabTitleRelationships = "UserTab.TitleRelationships";

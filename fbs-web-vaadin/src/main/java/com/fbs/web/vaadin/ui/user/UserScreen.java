@@ -15,6 +15,7 @@ public class UserScreen extends ScreenTemplate
 	private PartyAccordion partyAccordion;
 	private RelationshipAccordion relAccordion;
 	private DocumentsAccordion docAccordion;
+	private ContactAccordion contactAccordion;
 	private TypesAccordion typesAccordion;
 
 
@@ -33,12 +34,14 @@ public class UserScreen extends ScreenTemplate
 		this.partyAccordion = new PartyAccordion(this.app);
 		this.relAccordion = new RelationshipAccordion(this.app);
 		this.docAccordion = new  DocumentsAccordion(this.app);
+		this.contactAccordion = new ContactAccordion(this.app);
 		this.typesAccordion = new TypesAccordion(this.app);
 
 		tabsheet.setSizeFull();
 
 		tabsheet.addTab(partyAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleParty), null);
 		tabsheet.addTab(relAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleRelationships), null);
+		tabsheet.addTab(contactAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleContacts), null);
 		tabsheet.addTab(docAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleDocuments), null);
 		tabsheet.addTab(typesAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleTypes), null);
 	}

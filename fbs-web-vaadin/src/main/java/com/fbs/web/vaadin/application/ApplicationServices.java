@@ -1,5 +1,7 @@
 package com.fbs.web.vaadin.application;
 
+import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
+import com.fbs.dmr.universal.model.contact.ContactMechanismType;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
@@ -26,6 +28,10 @@ public interface ApplicationServices
 	public UserService getUserService();
 
 	public SeedService getSeedService();
+	
+	public CrudService<ContactMechanismPurposeType, Integer> getCrudServiceContactMechanismPurposeType();
+	
+	public CrudService<ContactMechanismType, Integer> getCrudServiceContactMechanismType();
 
 	public CrudService<Party, Integer> getCrudServiceParty();
 

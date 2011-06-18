@@ -2,6 +2,8 @@ package com.fbs.web.vaadin.application;
 
 import javax.annotation.Resource;
 
+import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
+import com.fbs.dmr.universal.model.contact.ContactMechanismType;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
@@ -30,6 +32,10 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private UserService userService;
 	@Resource
 	private SeedService seedService;
+	@Resource(name="crudServiceContactMechanismPurposeType")
+	CrudService<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
+	@Resource(name="crudServiceContactMechanismType")
+	CrudService<ContactMechanismType, Integer> crudServiceContactMechanismType;
 	@Resource(name = "crudServiceOrganization")
 	private CrudService<Organization, Integer> crudServiceOrganization;
 	@Resource(name = "crudServiceParty")
@@ -221,4 +227,16 @@ public class ApplicationServicesImpl implements ApplicationServices
 	{
 		return this.crudServicePriorityType;
 	}
+
+	@Override
+    public CrudService<ContactMechanismType, Integer> getCrudServiceContactMechanismType()
+    {
+	    return this.crudServiceContactMechanismType;
+    }
+
+	@Override
+    public CrudService<ContactMechanismPurposeType, Integer> getCrudServiceContactMechanismPurposeType()
+    {
+	    return this.crudServiceContactMechanismPurposeType;
+    }
 }

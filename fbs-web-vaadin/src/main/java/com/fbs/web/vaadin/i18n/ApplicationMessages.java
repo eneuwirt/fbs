@@ -19,6 +19,15 @@ public interface ApplicationMessages extends Serializable
 	public static String CommonSave = "Common.Save";
 	public static String CommonSearch = "Common.Search";
 	
+
+	public static String ContactMechanismPurposeTypeId = "ContactMechanismPurposeType.Id";
+	public static String ContactMechanismPurposeTypeDescription = "ContactMechanismPurposeType.Description";
+	public static String ContactMechanismPurposeTypeTitle = "ContactMechanismPurposeType.Title";
+	
+	public static String ContactMechanismTypeDescription = "ContactMechanismType.Description";
+	public static String ContactMechanismTypeId = "ContactMechanismType.Id";
+	public static String ContactMechanismTypeTitle = "ContactMechanismType.Title";
+	
 	public static String ErrorCommon = "Error.Common";
 	public static String ErrorDatabase = "Error.Database";
 

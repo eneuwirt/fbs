@@ -15,10 +15,10 @@ import com.vaadin.ui.TextField;
 public class PartyTypeScreen extends ItemsListScreen<PartyType>
 {
 	private static final long serialVersionUID = 1L;
-	private static final String COL_ID = "id";
-	private static final String COL_DESC = "description";
-	private static final String[] VISIBLE_COLUMNS = new String[] { COL_ID, COL_DESC };
-	private static final String[] VISIBLE_FIELDS = new String[] { COL_ID, COL_DESC };
+	private static final String ID = "id";
+	private static final String DESC = "description";
+	private static final String[] VISIBLE_COLUMNS = new String[] { ID, DESC };
+	private static final String[] VISIBLE_FIELDS = new String[] { ID, DESC };
 
 
 	public PartyTypeScreen(MyVaadinApplication app)
@@ -90,10 +90,10 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 	@Override
 	protected String getColumnName(String propertyId)
 	{
-		if (propertyId.equals(COL_ID))
+		if (propertyId.equals(ID))
 			return this.app.getMessage(ApplicationMessages.PartyTypeId);
 
-		if (propertyId.equals(COL_DESC))
+		if (propertyId.equals(DESC))
 			return this.app.getMessage(ApplicationMessages.PartyTypeDescription);
 
 		return propertyId;
@@ -119,13 +119,13 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 
 			String pid = (String) propertyId;
 
-			if (COL_ID.equals(pid))
+			if (ID.equals(pid))
 			{
 				result = new TextField(this.app.getMessage(ApplicationMessages.PartyTypeId));
 
 				result.setReadOnly(true);
 			}
-			else if (COL_DESC.equals(pid))
+			else if (DESC.equals(pid))
 			{
 				result = new TextField(this.app.getMessage(ApplicationMessages.PartyTypeDescription));
 			}

@@ -86,10 +86,10 @@ public class TelecommunicationNumber extends ContactMechanism
 	public int hashCode()
 	{
 		final int prime = 31;
-		String seq = this.areaCode + this.countryCode + this.number;
+		String attrHash = this.areaCode + this.countryCode + this.number;
 		int result = 1;
 
-		result = prime * result + ((this.getId() == null) ? seq.hashCode() : this.getId().hashCode());
+		result = prime * result + ((this.getId() == null) ? attrHash.hashCode() : this.getId().hashCode());
 
 		return result;
 	}

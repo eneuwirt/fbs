@@ -1,48 +1,21 @@
 package com.fbs.dmr.universal.model.geoboundary;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fbs.dmr.universal.model.type.Type;
 
 @Entity
 @Table(name = "GEO_BOUNDARY_TYPE")
-public class GeographicBoundaryType implements Serializable
+public class GeographicBoundaryType extends Type
 {
     private static final long serialVersionUID = 1L;
-    @Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-    private String description ="";
-
+  
     public GeographicBoundaryType()
     {
     	
-    }
-    
-    
-    public Integer getId()
-    {
-    	return id;
-    }
-
-	public void setId(Integer id)
-    {
-    	this.id = id;
-    }
-
-	public String getDescription()
-    {
-    	return description;
-    }
-
-	public void setDescription(String description)
-    {
-    	this.description = description;
-    }
+    } 
+ 
 
 	@Override
 	public boolean equals(Object obj)
@@ -64,30 +37,11 @@ public class GeographicBoundaryType implements Serializable
 			return this.getDescription().equals(other.getDescription());
 		}
 
-		if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id))
+		if ((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId()))
 		{
 			return false;
 		}
 		
 		return true;
-	}
-
-
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		int descrHashCode = (this.description == null) ? 0 : this.description.hashCode();
-
-		result = prime * result + ((id == null) ? descrHashCode : id.hashCode());
-
-		return result;
-	}
-
-
-	public String toString()
-	{
-		return String.format("GeographicBoundaryType [id=%s, description=%s]", this.id, this.description);
 	}
 }

@@ -28,6 +28,7 @@ public class PartyRole implements Serializable
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	@ManyToOne
+	@JoinColumn(name="party_id")
 	private Party party;
 	@ManyToOne
 	@JoinColumn(name = "partyroletype_id")

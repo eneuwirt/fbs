@@ -1,4 +1,4 @@
-package com.fbs.dmr.universal.model.party;
+package com.fbs.dmr.universal.model.contact;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -6,17 +6,12 @@ import javax.persistence.Table;
 import com.fbs.dmr.universal.model.type.Type;
 
 @Entity
-@Table(name = "PRIORITY_TYPES")
-public class PriorityType extends Type
+@Table(name = "CONTACT_PURPOSE_TYPES")
+public class ContactMechanismPurposeType extends Type
 {
     private static final long serialVersionUID = 1L;
- 
-    public PriorityType()
-    {
-    	
-    }
-
-	@Override
+    
+    @Override
 	public boolean equals(Object obj)
 	{
 		if (obj == null)
@@ -24,13 +19,13 @@ public class PriorityType extends Type
 			return false;
 		}
 
-		if (!(obj instanceof PriorityType))
+		if (!(obj instanceof ContactMechanismPurposeType))
 		{
 			return false;
 		}
 
-		PriorityType other = (PriorityType) obj;
-		
+		ContactMechanismPurposeType other = (ContactMechanismPurposeType) obj;
+
 		if (this.getId() == null && other.getId() == null)
 		{
 			return this.getDescription().equals(other.getDescription());
@@ -40,7 +35,8 @@ public class PriorityType extends Type
 		{
 			return false;
 		}
-		
+
 		return true;
 	}
+  
 }

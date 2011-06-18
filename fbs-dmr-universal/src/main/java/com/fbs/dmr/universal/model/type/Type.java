@@ -85,7 +85,7 @@ public abstract class Type  implements Serializable
 
 	public String toString()
 	{
-		return String.format("Type [id=%s, description=%s]", this.id, this.description);
+		return String.format("%s [id=%s, description=%s]", this.getClass().getName(), this.id, this.description);
 	}
 }
 

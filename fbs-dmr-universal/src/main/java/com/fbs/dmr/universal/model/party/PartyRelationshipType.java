@@ -74,7 +74,10 @@ public class PartyRelationshipType extends Type
 
 		if (this.getId() == null && other.getId() == null)
 		{
-			return this.getName().equals(other.getName());
+			String seqThis = this.getDescription() + this.getName();
+			String seqOther = other.getDescription() + other.getName();
+			
+			return seqThis.equals(seqOther);
 		}
 
 		if ((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId()))
@@ -83,5 +86,17 @@ public class PartyRelationshipType extends Type
 		}
 
 		return true;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		int attrHashCode = this.getDescription().hashCode() + this.name.hashCode();
+
+		result = prime * result + ((this.getId() == null) ? attrHashCode : this.getId().hashCode());
+
+		return result;
 	}
 }

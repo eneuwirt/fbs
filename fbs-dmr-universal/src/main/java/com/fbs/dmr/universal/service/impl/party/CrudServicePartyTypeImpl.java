@@ -1,7 +1,5 @@
 package com.fbs.dmr.universal.service.impl.party;
 
-import javax.persistence.Query;
-
 import org.springframework.stereotype.Repository;
 
 import com.fbs.dmr.universal.model.party.PartyType;

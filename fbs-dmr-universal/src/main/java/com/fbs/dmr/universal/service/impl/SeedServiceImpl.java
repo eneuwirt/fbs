@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.universal.model.contact.ContactMechanismType;
 import com.fbs.dmr.universal.model.contact.PostalAddress;
+import com.fbs.dmr.universal.model.contact.PostalAddressBoundary;
+import com.fbs.dmr.universal.model.geoboundary.City;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRole;
@@ -38,6 +40,9 @@ public class SeedServiceImpl implements SeedService
 	private static final String CONTACT_TYPE_PHONE = "Telefon";
 	private static final String CONTACT_TYPE_POSTAL = "Post Anschrift";
 	private static final String CONTACT_TYPE_WEB = "Web-Adresse";
+	private static final String DEMO_CITY = "Mannheim";
+	@Resource(name="crudServiceCity")
+	private CrudService<City, Integer> crudServiceCity;
 	@Resource(name="crudServiceContactMechanismPurposeType")
 	private CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
 	@Resource(name="crudServiceContactMechanismType")
@@ -56,6 +61,8 @@ public class SeedServiceImpl implements SeedService
 	private CrudService<Person, Integer> crudServicePerson;
 	@Resource(name="crudServicePartyRole")
 	private ServicePartyRole servicePartyRole;
+	@Resource(name="crudServicePostalAddressBoundary")
+	private CrudService<PostalAddressBoundary, Integer> crudServicePostalAddressBoundary;
 
 	@Override
 	public void defaultFill()
@@ -290,12 +297,21 @@ public class SeedServiceImpl implements SeedService
 	{
 		PostalAddress postalAddress;
 		ContactMechanismType cmt;
+		PostalAddressBoundary postalAddressBoundary;
+		City city;
 		
 		cmt = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_POSTAL);
 		
 		postalAddress = new PostalAddress();
 		postalAddress.setAddress1(street + " " + building);		
 		postalAddress.setContactMechanismType(cmt);
+		
+		city = new City();
+		city.setName(DEMO_CITY);
+		
+		postalAddressBoundary = new PostalAddressBoundary();
+		postalAddressBoundary.setPostallAddress(postalAddress);
+		postalAddressBoundary.setGeoBoundary(city);
 		
 		
 	}
@@ -415,4 +431,14 @@ public class SeedServiceImpl implements SeedService
 	{
 		this.servicePartyRole = servicePartyRole;
 	}
+
+	public void setCrudServicePostalAddressBoundary(CrudService<PostalAddressBoundary, Integer> crudServicePostalAddressBoundary)
+    {
+	    this.crudServicePostalAddressBoundary = crudServicePostalAddressBoundary;
+    }
+
+	public void setCrudServiceCity(CrudService<City, Integer> crudServiceCity)
+    {
+	    this.crudServiceCity = crudServiceCity;
+    }
 }

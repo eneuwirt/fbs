@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.universal.model.contact.ContactMechanismType;
+import com.fbs.dmr.universal.model.contact.PostalAddress;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRole;
@@ -13,9 +14,9 @@ import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.model.party.PriorityType;
 import com.fbs.dmr.universal.service.CrudService;
+import com.fbs.dmr.universal.service.CrudServiceType;
 import com.fbs.dmr.universal.service.SeedService;
 import com.fbs.dmr.universal.service.ServicePartyRole;
-import com.fbs.dmr.universal.service.ServicePartyRoleType;
 
 public class SeedServiceImpl implements SeedService
 {
@@ -32,7 +33,7 @@ public class SeedServiceImpl implements SeedService
 	private CrudService<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
 	private CrudService<ContactMechanismType, Integer> crudServiceContactMechanismType;
 	private CrudService<PartyRelationshipStatusType, Integer> servicePartyRelationshipStatusType;
-	private ServicePartyRoleType servicePartyRoleType;
+	private CrudServiceType<PartyRoleType, Integer> servicePartyRoleType;
 	private CrudService<PartyType, Integer> servicePartyType;
 	private CrudService<PriorityType, Integer> servicePriorityType;
 	private CrudService<Organization, Integer> crudServiceOrganization;
@@ -239,7 +240,7 @@ public class SeedServiceImpl implements SeedService
 		this.servicePartyType = servicePartyType;
 	}
 
-	public void setServicePartyRoleType(ServicePartyRoleType servicePartyRoleType)
+	public void setServicePartyRoleType(CrudServiceType<PartyRoleType, Integer> servicePartyRoleType)
 	{
 		this.servicePartyRoleType = servicePartyRoleType;
 	}
@@ -280,6 +281,7 @@ public class SeedServiceImpl implements SeedService
 		Organization org;
 		PartyRoleType partyRoleType;
 		PartyRole partyRole;
+		PostalAddress postalAddress;
 
 		org = new Organization();
 		org.setName("Bürogemeinschaft Klaglos & Ratlos");
@@ -294,6 +296,9 @@ public class SeedServiceImpl implements SeedService
 		partyRole.setParty(org);
 		partyRole.setPartyRoleType(partyRoleType);
 		this.servicePartyRole.create(partyRole);
+		postalAddress = new PostalAddress();
+		postalAddress.setAddress1("A 4");
+		
 
 		partyRoleType = this.servicePartyRoleType.findForDescription(CLIENT_OUTSTANDING);
 		partyRole = new PartyRole();

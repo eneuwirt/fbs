@@ -5,12 +5,12 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import com.fbs.dmr.universal.model.party.PartyRoleType;
-import com.fbs.dmr.universal.service.ServicePartyRoleType;
+import com.fbs.dmr.universal.service.CrudServiceType;
 import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
 
 @Repository
 public class CrudServicePartyRoleTypeImpl extends CrudServiceGenericImpl<PartyRoleType, Integer> implements
-        ServicePartyRoleType
+        CrudServiceType<PartyRoleType, Integer>
 {
 	public CrudServicePartyRoleTypeImpl()
 	{
@@ -18,8 +18,8 @@ public class CrudServicePartyRoleTypeImpl extends CrudServiceGenericImpl<PartyRo
 	}
 
 	@Override
-    public PartyRoleType findForDescription(String description)
-    {
+	public PartyRoleType findForDescription(String description)
+	{
 		PartyRoleType result = null;
 		Query query;
 
@@ -29,5 +29,5 @@ public class CrudServicePartyRoleTypeImpl extends CrudServiceGenericImpl<PartyRo
 		result = (PartyRoleType) query.getSingleResult();
 
 		return result;
-    }
+	}
 }

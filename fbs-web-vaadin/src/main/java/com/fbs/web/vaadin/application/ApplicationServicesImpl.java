@@ -9,14 +9,15 @@ import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
+import com.fbs.dmr.universal.model.party.PartyRoleType;
+import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.model.party.PriorityType;
 import com.fbs.dmr.universal.service.CrudService;
+import com.fbs.dmr.universal.service.CrudServiceType;
 import com.fbs.dmr.universal.service.SeedService;
 import com.fbs.dmr.universal.service.ServicePartyClassification;
 import com.fbs.dmr.universal.service.ServicePartyRole;
-import com.fbs.dmr.universal.service.ServicePartyRoleType;
-import com.fbs.dmr.universal.service.ServicePartyType;
 import com.fbs.security.service.SecurityService;
 import com.fbs.security.service.TenantService;
 import com.fbs.security.service.UserService;
@@ -41,7 +42,7 @@ public class ApplicationServicesImpl implements ApplicationServices
 	@Resource(name = "crudServiceParty")
 	private CrudService<Party, Integer> crudServiceParty;
 	@Resource(name = "crudServicePartyType")
-	private ServicePartyType crudServicePartyType;
+	private CrudServiceType<PartyType, Integer> crudServicePartyType;
 	@Resource(name = "crudServicePartyRelationship")
 	private CrudService<PartyRelationship, Integer> crudServicePartyRelationship;
 	@Resource(name = "crudServicePartyRelationshipStatusType")
@@ -49,7 +50,7 @@ public class ApplicationServicesImpl implements ApplicationServices
 	@Resource(name = "crudServicePartyRelationshipType")
 	private CrudService<PartyRelationshipType, Integer> crudServicePartyRelationshipType;
 	@Resource(name = "crudServicePartyRoleType")
-	private ServicePartyRoleType crudServicePartyRoleType;
+	private CrudServiceType<PartyRoleType, Integer> crudServicePartyRoleType;
 	@Resource(name = "crudServicePartyRole")
 	private ServicePartyRole crudServicePartyRole;
 	@Resource(name = "crudServicePerson")
@@ -115,12 +116,12 @@ public class ApplicationServicesImpl implements ApplicationServices
 	}
 
 	@Override
-	public ServicePartyType getCrudServicePartyType()
+	public CrudServiceType<PartyType, Integer> getCrudServicePartyType()
 	{
 		return crudServicePartyType;
 	}
 
-	public void setCrudPartyTypeService(ServicePartyType crudPartyTypeService)
+	public void setCrudPartyTypeService(CrudServiceType<PartyType, Integer> crudPartyTypeService)
 	{
 		this.crudServicePartyType = crudPartyTypeService;
 	}
@@ -147,13 +148,13 @@ public class ApplicationServicesImpl implements ApplicationServices
 		return crudServiceOrganization;
 	}
 
-	public void setCrudServicePartyRoleType(ServicePartyRoleType crudServicePartyRole)
+	public void setCrudServicePartyRoleType(CrudServiceType<PartyRoleType, Integer> crudServicePartyRole)
 	{
 		this.crudServicePartyRoleType = crudServicePartyRole;
 	}
 
 	@Override
-	public ServicePartyRoleType getCrudServicePartyRoleType()
+	public CrudServiceType<PartyRoleType, Integer> getCrudServicePartyRoleType()
 	{
 		return crudServicePartyRoleType;
 	}

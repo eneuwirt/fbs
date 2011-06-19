@@ -30,12 +30,18 @@ public class SeedServiceImpl implements SeedService
 	private static final String MALE = "Herr";
 	private static final String PRIVATE = "Private";
 	private static final String SUPPLIER = "Supplier";
-	private CrudService<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
-	private CrudService<ContactMechanismType, Integer> crudServiceContactMechanismType;
-	private CrudService<PartyRelationshipStatusType, Integer> servicePartyRelationshipStatusType;
+	private static final String CONTACT_TYPE_EMAIL = "E-Mail";
+	private static final String CONTACT_TYPE_FAX = "Fax";
+	private static final String CONTACT_TYPE_MOBILE = "Mobil";
+	private static final String CONTACT_TYPE_PHONE = "Telefon";
+	private static final String CONTACT_TYPE_POSTAL = "Post Anschrift";
+	private static final String CONTACT_TYPE_WEB = "Web-Adresse";
+	private CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
+	private CrudServiceType<ContactMechanismType, Integer> crudServiceContactMechanismType;
+	private CrudServiceType<PartyRelationshipStatusType, Integer> servicePartyRelationshipStatusType;
 	private CrudServiceType<PartyRoleType, Integer> servicePartyRoleType;
 	private CrudService<PartyType, Integer> servicePartyType;
-	private CrudService<PriorityType, Integer> servicePriorityType;
+	private CrudServiceType<PriorityType, Integer> servicePriorityType;
 	private CrudService<Organization, Integer> crudServiceOrganization;
 	private CrudService<Person, Integer> crudServicePerson;
 	private ServicePartyRole servicePartyRole;
@@ -56,11 +62,11 @@ public class SeedServiceImpl implements SeedService
 	}
 
 	private void createContactMechanismPurposeType()
-    {
+	{
 		List<ContactMechanismPurposeType> types;
-		
+
 		types = this.crudServiceContactMechanismPurposeType.findAll();
-		
+
 		if (types.size() == 0)
 		{
 			ContactMechanismPurposeType type;
@@ -68,62 +74,55 @@ public class SeedServiceImpl implements SeedService
 			String GENERAL_PHONE = "Haupttelefonkontakt";
 			String GENERAL_FAX = "Fax";
 			String SECONDARY_FAX = "Zweite Faxnummer";
-			
+
 			type = new ContactMechanismPurposeType();
 			type.setDescription(HEAD_QUARTERS);
 			this.crudServiceContactMechanismPurposeType.create(type);
-			
+
 			type = new ContactMechanismPurposeType();
 			type.setDescription(GENERAL_PHONE);
 			this.crudServiceContactMechanismPurposeType.create(type);
-			
+
 			type = new ContactMechanismPurposeType();
 			type.setDescription(GENERAL_FAX);
 			this.crudServiceContactMechanismPurposeType.create(type);
-			
 
 			type = new ContactMechanismPurposeType();
 			type.setDescription(SECONDARY_FAX);
 			this.crudServiceContactMechanismPurposeType.create(type);
 		}
-    }
+	}
 
 	private void createContactMechanismType()
 	{
 		List<ContactMechanismType> types;
-		String CONTACT_TYPE_EMAIL = "E-Mail";
-		String CONTACT_TYPE_FAX = "Fax";
-		String CONTACT_TYPE_MOBILE = "Mobil";
-		String CONTACT_TYPE_PHONE = "Telefon";
-		String CONTACT_TYPE_POSTAL = "Post Anschrift";
-		String CONTACT_TYPE_WEB = "Web-Adresse";
-		
+
 		types = this.crudServiceContactMechanismType.findAll();
-		
+
 		if (types.size() == 0)
 		{
 			ContactMechanismType type;
-			
+
 			type = new ContactMechanismType();
 			type.setDescription(CONTACT_TYPE_PHONE);
 			this.crudServiceContactMechanismType.create(type);
-			
+
 			type = new ContactMechanismType();
 			type.setDescription(CONTACT_TYPE_FAX);
 			this.crudServiceContactMechanismType.create(type);
-			
+
 			type = new ContactMechanismType();
 			type.setDescription(CONTACT_TYPE_POSTAL);
 			this.crudServiceContactMechanismType.create(type);
-			
+
 			type = new ContactMechanismType();
 			type.setDescription(CONTACT_TYPE_EMAIL);
 			this.crudServiceContactMechanismType.create(type);
-			
+
 			type = new ContactMechanismType();
 			type.setDescription(CONTACT_TYPE_MOBILE);
 			this.crudServiceContactMechanismType.create(type);
-			
+
 			type = new ContactMechanismType();
 			type.setDescription(CONTACT_TYPE_WEB);
 			this.crudServiceContactMechanismType.create(type);
@@ -245,13 +244,13 @@ public class SeedServiceImpl implements SeedService
 		this.servicePartyRoleType = servicePartyRoleType;
 	}
 
-	public void setServicePriorityType(CrudService<PriorityType, Integer> servicePriorityType)
+	public void setServicePriorityType(CrudServiceType<PriorityType, Integer> servicePriorityType)
 	{
 		this.servicePriorityType = servicePriorityType;
 	}
 
 	public void setServicePartyRelationshipStatusType(
-	        CrudService<PartyRelationshipStatusType, Integer> servicePartyRelationshipStatusType)
+	        CrudServiceType<PartyRelationshipStatusType, Integer> servicePartyRelationshipStatusType)
 	{
 		this.servicePartyRelationshipStatusType = servicePartyRelationshipStatusType;
 	}
@@ -276,12 +275,23 @@ public class SeedServiceImpl implements SeedService
 		logger.info("<demoFill");
 	}
 
+	private void createDemoContact(String street, String building, String City, String zip)
+	{
+		PostalAddress postalAddress;
+		ContactMechanismType cmt;
+		
+		cmt = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_POSTAL);
+		
+		postalAddress = new PostalAddress();
+		postalAddress.setAddress1(street + " " + building);		
+		postalAddress.setContactMechanismType(cmt);
+	}
 	private void createDemoOrgs()
 	{
 		Organization org;
 		PartyRoleType partyRoleType;
 		PartyRole partyRole;
-		PostalAddress postalAddress;
+	
 
 		org = new Organization();
 		org.setName("Bürogemeinschaft Klaglos & Ratlos");
@@ -296,8 +306,8 @@ public class SeedServiceImpl implements SeedService
 		partyRole.setParty(org);
 		partyRole.setPartyRoleType(partyRoleType);
 		this.servicePartyRole.create(partyRole);
-		postalAddress = new PostalAddress();
-		postalAddress.setAddress1("A 4");
+		this.
+		
 		
 
 		partyRoleType = this.servicePartyRoleType.findForDescription(CLIENT_OUTSTANDING);
@@ -375,15 +385,17 @@ public class SeedServiceImpl implements SeedService
 		this.crudServicePerson = crudServicePerson;
 	}
 
-	public void setCrudServiceContactMechanismType(CrudService<ContactMechanismType, Integer> crudServiceContactMechanismType)
-    {
-	    this.crudServiceContactMechanismType = crudServiceContactMechanismType;
-    }
-	
-	public void setCrudServiceContactMechanismPurposeType(CrudService<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType)
-    {
-	    this.crudServiceContactMechanismPurposeType = crudServiceContactMechanismPurposeType;
-    }
+	public void setCrudServiceContactMechanismType(
+	        CrudServiceType<ContactMechanismType, Integer> crudServiceContactMechanismType)
+	{
+		this.crudServiceContactMechanismType = crudServiceContactMechanismType;
+	}
+
+	public void setCrudServiceContactMechanismPurposeType(
+	        CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType)
+	{
+		this.crudServiceContactMechanismPurposeType = crudServiceContactMechanismPurposeType;
+	}
 
 	public void setServicePartyRole(ServicePartyRole servicePartyRole)
 	{

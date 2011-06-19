@@ -5,10 +5,8 @@ import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
 
 public class CrudServicePartyContactMechanismImpl extends CrudServiceGenericImpl<PartyContactMechanism, Integer> 
 {
-
 	public CrudServicePartyContactMechanismImpl()
     {
 	    super(PartyContactMechanism.class);
     }
-
 }

@@ -5,12 +5,9 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 
-import com.fbs.dmr.universal.model.contact.Address;
 import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.universal.model.contact.ContactMechanismType;
 import com.fbs.dmr.universal.model.contact.PostalAddress;
-import com.fbs.dmr.universal.model.contact.PostalAddressBoundary;
-import com.fbs.dmr.universal.model.geoboundary.City;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRole;
@@ -43,8 +40,8 @@ public class SeedServiceImpl implements SeedService
 	private static final String CONTACT_TYPE_WEB = "Web-Adresse";
 	private static final String DEMO_CITY = "Mannheim";
 	private static final String DEMO_ZIP = "69011";
-	@Resource(name="crudServiceAddress")
-	private CrudService<Address, Integer> crudServiceAddress;
+	@Resource(name="crudServicePostalAddress")
+	private CrudService<PostalAddress, Integer> crudServicePostalAddress;
 	@Resource(name="crudServiceContactMechanismPurposeType")
 	private CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
 	@Resource(name="crudServiceContactMechanismType")
@@ -63,9 +60,7 @@ public class SeedServiceImpl implements SeedService
 	private CrudService<Person, Integer> crudServicePerson;
 	@Resource(name="crudServicePartyRole")
 	private ServicePartyRole servicePartyRole;
-	@Resource(name="crudServicePostalAddressBoundary")
-	private CrudService<PostalAddressBoundary, Integer> crudServicePostalAddressBoundary;
-
+	
 	@Override
 	public void defaultFill()
 	{
@@ -294,19 +289,6 @@ public class SeedServiceImpl implements SeedService
 
 		logger.info("<demoFill");
 	}
-
-	private void createDemoContact(String street, String building, String City, String zip)
-	{
-		Address address;
-		ContactMechanismType cmt;
-	
-		cmt = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_POSTAL);
-		
-		address = new Address(street + " " + building, null, DEMO_ZIP, DEMO_CITY, "BRD", cmt);
-		
-		this.crudServiceAddress.create(address);
-		
-	}
 	
 	private void createDemoOrgs()
 	{
@@ -423,14 +405,4 @@ public class SeedServiceImpl implements SeedService
 	{
 		this.servicePartyRole = servicePartyRole;
 	}
-
-	public void setCrudServicePostalAddressBoundary(CrudService<PostalAddressBoundary, Integer> crudServicePostalAddressBoundary)
-    {
-	    this.crudServicePostalAddressBoundary = crudServicePostalAddressBoundary;
-    }
-
-	public void setCrudServiceAddress(CrudService<Address, Integer> crudServiceAddress)
-    {
-	    this.crudServiceAddress = crudServiceAddress;
-    }
 }

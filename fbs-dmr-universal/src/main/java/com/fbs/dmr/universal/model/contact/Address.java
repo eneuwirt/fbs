@@ -16,15 +16,19 @@ public class Address implements Serializable
 	private String city = "";
 	private String zip = "";
 	private String country = "";
+	private ContactMechanismType cmt;
 
-	public Address(String addr1, String addr2, String city, String zip, String country)
+	public Address(String addr1, String addr2, String zip, String city, String country, ContactMechanismType cmt)
 	{
 		this.addr1 = addr1;
 		this.addr2 = addr2;
 		this.city = city;
 		this.zip = zip;
 		this.country = country;
+		
+		this.setCmt(cmt);
 	}
+	
 
 	public String getAddr1()
 	{
@@ -75,4 +79,16 @@ public class Address implements Serializable
 	{
 		this.country = country;
 	}
+
+
+	public void setCmt(ContactMechanismType cmt)
+    {
+	    this.cmt = cmt;
+    }
+
+
+	public ContactMechanismType getCmt()
+    {
+	    return cmt;
+    }
 }

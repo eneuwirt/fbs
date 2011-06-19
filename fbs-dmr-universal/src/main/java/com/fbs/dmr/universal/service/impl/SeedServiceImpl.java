@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 
+import com.fbs.dmr.universal.model.contact.Address;
 import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.universal.model.contact.ContactMechanismType;
 import com.fbs.dmr.universal.model.contact.PostalAddress;
@@ -41,8 +42,9 @@ public class SeedServiceImpl implements SeedService
 	private static final String CONTACT_TYPE_POSTAL = "Post Anschrift";
 	private static final String CONTACT_TYPE_WEB = "Web-Adresse";
 	private static final String DEMO_CITY = "Mannheim";
-	@Resource(name="crudServiceCity")
-	private CrudService<City, Integer> crudServiceCity;
+	private static final String DEMO_ZIP = "69011";
+	@Resource(name="crudServiceAddress")
+	private CrudService<Address, Integer> crudServiceAddress;
 	@Resource(name="crudServiceContactMechanismPurposeType")
 	private CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
 	@Resource(name="crudServiceContactMechanismType")
@@ -295,24 +297,14 @@ public class SeedServiceImpl implements SeedService
 
 	private void createDemoContact(String street, String building, String City, String zip)
 	{
-		PostalAddress postalAddress;
+		Address address;
 		ContactMechanismType cmt;
-		PostalAddressBoundary postalAddressBoundary;
-		City city;
-		
+	
 		cmt = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_POSTAL);
 		
-		postalAddress = new PostalAddress();
-		postalAddress.setAddress1(street + " " + building);		
-		postalAddress.setContactMechanismType(cmt);
+		address = new Address(street + " " + building, null, DEMO_ZIP, DEMO_CITY, "BRD", cmt);
 		
-		city = new City();
-		city.setName(DEMO_CITY);
-		
-		postalAddressBoundary = new PostalAddressBoundary();
-		postalAddressBoundary.setPostallAddress(postalAddress);
-		postalAddressBoundary.setGeoBoundary(city);
-		
+		this.crudServiceAddress.create(address);
 		
 	}
 	
@@ -437,8 +429,8 @@ public class SeedServiceImpl implements SeedService
 	    this.crudServicePostalAddressBoundary = crudServicePostalAddressBoundary;
     }
 
-	public void setCrudServiceCity(CrudService<City, Integer> crudServiceCity)
+	public void setCrudServiceAddress(CrudService<Address, Integer> crudServiceAddress)
     {
-	    this.crudServiceCity = crudServiceCity;
+	    this.crudServiceAddress = crudServiceAddress;
     }
 }

@@ -50,7 +50,8 @@
   </bean>
 
   <bean id="seedService" class="com.fbs.dmr.universal.service.impl.SeedServiceImpl" />
-   
+  
+  <bean id="crudServiceAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceAddressImpl"/>
   <bean id="crudServiceCity" class="com.fbs.dmr.universal.service.impl.geoboundary.CrudServiceCityImpl" />
   <bean id="crudServiceContactMechanismPurposeType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismPurposeTypeImpl" />
   <bean id="crudServiceContactMechanismType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismTypeImpl" />

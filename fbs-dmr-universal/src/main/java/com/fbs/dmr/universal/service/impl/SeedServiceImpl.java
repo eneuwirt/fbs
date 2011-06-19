@@ -285,7 +285,10 @@ public class SeedServiceImpl implements SeedService
 		postalAddress = new PostalAddress();
 		postalAddress.setAddress1(street + " " + building);		
 		postalAddress.setContactMechanismType(cmt);
+		
+		
 	}
+	
 	private void createDemoOrgs()
 	{
 		Organization org;
@@ -306,7 +309,7 @@ public class SeedServiceImpl implements SeedService
 		partyRole.setParty(org);
 		partyRole.setPartyRoleType(partyRoleType);
 		this.servicePartyRole.create(partyRole);
-		this.
+		
 		
 		
 

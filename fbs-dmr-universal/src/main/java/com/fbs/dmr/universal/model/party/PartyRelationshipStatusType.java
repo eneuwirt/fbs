@@ -15,9 +15,31 @@ public class PartyRelationshipStatusType extends Type
     {
     	
     }
-
-    public String toString()
+    @Override
+	public boolean equals(Object obj)
 	{
-		return String.format("PartyRelationshipStatusType [id=%s descr=%s]", this.getId(), this.getDescription());
+		if (obj == null)
+		{
+			return false;
+		}
+
+		if (!(obj instanceof PartyRelationshipStatusType))
+		{
+			return false;
+		}
+
+		PartyRelationshipStatusType other = (PartyRelationshipStatusType) obj;
+
+		if (this.getId() == null && other.getId() == null)
+		{
+			return this.getDescription().equals(other.getDescription());
+		}
+
+		if ((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId()))
+		{
+			return false;
+		}
+
+		return true;
 	}
 }

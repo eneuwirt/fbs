@@ -43,10 +43,4 @@ public class ContactMechanismType extends Type
 		
 		return true;
 	}
-    
-
-    public String toString()
-	{
-		return String.format("ContactMechanismType [id=%s, description=%s]", this.getId(), this.getDescription());
-	}
 }

@@ -1,24 +1,19 @@
 package com.fbs.dmr.universal.model.party;
 
-import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fbs.dmr.universal.model.type.Type;
+
 @Entity
 @Table(name = "PARTY_RELATIONSHIP_TYPE")
-public class PartyRelationshipType implements Serializable
+public class PartyRelationshipType extends Type
 {
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	private String description = "";
+	
 	private String name = "";
 	@JoinColumn(name = "party_roletype_to_id")
 	@ManyToOne(optional=true)
@@ -30,26 +25,6 @@ public class PartyRelationshipType implements Serializable
 	public PartyRelationshipType()
 	{
 
-	}
-
-	public Integer getId()
-	{
-		return id;
-	}
-
-	public void setId(Integer id)
-	{
-		this.id = id;
-	}
-
-	public String getDescription()
-	{
-		return description;
-	}
-
-	public void setDescription(String description)
-	{
-		this.description = description;
 	}
 
 	public String getName()
@@ -102,28 +77,11 @@ public class PartyRelationshipType implements Serializable
 			return this.getName().equals(other.getName());
 		}
 
-		if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id))
+		if ((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId()))
 		{
 			return false;
 		}
 
 		return true;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		int nameHashCode = (this.name == null) ? 0 : this.name.hashCode();
-
-		result = prime * result + ((id == null) ? nameHashCode : id.hashCode());
-
-		return result;
-	}
-
-	public String toString()
-	{
-		return String.format("PartyRelationshipType [id=%s, name=%s]", this.id, this.name);
 	}
 }

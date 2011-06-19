@@ -38,5 +38,4 @@ public class ContactMechanismPurposeType extends Type
 
 		return true;
 	}
-  
 }

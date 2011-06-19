@@ -18,7 +18,7 @@ public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudS
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(CrudServiceGenericImpl.class.getName());
 	protected EntityManager em;
-	private Class<T> entityClass;
+	protected Class<T> entityClass;
 
 
 	public CrudServiceGenericImpl(Class<T> entityClass)

@@ -15,9 +15,4 @@ public class PartyRoleType extends Type
     {
     	
     }
-    
-    public String toString()
-	{
-		return String.format("PartyRoleType [id=%s, descr=%s]", this.getId(), this.getDescription());
-	}
 }

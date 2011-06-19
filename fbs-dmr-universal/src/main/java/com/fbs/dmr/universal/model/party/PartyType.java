@@ -1,49 +1,19 @@
 package com.fbs.dmr.universal.model.party;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fbs.dmr.universal.model.type.Type;
 
 @Entity
 @Table(name = "PARTY_TYPES")
-public class PartyType implements Serializable
+public class PartyType extends Type
 {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	@Column(unique = true)
-	private String description = "";
 
 	public PartyType()
 	{
 
-	}
-
-	public void setId(Integer id)
-	{
-		this.id = id;
-	}
-
-	public Integer getId()
-	{
-		return id;
-	}
-
-	public void setDescription(String description)
-	{
-		this.description = description;
-	}
-
-	public String getDescription()
-	{
-		return description;
 	}
 
 	@Override
@@ -66,29 +36,11 @@ public class PartyType implements Serializable
 			return this.getDescription().equals(other.getDescription());
 		}
 
-		if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id))
+		if ((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId()))
 		{
 			return false;
 		}
 
 		return true;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		int result = 1;
-		final int prime = 31;
-		int descrHashCode = (this.description == null) ? 0 : this.description.hashCode();
-
-		result = prime * result + ((id == null) ? descrHashCode : id.hashCode());
-
-		return result;
-	}
-
-	@Override
-	public String toString()
-	{
-		return String.format("PartyType [id=%s, description=%s]", this.id, this.description);
 	}
 }

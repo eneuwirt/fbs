@@ -49,11 +49,14 @@
     <property name="entityManagerFactory" ref="entityManagerFactory" />
   </bean>
 
+  <bean id="seedService" class="com.fbs.dmr.universal.service.impl.SeedServiceImpl" />
+
+  <bean id="crudServiceContactMechanismPurposeType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismPurposeTypeImpl" />
   <bean id="crudServiceContactMechanismType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismTypeImpl" />
   <bean id="crudServiceElectronicAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceElectronicAddressImpl" />
   <bean id="crudServiceTelecommunicationNumber" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceTelecommunicationNumberImpl" />
   <bean id="crudServicePostalAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServicePostalAddressImpl" />
-  <bean id="crudServicePostalAddressBoundary" class="com.fbs.dmr.universal.service.impl.contact.CrudServicePostalAddressBoundaryImpl"/>
+  <bean id="crudServicePostalAddressBoundary" class="com.fbs.dmr.universal.service.impl.contact.CrudServicePostalAddressBoundaryImpl" />
   <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.party.CrudServiceOrganizationImpl" />
   <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyClassificationImpl" />
   <bean id="crudServicePartyContactMechanism" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyContactMechanismImpl" />

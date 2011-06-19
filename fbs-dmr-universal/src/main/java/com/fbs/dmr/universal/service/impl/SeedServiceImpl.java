@@ -3,6 +3,8 @@ package com.fbs.dmr.universal.service.impl;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.annotation.Resource;
+
 import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.universal.model.contact.ContactMechanismType;
 import com.fbs.dmr.universal.model.contact.PostalAddress;
@@ -36,14 +38,23 @@ public class SeedServiceImpl implements SeedService
 	private static final String CONTACT_TYPE_PHONE = "Telefon";
 	private static final String CONTACT_TYPE_POSTAL = "Post Anschrift";
 	private static final String CONTACT_TYPE_WEB = "Web-Adresse";
+	@Resource(name="crudServiceContactMechanismPurposeType")
 	private CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
+	@Resource(name="crudServiceContactMechanismType")
 	private CrudServiceType<ContactMechanismType, Integer> crudServiceContactMechanismType;
-	private CrudServiceType<PartyRelationshipStatusType, Integer> servicePartyRelationshipStatusType;
-	private CrudServiceType<PartyRoleType, Integer> servicePartyRoleType;
-	private CrudService<PartyType, Integer> servicePartyType;
-	private CrudServiceType<PriorityType, Integer> servicePriorityType;
+	@Resource(name="crudServicePartyRelationshipStatusType")
+	private CrudServiceType<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType;
+	@Resource(name="crudServicePartyRoleType")
+	private CrudServiceType<PartyRoleType, Integer> crudServicePartyRoleType;
+	@Resource(name="crudServicePartyType")
+	private CrudService<PartyType, Integer> crudServicePartyType;
+	@Resource(name="crudServicePriorityType")
+	private CrudServiceType<PriorityType, Integer> crudServicePriorityType;
+	@Resource(name="crudServiceOrganization")
 	private CrudService<Organization, Integer> crudServiceOrganization;
+	@Resource(name="crudServicePerson")
 	private CrudService<Person, Integer> crudServicePerson;
+	@Resource(name="crudServicePartyRole")
 	private ServicePartyRole servicePartyRole;
 
 	@Override
@@ -133,7 +144,7 @@ public class SeedServiceImpl implements SeedService
 	{
 		List<PartyRelationshipStatusType> types;
 
-		types = this.servicePartyRelationshipStatusType.findAll();
+		types = this.crudServicePartyRelationshipStatusType.findAll();
 
 		if (types.size() == 0)
 		{
@@ -141,11 +152,11 @@ public class SeedServiceImpl implements SeedService
 
 			type = new PartyRelationshipStatusType();
 			type.setDescription("Aktiv");
-			this.servicePartyRelationshipStatusType.create(type);
+			this.crudServicePartyRelationshipStatusType.create(type);
 
 			type = new PartyRelationshipStatusType();
 			type.setDescription("Inaktiv");
-			this.servicePartyRelationshipStatusType.create(type);
+			this.crudServicePartyRelationshipStatusType.create(type);
 		}
 	}
 
@@ -153,7 +164,7 @@ public class SeedServiceImpl implements SeedService
 	{
 		List<PriorityType> priorityTypes;
 
-		priorityTypes = this.servicePriorityType.findAll();
+		priorityTypes = this.crudServicePriorityType.findAll();
 
 		if (priorityTypes.size() == 0)
 		{
@@ -161,15 +172,15 @@ public class SeedServiceImpl implements SeedService
 
 			priorityType = new PriorityType();
 			priorityType.setDescription("Hoch");
-			this.servicePriorityType.create(priorityType);
+			this.crudServicePriorityType.create(priorityType);
 
 			priorityType = new PriorityType();
 			priorityType.setDescription("Mittel");
-			this.servicePriorityType.create(priorityType);
+			this.crudServicePriorityType.create(priorityType);
 
 			priorityType = new PriorityType();
 			priorityType.setDescription("Niedrig");
-			this.servicePriorityType.create(priorityType);
+			this.crudServicePriorityType.create(priorityType);
 		}
 	}
 
@@ -177,7 +188,7 @@ public class SeedServiceImpl implements SeedService
 	{
 		List<PartyRoleType> partyRoleTypes;
 
-		partyRoleTypes = servicePartyRoleType.findAll();
+		partyRoleTypes = crudServicePartyRoleType.findAll();
 
 		if (partyRoleTypes.size() == 0)
 		{
@@ -185,31 +196,31 @@ public class SeedServiceImpl implements SeedService
 
 			partyRoleType = new PartyRoleType();
 			partyRoleType.setDescription(ADVOCATE);
-			this.servicePartyRoleType.create(partyRoleType);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
 			partyRoleType = new PartyRoleType();
 			partyRoleType.setDescription(CLIENT_FISCAL_LAW);
-			this.servicePartyRoleType.create(partyRoleType);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
 			partyRoleType = new PartyRoleType();
 			partyRoleType.setDescription(CLIENT_OUTSTANDING);
-			this.servicePartyRoleType.create(partyRoleType);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
 			partyRoleType = new PartyRoleType();
 			partyRoleType.setDescription(CLIENT_INVESTMENT);
-			this.servicePartyRoleType.create(partyRoleType);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
 			partyRoleType = new PartyRoleType();
 			partyRoleType.setDescription(ASSISTANCE);
-			this.servicePartyRoleType.create(partyRoleType);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
 			partyRoleType = new PartyRoleType();
 			partyRoleType.setDescription(SUPPLIER);
-			this.servicePartyRoleType.create(partyRoleType);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
 			partyRoleType = new PartyRoleType();
 			partyRoleType.setDescription(PRIVATE);
-			this.servicePartyRoleType.create(partyRoleType);
+			this.crudServicePartyRoleType.create(partyRoleType);
 		}
 	}
 
@@ -217,7 +228,7 @@ public class SeedServiceImpl implements SeedService
 	{
 		List<PartyType> partyTypes;
 
-		partyTypes = this.servicePartyType.findAll();
+		partyTypes = this.crudServicePartyType.findAll();
 
 		if (partyTypes.size() == 0)
 		{
@@ -225,34 +236,34 @@ public class SeedServiceImpl implements SeedService
 
 			partyType = new PartyType();
 			partyType.setDescription("Person");
-			this.servicePartyType.create(partyType);
+			this.crudServicePartyType.create(partyType);
 
 			partyType = new PartyType();
 			partyType.setDescription("Organization");
-			this.servicePartyType.create(partyType);
+			this.crudServicePartyType.create(partyType);
 		}
 
 	}
 
 	public void setServicePartyType(CrudService<PartyType, Integer> servicePartyType)
 	{
-		this.servicePartyType = servicePartyType;
+		this.crudServicePartyType = servicePartyType;
 	}
 
 	public void setServicePartyRoleType(CrudServiceType<PartyRoleType, Integer> servicePartyRoleType)
 	{
-		this.servicePartyRoleType = servicePartyRoleType;
+		this.crudServicePartyRoleType = servicePartyRoleType;
 	}
 
 	public void setServicePriorityType(CrudServiceType<PriorityType, Integer> servicePriorityType)
 	{
-		this.servicePriorityType = servicePriorityType;
+		this.crudServicePriorityType = servicePriorityType;
 	}
 
 	public void setServicePartyRelationshipStatusType(
 	        CrudServiceType<PartyRelationshipStatusType, Integer> servicePartyRelationshipStatusType)
 	{
-		this.servicePartyRelationshipStatusType = servicePartyRelationshipStatusType;
+		this.crudServicePartyRelationshipStatusType = servicePartyRelationshipStatusType;
 	}
 
 	@Override
@@ -304,7 +315,7 @@ public class SeedServiceImpl implements SeedService
 		org = new Organization();
 		org.setName("Querformat GmbH");
 		this.crudServiceOrganization.create(org);
-		partyRoleType = this.servicePartyRoleType.findForDescription(SUPPLIER);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(SUPPLIER);
 		partyRole = new PartyRole();
 		partyRole.setParty(org);
 		partyRole.setPartyRoleType(partyRoleType);
@@ -313,7 +324,7 @@ public class SeedServiceImpl implements SeedService
 		
 		
 
-		partyRoleType = this.servicePartyRoleType.findForDescription(CLIENT_OUTSTANDING);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(CLIENT_OUTSTANDING);
 		partyRole = new PartyRole();
 		partyRole.setParty(org);
 		partyRole.setPartyRoleType(partyRoleType);
@@ -330,7 +341,7 @@ public class SeedServiceImpl implements SeedService
 		person.setGender(MALE);
 		person.setLastName("Ratlos");
 		this.crudServicePerson.create(person);
-		partyRoleType = this.servicePartyRoleType.findForDescription(ADVOCATE);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
 		partyRole = new PartyRole();
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);
@@ -340,7 +351,7 @@ public class SeedServiceImpl implements SeedService
 		person.setLastName("Klaglos");
 		person.setGender(MALE);
 		this.crudServicePerson.create(person);
-		partyRoleType = this.servicePartyRoleType.findForDescription(ADVOCATE);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
 		partyRole = new PartyRole();
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);
@@ -350,7 +361,7 @@ public class SeedServiceImpl implements SeedService
 		person.setGender(FEMALE);
 		person.setLastName("Walküre");
 		this.crudServicePerson.create(person);
-		partyRoleType = this.servicePartyRoleType.findForDescription(ASSISTANCE);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(ASSISTANCE);
 		partyRole = new PartyRole();
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);
@@ -360,7 +371,7 @@ public class SeedServiceImpl implements SeedService
 		person.setGender(MALE);
 		person.setLastName("Reinweiß");
 		this.crudServicePerson.create(person);
-		partyRoleType = this.servicePartyRoleType.findForDescription(CLIENT_INVESTMENT);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(CLIENT_INVESTMENT);
 		partyRole = new PartyRole();
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);
@@ -370,7 +381,7 @@ public class SeedServiceImpl implements SeedService
 		person.setGender(MALE);
 		person.setLastName("Lahm");
 		this.crudServicePerson.create(person);
-		partyRoleType = this.servicePartyRoleType.findForDescription(PRIVATE);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(PRIVATE);
 		partyRole = new PartyRole();
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);

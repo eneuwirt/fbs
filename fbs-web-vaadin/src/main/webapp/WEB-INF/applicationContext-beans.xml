@@ -15,13 +15,11 @@
                       http://www.springframework.org/schema/util 
                       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-  <bean id="crudServiceAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceAddressImpl" />
   <bean id="crudServiceContactMechanismPurposeType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismPurposeTypeImpl" />
   <bean id="crudServiceContactMechanismType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismTypeImpl" />
   <bean id="crudServiceElectronicAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceElectronicAddressImpl" />
   <bean id="crudServiceTelecommunicationNumber" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceTelecommunicationNumberImpl" />
   <bean id="crudServicePostalAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServicePostalAddressImpl" />
-  <bean id="crudServicePostalAddressBoundary" class="com.fbs.dmr.universal.service.impl.contact.CrudServicePostalAddressBoundaryImpl" />
 
   <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.party.CrudServiceOrganizationImpl" />
   <bean id="crudServiceParty" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyImpl" />
@@ -35,17 +33,7 @@
   <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.party.CrudServicePersonImpl" />
   <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePriorityTypeImpl" />
 
-  <bean id="seedService" class="com.fbs.dmr.universal.service.impl.SeedServiceImpl">
-    <property name="servicePartyRelationshipStatusType" ref="crudServicePartyRelationshipStatusType" />
-    <property name="servicePartyType" ref="crudServicePartyType" />
-    <property name="servicePartyRoleType" ref="crudServicePartyRoleType" />
-    <property name="servicePriorityType" ref="crudServicePriorityType" />
-    <property name="crudServiceOrganization" ref="crudServiceOrganization" />
-    <property name="crudServicePerson" ref="crudServicePerson" />
-    <property name="servicePartyRole" ref="crudServicePartyRole" />
-    <property name="crudServiceContactMechanismPurposeType" ref="crudServiceContactMechanismPurposeType" />
-    <property name="crudServiceContactMechanismType" ref="crudServiceContactMechanismType" />
-  </bean>
+  <bean id="seedService" class="com.fbs.dmr.universal.service.impl.SeedServiceImpl" />
 
   <bean id="tenantService" class="com.fbs.security.service.impl.TenantServiceImpl">
     <property name="dataSource" ref="dataSourceSecurity" />

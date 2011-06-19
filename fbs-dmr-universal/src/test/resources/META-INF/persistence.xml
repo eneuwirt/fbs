@@ -8,6 +8,7 @@
     <class>com.fbs.dmr.universal.model.contact.ContactMechanismType</class>
     <class>com.fbs.dmr.universal.model.contact.ElectronicAddress</class>
     <class>com.fbs.dmr.universal.model.contact.PostalAddress</class>
+    <class>com.fbs.dmr.universal.model.contact.PostalAddressBoundary</class>
     <class>com.fbs.dmr.universal.model.contact.TelecommunicationNumber</class>
     <class>com.fbs.dmr.universal.model.geoboundary.City</class>
     <class>com.fbs.dmr.universal.model.geoboundary.Country</class>

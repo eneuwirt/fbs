@@ -38,8 +38,8 @@ public class PartyContactMechanism implements Serializable
 	@Column(name = "date_to")
 	private Date dateTo = DateUtils.getEndOfDays();
 	private Boolean solicitation = false;
-	private String extension = null;
-	private String comment = null;
+	private String extension = "";
+	private String comment = "";
 
 	public PartyContactMechanism()
 	{

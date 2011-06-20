@@ -62,6 +62,13 @@ public interface ApplicationMessages extends Serializable
 	public static String PartyPostalAddress = "Party.PostalAddress";
 	public static String PartyRelationships = "Party.Relationships";
 	
+	//PartyContactMechanism
+	public static String PartyContactMechanismAddress = "PartyContactMechanism.Address";
+	public static String PartyContactMechanismComment = "PartyContactMechanism.Comment";
+	public static String PartyContactMechanismId = "PartyContactMechanism.Id";
+	public static String PartyContactMechanismParty = "PartyContactMechanism.Party";
+	public static String PartyContactMechanismTitle = "PartyContactMechanism.Title";
+	
 	// PartyRelationship
 	public static String PartyRelationshipComment = "PartyRelationship.Comment";
 	public static String PartyRelationshipDateFrom = "PartyRelationship.DateFrom";

@@ -30,6 +30,11 @@ public class ContactMechanism implements Serializable
     	
     }
     
+    public String getAddress()
+    {
+    	return "";
+    }
+    
     public Integer getId()
     {
     	return id;

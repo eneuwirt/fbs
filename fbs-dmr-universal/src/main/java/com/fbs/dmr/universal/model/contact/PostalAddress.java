@@ -19,35 +19,40 @@ public class PostalAddress extends ContactMechanism
 	private String postalCode = "";
 	private String country = "";
 
+	public String getAddress()
+	{
+		return String.format("%s %s %s", this.address1, this.postalCode, this.city);
+	}
+
 	public String getCity()
-    {
-    	return city;
-    }
+	{
+		return city;
+	}
 
 	public void setCity(String city)
-    {
-    	this.city = city;
-    }
+	{
+		this.city = city;
+	}
 
 	public String getPostalCode()
-    {
-    	return postalCode;
-    }
+	{
+		return postalCode;
+	}
 
 	public void setPostalCode(String postalCode)
-    {
-    	this.postalCode = postalCode;
-    }
+	{
+		this.postalCode = postalCode;
+	}
 
 	public String getCountry()
-    {
-    	return country;
-    }
+	{
+		return country;
+	}
 
 	public void setCountry(String country)
-    {
-    	this.country = country;
-    }
+	{
+		this.country = country;
+	}
 
 	public PostalAddress()
 	{

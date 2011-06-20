@@ -5,30 +5,33 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ELECTRONIC_ADDRESSES")
+@Table(name = "ELECTRONIC_ADDRESSES")
 public class ElectronicAddress extends ContactMechanism
 {
-    private static final long serialVersionUID = 1L;
-    @Column(name="electronic_address")
-    private String electronicAddress = "";
-    
-    public ElectronicAddress()
-    {
-    	
-    }
+	private static final long serialVersionUID = 1L;
+	@Column(name = "electronic_address")
+	private String electronicAddress = "";
 
-    
-    public void setElectronicAddress(String electronicAddress)
-    {
-	    this.electronicAddress = electronicAddress;
-    }
+	public ElectronicAddress()
+	{
 
+	}
+
+	@Override
+	public String getAddress()
+	{
+		return this.electronicAddress;
+	}
+
+	public void setElectronicAddress(String electronicAddress)
+	{
+		this.electronicAddress = electronicAddress;
+	}
 
 	public String getElectronicAddress()
-    {
-	    return electronicAddress;
-    }
-
+	{
+		return electronicAddress;
+	}
 
 	@Override
 	public boolean equals(Object obj)
@@ -44,7 +47,7 @@ public class ElectronicAddress extends ContactMechanism
 		}
 
 		ElectronicAddress other = (ElectronicAddress) obj;
-		
+
 		if (this.getId() == null && other.getId() == null)
 		{
 			return this.electronicAddress.equals(other.electronicAddress);
@@ -54,10 +57,9 @@ public class ElectronicAddress extends ContactMechanism
 		{
 			return false;
 		}
-		
+
 		return true;
 	}
-
 
 	@Override
 	public int hashCode()
@@ -71,7 +73,7 @@ public class ElectronicAddress extends ContactMechanism
 		return result;
 	}
 
-    public String toString()
+	public String toString()
 	{
 		return String.format("ElectronicAddress [id=%s, elAddress=%s]", this.getId(), this.electronicAddress);
 	}

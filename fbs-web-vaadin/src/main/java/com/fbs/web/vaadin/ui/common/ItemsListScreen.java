@@ -124,7 +124,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 */
 	protected abstract void deleteBean(T t) throws Exception;
 
-	private Collection<String> getVisibleFields()
+	protected Collection<String> getVisibleFields()
 	{
 		return Arrays.asList(visibleFields);
 	}
@@ -416,7 +416,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		right.setExpandRatio(this.component, 1.0f);
 	}
 
-	private void notifyClick(Action action)
+	protected void notifyClick(Action action)
 	{
 		this.actionPrevious = this.actionCurrent;
 		this.actionCurrent = action;

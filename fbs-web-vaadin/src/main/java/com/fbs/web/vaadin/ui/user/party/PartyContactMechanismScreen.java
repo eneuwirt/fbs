@@ -2,26 +2,33 @@ package com.fbs.web.vaadin.ui.user.party;
 
 import java.util.List;
 
+import com.fbs.dmr.universal.model.contact.ContactMechanism;
+import com.fbs.dmr.universal.model.contact.ElectronicAddress;
+import com.fbs.dmr.universal.model.contact.PostalAddress;
+import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
+import com.fbs.web.dto.ContactMechanismDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
 import com.vaadin.data.Item;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 
 public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMechanism>
 {
 	private static final long serialVersionUID = 1L;
-
 	private static final String ID = "id";
 	private static final String COMMENT = "comment";
-	private static final String CONTACT_MECHANISM = "contactMechanism";
 	private static final String CONTACT_MECHANISM_ADDRESS = "contactMechanism.address";
 	private static final String CONTACT_MECHANISM_TYPE_DESCR = "contactMechanism.contactMechanismType.description";
 	private static final String PARTY = "party";
@@ -29,13 +36,54 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	private static final String[] VISIBLE_COLUMNS = new String[]
 		{ ID, PARTY_NAME, CONTACT_MECHANISM_ADDRESS, CONTACT_MECHANISM_TYPE_DESCR };
 	private static final String[] VISIBLE_FIELDS = new String[]
-		{ ID, PARTY, CONTACT_MECHANISM, COMMENT };
+		{ ID, PARTY, COMMENT };
 	private static final String[] NESTED_PROPERTIES = new String[]
 		{ PARTY_NAME, CONTACT_MECHANISM_ADDRESS, CONTACT_MECHANISM_TYPE_DESCR };
+
+	private Form formDetails;
 
 	public PartyContactMechanismScreen(MyVaadinApplication app)
 	{
 		super(app, PartyContactMechanism.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
+	}
+
+	@Override
+	protected AbstractComponentContainer getComponent()
+	{
+		VerticalLayout verticalLayout;
+
+		verticalLayout = new VerticalLayout();
+
+		this.formDetails = new Form();
+		this.formDetails.setFormFieldFactory(new PartyContactDetailsFormFieldFactory(this.app));
+
+		verticalLayout.addComponent(this.form);
+		verticalLayout.addComponent(this.formDetails);
+
+		return verticalLayout;
+	}
+
+	protected void updateComponent(PartyContactMechanism bean)
+	{
+		super.updateComponent(bean);
+
+		if (bean != null)
+		{
+			BeanItem<ContactMechanismDto> beanItem;
+			ContactMechanismDto dummy = new ContactMechanismDto(bean.getContactMechanism());
+
+			beanItem = new BeanItem<ContactMechanismDto>(dummy);
+
+			this.formDetails.setItemDataSource(beanItem);
+		}
+	}
+
+	@Override
+	protected void layoutComponent()
+	{
+		this.formDetails.setSizeFull();
+
+		this.component.setSizeFull();
 	}
 
 	@Override
@@ -103,7 +151,7 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 
 		if (propertyId.equals(CONTACT_MECHANISM_TYPE_DESCR))
 			return this.app.getMessage(ApplicationMessages.ContactMechanismTypeTitle);
-		
+
 		return propertyId;
 	}
 
@@ -154,13 +202,90 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 
 				result = select;
 			}
-			else if (CONTACT_MECHANISM.equals(pid))
-			{
-
-			}
 
 			return result;
 		}
 	}
 
+	private static class PartyContactDetailsFormFieldFactory implements FormFieldFactory
+	{
+		private static final long serialVersionUID = 1L;
+		String ADDRESS1 = "address1";
+		String ADDRESS2 = "address2";
+		String CITY = "city";
+		String POSTAL_CODE = "postalCode";
+		String COUNTRY = "country";
+		String ELECTRONIC_ADDRESS = "electronicAddress";
+		String COUNTRY_CODE = "countryCode";
+		private String AREA_CODE = "areaCode";
+		private String NUMBER = "number";
+		private MyVaadinApplication app;
+
+		public PartyContactDetailsFormFieldFactory(MyVaadinApplication app)
+		{
+			this.app = app;
+		}
+
+		/**
+		 * Sehr tricky. Also ich bekomme eine Instanz Dto Klasse Anhand der
+		 * zugrunde liegenden Klasse bestimme ich, welche Felder aktiviert
+		 * werden.
+		 */
+		@Override
+		public Field createField(Item item, Object propertyId, Component uiContext)
+		{
+			ContactMechanismDto dto;
+			Field result = null;
+			BeanItem<ContactMechanismDto> beanItem;
+			ContactMechanismDto contactMechanismDto;
+
+			String pid = (String) propertyId;
+			beanItem = (BeanItem<ContactMechanismDto>) item;
+			contactMechanismDto = beanItem.getBean();
+
+
+			boolean isPA = contactMechanismDto.getContactMechanism() instanceof PostalAddress;
+			boolean isPhone = contactMechanismDto.getContactMechanism() instanceof TelecommunicationNumber;
+			boolean isElectronic = contactMechanismDto.getContactMechanism() instanceof ElectronicAddress;
+
+			if (ADDRESS1.equals(pid) && isPA)
+			{
+				result = new TextField("Addresse");
+			}
+			else if (ADDRESS2.equals(pid) && isPA)
+			{
+				result = new TextField("Addresszusatz");
+			}
+			else if (CITY.equals(pid) && isPA)
+			{
+				result = new TextField("Stadt");
+			}
+			else if (POSTAL_CODE.equals(pid) && isPA)
+			{
+				result = new TextField("Postleitzahl");
+			}
+			else if (COUNTRY.equals(pid) && isPA)
+			{
+				result = new TextField("Staat");
+			}
+			else if (ELECTRONIC_ADDRESS.equals(pid) && isElectronic)
+			{
+				result = new TextField("Elektronische Adresse");
+			}
+			else if (COUNTRY_CODE.equals(pid) && isPhone)
+			{
+				result = new TextField("Länder Code");
+			}
+			else if (AREA_CODE.equals(pid) && isPhone)
+			{
+				result = new TextField("Vorwahl");
+			}
+			else if (NUMBER.equals(pid) && isPhone)
+			{
+				result = new TextField("Telefonnummer");
+			}
+
+			return result;
+		}
+	}
 }

@@ -9,6 +9,7 @@ import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.universal.model.contact.ContactMechanismType;
 import com.fbs.dmr.universal.model.contact.ElectronicAddress;
 import com.fbs.dmr.universal.model.contact.PostalAddress;
+import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
@@ -43,10 +44,13 @@ public class SeedServiceImpl implements SeedService
 	private static final String DEMO_STREET = "A4";
 	private static final String DEMO_CITY = "Mannheim";
 	private static final String DEMO_ZIP = "69011";
+	// *******************************************************************************
 	@Resource(name="crudServicePartyContactMechanism")
 	private CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism;
 	@Resource(name="crudServiceElectronicAddress")
 	private CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress;
+	@Resource(name="crudServiceTelecommunicationNumber")
+	private CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber;
 	@Resource(name="crudServicePostalAddress")
 	private CrudService<PostalAddress, Integer> crudServicePostalAddress;
 	@Resource(name="crudServiceContactMechanismPurposeType")
@@ -358,6 +362,10 @@ public class SeedServiceImpl implements SeedService
 		Person person;
 		PartyRoleType partyRoleType;
 		PartyRole partyRole;
+		PostalAddress postalAddress;
+		TelecommunicationNumber phone;
+		PartyContactMechanism pcm;
+		ContactMechanismType contactMechanismType;
 
 		person = new Person();
 		person.setGender(MALE);
@@ -398,6 +406,28 @@ public class SeedServiceImpl implements SeedService
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);
 		this.servicePartyRole.create(partyRole);
+		//
+		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_POSTAL);
+		postalAddress = new PostalAddress();
+		postalAddress.setAddress1(DEMO_STREET);
+		postalAddress.setCity(DEMO_CITY);
+		postalAddress.setPostalCode(DEMO_ZIP);
+		postalAddress.setContactMechanismType(contactMechanismType);
+		this.crudServicePostalAddress.create(postalAddress);
+		pcm = new PartyContactMechanism();
+		pcm.setContactMechanism(postalAddress);
+		pcm.setParty(person);
+		this.crudServicePartyContactMechanism.create(pcm);	
+		// 
+		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_PHONE);
+		phone = new TelecommunicationNumber();
+		phone.setNumber("0815 – 10");
+		phone.setContactMechanismType(contactMechanismType);
+		this.crudServiceTelecommunicationNumber.create(phone);
+		pcm = new PartyContactMechanism();
+		pcm.setContactMechanism(phone);
+		pcm.setParty(person);
+		this.crudServicePartyContactMechanism.create(pcm);	
 
 		person = new Person();
 		person.setGender(MALE);
@@ -477,5 +507,11 @@ public class SeedServiceImpl implements SeedService
 	public void setCrudServiceElectronicAddress(CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress)
     {
 	    this.crudServiceElectronicAddress = crudServiceElectronicAddress;
+    }
+	
+	public void setCrudServiceTelecommunicationNumber(
+            CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber)
+    {
+    	this.crudServiceTelecommunicationNumber = crudServiceTelecommunicationNumber;
     }
 }

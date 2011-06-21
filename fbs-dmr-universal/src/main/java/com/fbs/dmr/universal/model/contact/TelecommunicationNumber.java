@@ -19,6 +19,12 @@ public class TelecommunicationNumber extends ContactMechanism
     {
     	
     }
+    
+    @Override
+    public String getAddress()
+    {
+    	return String.format("%s %s %s", this.countryCode, this.areaCode, this.number);
+    }
 
     public String getCountryCode()
     {

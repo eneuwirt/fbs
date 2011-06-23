@@ -1,5 +1,6 @@
 package com.fbs.web.vaadin.ui.user.party;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -21,19 +22,15 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractComponentContainer;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
+
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMechanism>
 {
@@ -43,16 +40,14 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	private static final String COMMENT = "comment";
 	private static final String CONTACT_MECHANISM_ADDRESS = "contactMechanism.address";
 	private static final String CONTACT_MECHANISM_TYPE_DESCR = "contactMechanism.contactMechanismType.description";
-	// private static final String CONTACT_PURPOSE_TYPE_DESCRIPTION =
-	// "contactMechanismPurposeType.description";
 	private static final String PARTY = "party";
 	private static final String PARTY_NAME = "party.name";
 	private static final String[] VISIBLE_COLUMNS = new String[]
-		{ ID, PARTY_NAME, CONTACT_MECHANISM_ADDRESS, CONTACT_MECHANISM_TYPE_DESCR };
+		{ ID, PARTY_NAME, CONTACT_MECHANISM_ADDRESS };
 	private static final String[] VISIBLE_FIELDS = new String[]
 		{ ID, PARTY, COMMENT };
 	private static final String[] NESTED_PROPERTIES = new String[]
-		{ PARTY_NAME, CONTACT_MECHANISM_ADDRESS, CONTACT_MECHANISM_TYPE_DESCR };
+		{ PARTY_NAME, CONTACT_MECHANISM_ADDRESS };
 	private static final String ADDRESS1 = "address1";
 	private static final String ADDRESS2 = "address2";
 	private static final String CITY = "city";
@@ -62,6 +57,8 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	private static final String COUNTRY_CODE = "countryCode";
 	private static final String AREA_CODE = "areaCode";
 	private static final String NUMBER = "number";
+	private static final String[] VISIBLE_FIELDS_DETAILS = new String[]
+		{ ADDRESS1, ADDRESS2, POSTAL_CODE, CITY, COUNTRY, ELECTRONIC_ADDRESS, COUNTRY_CODE, AREA_CODE, NUMBER };
 
 	private Form formDetails;
 	private OptionGroup optionGroupPurpose;
@@ -95,30 +92,58 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 		return verticalLayout;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void updateComponent(PartyContactMechanism bean)
 	{
+		BeanItem<ContactMechanismDto> beanItem;
+		ContactMechanism contactMechanism = null;
+		ContactMechanismDto dummy = null;
+
 		super.updateComponent(bean);
 
 		if (bean != null)
 		{
-			BeanItem<ContactMechanismDto> beanItem;
-			ContactMechanismDto dummy;
+			contactMechanism = bean.getContactMechanism();
 
-			dummy = new ContactMechanismDto(bean.getContactMechanism());
-
-			beanItem = new BeanItem<ContactMechanismDto>(dummy);
-
-			this.setOptiongroup(bean);
-
-			this.formDetails.setItemDataSource(beanItem);
 		}
-		else if (bean == null && this.actionCurrent == Action.CREATE)
-		{	
-			
+		else if (bean == null)
+		{
+			switch (this.actionCurrent)
+			{
+				case CREATE:
+					contactMechanism = new PostalAddress();
+					break;
+
+				case CREATE_1:
+					contactMechanism = new ElectronicAddress();
+					break;
+
+				case CREATE_2:
+					contactMechanism = new TelecommunicationNumber();
+					break;
+
+				default:
+					contactMechanism = new ContactMechanism();
+					break;
+			}
+			BeanItem<PartyContactMechanism> bI;
+
+			bI = (BeanItem<PartyContactMechanism>) this.form.getItemDataSource();
+
+			bean = bI.getBean();
+
+			bean.setContactMechanism(contactMechanism);
 		}
+
+		dummy = new ContactMechanismDto(contactMechanism);
+
+		beanItem = new BeanItem<ContactMechanismDto>(dummy);
+
+		this.setOptiongroup(bean);
+
+		this.formDetails.setItemDataSource(beanItem, Arrays.asList(VISIBLE_FIELDS_DETAILS));
 	}
-	
-	
+
 	private void setOptiongroup(PartyContactMechanism pcm)
 	{
 		List<ContactMechanismPurposeType> contactMechanismPurposes;
@@ -158,6 +183,20 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	}
 
 	@Override
+	protected void layoutItemButtons()
+	{
+		String caption = this.app.getMessage(ApplicationMessages.PartyContactMechanismCreatePostalAddress);
+		String caption1 = this.app.getMessage(ApplicationMessages.PartyContactMechanismCreateEAddress);
+		String caption2 = this.app.getMessage(ApplicationMessages.PartyContactMechanismCreatePhone);
+		
+		this.buttonItemAdd.setCaption(caption);
+		this.buttonItemAdd1.setCaption(caption1);
+		this.buttonItemAdd2.setCaption(caption2);
+
+		this.buttonItemDelete.setCaption("-");
+	}
+
+	@Override
 	protected PartyContactMechanism createBeanInstance()
 	{
 		return new PartyContactMechanism();
@@ -166,13 +205,64 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	@Override
 	protected List<PartyContactMechanism> getAllBeans() throws Exception
 	{
-		return this.app.getServices().getCrudServicePartyContactMechanism().findAll();
+		List<PartyContactMechanism> result;
+
+		result = this.app.getServices().getCrudServicePartyContactMechanism().findAll();
+
+		return result;
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
+    @Override
 	protected PartyContactMechanism createBean(PartyContactMechanism t) throws Exception
 	{
 		Set<String> selectedPurposes;
+		BeanItem<ContactMechanismDto> beanItem;
+		ContactMechanismDto bean;
+
+		beanItem = (BeanItem<ContactMechanismDto>) this.formDetails.getItemDataSource();
+		bean = beanItem.getBean();
+
+		if (t.getContactMechanism() instanceof PostalAddress)
+		{
+			PostalAddress postalAddress;
+
+			postalAddress = (PostalAddress) t.getContactMechanism();
+
+			bean.fillPostalAddress(postalAddress);
+
+			this.app.getServices().getCrudServicePostalAddress().create(postalAddress);
+		}
+		else if (t.getContactMechanism() instanceof TelecommunicationNumber)
+		{
+			TelecommunicationNumber tn;
+
+			tn = (TelecommunicationNumber) t.getContactMechanism();
+
+			bean.fillTelecommunicationNumber(tn);
+
+			this.app.getServices().getCrudServiceTelecommunicationNumber().create(tn);
+		}
+		else if (t.getContactMechanism() instanceof ElectronicAddress)
+		{
+			ElectronicAddress ea;
+
+			ea = (ElectronicAddress) t.getContactMechanism();
+
+			bean.fillElectronicAddress(ea);
+
+			this.app.getServices().getCrudServiceElectronicAddress().create(ea);
+		}
+		else
+		{
+			String msg = "Unknown class: " + t.getContactMechanism().getClass().getName();
+
+			logger.log(Level.SEVERE, msg);
+
+			throw new IllegalArgumentException(msg);
+		}
+
+		this.app.getServices().getCrudServicePartyContactMechanism().create(t);
 
 		selectedPurposes = (Set<String>) this.optionGroupPurpose.getValue();
 		for (String s : selectedPurposes)
@@ -189,8 +279,6 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 			this.app.getServices().getCrudServicePartyContactMechanismPurpose().create(cmp);
 
 		}
-
-		this.app.getServices().getCrudServicePartyContactMechanism().create(t);
 
 		return t;
 	}

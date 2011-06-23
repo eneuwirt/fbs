@@ -42,7 +42,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 	public enum Action
 	{
-		CREATE, SAVE, SAVE_FAILURE, DELETE, CANCEL, SELECT, SELECT_NULL;
+		CREATE, CREATE_1, CREATE_2, SAVE, SAVE_FAILURE, DELETE, CANCEL, SELECT, SELECT_NULL, UNDEFINED;
 	}
 
 	protected Class<T> clazz;
@@ -56,6 +56,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected Table table;
 	protected BeanItemContainer<T> beanItemContainer;
 	protected Button buttonItemAdd;
+	protected Button buttonItemAdd1;
+	protected Button buttonItemAdd2;
 	protected Button buttonItemDelete;
 	// ** Elements right ******************************************
 	protected Form form;
@@ -64,8 +66,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	protected Button buttonCancel;
 	protected Button buttonDelete;
 	// remember the clicked button
-	protected Action actionCurrent;
-	protected Action actionPrevious; // Previously clicked button
+	protected Action actionCurrent = Action.UNDEFINED;
+	protected Action actionPrevious = Action.UNDEFINED; // Previously clicked
+														// button
 
 	public Action getActionCurrent()
 	{
@@ -146,6 +149,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.buttonItemAdd = new Button();
 		this.buttonItemAdd.addListener(new CreateItemListener<T>(this));
 
+		this.buttonItemAdd1 = new Button();
+		this.buttonItemAdd1.addListener(new CreateItemListener<T>(this));
+
+		this.buttonItemAdd2 = new Button();
+		this.buttonItemAdd2.addListener(new CreateItemListener<T>(this));
+
 		this.buttonItemDelete = new Button();
 		this.buttonItemDelete.addListener(new DeleteItemListener<T>(this));
 		this.buttonItemDelete.setEnabled(false);
@@ -196,6 +205,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				this.component.setEnabled(true);
 
 				this.buttonItemAdd.setEnabled(true);
+				this.buttonItemAdd1.setEnabled(true);
+				this.buttonItemAdd2.setEnabled(true);
 				this.buttonItemDelete.setEnabled(true);
 
 				this.buttonSave.setEnabled(true);
@@ -270,9 +281,11 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		this.layoutTable();
 		this.layoutSearchField(searchRow);
 		this.layoutItemButtons();
-		
+
 		buttonRow.setSpacing(true);
 		buttonRow.addComponent(this.buttonItemAdd);
+		buttonRow.addComponent(this.buttonItemAdd1);
+		buttonRow.addComponent(this.buttonItemAdd2);
 		buttonRow.addComponent(this.buttonItemDelete);
 
 		left.addComponent(searchRow);
@@ -301,6 +314,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	{
 		this.buttonItemAdd.setCaption("+");
 		this.buttonItemDelete.setCaption("-");
+
+		this.buttonItemAdd1.setVisible(false);
+		this.buttonItemAdd2.setVisible(false);
 	}
 
 	protected void layoutSearchField(HorizontalLayout searchRow)
@@ -383,12 +399,25 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		@Override
 		public void buttonClick(ClickEvent event)
 		{
-			this.screen.notifyClick(Action.CREATE);
+			if (event.getButton().equals(this.screen.buttonItemAdd))
+			{
+				this.screen.notifyClick(Action.CREATE);
+			}
+			else if (event.getButton().equals(this.screen.buttonItemAdd1))
+			{
+				this.screen.notifyClick(Action.CREATE_1);
+			}
+			else if (event.getButton().equals(this.screen.buttonItemAdd2))
+			{
+				this.screen.notifyClick(Action.CREATE_2);
+			}
 
 			this.screen.updateComponent(null);
 			this.screen.component.setEnabled(true);
 
 			this.screen.buttonItemAdd.setEnabled(false);
+			this.screen.buttonItemAdd1.setEnabled(false);
+			this.screen.buttonItemAdd2.setEnabled(false);
 			this.screen.buttonItemDelete.setEnabled(false);
 
 			this.screen.buttonSave.setEnabled(true);
@@ -453,6 +482,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				this.screen.buttonDelete.setEnabled(false);
 
 				this.screen.buttonItemAdd.setEnabled(true);
+				this.screen.buttonItemAdd1.setEnabled(true);
+				this.screen.buttonItemAdd2.setEnabled(true);
 				this.screen.buttonItemDelete.setEnabled(false);
 			}
 			else
@@ -495,13 +526,17 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			try
 			{
 				// Save bean. Distinguish between create and update
-				if (this.screen.actionPrevious == Action.CREATE)
+				switch (this.screen.actionPrevious)
 				{
-					this.screen.createBean(beanItem.getBean());
-				}
-				else
-				{
-					this.screen.updateBean(beanItem.getBean());
+					case CREATE:
+					case CREATE_1:
+					case CREATE_2:
+						this.screen.createBean(beanItem.getBean());
+						break;
+
+					default:
+						this.screen.updateBean(beanItem.getBean());
+						break;
 				}
 
 				// I had several problem with table refresh, so this hard action
@@ -519,6 +554,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				this.screen.buttonDelete.setEnabled(true);
 
 				this.screen.buttonItemAdd.setEnabled(true);
+				this.screen.buttonItemAdd1.setEnabled(true);
+				this.screen.buttonItemAdd2.setEnabled(true);
 				this.screen.buttonItemDelete.setEnabled(true);
 			}
 			catch (Exception ex)
@@ -538,6 +575,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 				this.screen.buttonDelete.setEnabled(false);
 
 				this.screen.buttonItemAdd.setEnabled(true);
+				this.screen.buttonItemAdd1.setEnabled(true);
+				this.screen.buttonItemAdd2.setEnabled(true);
 				this.screen.buttonItemDelete.setEnabled(false);
 			}
 
@@ -640,6 +679,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			this.screen.buttonDelete.setEnabled(enableDelete);
 
 			this.screen.buttonItemAdd.setEnabled(true);
+			this.screen.buttonItemAdd1.setEnabled(true);
+			this.screen.buttonItemAdd2.setEnabled(true);
 			this.screen.buttonItemDelete.setEnabled(enableItemDelete);
 		}
 	}

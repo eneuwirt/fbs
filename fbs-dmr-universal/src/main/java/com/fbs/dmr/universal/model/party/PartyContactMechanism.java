@@ -166,7 +166,9 @@ public class PartyContactMechanism implements Serializable
 		int result = 1;
 		int attrHash = this.comment.hashCode() + this.extension.hashCode() + this.solicitation.hashCode();
 
-		result = prime * result + ((id == null) ? attrHash : id.hashCode());
+		result = ((id == null) ? attrHash : id.hashCode());
+		
+		result = prime * result;
 
 		return result;
 	}

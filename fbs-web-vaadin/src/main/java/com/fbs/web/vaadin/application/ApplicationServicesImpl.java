@@ -10,6 +10,7 @@ import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
+import com.fbs.dmr.universal.model.party.PartyContactMechanismPurpose;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
@@ -49,6 +50,8 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private CrudService<Party, Integer> crudServiceParty;
 	@Resource(name = "crudServicePartyContactMechanism")
 	private CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism;
+	@Resource(name = "crudServicePartyContactMechanismPurpose")
+	private CrudService<PartyContactMechanismPurpose, Integer> crudServicePartyContactMechanismPurpose;
 	@Resource(name = "crudServicePartyType")
 	private CrudServiceType<PartyType, Integer> crudServicePartyType;
 	@Resource(name = "crudServicePartyRelationship")
@@ -297,5 +300,16 @@ public class ApplicationServicesImpl implements ApplicationServices
 	public void setCrudServiceElectronicAddress(CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress)
     {
 	    this.crudServiceElectronicAddress = crudServiceElectronicAddress;
+    }
+
+	@Override
+    public CrudService<PartyContactMechanismPurpose, Integer> getCrudServicePartyContactMechanismPurpose()
+    {
+	    return this.crudServicePartyContactMechanismPurpose;
+    }
+
+	public void setCrudServicePartyContactMechanismPurpose(CrudService<PartyContactMechanismPurpose, Integer> crudServicePartyContactMechanismPurpose)
+    {
+	    this.crudServicePartyContactMechanismPurpose = crudServicePartyContactMechanismPurpose;
     }
 }

@@ -8,6 +8,7 @@ import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
+import com.fbs.dmr.universal.model.party.PartyContactMechanismPurpose;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
@@ -45,6 +46,8 @@ public interface ApplicationServices
 	public CrudService<Party, Integer> getCrudServiceParty();
 
 	public CrudService<PartyContactMechanism, Integer> getCrudServicePartyContactMechanism();
+	
+	public CrudService<PartyContactMechanismPurpose, Integer> getCrudServicePartyContactMechanismPurpose();
 
 	public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship();
 

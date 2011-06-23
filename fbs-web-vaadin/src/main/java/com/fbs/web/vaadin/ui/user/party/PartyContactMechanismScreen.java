@@ -33,6 +33,7 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	private static final String COMMENT = "comment";
 	private static final String CONTACT_MECHANISM_ADDRESS = "contactMechanism.address";
 	private static final String CONTACT_MECHANISM_TYPE_DESCR = "contactMechanism.contactMechanismType.description";
+	//private static final String CONTACT_PURPOSE_TYPE_DESCRIPTION = "contactMechanismPurposeType.description";
 	private static final String PARTY = "party";
 	private static final String PARTY_NAME = "party.name";
 	private static final String[] VISIBLE_COLUMNS = new String[]
@@ -95,8 +96,6 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	protected void layoutComponent()
 	{
 		this.formDetails.setSizeFull();
-
-		// this.component.setSizeFull();
 	}
 
 	@Override

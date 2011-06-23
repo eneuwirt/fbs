@@ -44,6 +44,10 @@ public class SeedServiceImpl implements SeedService
 	private static final String DEMO_STREET = "A4";
 	private static final String DEMO_CITY = "Mannheim";
 	private static final String DEMO_ZIP = "69011";
+	private static final String PURPOSE_HEAD_QUARTERS = "Die Zentrale";
+	private static final String PURPOSE_GENERAL_PHONE = "Haupttelefonkontakt";
+	private static final String PURPOSE_GENERAL_FAX = "Fax";
+	private static final String PURPOSE_SECONDARY_FAX = "Zweite Faxnummer";
 	// *******************************************************************************
 	@Resource(name="crudServicePartyContactMechanism")
 	private CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism;
@@ -96,25 +100,21 @@ public class SeedServiceImpl implements SeedService
 		if (types.size() == 0)
 		{
 			ContactMechanismPurposeType type;
-			String HEAD_QUARTERS = "Die Zentrale";
-			String GENERAL_PHONE = "Haupttelefonkontakt";
-			String GENERAL_FAX = "Fax";
-			String SECONDARY_FAX = "Zweite Faxnummer";
 
 			type = new ContactMechanismPurposeType();
-			type.setDescription(HEAD_QUARTERS);
+			type.setDescription(PURPOSE_HEAD_QUARTERS);
 			this.crudServiceContactMechanismPurposeType.create(type);
 
 			type = new ContactMechanismPurposeType();
-			type.setDescription(GENERAL_PHONE);
+			type.setDescription(PURPOSE_GENERAL_PHONE);
 			this.crudServiceContactMechanismPurposeType.create(type);
 
 			type = new ContactMechanismPurposeType();
-			type.setDescription(GENERAL_FAX);
+			type.setDescription(PURPOSE_GENERAL_FAX);
 			this.crudServiceContactMechanismPurposeType.create(type);
 
 			type = new ContactMechanismPurposeType();
-			type.setDescription(SECONDARY_FAX);
+			type.setDescription(PURPOSE_SECONDARY_FAX);
 			this.crudServiceContactMechanismPurposeType.create(type);
 		}
 	}
@@ -289,6 +289,7 @@ public class SeedServiceImpl implements SeedService
 		ElectronicAddress electronicAddress;
 		PartyContactMechanism pcm;
 		ContactMechanismType contactMechanismType;
+		ContactMechanismPurposeType contactMechanismPurposeType;
 	
 		// ************************************************************************************************
 		org = new Organization();
@@ -328,6 +329,7 @@ public class SeedServiceImpl implements SeedService
 		this.servicePartyRole.create(partyRole);
 		//
 		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_POSTAL);
+		contactMechanismPurposeType = this.crudServiceContactMechanismPurposeType.findForDescription(PURPOSE_HEAD_QUARTERS);
 		postalAddress = new PostalAddress();
 		postalAddress.setAddress1(DEMO_STREET);
 		postalAddress.setCity(DEMO_CITY);
@@ -336,6 +338,7 @@ public class SeedServiceImpl implements SeedService
 		this.crudServicePostalAddress.create(postalAddress);
 		pcm = new PartyContactMechanism();
 		pcm.setContactMechanism(postalAddress);
+		pcm.setContactMechanismPurposeType(contactMechanismPurposeType);
 		pcm.setParty(org);
 		this.crudServicePartyContactMechanism.create(pcm);	
 		//
@@ -347,9 +350,8 @@ public class SeedServiceImpl implements SeedService
 		pcm = new PartyContactMechanism();
 		pcm.setContactMechanism(electronicAddress);
 		pcm.setParty(org);
-		this.crudServicePartyContactMechanism.create(pcm);	
-		
-
+		this.crudServicePartyContactMechanism.create(pcm);			
+		//
 		partyRoleType = this.crudServicePartyRoleType.findForDescription(CLIENT_OUTSTANDING);
 		partyRole = new PartyRole();
 		partyRole.setParty(org);

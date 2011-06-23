@@ -24,11 +24,11 @@ public class PartyClassification implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@ManyToOne
 	@JoinColumn(name = "party_id")
-	@ManyToOne
 	private Party party;
-	@JoinColumn(name = "party_type_id")
 	@ManyToOne
+	@JoinColumn(name = "party_type_id")
 	private PartyType partyType;
 	@Temporal(TemporalType.DATE)
 	@Column(name="date_from")

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
@@ -18,7 +20,11 @@ public class PartyContactMechanismPurpose implements Serializable
     @Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+    @ManyToOne
+	@JoinColumn(name = "party_contact_mechanism_id")
     private PartyContactMechanism partyContactMechanism;
+    @ManyToOne
+	@JoinColumn(name = "party_contact_mechanism_purpsoe_type_id")
     private ContactMechanismPurposeType contactMechanismPurposeType;
 
     public PartyContactMechanismPurpose()

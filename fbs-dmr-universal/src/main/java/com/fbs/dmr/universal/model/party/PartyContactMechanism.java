@@ -15,7 +15,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanism;
-import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.util.DateUtils;
 
 @Entity
@@ -32,9 +31,6 @@ public class PartyContactMechanism implements Serializable
 	@ManyToOne
 	@JoinColumn(name = "contact_mechanism_id")
 	private ContactMechanism contactMechanism;
-	@ManyToOne
-	@JoinColumn(name = "contact_purpose_id")
-	private ContactMechanismPurposeType contactMechanismPurposeType;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_from")
 	private Date dateFrom = new Date();
@@ -130,15 +126,6 @@ public class PartyContactMechanism implements Serializable
 		this.comment = comment;
 	}
 
-	public void setContactMechanismPurposeType(ContactMechanismPurposeType contactMechanismPurposeType)
-    {
-	    this.contactMechanismPurposeType = contactMechanismPurposeType;
-    }
-
-	public ContactMechanismPurposeType getContactMechanismPurposeType()
-    {
-	    return contactMechanismPurposeType;
-    }
 
 	@Override
 	public boolean equals(Object obj)

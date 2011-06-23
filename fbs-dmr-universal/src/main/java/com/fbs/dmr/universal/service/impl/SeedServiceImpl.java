@@ -12,6 +12,7 @@ import com.fbs.dmr.universal.model.contact.PostalAddress;
 import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
+import com.fbs.dmr.universal.model.party.PartyContactMechanismPurpose;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
@@ -49,33 +50,35 @@ public class SeedServiceImpl implements SeedService
 	private static final String PURPOSE_GENERAL_FAX = "Fax";
 	private static final String PURPOSE_SECONDARY_FAX = "Zweite Faxnummer";
 	// *******************************************************************************
-	@Resource(name="crudServicePartyContactMechanism")
+	@Resource(name = "crudServicePartyContactMechanism")
 	private CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism;
-	@Resource(name="crudServiceElectronicAddress")
+	@Resource(name = "crudServiceElectronicAddress")
 	private CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress;
-	@Resource(name="crudServiceTelecommunicationNumber")
+	@Resource(name = "crudServiceTelecommunicationNumber")
 	private CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber;
-	@Resource(name="crudServicePostalAddress")
+	@Resource(name = "crudServicePostalAddress")
 	private CrudService<PostalAddress, Integer> crudServicePostalAddress;
-	@Resource(name="crudServiceContactMechanismPurposeType")
+	@Resource(name = "crudServiceContactMechanismPurposeType")
 	private CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
-	@Resource(name="crudServiceContactMechanismType")
-	private CrudServiceType<ContactMechanismType, Integer> crudServiceContactMechanismType;
-	@Resource(name="crudServicePartyRelationshipStatusType")
+	@Resource(name = "crudServiceContactMechanismType")
+	private CrudServiceType<ContactMechanismType, Integer> crudServiceContactMechanismType;	
+	@Resource(name = "crudServicePartyContactMechanismPurpose")
+	private CrudService<PartyContactMechanismPurpose, Integer> crudServicePartyContactMechanismPurpose;
+	@Resource(name = "crudServicePartyRelationshipStatusType")
 	private CrudServiceType<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType;
-	@Resource(name="crudServicePartyRoleType")
+	@Resource(name = "crudServicePartyRoleType")
 	private CrudServiceType<PartyRoleType, Integer> crudServicePartyRoleType;
-	@Resource(name="crudServicePartyType")
+	@Resource(name = "crudServicePartyType")
 	private CrudService<PartyType, Integer> crudServicePartyType;
-	@Resource(name="crudServicePriorityType")
+	@Resource(name = "crudServicePriorityType")
 	private CrudServiceType<PriorityType, Integer> crudServicePriorityType;
-	@Resource(name="crudServiceOrganization")
+	@Resource(name = "crudServiceOrganization")
 	private CrudService<Organization, Integer> crudServiceOrganization;
-	@Resource(name="crudServicePerson")
+	@Resource(name = "crudServicePerson")
 	private CrudService<Person, Integer> crudServicePerson;
-	@Resource(name="crudServicePartyRole")
+	@Resource(name = "crudServicePartyRole")
 	private ServicePartyRole servicePartyRole;
-	
+
 	@Override
 	public void defaultFill()
 	{
@@ -279,7 +282,7 @@ public class SeedServiceImpl implements SeedService
 
 		logger.info("<demoFill");
 	}
-	
+
 	private void createDemoOrgs()
 	{
 		Organization org;
@@ -288,9 +291,10 @@ public class SeedServiceImpl implements SeedService
 		PostalAddress postalAddress;
 		ElectronicAddress electronicAddress;
 		PartyContactMechanism pcm;
+		PartyContactMechanismPurpose pcmp;
 		ContactMechanismType contactMechanismType;
 		ContactMechanismPurposeType contactMechanismPurposeType;
-	
+
 		// ************************************************************************************************
 		org = new Organization();
 		org.setName("Bürogemeinschaft Klaglos & Ratlos");
@@ -316,7 +320,7 @@ public class SeedServiceImpl implements SeedService
 		pcm = new PartyContactMechanism();
 		pcm.setContactMechanism(electronicAddress);
 		pcm.setParty(org);
-		this.crudServicePartyContactMechanism.create(pcm);	
+		this.crudServicePartyContactMechanism.create(pcm);
 
 		// ************************************************************************************************
 		org = new Organization();
@@ -329,7 +333,6 @@ public class SeedServiceImpl implements SeedService
 		this.servicePartyRole.create(partyRole);
 		//
 		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_POSTAL);
-		contactMechanismPurposeType = this.crudServiceContactMechanismPurposeType.findForDescription(PURPOSE_HEAD_QUARTERS);
 		postalAddress = new PostalAddress();
 		postalAddress.setAddress1(DEMO_STREET);
 		postalAddress.setCity(DEMO_CITY);
@@ -338,9 +341,15 @@ public class SeedServiceImpl implements SeedService
 		this.crudServicePostalAddress.create(postalAddress);
 		pcm = new PartyContactMechanism();
 		pcm.setContactMechanism(postalAddress);
-		pcm.setContactMechanismPurposeType(contactMechanismPurposeType);
 		pcm.setParty(org);
-		this.crudServicePartyContactMechanism.create(pcm);	
+		this.crudServicePartyContactMechanism.create(pcm);
+		contactMechanismPurposeType = this.crudServiceContactMechanismPurposeType
+		        .findForDescription(PURPOSE_HEAD_QUARTERS);
+		pcmp = new PartyContactMechanismPurpose();
+		pcmp.setPartyContactMechanism(pcm);
+		pcmp.setContactMechanismPurposeType(contactMechanismPurposeType);
+		this.crudServicePartyContactMechanismPurpose.create(pcmp);
+
 		//
 		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_EMAIL);
 		electronicAddress = new ElectronicAddress();
@@ -350,7 +359,7 @@ public class SeedServiceImpl implements SeedService
 		pcm = new PartyContactMechanism();
 		pcm.setContactMechanism(electronicAddress);
 		pcm.setParty(org);
-		this.crudServicePartyContactMechanism.create(pcm);			
+		this.crudServicePartyContactMechanism.create(pcm);
 		//
 		partyRoleType = this.crudServicePartyRoleType.findForDescription(CLIENT_OUTSTANDING);
 		partyRole = new PartyRole();
@@ -419,8 +428,8 @@ public class SeedServiceImpl implements SeedService
 		pcm = new PartyContactMechanism();
 		pcm.setContactMechanism(postalAddress);
 		pcm.setParty(person);
-		this.crudServicePartyContactMechanism.create(pcm);	
-		// 
+		this.crudServicePartyContactMechanism.create(pcm);
+		//
 		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_PHONE);
 		phone = new TelecommunicationNumber();
 		phone.setNumber("0815 – 10");
@@ -429,7 +438,7 @@ public class SeedServiceImpl implements SeedService
 		pcm = new PartyContactMechanism();
 		pcm.setContactMechanism(phone);
 		pcm.setParty(person);
-		this.crudServicePartyContactMechanism.create(pcm);	
+		this.crudServicePartyContactMechanism.create(pcm);
 
 		person = new Person();
 		person.setGender(MALE);
@@ -471,20 +480,21 @@ public class SeedServiceImpl implements SeedService
 	}
 
 	public void setCrudServicePostalAddress(CrudService<PostalAddress, Integer> crudServicePostalAddress)
-    {
-	    this.crudServicePostalAddress = crudServicePostalAddress;
-    }
+	{
+		this.crudServicePostalAddress = crudServicePostalAddress;
+	}
 
 	public CrudService<PostalAddress, Integer> getCrudServicePostalAddress()
-    {
-	    return crudServicePostalAddress;
-    }
+	{
+		return crudServicePostalAddress;
+	}
 
-	public void setCrudServicePartyContactMechanism(CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism)
-    {
-	    this.crudServicePartyContactMechanism = crudServicePartyContactMechanism;
-    }
-	
+	public void setCrudServicePartyContactMechanism(
+	        CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism)
+	{
+		this.crudServicePartyContactMechanism = crudServicePartyContactMechanism;
+	}
+
 	public void setServicePartyType(CrudService<PartyType, Integer> servicePartyType)
 	{
 		this.crudServicePartyType = servicePartyType;
@@ -507,13 +517,18 @@ public class SeedServiceImpl implements SeedService
 	}
 
 	public void setCrudServiceElectronicAddress(CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress)
-    {
-	    this.crudServiceElectronicAddress = crudServiceElectronicAddress;
-    }
-	
+	{
+		this.crudServiceElectronicAddress = crudServiceElectronicAddress;
+	}
+
 	public void setCrudServiceTelecommunicationNumber(
-            CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber)
+	        CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber)
+	{
+		this.crudServiceTelecommunicationNumber = crudServiceTelecommunicationNumber;
+	}
+
+	public void setCrudServicePartyContactMechanismPurpose(CrudServiceType<PartyContactMechanismPurpose, Integer> crudServicePartyContactMechanismPurpose)
     {
-    	this.crudServiceTelecommunicationNumber = crudServiceTelecommunicationNumber;
+	    this.crudServicePartyContactMechanismPurpose = crudServicePartyContactMechanismPurpose;
     }
 }

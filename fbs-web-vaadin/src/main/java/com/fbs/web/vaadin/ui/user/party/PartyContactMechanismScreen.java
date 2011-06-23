@@ -1,15 +1,18 @@
 package com.fbs.web.vaadin.ui.user.party;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.fbs.dmr.universal.model.contact.ContactMechanism;
 import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.universal.model.contact.ElectronicAddress;
 import com.fbs.dmr.universal.model.contact.PostalAddress;
 import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
+import com.fbs.dmr.universal.model.party.PartyContactMechanismPurpose;
 import com.fbs.web.dto.ContactMechanismDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
@@ -18,15 +21,19 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractComponentContainer;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMechanism>
 {
@@ -74,7 +81,7 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 		this.formDetails = new Form();
 		this.formDetails.setCaption(this.app.getMessage(ApplicationMessages.PartyContactMechanismDetails));
 		this.formDetails.setFormFieldFactory(new PartyContactDetailsFormFieldFactory(this.app));
-		
+
 		this.optionGroupPurpose = new OptionGroup();
 		this.optionGroupPurpose.setCaption(this.app.getMessage(ApplicationMessages.PartyContactMechanismPurpose));
 		this.optionGroupPurpose.setMultiSelect(true);
@@ -101,35 +108,52 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 
 			beanItem = new BeanItem<ContactMechanismDto>(dummy);
 
-			this.setOptiongroup();
+			this.setOptiongroup(bean);
 
 			this.formDetails.setItemDataSource(beanItem);
 		}
+		else if (bean == null && this.actionCurrent == Action.CREATE)
+		{	
+			
+		}
 	}
-
-	private void setOptiongroup()
+	
+	
+	private void setOptiongroup(PartyContactMechanism pcm)
 	{
 		List<ContactMechanismPurposeType> contactMechanismPurposes;
 		BeanItemContainer<String> container;
-		
+
 		container = new BeanItemContainer<String>(String.class);
 		contactMechanismPurposes = this.app.getServices().getCrudServiceContactMechanismPurposeType().findAll();
-		for (ContactMechanismPurposeType cmp: contactMechanismPurposes)
+		for (ContactMechanismPurposeType cmp : contactMechanismPurposes)
 		{
 			container.addBean(cmp.getDescription());
 		}
-		
+
 		this.optionGroupPurpose.setContainerDataSource(container);
-		
+
 		// set selection
 		this.optionGroupPurpose.setValue(null);
+		if (pcm != null)
+		{
+			List<PartyContactMechanismPurpose> partyContactMechanismPurposes;
+
+			partyContactMechanismPurposes = this.app.getServices().getCrudServicePartyContactMechanismPurpose()
+			        .findByPartyContactMechanism(pcm);
+
+			for (PartyContactMechanismPurpose p : partyContactMechanismPurposes)
+			{
+				this.optionGroupPurpose.select(p.getContactMechanismPurposeType().getDescription());
+			}
+		}
 	}
 
 	@Override
 	protected void layoutComponent()
 	{
 		this.formDetails.setSizeFull();
-		
+
 		this.optionGroupPurpose.setSizeFull();
 	}
 
@@ -148,6 +172,24 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	@Override
 	protected PartyContactMechanism createBean(PartyContactMechanism t) throws Exception
 	{
+		Set<String> selectedPurposes;
+
+		selectedPurposes = (Set<String>) this.optionGroupPurpose.getValue();
+		for (String s : selectedPurposes)
+		{
+			ContactMechanismPurposeType contactMechanismPurposeType;
+			PartyContactMechanismPurpose cmp;
+
+			contactMechanismPurposeType = this.app.getServices().getCrudServiceContactMechanismPurposeType()
+			        .findForDescription(s);
+
+			cmp = new PartyContactMechanismPurpose();
+			cmp.setPartyContactMechanism(t);
+			cmp.setContactMechanismPurposeType(contactMechanismPurposeType);
+			this.app.getServices().getCrudServicePartyContactMechanismPurpose().create(cmp);
+
+		}
+
 		this.app.getServices().getCrudServicePartyContactMechanism().create(t);
 
 		return t;

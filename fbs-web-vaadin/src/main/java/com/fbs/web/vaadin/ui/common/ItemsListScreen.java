@@ -19,7 +19,6 @@ import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
@@ -336,9 +335,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		HorizontalLayout buttonRow = new HorizontalLayout();
 
 		bottomLeftCorner.setWidth("100%");
+		bottomLeftCorner.setSpacing(true);
 
 		this.buttonItemDelete.setEnabled(false);
 		this.layoutSearchField(searchRow);
+		
+		buttonRow.setSpacing(true);
 
 		buttonRow.addComponent(this.buttonItemAdd);
 		buttonRow.addComponent(this.buttonItemDelete);
@@ -352,13 +354,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 
 	protected void layoutSearchField(HorizontalLayout searchRow)
 	{
-		Label searchLabel;
-
 		searchRow.setWidth("100%");
-
-		searchLabel = new Label(this.app.getMessage(ApplicationMessages.CommonSearch));
-		searchRow.addComponent(searchLabel);
-		searchRow.setExpandRatio(searchLabel, 1);
+		searchRow.setCaption(this.app.getMessage(ApplicationMessages.CommonSearch));
 
 		// Add search fields
 		for (final String visibleColumn : this.visibleColumns)

@@ -8,7 +8,6 @@ import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
-import com.fbs.dmr.universal.model.party.PartyContactMechanismPurpose;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
@@ -17,6 +16,7 @@ import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.model.party.PriorityType;
 import com.fbs.dmr.universal.service.CrudService;
+import com.fbs.dmr.universal.service.CrudServicePartyContactMechanismPurpose;
 import com.fbs.dmr.universal.service.CrudServiceType;
 import com.fbs.dmr.universal.service.SeedService;
 import com.fbs.dmr.universal.service.ServicePartyClassification;
@@ -35,7 +35,7 @@ public interface ApplicationServices
 
 	public SeedService getSeedService();
 
-	public CrudService<ContactMechanismPurposeType, Integer> getCrudServiceContactMechanismPurposeType();
+	public CrudServiceType<ContactMechanismPurposeType, Integer> getCrudServiceContactMechanismPurposeType();
 
 	public CrudService<ContactMechanismType, Integer> getCrudServiceContactMechanismType();
 	
@@ -47,7 +47,7 @@ public interface ApplicationServices
 
 	public CrudService<PartyContactMechanism, Integer> getCrudServicePartyContactMechanism();
 	
-	public CrudService<PartyContactMechanismPurpose, Integer> getCrudServicePartyContactMechanismPurpose();
+	public CrudServicePartyContactMechanismPurpose getCrudServicePartyContactMechanismPurpose();
 
 	public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship();
 

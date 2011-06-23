@@ -6,7 +6,7 @@ import com.fbs.dmr.universal.model.party.PartyClassification;
 
 public interface ServicePartyClassification extends CrudService<PartyClassification, Integer>
 {
-	List<PartyClassification> findByParty(Integer partyId);
+	public List<PartyClassification> findByParty(Integer partyId);
 
-	PartyClassification findByPartyType(Integer id, String selectedClass);
+	public PartyClassification findByPartyType(Integer id, String selectedClass);
 }

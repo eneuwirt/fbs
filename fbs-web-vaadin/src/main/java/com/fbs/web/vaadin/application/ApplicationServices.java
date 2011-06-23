@@ -2,6 +2,9 @@ package com.fbs.web.vaadin.application;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.universal.model.contact.ContactMechanismType;
+import com.fbs.dmr.universal.model.contact.ElectronicAddress;
+import com.fbs.dmr.universal.model.contact.PostalAddress;
+import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
@@ -30,32 +33,38 @@ public interface ApplicationServices
 	public UserService getUserService();
 
 	public SeedService getSeedService();
-	
+
 	public CrudService<ContactMechanismPurposeType, Integer> getCrudServiceContactMechanismPurposeType();
-	
+
 	public CrudService<ContactMechanismType, Integer> getCrudServiceContactMechanismType();
+	
+	public CrudService<ElectronicAddress, Integer> getCrudServiceElectronicAddress();
+	
+	public CrudService<Organization, Integer> getCrudServiceOrganization();
 
 	public CrudService<Party, Integer> getCrudServiceParty();
-	
+
 	public CrudService<PartyContactMechanism, Integer> getCrudServicePartyContactMechanism();
 
 	public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship();
-	
+
 	public CrudService<PartyRelationshipStatusType, Integer> getCrudServicePartyRelationshipStatusType();
-	
+
 	public CrudService<PartyRelationshipType, Integer> getCrudServicePartyRelationshipType();
-
-	public CrudService<Person, Integer> getCrudServicePerson();
-	
-	public CrudService<PriorityType, Integer> getCrudServicePriorityType();
-
-	public CrudService<Organization, Integer> getCrudServiceOrganization();
-	
-	public ServicePartyClassification getCrudServicePartyClassification();
-	
-	public ServicePartyRole getCrudServicePartyRole();
 	
 	public CrudServiceType<PartyRoleType, Integer> getCrudServicePartyRoleType();
 	
 	public CrudServiceType<PartyType, Integer> getCrudServicePartyType();
+
+	public CrudService<Person, Integer> getCrudServicePerson();
+	
+	public CrudService<PostalAddress, Integer> getCrudServicePostalAddress();
+
+	public CrudService<PriorityType, Integer> getCrudServicePriorityType();
+	
+	public CrudService<TelecommunicationNumber, Integer> getCrudServiceTelecommunicationNumber();
+
+	public ServicePartyClassification getCrudServicePartyClassification();
+
+	public ServicePartyRole getCrudServicePartyRole();	
 }

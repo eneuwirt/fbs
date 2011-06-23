@@ -4,6 +4,9 @@ import javax.annotation.Resource;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.universal.model.contact.ContactMechanismType;
+import com.fbs.dmr.universal.model.contact.ElectronicAddress;
+import com.fbs.dmr.universal.model.contact.PostalAddress;
+import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
@@ -34,10 +37,12 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private UserService userService;
 	@Resource
 	private SeedService seedService;
-	@Resource(name="crudServiceContactMechanismPurposeType")
-	CrudService<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
-	@Resource(name="crudServiceContactMechanismType")
-	CrudService<ContactMechanismType, Integer> crudServiceContactMechanismType;
+	@Resource(name = "crudServiceContactMechanismPurposeType")
+	private CrudService<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
+	@Resource(name = "crudServiceContactMechanismType")
+	private CrudService<ContactMechanismType, Integer> crudServiceContactMechanismType;
+	@Resource(name="crudServiceElectronicAddress")
+	private CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress;
 	@Resource(name = "crudServiceOrganization")
 	private CrudService<Organization, Integer> crudServiceOrganization;
 	@Resource(name = "crudServiceParty")
@@ -58,10 +63,14 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private ServicePartyRole crudServicePartyRole;
 	@Resource(name = "crudServicePerson")
 	private CrudService<Person, Integer> crudServicePerson;
-	@Resource(name="crudServicePriorityType")
+	@Resource(name = "crudServicePriorityType")
 	private CrudService<PriorityType, Integer> crudServicePriorityType;
+	@Resource(name = "crudServiceTelecommunicationNumber")
+	private CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber;
 	@Resource
-	ServicePartyClassification servicePartyClassification;
+	private ServicePartyClassification servicePartyClassification;
+	@Resource(name = "crudServicePriorityType")
+	private CrudService<PostalAddress, Integer> crudServicePostalAddress;
 
 	@Override
 	public SecurityService getSecurityService()
@@ -231,27 +240,62 @@ public class ApplicationServicesImpl implements ApplicationServices
 	{
 		return this.crudServicePriorityType;
 	}
- 
-	@Override
-    public CrudService<ContactMechanismType, Integer> getCrudServiceContactMechanismType()
-    {
-	    return this.crudServiceContactMechanismType;
-    }
 
 	@Override
-    public CrudService<ContactMechanismPurposeType, Integer> getCrudServiceContactMechanismPurposeType()
-    {
-	    return this.crudServiceContactMechanismPurposeType;
-    }
+	public CrudService<ContactMechanismType, Integer> getCrudServiceContactMechanismType()
+	{
+		return this.crudServiceContactMechanismType;
+	}
 
 	@Override
-    public CrudService<PartyContactMechanism, Integer> getCrudServicePartyContactMechanism()
+	public CrudService<ContactMechanismPurposeType, Integer> getCrudServiceContactMechanismPurposeType()
+	{
+		return this.crudServiceContactMechanismPurposeType;
+	}
+
+	@Override
+	public CrudService<PartyContactMechanism, Integer> getCrudServicePartyContactMechanism()
+	{
+		return this.crudServicePartyContactMechanism;
+	}
+
+	public void setCrudServicePartyContactMechanism(
+	        CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism)
+	{
+		this.crudServicePartyContactMechanism = crudServicePartyContactMechanism;
+	}
+
+	@Override
+	public CrudService<PostalAddress, Integer> getCrudServicePostalAddress()
+	{
+		return this.crudServicePostalAddress;
+	}
+
+	public void setCrudServicePostalAddress(CrudService<PostalAddress, Integer> crudServicePostalAddress)
+	{
+		this.crudServicePostalAddress = crudServicePostalAddress;
+	}
+
+	@Override
+	public CrudService<TelecommunicationNumber, Integer> getCrudServiceTelecommunicationNumber()
+	{
+		return this.crudServiceTelecommunicationNumber;
+	}
+
+	public void setCrudServiceTelecommunicationNumber(
+	        CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber)
+	{
+		this.crudServiceTelecommunicationNumber = crudServiceTelecommunicationNumber;
+	}
+
+	@Override
+    public CrudService<ElectronicAddress, Integer> getCrudServiceElectronicAddress()
     {
-	    return this.crudServicePartyContactMechanism;
+	    return this.crudServiceElectronicAddress;
     }
 
-	public void setCrudServicePartyContactMechanism(CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism)
+	public void setCrudServiceElectronicAddress(CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress)
     {
-	    this.crudServicePartyContactMechanism = crudServicePartyContactMechanism;
+	    this.crudServiceElectronicAddress = crudServiceElectronicAddress;
     }
 }

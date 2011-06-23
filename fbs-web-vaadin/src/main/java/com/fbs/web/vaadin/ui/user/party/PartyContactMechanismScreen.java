@@ -1,8 +1,9 @@
 package com.fbs.web.vaadin.ui.user.party;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import com.fbs.dmr.universal.model.contact.ContactMechanism;
 import com.fbs.dmr.universal.model.contact.ElectronicAddress;
 import com.fbs.dmr.universal.model.contact.PostalAddress;
 import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
@@ -27,6 +28,7 @@ import com.vaadin.ui.VerticalLayout;
 public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMechanism>
 {
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = Logger.getLogger(PartyContactMechanismScreen.class.getName());
 	private static final String ID = "id";
 	private static final String COMMENT = "comment";
 	private static final String CONTACT_MECHANISM_ADDRESS = "contactMechanism.address";
@@ -39,6 +41,15 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 		{ ID, PARTY, COMMENT };
 	private static final String[] NESTED_PROPERTIES = new String[]
 		{ PARTY_NAME, CONTACT_MECHANISM_ADDRESS, CONTACT_MECHANISM_TYPE_DESCR };
+	private static final String ADDRESS1 = "address1";
+	private static final String ADDRESS2 = "address2";
+	private static final String CITY = "city";
+	private static final String POSTAL_CODE = "postalCode";
+	private static final String COUNTRY = "country";
+	private static final String ELECTRONIC_ADDRESS = "electronicAddress";
+	private static final String COUNTRY_CODE = "countryCode";
+	private static final String AREA_CODE = "areaCode";
+	private static final String NUMBER = "number";
 
 	private Form formDetails;
 
@@ -70,7 +81,9 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 		if (bean != null)
 		{
 			BeanItem<ContactMechanismDto> beanItem;
-			ContactMechanismDto dummy = new ContactMechanismDto(bean.getContactMechanism());
+			ContactMechanismDto dummy;
+
+			dummy = new ContactMechanismDto(bean.getContactMechanism());
 
 			beanItem = new BeanItem<ContactMechanismDto>(dummy);
 
@@ -83,7 +96,7 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	{
 		this.formDetails.setSizeFull();
 
-		this.component.setSizeFull();
+		// this.component.setSizeFull();
 	}
 
 	@Override
@@ -106,10 +119,58 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 		return t;
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
+    @Override
 	protected void updateBean(PartyContactMechanism t) throws Exception
 	{
+		BeanItem<ContactMechanismDto> beanItem;
+		ContactMechanismDto bean;
+		
+		
+		beanItem = (BeanItem<ContactMechanismDto>) this.formDetails.getItemDataSource();
+		
+		bean = beanItem.getBean();
+		
 		this.app.getServices().getCrudServicePartyContactMechanism().update(t);
+		
+		if (t.getContactMechanism() instanceof PostalAddress)
+		{
+			PostalAddress postalAddress;
+			
+			postalAddress = (PostalAddress) t.getContactMechanism();
+			
+			bean.fillPostalAddress(postalAddress);
+			
+			this.app.getServices().getCrudServicePostalAddress().update(postalAddress);
+		}
+		else if (t.getContactMechanism() instanceof TelecommunicationNumber)
+		{
+			TelecommunicationNumber tn;
+			
+			tn = (TelecommunicationNumber) t.getContactMechanism();
+			
+			bean.fillTelecommunicationNumber(tn);
+			
+			this.app.getServices().getCrudServiceTelecommunicationNumber().update(tn);
+		}
+		else if (t.getContactMechanism() instanceof ElectronicAddress)
+		{
+			ElectronicAddress ea;
+			
+			ea = (ElectronicAddress) t.getContactMechanism();
+			
+			bean.fillElectronicAddress(ea);
+			
+			this.app.getServices().getCrudServiceElectronicAddress().update(ea);
+		}
+		else
+		{
+			String msg = "Unknown class: " + t.getContactMechanism().getClass().getName();
+			
+			logger.log(Level.SEVERE, msg);
+			
+			throw new IllegalArgumentException(msg);
+		}
 	}
 
 	@Override
@@ -210,15 +271,6 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	private static class PartyContactDetailsFormFieldFactory implements FormFieldFactory
 	{
 		private static final long serialVersionUID = 1L;
-		String ADDRESS1 = "address1";
-		String ADDRESS2 = "address2";
-		String CITY = "city";
-		String POSTAL_CODE = "postalCode";
-		String COUNTRY = "country";
-		String ELECTRONIC_ADDRESS = "electronicAddress";
-		String COUNTRY_CODE = "countryCode";
-		private String AREA_CODE = "areaCode";
-		private String NUMBER = "number";
 		private MyVaadinApplication app;
 
 		public PartyContactDetailsFormFieldFactory(MyVaadinApplication app)
@@ -231,10 +283,10 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 		 * zugrunde liegenden Klasse bestimme ich, welche Felder aktiviert
 		 * werden.
 		 */
+		@SuppressWarnings("unchecked")
 		@Override
 		public Field createField(Item item, Object propertyId, Component uiContext)
 		{
-			ContactMechanismDto dto;
 			Field result = null;
 			BeanItem<ContactMechanismDto> beanItem;
 			ContactMechanismDto contactMechanismDto;
@@ -242,7 +294,6 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 			String pid = (String) propertyId;
 			beanItem = (BeanItem<ContactMechanismDto>) item;
 			contactMechanismDto = beanItem.getBean();
-
 
 			boolean isPA = contactMechanismDto.getContactMechanism() instanceof PostalAddress;
 			boolean isPhone = contactMechanismDto.getContactMechanism() instanceof TelecommunicationNumber;

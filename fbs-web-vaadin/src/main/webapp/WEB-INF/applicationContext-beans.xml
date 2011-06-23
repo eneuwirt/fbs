@@ -15,6 +15,7 @@
                       http://www.springframework.org/schema/util 
                       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
+  <bean id="crudServiceContactMechanism" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismImpl" />
   <bean id="crudServiceContactMechanismPurposeType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismPurposeTypeImpl" />
   <bean id="crudServiceContactMechanismType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismTypeImpl" />
   <bean id="crudServiceElectronicAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceElectronicAddressImpl" />

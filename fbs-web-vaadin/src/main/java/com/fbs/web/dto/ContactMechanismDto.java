@@ -3,6 +3,9 @@ package com.fbs.web.dto;
 import java.io.Serializable;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanism;
+import com.fbs.dmr.universal.model.contact.ElectronicAddress;
+import com.fbs.dmr.universal.model.contact.PostalAddress;
+import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 
 /**
  * Mega object with all field from all contact Mechanism
@@ -27,10 +30,57 @@ public class ContactMechanismDto implements Serializable
 	private String countryCode = "";
 	private String areaCode = "";
 	private String number = "";
-
-	public ContactMechanismDto(ContactMechanism cm)
+	
+	public void fillPostalAddress(PostalAddress postalAddress)
 	{
-		this.contactMechanism = cm;
+		postalAddress.setAddress1(this.address1);
+		postalAddress.setAddress2(this.address2);
+		postalAddress.setDirections(this.directions);
+		postalAddress.setCity(this.city);
+		postalAddress.setPostalCode(this.postalCode);
+		postalAddress.setCountry(this.country);
+	}
+	
+	public void fillTelecommunicationNumber(TelecommunicationNumber tn)
+    {
+	    tn.setAreaCode(this.areaCode);
+	    tn.setCountryCode(this.countryCode);
+	    tn.setNumber(this.number);
+    }
+	
+	public void fillElectronicAddress(ElectronicAddress ea)
+    {
+	    ea.setElectronicAddress(this.electronicAddress);
+    }
+
+	public ContactMechanismDto(ContactMechanism contactMechanism)
+	{
+		this.contactMechanism = contactMechanism;
+		
+		if (contactMechanism instanceof ElectronicAddress)
+		{
+			ElectronicAddress ea = (ElectronicAddress) contactMechanism;
+			
+			this.electronicAddress = ea.getElectronicAddress();
+		}
+		else if (contactMechanism instanceof TelecommunicationNumber)
+		{
+			TelecommunicationNumber tn = (TelecommunicationNumber) contactMechanism;
+			
+			this.countryCode = tn.getCountryCode();
+			this.areaCode = tn.getAreaCode();
+			this.number = tn.getNumber();
+		}
+		else if (contactMechanism instanceof PostalAddress)
+		{
+			PostalAddress pa = (PostalAddress) contactMechanism;
+			
+			this.address1 = pa.getAddress1();
+			this.address2 = pa.getAddress2();
+			this.city = pa.getCity();
+			this.postalCode = pa.getPostalCode();
+			this.country = pa.getCountry();
+		}
 	}
 
 	public String getCountryCode()
@@ -142,5 +192,4 @@ public class ContactMechanismDto implements Serializable
 	{
 		return contactMechanism;
 	}
-
 }

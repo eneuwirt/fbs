@@ -28,6 +28,9 @@ public interface ApplicationMessages extends Serializable
 	public static String ContactMechanismTypeId = "ContactMechanismType.Id";
 	public static String ContactMechanismTypeTitle = "ContactMechanismType.Title";
 	
+
+	public static String ElectronicAddress = "ElectronicAddress";
+	
 	public static String ErrorCommon = "Error.Common";
 	public static String ErrorDatabase = "Error.Database";
 
@@ -122,6 +125,13 @@ public interface ApplicationMessages extends Serializable
 	public static String PersonMiddleName = "Person.MiddleName";
 	public static String PersonTitle = "Person.Title";
 	public static String PersonTitleAcademic = "Person.TitleAcademic";
+	
+	// PostalAddress
+	public static String PostalAddressAddress1 = "PostalAddress.Address1";
+	public static String PostalAddressAddress2 = "PostalAddress.Address2";
+	public static String PostalAddressCity = "PostalAddress.City";
+	public static String PostalAddressCountry = "PostalAddress.Country";
+	public static String PostalAddressPostalCode = "PostalAddress.PostalCode";
 
 	// Register Form
 	public static String RegisterTitle = "Register.Title";
@@ -132,6 +142,10 @@ public interface ApplicationMessages extends Serializable
 	public static String SecurityExcessiveAttempts = "Security.ExcessiveAttempts";
 	public static String SecurityInvalidCredentials = "Security.InvalidCredentials";
 	public static String SecurityUnknownAccount = "Security.UnknownAccount";
+	
+	public static String TelekommunikationCountryCode = "Telekommunikation.CountryCode";
+	public static String TelekommunikationAreaCode = "Telekommunikation.AreaCode";
+	public static String TelekommunikationNumber = "Telekommunikation.Number";
 
 	public static String TenantId = "Tenant.Id";
 	public static String TenantDescription = "Tenant.Description";

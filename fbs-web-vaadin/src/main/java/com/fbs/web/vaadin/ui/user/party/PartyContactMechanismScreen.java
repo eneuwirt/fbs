@@ -57,8 +57,12 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	private static final String COUNTRY_CODE = "countryCode";
 	private static final String AREA_CODE = "areaCode";
 	private static final String NUMBER = "number";
-	private static final String[] VISIBLE_FIELDS_DETAILS = new String[]
-		{ ADDRESS1, ADDRESS2, POSTAL_CODE, CITY, COUNTRY, ELECTRONIC_ADDRESS, COUNTRY_CODE, AREA_CODE, NUMBER };
+	private static final String[] VISIBLE_FIELDS_DETAILS_POSTAL_ADDRESS = new String[]
+		{ ADDRESS1, ADDRESS2, POSTAL_CODE, CITY, COUNTRY, };
+	private static final String[] VISIBLE_FIELDS_DETAILS_ELECTRONIC_ADDRESS = new String[]
+		{ ELECTRONIC_ADDRESS };
+	private static final String[] VISIBLE_FIELDS_DETAILS_TELEKOM = new String[]
+		{ COUNTRY_CODE, AREA_CODE, NUMBER };
 
 	private Form formDetails;
 	private OptionGroup optionGroupPurpose;
@@ -98,13 +102,13 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 		BeanItem<ContactMechanismDto> beanItem;
 		ContactMechanism contactMechanism = null;
 		ContactMechanismDto dummy = null;
+		String[] visible_field_details = null;
 
 		super.updateComponent(bean);
 
 		if (bean != null)
 		{
 			contactMechanism = bean.getContactMechanism();
-
 		}
 		else if (bean == null)
 		{
@@ -120,12 +124,14 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 
 				case CREATE_2:
 					contactMechanism = new TelecommunicationNumber();
+
 					break;
 
 				default:
 					contactMechanism = new ContactMechanism();
 					break;
 			}
+
 			BeanItem<PartyContactMechanism> bI;
 
 			bI = (BeanItem<PartyContactMechanism>) this.form.getItemDataSource();
@@ -141,7 +147,24 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 
 		this.setOptiongroup(bean);
 
-		this.formDetails.setItemDataSource(beanItem, Arrays.asList(VISIBLE_FIELDS_DETAILS));
+		if (contactMechanism instanceof PostalAddress)
+		{
+			visible_field_details = VISIBLE_FIELDS_DETAILS_POSTAL_ADDRESS;
+		}
+		else if (contactMechanism instanceof ElectronicAddress)
+		{
+			visible_field_details = VISIBLE_FIELDS_DETAILS_ELECTRONIC_ADDRESS;
+		}
+		else if (contactMechanism instanceof TelecommunicationNumber)
+		{
+			visible_field_details = VISIBLE_FIELDS_DETAILS_TELEKOM;
+		}
+		else
+		{
+			visible_field_details = new String[]{};
+		}
+
+		this.formDetails.setItemDataSource(beanItem, Arrays.asList(visible_field_details));
 	}
 
 	private void setOptiongroup(PartyContactMechanism pcm)
@@ -188,7 +211,7 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 		String caption = this.app.getMessage(ApplicationMessages.PartyContactMechanismCreatePostalAddress);
 		String caption1 = this.app.getMessage(ApplicationMessages.PartyContactMechanismCreateEAddress);
 		String caption2 = this.app.getMessage(ApplicationMessages.PartyContactMechanismCreatePhone);
-		
+
 		this.buttonItemAdd.setCaption(caption);
 		this.buttonItemAdd1.setCaption(caption1);
 		this.buttonItemAdd2.setCaption(caption2);
@@ -213,7 +236,7 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	}
 
 	@SuppressWarnings("unchecked")
-    @Override
+	@Override
 	protected PartyContactMechanism createBean(PartyContactMechanism t) throws Exception
 	{
 		Set<String> selectedPurposes;
@@ -441,62 +464,47 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 			this.app = app;
 		}
 
-		/**
-		 * Sehr tricky. Also ich bekomme eine Instanz Dto Klasse Anhand der
-		 * zugrunde liegenden Klasse bestimme ich, welche Felder aktiviert
-		 * werden.
-		 */
-		@SuppressWarnings("unchecked")
 		@Override
 		public Field createField(Item item, Object propertyId, Component uiContext)
 		{
 			Field result = null;
-			BeanItem<ContactMechanismDto> beanItem;
-			ContactMechanismDto contactMechanismDto;
-
 			String pid = (String) propertyId;
-			beanItem = (BeanItem<ContactMechanismDto>) item;
-			contactMechanismDto = beanItem.getBean();
 
-			boolean isPA = contactMechanismDto.getContactMechanism() instanceof PostalAddress;
-			boolean isPhone = contactMechanismDto.getContactMechanism() instanceof TelecommunicationNumber;
-			boolean isElectronic = contactMechanismDto.getContactMechanism() instanceof ElectronicAddress;
-
-			if (ADDRESS1.equals(pid) && isPA)
+			if (ADDRESS1.equals(pid))
 			{
-				result = new TextField("Addresse");
+				result = new TextField(this.app.getMessage(ApplicationMessages.PostalAddressAddress1));
 			}
-			else if (ADDRESS2.equals(pid) && isPA)
+			else if (ADDRESS2.equals(pid))
 			{
-				result = new TextField("Addresszusatz");
+				result = new TextField(this.app.getMessage(ApplicationMessages.PostalAddressAddress2));
 			}
-			else if (CITY.equals(pid) && isPA)
+			else if (CITY.equals(pid))
 			{
-				result = new TextField("Stadt");
+				result = new TextField(this.app.getMessage(ApplicationMessages.PostalAddressCity));
 			}
-			else if (POSTAL_CODE.equals(pid) && isPA)
+			else if (POSTAL_CODE.equals(pid))
 			{
-				result = new TextField("Postleitzahl");
+				result = new TextField(this.app.getMessage(ApplicationMessages.PostalAddressPostalCode));
 			}
-			else if (COUNTRY.equals(pid) && isPA)
+			else if (COUNTRY.equals(pid))
 			{
-				result = new TextField("Staat");
+				result = new TextField(this.app.getMessage(ApplicationMessages.PostalAddressCountry));
 			}
-			else if (ELECTRONIC_ADDRESS.equals(pid) && isElectronic)
+			else if (ELECTRONIC_ADDRESS.equals(pid))
 			{
-				result = new TextField("Elektronische Adresse");
+				result = new TextField(this.app.getMessage(ApplicationMessages.ElectronicAddress));
 			}
-			else if (COUNTRY_CODE.equals(pid) && isPhone)
+			else if (COUNTRY_CODE.equals(pid))
 			{
-				result = new TextField("Länder Code");
+				result = new TextField(this.app.getMessage(ApplicationMessages.TelekommunikationCountryCode));
 			}
-			else if (AREA_CODE.equals(pid) && isPhone)
+			else if (AREA_CODE.equals(pid))
 			{
-				result = new TextField("Vorwahl");
+				result = new TextField(this.app.getMessage(ApplicationMessages.TelekommunikationAreaCode));
 			}
-			else if (NUMBER.equals(pid) && isPhone)
+			else if (NUMBER.equals(pid))
 			{
-				result = new TextField("Telefonnummer");
+				result = new TextField(ApplicationMessages.TelekommunikationNumber);
 			}
 
 			return result;

@@ -85,8 +85,11 @@ public interface ApplicationMessages extends Serializable
 	public static String PartyRelationshipPartyFrom = "PartyRelationship.PartyFrom";
 	public static String PartyRelationshipPartyTo = "PartyRelationship.PartyTo";
 	public static String PartyRelationshipPriority = "PartyRelationship.Priority";
+	public static String PartyRelationshipRoleFrom = "PartyRelationship.RoleFrom";
+	public static String PartyRelationshipRoleTo = "PartyRelationship.RoleTo";
 	public static String PartyRelationshipStatus = "PartyRelationship.Status";
 	public static String PartyRelationshipTitle = "PartyRelationship.Title";
+	
 	
 	// PartyRelationshipType
 	public static String PartyRelationshipTypeDescription = "PartyRelationshipType.Description";

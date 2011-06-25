@@ -7,6 +7,7 @@ import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.model.party.PriorityType;
+import com.fbs.web.dto.PartyRelationshipDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
@@ -20,80 +21,80 @@ import com.vaadin.ui.Select;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
+public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDto>
 {
 	private static final long serialVersionUID = 1L;
+	
 	private static final String COMMENT = "comment";
 	private static final String DATE_FROM = "dateFrom";
 	private static final String DATE_TO = "dateTo";
 	private static final String ID = "id";
-	private static final String RELTYPE = "partyRelationshipType";
-	private static final String RELTYPE_NAME = "partyRelationshipType.name";
-	private static final String PARTYFROM_NAME = "partyRoleFrom.party.name";
-	private static final String PARTYTO_NAME = "partyRoleTo.party.name";
+
 	private static final String PRIORITY_TYPE = "priorityType";
 	private static final String PRIORITY_TYPE_DESCRIPTION = "priorityType.description";
-	private static final String ROLE_FROM = "partyRoleFrom";
-	private static final String ROLE_TO = "partyRoleTo";
+	
+	private static final String RELTYPE = "partyRelationshipType";
+	private static final String RELTYPE_NAME = "partyRelationshipType.name";
+
+
 	private static final String STATUS = "partyRelationshipStatusType";
 	private static final String STATUS_DESCRIPTION = "partyRelationshipStatusType.description";
-	private static final String[] NESTED_PROPERTIES = new String[] { RELTYPE_NAME, PARTYFROM_NAME , PARTYTO_NAME, STATUS_DESCRIPTION, PRIORITY_TYPE_DESCRIPTION};
-	private static final String[] VISIBLE_COLUMNS = new String[] { ID, RELTYPE_NAME, PARTYFROM_NAME, PARTYTO_NAME, STATUS_DESCRIPTION };
-	private static final String[] VISIBLE_FIELDS = new String[] { ID, COMMENT, RELTYPE, ROLE_FROM, ROLE_TO,
-	        DATE_FROM, DATE_TO, STATUS, PRIORITY_TYPE};
 
+	private static final String[] NESTED_PROPERTIES = new String[]
+		{ RELTYPE_NAME, STATUS_DESCRIPTION, PRIORITY_TYPE_DESCRIPTION };
+
+	private static final String[] VISIBLE_COLUMNS = new String[]
+		{ ID, RELTYPE_NAME, STATUS_DESCRIPTION };
+
+	private static final String[] VISIBLE_FIELDS = new String[]
+		{ ID, COMMENT, RELTYPE, STATUS, PRIORITY_TYPE };
 
 	public PartyRelationshipScreen(MyVaadinApplication app)
 	{
-		super(app, PartyRelationship.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
+		super(app, PartyRelationshipDto.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
 	}
 
-
 	@Override
-	protected PartyRelationship createBeanInstance()
+	protected PartyRelationshipDto createBeanInstance()
 	{
-		PartyRelationship result = new PartyRelationship();
+		PartyRelationshipDto result = new PartyRelationshipDto(new PartyRelationship());
 
 		return result;
 	}
 
-
 	@Override
-	protected List<PartyRelationship> getAllBeans() throws Exception
+	protected List<PartyRelationshipDto> getAllBeans() throws Exception
 	{
-		return this.app.getServices().getCrudServicePartyRelationship().findAll();
+		//return this.app.getServices().getCrudServicePartyRelationship().findAll();
+		return null;
 	}
 
-
 	@Override
-	protected PartyRelationship createBean(PartyRelationship t) throws Exception
+	protected PartyRelationshipDto createBean(PartyRelationshipDto t) throws Exception
 	{
-		this.app.getServices().getCrudServicePartyRelationship().create(t);
+		//this.app.getServices().getCrudServicePartyRelationship().create(t);
 
 		return t;
 	}
 
-
 	@Override
-	protected void updateBean(PartyRelationship t) throws Exception
+	protected void updateBean(PartyRelationshipDto t) throws Exception
 	{
-		this.app.getServices().getCrudServicePartyRelationship().update(t);
+		//this.app.getServices().getCrudServicePartyRelationship().update(t);
 	}
 
-
 	@Override
-	protected PartyRelationship readBean(PartyRelationship t) throws Exception
+	protected PartyRelationshipDto readBean(PartyRelationshipDto t) throws Exception
 	{
-		return this.app.getServices().getCrudServicePartyRelationship().read(t.getId());
+		//return this.app.getServices().getCrudServicePartyRelationship().read(t.getId());
+		return null;
 	}
 
-
 	@Override
-	protected void deleteBean(PartyRelationship t) throws Exception
+	protected void deleteBean(PartyRelationshipDto t) throws Exception
 	{
 		this.app.getServices().getCrudServicePartyRelationship().delete(t.getId());
 	}
-
 
 	@Override
 	protected String getColumnName(String propertyId)
@@ -103,22 +104,27 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 
 		if (propertyId.equals(RELTYPE_NAME))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeTitle);
-		
-		if (propertyId.equals(PARTYFROM_NAME))
+
+		if (propertyId.equals(PARTY_FROM_NAME))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipPartyFrom);
-		
-		if (propertyId.equals(PARTYTO_NAME))
+
+		if (propertyId.equals(ROLE_FROM_DESCRIPTION))
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipRoleFrom);
+
+		if (propertyId.equals(PARTY_TO_NAME))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipPartyTo);
-		
+
+		if (propertyId.equals(ROLE_TO_DESCRIPTION))
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipRoleTo);
+
 		if (propertyId.equals(STATUS_DESCRIPTION))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipStatus);
-		
+
 		if (propertyId.equals(PRIORITY_TYPE_DESCRIPTION))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipPriority);
 
 		return propertyId;
 	}
-
 
 	@Override
 	protected FormFieldFactory getFormFieldFactory()
@@ -131,12 +137,10 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 		private static final long serialVersionUID = 1L;
 		private MyVaadinApplication app;
 
-
 		public PartyRelationshipFormFieldFactory(MyVaadinApplication app)
 		{
 			this.app = app;
 		}
-
 
 		@Override
 		public Field createField(Item item, Object propertyId, Component uiContext)
@@ -191,12 +195,38 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 
 				partyRoles = this.app.getServices().getCrudServicePartyRole().findAll();
 				container = new BeanItemContainer<PartyRole>(PartyRole.class, partyRoles);
-				container.addNestedContainerProperty("party.name");
-				
+				container.addNestedContainerProperty("partyRoleType.description");
+
 				if (ROLE_FROM.equals(pid))
 				{
+					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipRoleFrom);
+				}
+				else
+				{
+					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipRoleTo);
+				}
+
+				select = new Select(caption, container);
+				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
+				select.setItemCaptionPropertyId("partyRoleType.description");
+
+				result = select;
+			}
+			else if (PARTY_FROM.equals(pid) || PARTY_TO.equals(pid))
+			{
+				Select select;
+				String caption;
+				BeanItemContainer<PartyRole> container;
+				List<PartyRole> partyRoles;
+
+				partyRoles = this.app.getServices().getCrudServicePartyRole().findAll();
+				container = new BeanItemContainer<PartyRole>(PartyRole.class, partyRoles);
+				container.addNestedContainerProperty("party.name");
+
+				if (PARTY_FROM.equals(pid))
+				{
 					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipPartyFrom);
-					
+
 				}
 				else
 				{
@@ -234,12 +264,12 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 				String caption;
 				BeanItemContainer<PartyRelationshipStatusType> container;
 				List<PartyRelationshipStatusType> stati;
-				
+
 				caption = this.app.getMessage(ApplicationMessages.PartyRelationshipStatus);
-				
+
 				stati = this.app.getServices().getCrudServicePartyRelationshipStatusType().findAll();
 				container = new BeanItemContainer<PartyRelationshipStatusType>(PartyRelationshipStatusType.class, stati);
-				
+
 				select = new Select(caption, container);
 				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
 				select.setItemCaptionPropertyId("description");
@@ -252,12 +282,12 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 				String caption;
 				BeanItemContainer<PriorityType> container;
 				List<PriorityType> priorityTypes;
-				
+
 				caption = this.app.getMessage(ApplicationMessages.PartyRelationshipPriority);
-				
+
 				priorityTypes = this.app.getServices().getCrudServicePriorityType().findAll();
-				container = new BeanItemContainer<PriorityType> (PriorityType.class, priorityTypes);
-				
+				container = new BeanItemContainer<PriorityType>(PriorityType.class, priorityTypes);
+
 				select = new Select(caption, container);
 				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
 				select.setItemCaptionPropertyId("description");

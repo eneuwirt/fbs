@@ -68,7 +68,7 @@ public class ElectronicAddress extends ContactMechanism
 		int result = 1;
 		int descrHashCode = this.electronicAddress.hashCode();
 
-		result = prime * result + ((this.getId() == null) ? descrHashCode : this.getId().hashCode());
+		result = prime * ((this.getId() == null) ? descrHashCode : this.getId().hashCode());
 
 		return result;
 	}

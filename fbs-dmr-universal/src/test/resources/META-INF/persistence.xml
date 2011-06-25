@@ -9,12 +9,17 @@
     <class>com.fbs.dmr.universal.model.contact.ElectronicAddress</class>
     <class>com.fbs.dmr.universal.model.contact.PostalAddress</class>
     <class>com.fbs.dmr.universal.model.contact.TelecommunicationNumber</class>
-  
+
+    <class>com.fbs.dmr.universal.model.facility.Facility</class>
+    <class>com.fbs.dmr.universal.model.facility.FacilityContactMechanism</class>
+    <class>com.fbs.dmr.universal.model.facility.FacilityType</class>
+
     <class>com.fbs.dmr.universal.model.party.Organization</class>
     <class>com.fbs.dmr.universal.model.party.Party</class>
     <class>com.fbs.dmr.universal.model.party.PartyClassification</class>
     <class>com.fbs.dmr.universal.model.party.PartyContactMechanism</class>
     <class>com.fbs.dmr.universal.model.party.PartyContactMechanismPurpose</class>
+    <class>com.fbs.dmr.universal.model.party.PartyFacility</class>
     <class>com.fbs.dmr.universal.model.party.PartyRelationship</class>
     <class>com.fbs.dmr.universal.model.party.PartyRelationshipStatusType</class>
     <class>com.fbs.dmr.universal.model.party.PartyRelationshipType</class>

@@ -7,7 +7,6 @@ import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.model.party.PriorityType;
-import com.fbs.web.dto.PartyRelationshipDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
@@ -21,7 +20,7 @@ import com.vaadin.ui.Select;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDto>
+public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -51,47 +50,45 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
 
 	public PartyRelationshipScreen(MyVaadinApplication app)
 	{
-		super(app, PartyRelationshipDto.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
+		super(app, PartyRelationship.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
 	}
 
 	@Override
-	protected PartyRelationshipDto createBeanInstance()
+	protected PartyRelationship createBeanInstance()
 	{
-		PartyRelationshipDto result = new PartyRelationshipDto(new PartyRelationship());
+		PartyRelationship result = new PartyRelationship();
 
 		return result;
 	}
 
 	@Override
-	protected List<PartyRelationshipDto> getAllBeans() throws Exception
+	protected List<PartyRelationship> getAllBeans() throws Exception
 	{
-		//return this.app.getServices().getCrudServicePartyRelationship().findAll();
-		return null;
+		return this.app.getServices().getCrudServicePartyRelationship().findAll();
 	}
 
 	@Override
-	protected PartyRelationshipDto createBean(PartyRelationshipDto t) throws Exception
+	protected PartyRelationship createBean(PartyRelationship t) throws Exception
 	{
-		//this.app.getServices().getCrudServicePartyRelationship().create(t);
+		this.app.getServices().getCrudServicePartyRelationship().create(t);
 
 		return t;
 	}
 
 	@Override
-	protected void updateBean(PartyRelationshipDto t) throws Exception
+	protected void updateBean(PartyRelationship t) throws Exception
 	{
 		//this.app.getServices().getCrudServicePartyRelationship().update(t);
 	}
 
 	@Override
-	protected PartyRelationshipDto readBean(PartyRelationshipDto t) throws Exception
+	protected PartyRelationship readBean(PartyRelationship t) throws Exception
 	{
-		//return this.app.getServices().getCrudServicePartyRelationship().read(t.getId());
-		return null;
+		return this.app.getServices().getCrudServicePartyRelationship().read(t.getId());
 	}
 
 	@Override
-	protected void deleteBean(PartyRelationshipDto t) throws Exception
+	protected void deleteBean(PartyRelationship t) throws Exception
 	{
 		this.app.getServices().getCrudServicePartyRelationship().delete(t.getId());
 	}
@@ -104,7 +101,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
 
 		if (propertyId.equals(RELTYPE_NAME))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeTitle);
-
+/*
 		if (propertyId.equals(PARTY_FROM_NAME))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipPartyFrom);
 
@@ -116,7 +113,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
 
 		if (propertyId.equals(ROLE_TO_DESCRIPTION))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipRoleTo);
-
+*/
 		if (propertyId.equals(STATUS_DESCRIPTION))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipStatus);
 
@@ -186,6 +183,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
 
 				result = select;
 			}
+			/*
 			else if (ROLE_FROM.equals(pid) || ROLE_TO.equals(pid))
 			{
 				Select select;
@@ -239,6 +237,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
 
 				result = select;
 			}
+			*/
 			else if (DATE_FROM.equals(pid) || DATE_TO.equals(pid))
 			{
 				DateField date;

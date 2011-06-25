@@ -1,126 +1,169 @@
 package com.fbs.web.vaadin.ui.user.party;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.PartyRole;
+import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PriorityType;
+import com.fbs.web.dto.PartyRelationshipDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
 import com.vaadin.data.Item;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
+public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDto>
 {
 	private static final long serialVersionUID = 1L;
-	
-	private static final String COMMENT = "comment";
-	private static final String DATE_FROM = "dateFrom";
-	private static final String DATE_TO = "dateTo";
 	private static final String ID = "id";
+	private static final String COMMENT = "comment";
 
 	private static final String PRIORITY_TYPE = "priorityType";
 	private static final String PRIORITY_TYPE_DESCRIPTION = "priorityType.description";
-	
+
 	private static final String RELTYPE = "partyRelationshipType";
 	private static final String RELTYPE_NAME = "partyRelationshipType.name";
-
 
 	private static final String STATUS = "partyRelationshipStatusType";
 	private static final String STATUS_DESCRIPTION = "partyRelationshipStatusType.description";
 
-	private static final String[] NESTED_PROPERTIES = new String[]
-		{ RELTYPE_NAME, STATUS_DESCRIPTION, PRIORITY_TYPE_DESCRIPTION };
+	private static final String PARTY_FROM = "partyFrom";
+	private static final String PARTY_FROM_NAME = "partyFrom.name";
+
+	private static final String PARTY_TO = "partyTo";
+	private static final String PARTY_TO_NAME = "partyTo.name";
 
 	private static final String[] VISIBLE_COLUMNS = new String[]
-		{ ID, RELTYPE_NAME, STATUS_DESCRIPTION };
+		{ ID, PARTY_FROM_NAME, RELTYPE_NAME, PARTY_TO_NAME };
 
+	// RELTYPE muss hinter den PARTY_FROM und PARTY_TO stehen. 
 	private static final String[] VISIBLE_FIELDS = new String[]
-		{ ID, COMMENT, RELTYPE, STATUS, PRIORITY_TYPE };
+		{ ID, PARTY_FROM, PARTY_TO, RELTYPE, STATUS, COMMENT, PRIORITY_TYPE };
+
+	private static final String[] NESTED_PROPERTIES = new String[]
+		{ PRIORITY_TYPE_DESCRIPTION, RELTYPE_NAME, STATUS_DESCRIPTION, PARTY_FROM_NAME, PARTY_TO_NAME };
 
 	public PartyRelationshipScreen(MyVaadinApplication app)
 	{
-		super(app, PartyRelationship.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
+		super(app, PartyRelationshipDto.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
 	}
 
 	@Override
-	protected PartyRelationship createBeanInstance()
+	protected PartyRelationshipDto createBeanInstance()
 	{
-		PartyRelationship result = new PartyRelationship();
+		return new PartyRelationshipDto();
+	}
+
+	@Override
+	protected List<PartyRelationshipDto> getAllBeans() throws Exception
+	{
+		List<PartyRelationshipDto> result = new ArrayList<PartyRelationshipDto>();
+		List<PartyRelationship> partyRelationships;
+
+		partyRelationships = this.app.getServices().getCrudServicePartyRelationship().findAll();
+
+		for (PartyRelationship p : partyRelationships)
+		{
+			PartyRelationshipDto dto;
+
+			dto = new PartyRelationshipDto(p);
+
+			result.add(dto);
+		}
 
 		return result;
 	}
 
 	@Override
-	protected List<PartyRelationship> getAllBeans() throws Exception
+	protected PartyRelationshipDto createBean(PartyRelationshipDto t) throws Exception
 	{
-		return this.app.getServices().getCrudServicePartyRelationship().findAll();
-	}
+		PartyRelationship p;
+		Party partyFrom;
+		Party partyTo;
+		PartyRole partyRoleFrom;
+		PartyRole partyRoleTo;
+		String partyRoleTypeDescription;
 
-	@Override
-	protected PartyRelationship createBean(PartyRelationship t) throws Exception
-	{
-		this.app.getServices().getCrudServicePartyRelationship().create(t);
+		p = new PartyRelationship();
+
+		p.setPartyRelationshipStatusType(t.getPartyRelationshipStatusType());
+		p.setPartyRelationshipType(t.getPartyRelationshipType());
+		p.setComment(t.getComment());
+
+		partyFrom = t.getPartyFrom();
+		partyRoleTypeDescription = p.getPartyRelationshipType().getPartyRoleTypeFrom().getDescription();
+		partyRoleFrom = this.app.getServices().getCrudServicePartyRole()
+		        .findByPartyRoleType(partyFrom.getId(), partyRoleTypeDescription);
+		p.setPartyRoleFrom(partyRoleFrom);
+
+		partyTo = t.getPartyTo();
+		partyRoleTypeDescription = p.getPartyRelationshipType().getPartyRoleTypeTo().getDescription();
+		partyRoleTo = this.app.getServices().getCrudServicePartyRole()
+		        .findByPartyRoleType(partyTo.getId(), partyRoleTypeDescription);
+		p.setPartyRoleTo(partyRoleTo);
+
+		this.app.getServices().getCrudServicePartyRelationship().create(p);
 
 		return t;
 	}
 
 	@Override
-	protected void updateBean(PartyRelationship t) throws Exception
+	protected void updateBean(PartyRelationshipDto t) throws Exception
 	{
-		//this.app.getServices().getCrudServicePartyRelationship().update(t);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
-	protected PartyRelationship readBean(PartyRelationship t) throws Exception
+	protected PartyRelationshipDto readBean(PartyRelationshipDto t) throws Exception
 	{
-		return this.app.getServices().getCrudServicePartyRelationship().read(t.getId());
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	protected void deleteBean(PartyRelationship t) throws Exception
+	protected void deleteBean(PartyRelationshipDto t) throws Exception
 	{
-		this.app.getServices().getCrudServicePartyRelationship().delete(t.getId());
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
-	protected String getColumnName(String propertyId)
+	protected String getColumnName(String pid)
 	{
-		if (propertyId.equals(ID))
+		if (pid.equals(ID))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipId);
-
-		if (propertyId.equals(RELTYPE_NAME))
-			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeTitle);
-/*
-		if (propertyId.equals(PARTY_FROM_NAME))
+		
+		if (pid.equals(PARTY_FROM_NAME))
+		{
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipPartyFrom);
-
-		if (propertyId.equals(ROLE_FROM_DESCRIPTION))
-			return this.app.getMessage(ApplicationMessages.PartyRelationshipRoleFrom);
-
-		if (propertyId.equals(PARTY_TO_NAME))
+		}
+		
+		if (pid.equals(PARTY_TO_NAME))
+		{
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipPartyTo);
+		}
+		
+		if (pid.equals(RELTYPE_NAME))
+		{
+			return this.app.getMessage(ApplicationMessages.PartyRelationshipTitle);
+		}
 
-		if (propertyId.equals(ROLE_TO_DESCRIPTION))
-			return this.app.getMessage(ApplicationMessages.PartyRelationshipRoleTo);
-*/
-		if (propertyId.equals(STATUS_DESCRIPTION))
-			return this.app.getMessage(ApplicationMessages.PartyRelationshipStatus);
-
-		if (propertyId.equals(PRIORITY_TYPE_DESCRIPTION))
-			return this.app.getMessage(ApplicationMessages.PartyRelationshipPriority);
-
-		return propertyId;
+		return pid;
 	}
 
 	@Override
@@ -168,8 +211,9 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 			{
 				BeanItemContainer<PartyRelationshipType> container;
 				List<PartyRelationshipType> partyRelationshipTypes;
-				Select select;
+				final Select select;
 				String caption;
+				final Form form = (Form) uiContext;
 
 				partyRelationshipTypes = this.app.getServices().getCrudServicePartyRelationshipType().findAll();
 				container = new BeanItemContainer<PartyRelationshipType>(PartyRelationshipType.class,
@@ -178,35 +222,56 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 				caption = this.app.getMessage(ApplicationMessages.PartyRelationshipTypeTitle);
 
 				select = new Select(caption, container);
+				select.setNullSelectionAllowed(false);
 				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
 				select.setItemCaptionPropertyId("name");
 
-				result = select;
-			}
-			/*
-			else if (ROLE_FROM.equals(pid) || ROLE_TO.equals(pid))
-			{
-				Select select;
-				String caption;
-				BeanItemContainer<PartyRole> container;
-				List<PartyRole> partyRoles;
-
-				partyRoles = this.app.getServices().getCrudServicePartyRole().findAll();
-				container = new BeanItemContainer<PartyRole>(PartyRole.class, partyRoles);
-				container.addNestedContainerProperty("partyRoleType.description");
-
-				if (ROLE_FROM.equals(pid))
+				select.addListener(new ValueChangeListener()
 				{
-					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipRoleFrom);
-				}
-				else
-				{
-					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipRoleTo);
-				}
+					private static final long serialVersionUID = 1L;
 
-				select = new Select(caption, container);
-				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
-				select.setItemCaptionPropertyId("partyRoleType.description");
+					public void valueChange(ValueChangeEvent event)
+					{
+						PartyRelationshipType bean = null;
+						PartyRoleType partyRoleType;
+						List<Party> parties;
+						BeanItemContainer<Party> container;
+						Select partySelect;
+						Party party;
+
+						bean = (PartyRelationshipType) select.getValue();
+						if (bean == null)
+							return;
+
+						partyRoleType = bean.getPartyRoleTypeFrom();
+						parties = app.getServices().getCrudServicePartyRole()
+						        .findByPartyRoleType(partyRoleType.getDescription());
+						container = new BeanItemContainer<Party>(Party.class, parties);
+
+						partySelect = (Select) form.getField(PARTY_FROM);
+						// Notify the selected element
+						party = (Party) partySelect.getValue();
+						partySelect.removeAllItems();
+						partySelect.setContainerDataSource(container);
+						partySelect.setEnabled(true);
+						// restore the selection
+						partySelect.setValue(party);
+
+						partyRoleType = bean.getPartyRoleTypeTo();
+						parties = app.getServices().getCrudServicePartyRole()
+						        .findByPartyRoleType(partyRoleType.getDescription());
+						container = new BeanItemContainer<Party>(Party.class, parties);
+
+						partySelect = (Select) form.getField(PARTY_TO);
+						// Notify the selected element
+						party = (Party) partySelect.getValue();						
+						partySelect.removeAllItems();
+						partySelect.setContainerDataSource(container);
+						partySelect.setEnabled(true);
+						// restore the selection
+						partySelect.setValue(party);
+					}
+				});
 
 				result = select;
 			}
@@ -214,12 +279,6 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 			{
 				Select select;
 				String caption;
-				BeanItemContainer<PartyRole> container;
-				List<PartyRole> partyRoles;
-
-				partyRoles = this.app.getServices().getCrudServicePartyRole().findAll();
-				container = new BeanItemContainer<PartyRole>(PartyRole.class, partyRoles);
-				container.addNestedContainerProperty("party.name");
 
 				if (PARTY_FROM.equals(pid))
 				{
@@ -231,32 +290,29 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationship>
 					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipPartyTo);
 				}
 
-				select = new Select(caption, container);
+				select = new Select(caption);
 				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
-				select.setItemCaptionPropertyId("party.name");
+				select.setItemCaptionPropertyId("name");
+				// Select a relationshiptype first
+				select.setEnabled(false);
 
 				result = select;
 			}
-			*/
-			else if (DATE_FROM.equals(pid) || DATE_TO.equals(pid))
-			{
-				DateField date;
-				String caption;
-
-				if (DATE_FROM.equals(pid))
-				{
-					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipDateFrom);
-				}
-				else
-				{
-					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipDateTo);
-				}
-
-				date = new DateField(caption);
-				date.setResolution(DateField.RESOLUTION_DAY);
-
-				result = date;
-			}
+			/*
+			 * else if (DATE_FROM.equals(pid) || DATE_TO.equals(pid)) {
+			 * DateField date; String caption;
+			 * 
+			 * if (DATE_FROM.equals(pid)) { caption =
+			 * this.app.getMessage(ApplicationMessages
+			 * .PartyRelationshipDateFrom); } else { caption =
+			 * this.app.getMessage(ApplicationMessages.PartyRelationshipDateTo);
+			 * }
+			 * 
+			 * date = new DateField(caption);
+			 * date.setResolution(DateField.RESOLUTION_DAY);
+			 * 
+			 * result = date; }
+			 */
 			else if (STATUS.equals(pid))
 			{
 				Select select;

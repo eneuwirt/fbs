@@ -14,6 +14,7 @@ import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.dmr.universal.model.party.PartyContactMechanismPurpose;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
+import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
@@ -49,6 +50,7 @@ public class SeedServiceImpl implements SeedService
 	private static final String PURPOSE_GENERAL_PHONE = "Haupttelefonkontakt";
 	private static final String PURPOSE_GENERAL_FAX = "Fax";
 	private static final String PURPOSE_SECONDARY_FAX = "Zweite Faxnummer";
+	private static final String PARTY_ROLE_TYPE_REPRESENT_INVESTMENT = "Beratung in Investitionen";
 	// *******************************************************************************
 	@Resource(name = "crudServicePartyContactMechanism")
 	private CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism;
@@ -64,6 +66,8 @@ public class SeedServiceImpl implements SeedService
 	private CrudServiceType<ContactMechanismType, Integer> crudServiceContactMechanismType;	
 	@Resource(name = "crudServicePartyContactMechanismPurpose")
 	private CrudService<PartyContactMechanismPurpose, Integer> crudServicePartyContactMechanismPurpose;
+	@Resource(name = "crudServicePartyRelationshipStatusType")
+	private CrudServiceType<PartyRelationshipType, Integer> crudServicePartyRelationshipType;
 	@Resource(name = "crudServicePartyRelationshipStatusType")
 	private CrudServiceType<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType;
 	@Resource(name = "crudServicePartyRoleType")
@@ -279,9 +283,29 @@ public class SeedServiceImpl implements SeedService
 		this.createDemoPersons();
 
 		this.createDemoOrgs();
+		
+		this.createDemoRelationshipTypes();
 
 		logger.info("<demoFill");
 	}
+
+	private void createDemoRelationshipTypes()
+    {
+	    PartyRelationshipType partyRelationshipType;
+	    PartyRoleType partyRoleTypeFrom;
+	    PartyRoleType partyRoleTypeTo;
+	    
+	    partyRoleTypeFrom = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
+	    partyRoleTypeTo =  this.crudServicePartyRoleType.findForDescription(CLIENT_INVESTMENT);
+	    
+	    
+	    partyRelationshipType = new PartyRelationshipType();
+	    partyRelationshipType.setName(PARTY_ROLE_TYPE_REPRESENT_INVESTMENT);
+	    partyRelationshipType.setPartyRoleTypeFrom(partyRoleTypeFrom);
+	    partyRelationshipType.setPartyRoleTypeTo(partyRoleTypeTo);
+	    
+	    this.crudServicePartyRelationshipType.create(partyRelationshipType);
+    }
 
 	private void createDemoOrgs()
 	{
@@ -530,5 +554,10 @@ public class SeedServiceImpl implements SeedService
 	public void setCrudServicePartyContactMechanismPurpose(CrudServiceType<PartyContactMechanismPurpose, Integer> crudServicePartyContactMechanismPurpose)
     {
 	    this.crudServicePartyContactMechanismPurpose = crudServicePartyContactMechanismPurpose;
+    }
+
+	public void setCrudServicePartyRelationshipType(CrudServiceType<PartyRelationshipType, Integer> crudServicePartyRelationshipType)
+    {
+	    this.crudServicePartyRelationshipType = crudServicePartyRelationshipType;
     }
 }

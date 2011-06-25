@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.service.ServicePartyRole;
 import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
@@ -52,4 +53,19 @@ public class CrudServicePartyRoleImpl extends CrudServiceGenericImpl<PartyRole, 
 
 		return result;
 	}
+
+	@SuppressWarnings("unchecked")
+    @Override
+    public List<Party> findByPartyRoleType(String partyRoleTypeDescription)
+    {
+		List<Party> result;
+		Query query;
+
+		query = em.createQuery("SELECT p.party FROM PartyRole p WHERE p.partyRoleType.description = ?");
+		query.setParameter(1, partyRoleTypeDescription);
+
+		result = query.getResultList();
+
+		return result;
+    }
 }

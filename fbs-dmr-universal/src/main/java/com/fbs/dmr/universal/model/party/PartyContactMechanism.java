@@ -15,11 +15,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanism;
+import com.fbs.dmr.universal.model.contact.EntityContactMechanism;
 import com.fbs.dmr.util.DateUtils;
 
 @Entity
 @Table(name = "PARTY_CONTACTS")
-public class PartyContactMechanism implements Serializable
+public class PartyContactMechanism implements Serializable, EntityContactMechanism
 {
 	private static final long serialVersionUID = 1L;
 	@Id

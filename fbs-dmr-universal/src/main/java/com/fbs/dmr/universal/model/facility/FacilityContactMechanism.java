@@ -11,10 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanism;
+import com.fbs.dmr.universal.model.contact.EntityContactMechanism;
 
 @Entity
 @Table(name = "FACILITY_CONTACTS")
-public class FacilityContactMechanism implements Serializable
+public class FacilityContactMechanism implements Serializable, EntityContactMechanism
 {
 	private static final long serialVersionUID = 1L;
 	@Id

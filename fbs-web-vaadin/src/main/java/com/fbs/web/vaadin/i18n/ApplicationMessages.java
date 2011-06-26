@@ -19,6 +19,11 @@ public interface ApplicationMessages extends Serializable
 	public static String CommonSave = "Common.Save";
 	public static String CommonSearch = "Common.Search";
 	
+	public static String ContactMechanismCreateEAddress = "ContactMechanism.CreateEAddress";
+	public static String ContactMechanismCreatePhone = "ContactMechanism.CreatePhone";
+	public static String ContactMechanismCreatePostalAddress = "ContactMechanism.CreatePostalAddress";
+	
+	
 
 	public static String ContactMechanismPurposeTypeId = "ContactMechanismPurposeType.Id";
 	public static String ContactMechanismPurposeTypeDescription = "ContactMechanismPurposeType.Description";
@@ -33,6 +38,15 @@ public interface ApplicationMessages extends Serializable
 	
 	public static String ErrorCommon = "Error.Common";
 	public static String ErrorDatabase = "Error.Database";
+	
+	public static String FacilityDescription = "Facility.Description";
+	public static String FacilityId = "Facility.Id";
+	public static String FacilityTitle = "Facility.Title";
+	
+	// FacilityContactMechanism
+	public static String FacilityContactMechanismFacility = "FacilityContactMechanism.Facility";
+	public static String FacilityContactMechanismId = "FacilityContactMechanism.Id";
+	public static String FacilityContactMechanismTitle = "FacilityContactMechanism.Title";
 
 	public static String FooterCopyRight = "Footer.CopyRight";
 
@@ -67,9 +81,6 @@ public interface ApplicationMessages extends Serializable
 	
 	//PartyContactMechanism
 	public static String PartyContactMechanismAddress = "PartyContactMechanism.Address";
-	public static String PartyContactMechanismCreateEAddress = "PartyContactMechanism.CreateEAddress";
-	public static String PartyContactMechanismCreatePhone = "PartyContactMechanism.CreatePhone";
-	public static String PartyContactMechanismCreatePostalAddress = "PartyContactMechanism.CreatePostalAddress";
 	public static String PartyContactMechanismComment = "PartyContactMechanism.Comment";
 	public static String PartyContactMechanismDetails = "PartyContactMechanism.Details";
 	public static String PartyContactMechanismId = "PartyContactMechanism.Id";

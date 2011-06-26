@@ -66,6 +66,7 @@
   <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyClassificationImpl" />
   <bean id="crudServicePartyContactMechanism" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyContactMechanismImpl" />
   <bean id="crudServicePartyContactMechanismPurpose" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyContactMechanismPurposeImpl" />
+  <bean id="crudServicePartyFacility" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyFacilityImpl"/>
   <bean id="crudServicePartyRelationship" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipImpl" />
   <bean id="crudServicePartyRelationshipStatusType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipStatusTypeImpl" />
   <bean id="crudServicePartyRelationshipType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipTypeImpl" />

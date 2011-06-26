@@ -5,9 +5,12 @@ import com.fbs.dmr.universal.model.contact.ContactMechanismType;
 import com.fbs.dmr.universal.model.contact.ElectronicAddress;
 import com.fbs.dmr.universal.model.contact.PostalAddress;
 import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
+import com.fbs.dmr.universal.model.facility.Facility;
+import com.fbs.dmr.universal.model.facility.FacilityContactMechanism;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
+import com.fbs.dmr.universal.model.party.PartyFacility;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
@@ -39,6 +42,10 @@ public interface ApplicationServices
 
 	public CrudService<ContactMechanismType, Integer> getCrudServiceContactMechanismType();
 	
+	public CrudService<Facility, Integer> getCrudServiceFacility();
+	
+	public CrudService<FacilityContactMechanism, Integer> getCrudServiceFacilityContactMechanism();
+	
 	public CrudService<ElectronicAddress, Integer> getCrudServiceElectronicAddress();
 	
 	public CrudService<Organization, Integer> getCrudServiceOrganization();
@@ -48,6 +55,8 @@ public interface ApplicationServices
 	public CrudService<PartyContactMechanism, Integer> getCrudServicePartyContactMechanism();
 	
 	public CrudServicePartyContactMechanismPurpose getCrudServicePartyContactMechanismPurpose();
+	
+	public CrudService<PartyFacility, Integer> getCrudServicePartyFacility();
 
 	public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship();
 

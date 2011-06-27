@@ -74,6 +74,19 @@ public class FacilityScreen extends ItemsListScreen<Facility>
     {
 		this.app.getServices().getCrudServiceFacility().delete(t.getId());
     }
+	
+	@Override
+	protected String getColumnName(String propertyId)
+	{
+		if (propertyId.equals(ID))
+			return this.app.getMessage(ApplicationMessages.FacilityId);
+
+		if (propertyId.equals(DESC))
+			return this.app.getMessage(ApplicationMessages.FacilityDescription);
+
+
+		return propertyId;
+	}
 
 	@Override
     protected FormFieldFactory getFormFieldFactory()

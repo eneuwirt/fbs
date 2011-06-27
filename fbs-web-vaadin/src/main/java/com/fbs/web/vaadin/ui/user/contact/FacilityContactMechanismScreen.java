@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import com.fbs.dmr.universal.model.contact.ContactMechanism;
 import com.fbs.dmr.universal.model.facility.Facility;
 import com.fbs.dmr.universal.model.facility.FacilityContactMechanism;
-import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.web.dto.ContactMechanismDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;

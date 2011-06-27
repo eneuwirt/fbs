@@ -6,8 +6,10 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.fbs.dmr.universal.model.contact.PostalAddress;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyClassification;
+import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
@@ -20,6 +22,7 @@ import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.Table;
 
 public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 {
@@ -27,6 +30,9 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	private static Logger logger = Logger.getLogger(PartyScreen.class.getName());
 	protected OptionGroup rolesGroup;
 	protected OptionGroup classificationsGroup;
+	//
+	protected Table tablePostalAddress;
+	protected BeanItemContainer<PostalAddress> beanItemContainerPostalAddress;
 
 	public PartyScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields)
 	{
@@ -60,7 +66,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 			partyRole = new PartyRole();
 			partyRole.setParty(party);
 			partyRole.setPartyRoleType(partyRoleType);
-			
+
 			this.app.getServices().getCrudServicePartyRole().create(partyRole);
 		}
 
@@ -124,7 +130,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 				partyRole.setParty(party);
 				partyRole.setPartyRoleType(partyRoleType);
-				
+
 				this.app.getServices().getCrudServicePartyRole().create(partyRole);
 			}
 			else
@@ -132,7 +138,6 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 				this.app.getServices().getCrudServicePartyRole().update(partyRole);
 			}
 		}
-		
 
 		@SuppressWarnings("unchecked")
 		Set<String> selectedClassifications = (Set<String>) this.classificationsGroup.getValue();
@@ -163,7 +168,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 				partyClass = new PartyClassification();
 				partyClass.setParty(party);
 				partyClass.setPartyType(partyType);
-				
+
 				this.app.getServices().getCrudServicePartyClassification().create(partyClass);
 			}
 			else
@@ -173,7 +178,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 			classifications.add(partyClass);
 		}
-	
+
 		logger.info("<updateBean");
 	}
 
@@ -185,7 +190,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		T bean;
 
 		logger.info(">resetComponent");
-		
+
 		super.updateComponent(party);
 
 		beanItem = (BeanItem<T>) this.form.getItemDataSource();
@@ -195,7 +200,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 			try
 			{
 				bean = beanItem.getBean();
-				
+
 				if (bean.getId() != null)
 				{
 					party = this.readBean(bean);
@@ -204,6 +209,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 				this.resetOptionGroupRoles(party);
 
 				this.resetOptionGroupClassification(party);
+
+				this.resetPostalAddress(party);
 			}
 			catch (Exception e)
 			{
@@ -212,6 +219,25 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		}
 
 		logger.info("<resetComponent");
+	}
+
+	private void resetPostalAddress(Party party)
+	{
+		List<PartyContactMechanism> partyContactMechanisms;
+		// TODO Temporal
+		partyContactMechanisms = this.services.getCrudServicePartyContactMechanism().findAll();
+
+		for (PartyContactMechanism pcm : partyContactMechanisms)
+		{
+			if (pcm.getContactMechanism() instanceof PostalAddress && pcm.getParty().equals(party))
+			{
+				PostalAddress pa;
+				
+				pa = (PostalAddress) pcm.getContactMechanism();
+				
+				this.beanItemContainerPostalAddress.addBean(pa);
+			}
+		}
 	}
 
 	private void resetOptionGroupRoles(Party party)
@@ -230,7 +256,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		{
 			List<PartyRole> partyRoles;
 			partyRoles = this.app.getServices().getCrudServicePartyRole().findByParty(party.getId());
-			
+
 			for (PartyRole p : partyRoles)
 			{
 				this.rolesGroup.select(p.getPartyRoleType().getDescription());
@@ -256,7 +282,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		if (party != null)
 		{
 			List<PartyClassification> classifications;
-			
+
 			classifications = this.app.getServices().getCrudServicePartyClassification().findByParty(party.getId());
 			for (PartyClassification p : classifications)
 			{
@@ -285,9 +311,10 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 		this.createClassificationGroup();
 		this.createRolesGroup();
+		this.createContacts();
 
 		tabsheet.addTab(this.form, captionMasterData, null);
-		tabsheet.addTab(new Label("Viele Adressen hier"), captionAddr, null);
+		tabsheet.addTab(this.tablePostalAddress, captionAddr, null);
 		tabsheet.addTab(new Label("Bezihungen zwischen mir und den andren"), captionRelations, null);
 		tabsheet.addTab(this.rolesGroup, captionRoles, null);
 		tabsheet.addTab(this.classificationsGroup, captionClass, null);
@@ -297,11 +324,22 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		return tabsheet;
 	}
 
+	private void createContacts()
+	{
+		this.tablePostalAddress = new Table();
+
+		this.beanItemContainerPostalAddress = new BeanItemContainer<PostalAddress>(PostalAddress.class);
+
+		this.tablePostalAddress.setContainerDataSource(beanItemContainerPostalAddress);
+	}
+
 	@Override
 	protected void layoutComponent()
 	{
 		this.classificationsGroup.setSizeFull();
 		this.rolesGroup.setSizeFull();
+
+		this.tablePostalAddress.setSizeFull();
 
 		this.component.setSizeFull();
 	}

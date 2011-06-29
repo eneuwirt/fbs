@@ -4,5 +4,6 @@ bin/
 .metadata
 .project
 .settings/
+build/
 Servers/
 target/

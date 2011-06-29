@@ -28,11 +28,11 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(PartyScreen.class.getName());
+	//
 	protected OptionGroup rolesGroup;
 	protected OptionGroup classificationsGroup;
 	//
-	protected Table tablePostalAddress;
-	protected BeanItemContainer<PostalAddress> beanItemContainerPostalAddress;
+	private PostalAddressView postalAddressView;
 
 	public PartyScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields)
 	{
@@ -210,7 +210,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 				this.resetOptionGroupClassification(party);
 
-				this.resetPostalAddress(party);
+				this.postalAddressView.updateComponents(party);
 			}
 			catch (Exception e)
 			{
@@ -219,25 +219,6 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		}
 
 		logger.info("<resetComponent");
-	}
-
-	private void resetPostalAddress(Party party)
-	{
-		List<PartyContactMechanism> partyContactMechanisms;
-		// TODO Temporal
-		partyContactMechanisms = this.services.getCrudServicePartyContactMechanism().findAll();
-
-		for (PartyContactMechanism pcm : partyContactMechanisms)
-		{
-			if (pcm.getContactMechanism() instanceof PostalAddress && pcm.getParty().equals(party))
-			{
-				PostalAddress pa;
-				
-				pa = (PostalAddress) pcm.getContactMechanism();
-				
-				this.beanItemContainerPostalAddress.addBean(pa);
-			}
-		}
 	}
 
 	private void resetOptionGroupRoles(Party party)
@@ -314,7 +295,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		this.createContacts();
 
 		tabsheet.addTab(this.form, captionMasterData, null);
-		tabsheet.addTab(this.tablePostalAddress, captionAddr, null);
+		tabsheet.addTab(this.postalAddressView, captionAddr, null);
 		tabsheet.addTab(new Label("Bezihungen zwischen mir und den andren"), captionRelations, null);
 		tabsheet.addTab(this.rolesGroup, captionRoles, null);
 		tabsheet.addTab(this.classificationsGroup, captionClass, null);
@@ -326,11 +307,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 	private void createContacts()
 	{
-		this.tablePostalAddress = new Table();
-
-		this.beanItemContainerPostalAddress = new BeanItemContainer<PostalAddress>(PostalAddress.class);
-
-		this.tablePostalAddress.setContainerDataSource(beanItemContainerPostalAddress);
+		this.postalAddressView = new PostalAddressView(this.app);
 	}
 
 	@Override
@@ -338,8 +315,6 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	{
 		this.classificationsGroup.setSizeFull();
 		this.rolesGroup.setSizeFull();
-
-		this.tablePostalAddress.setSizeFull();
 
 		this.component.setSizeFull();
 	}

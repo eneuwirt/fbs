@@ -30,6 +30,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	protected OptionGroup classificationsGroup;
 	//
 	private PostalAddressView postalAddressView;
+	private TelekomView telecomView;
+	private ElectronicAddressView electronicAddressView;
 
 	public PartyScreen(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields)
 	{
@@ -208,6 +210,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 				this.resetOptionGroupClassification(party);
 
 				this.postalAddressView.updateComponents(party);
+				this.telecomView.updateComponents(party);
+				this.electronicAddressView.updateComponents(party);
 			}
 			catch (Exception e)
 			{
@@ -277,6 +281,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		String captionClass;
 		String captionRoles;
 		String captionAddr;
+		String captionElAddr;
+		String captionTelecom;
 		String captionRelations;
 
 		logger.info(">getComponent");
@@ -285,7 +291,9 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 		captionClass = this.app.getMessage(ApplicationMessages.PartyTypeClassificationTitle);
 		captionRoles = this.app.getMessage(ApplicationMessages.PartyRoleTitle);
 		captionAddr = this.app.getMessage(ApplicationMessages.PartyPostalAddress);
+		captionElAddr = this.app.getMessage(ApplicationMessages.PartyElectronicAddress);
 		captionRelations = this.app.getMessage(ApplicationMessages.PartyRelationships);
+		captionTelecom = this.app.getMessage(ApplicationMessages.PartyTelecommunicationNumber);
 
 		this.createClassificationGroup();
 		this.createRolesGroup();
@@ -293,6 +301,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 		tabsheet.addTab(this.form, captionMasterData, null);
 		tabsheet.addTab(this.postalAddressView, captionAddr, null);
+		tabsheet.addTab(this.telecomView, captionTelecom, null);
+		tabsheet.addTab(this.electronicAddressView, captionElAddr, null);
 		tabsheet.addTab(new Label("Bezihungen zwischen mir und den andren"), captionRelations, null);
 		tabsheet.addTab(this.rolesGroup, captionRoles, null);
 		tabsheet.addTab(this.classificationsGroup, captionClass, null);
@@ -305,6 +315,8 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	private void createContacts()
 	{
 		this.postalAddressView = new PostalAddressView(this.app);
+		this.telecomView = new TelekomView(this.app);
+		this.electronicAddressView = new ElectronicAddressView(this.app);
 	}
 
 	@Override

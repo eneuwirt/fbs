@@ -19,12 +19,13 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
     private static final long serialVersionUID = 1L;
 
     protected MyVaadinApplication app;
-    private Class<T> clazz;
+    protected Class<T> clazz;
 
     protected Table tableBeans;
     protected BeanItemContainer<T> beanItemContainer;
 
     protected Button buttonAdd;
+    protected Button buttonEdit;
     protected Button buttonDelete;
     //
     protected Window windowAdd;
@@ -48,6 +49,9 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
         this.tableBeans.addListener(new TableSelectListener<T>(this));
 
         this.buttonAdd = new Button("Add", new AddListener<T>(this));
+        
+        this.buttonEdit = new Button("Ändern");
+        this.buttonEdit.setEnabled(false);
         
         this.buttonDelete = new Button("-", new DeleteListener<T>(this));
         this.buttonDelete.setEnabled(false);
@@ -79,6 +83,7 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
         buttonRow.setWidth("100%");
         
         buttonRow.addComponent(this.buttonAdd);
+        buttonRow.addComponent(this.buttonEdit);
         buttonRow.addComponent(this.buttonDelete);
 
         this.addComponent(this.tableBeans);
@@ -99,6 +104,7 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
         public void valueChange(ValueChangeEvent event)
         {
             this.view.buttonDelete.setEnabled(true);
+            this.view.buttonEdit.setEnabled(true);
         }
     }
     

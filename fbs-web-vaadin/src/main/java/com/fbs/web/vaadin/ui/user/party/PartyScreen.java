@@ -119,7 +119,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 			PartyRole partyRole;
 
 			partyRole = this.app.getServices().getCrudServicePartyRole()
-			        .findByPartyRoleType(party.getId(), selectedRole);
+			        .findByPartyAndPartyRoleType(party.getId(), selectedRole);
 			if (partyRole == null)
 			{
 				PartyRoleType partyRoleType;

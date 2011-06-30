@@ -18,7 +18,7 @@ public class CrudServicePartyRoleImpl extends CrudServiceGenericImpl<PartyRole, 
 	}
 
 	@Override
-	public PartyRole findByPartyRoleType(Integer partyId, String partyRoleTypeDescription)
+	public PartyRole findByPartyAndPartyRoleType(Integer partyId, String partyRoleTypeDescription)
 	{
 		PartyRole result;
 		Query query;

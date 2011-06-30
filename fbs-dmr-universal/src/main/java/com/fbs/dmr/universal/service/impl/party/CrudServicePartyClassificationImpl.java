@@ -12,8 +12,6 @@ import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
 public class CrudServicePartyClassificationImpl extends CrudServiceGenericImpl<PartyClassification, Integer> implements
         ServicePartyClassification
 {
-	private static final long serialVersionUID = 1L;
-
 	public CrudServicePartyClassificationImpl()
 	{
 		super(PartyClassification.class);

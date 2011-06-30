@@ -107,13 +107,13 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
 		partyFrom = t.getPartyFrom();
 		partyRoleTypeDescription = p.getPartyRelationshipType().getPartyRoleTypeFrom().getDescription();
 		partyRoleFrom = this.app.getServices().getCrudServicePartyRole()
-		        .findByPartyRoleType(partyFrom.getId(), partyRoleTypeDescription);
+		        .findByPartyAndPartyRoleType(partyFrom.getId(), partyRoleTypeDescription);
 		p.setPartyRoleFrom(partyRoleFrom);
 
 		partyTo = t.getPartyTo();
 		partyRoleTypeDescription = p.getPartyRelationshipType().getPartyRoleTypeTo().getDescription();
 		partyRoleTo = this.app.getServices().getCrudServicePartyRole()
-		        .findByPartyRoleType(partyTo.getId(), partyRoleTypeDescription);
+		        .findByPartyAndPartyRoleType(partyTo.getId(), partyRoleTypeDescription);
 		p.setPartyRoleTo(partyRoleTo);
 
 		this.app.getServices().getCrudServicePartyRelationship().create(p);

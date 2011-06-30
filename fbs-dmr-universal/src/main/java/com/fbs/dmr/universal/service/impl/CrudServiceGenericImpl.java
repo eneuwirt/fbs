@@ -15,7 +15,6 @@ import com.fbs.dmr.universal.service.CrudService;
 @Transactional
 public class CrudServiceGenericImpl<T, ID extends Serializable> implements CrudService<T, ID>
 {
-	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(CrudServiceGenericImpl.class.getName());
 	protected EntityManager em;
 	protected Class<T> entityClass;

@@ -9,7 +9,7 @@ public interface ServicePartyRole extends CrudService<PartyRole, Integer>
 {
 	public List<PartyRole> findByParty(Integer partyId);
 
-	public PartyRole findByPartyRoleType(Integer partyId, String partyRoleTypeDescription);
+	public PartyRole findByPartyAndPartyRoleType(Integer partyId, String partyRoleTypeDescription);
 	
 	public List<Party> findByPartyRoleType(String partyRoleTypeDescription);
 }

@@ -1,6 +1,5 @@
 package com.fbs.web.vaadin.ui.user.party;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.fbs.dmr.universal.model.contact.PostalAddress;
@@ -8,11 +7,14 @@ import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.Table;
+import com.fbs.web.vaadin.ui.common.ItemsListView;
+import com.vaadin.data.Item;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.FormFieldFactory;
+import com.vaadin.ui.TextField;
 
-public class PostalAddressView extends Panel
+public class PostalAddressView extends  ItemsListView<PostalAddress>
 {
     private static final long serialVersionUID = 1L;
     protected static final String ADDRESS1 = "address1";
@@ -20,46 +22,96 @@ public class PostalAddressView extends Panel
     protected static final String CITY = "city";
     protected static final String POSTAL_CODE = "postalCode";
     protected static final String COUNTRY = "country";
-    private String[] VISIBLE_COLUMNS =
+    private static final String[] VISIBLE_COLUMNS =
     { ADDRESS1, ADDRESS2, POSTAL_CODE, CITY, COUNTRY };
-
-    protected MyVaadinApplication app;
-    
-    protected Table tablePostalAddress;
-    protected BeanItemContainer<PostalAddress> beanItemContainerPostalAddress;
+    private static final String[] VISIBLE_FIELDS =
+    { ADDRESS1, ADDRESS2, POSTAL_CODE, CITY, COUNTRY };
 
     public PostalAddressView(MyVaadinApplication app)
     {
-        this.app = app;
-
-        this.tablePostalAddress = new Table();
-
-        this.beanItemContainerPostalAddress = new BeanItemContainer<PostalAddress>(PostalAddress.class);
-
-        this.tablePostalAddress.setContainerDataSource(beanItemContainerPostalAddress);
-
-        this.initLayout();
+       super(app, PostalAddress.class, VISIBLE_COLUMNS, VISIBLE_FIELDS);
     }
 
-    private void initLayout()
+    @Override
+    public void updateComponents(Object obj)
     {
-        this.setSizeFull();
-        this.setScrollable(true);
+        Party party = (Party) obj;
+        List<PartyContactMechanism> partyContactMechanisms;
+        
+        // TODO Temporal
+        partyContactMechanisms = this.app.getServices().getCrudServicePartyContactMechanism().findAll();
 
-        this.tablePostalAddress.setSizeFull();
-        this.tablePostalAddress.setVisibleColumns(VISIBLE_COLUMNS);
-        // Set nicer header names
-        for (String propertyId : VISIBLE_COLUMNS)
+        this.beanItemContainer.removeAllItems();
+        for (PartyContactMechanism pcm : partyContactMechanisms)
         {
-            String columnName = this.getColumnName(propertyId);
+            if (pcm.getContactMechanism() instanceof PostalAddress && pcm.getParty().equals(party))
+            {
+                PostalAddress pa;
 
-            this.tablePostalAddress.setColumnHeader(propertyId, columnName);
+                pa = (PostalAddress) pcm.getContactMechanism();
+
+                this.beanItemContainer.addBean(pa);
+            }
         }
-
-        this.addComponent(this.tablePostalAddress);
     }
 
-    private String getColumnName(String propertyId)
+
+    @Override
+    public PostalAddress createBeanInstance()
+    {
+        return new PostalAddress();
+    }
+
+
+    @Override
+    public List<PostalAddress> getAllBeans() throws Exception
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public PostalAddress createBean(PostalAddress t) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public void updateBean(PostalAddress t) throws Exception
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public PostalAddress readBean(PostalAddress t) throws Exception
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    @Override
+    public void deleteBean(PostalAddress t) throws Exception
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public FormFieldFactory getFormFieldFactory()
+    {
+        return new PostalCodeFormFieldFactory(this.app);
+    }
+
+
+    @Override
+    public String getColumnName(String propertyId)
     {
         if (propertyId.equals(ADDRESS1))
             return this.app.getMessage(ApplicationMessages.PostalAddressAddress1);
@@ -72,30 +124,52 @@ public class PostalAddressView extends Panel
 
         if (propertyId.equals(POSTAL_CODE))
             return this.app.getMessage(ApplicationMessages.PostalAddressPostalCode);
-        
+
         if (propertyId.equals(COUNTRY))
             return this.app.getMessage(ApplicationMessages.PostalAddressCountry);
 
         return propertyId;
     }
-
-    public void updateComponents(Party party)
+    
+    
+    private static class PostalCodeFormFieldFactory implements FormFieldFactory
     {
-        List<PartyContactMechanism> partyContactMechanisms;
-        // TODO Temporal
-        partyContactMechanisms = this.app.getServices().getCrudServicePartyContactMechanism().findAll();
+        private static final long serialVersionUID = 1L;
+        private MyVaadinApplication app;
 
-        this.beanItemContainerPostalAddress.removeAllItems();
-        for (PartyContactMechanism pcm : partyContactMechanisms)
+        public PostalCodeFormFieldFactory(MyVaadinApplication app)
         {
-            if (pcm.getContactMechanism() instanceof PostalAddress && pcm.getParty().equals(party))
+            this.app = app;
+        }
+
+        @Override
+        public Field createField(Item item, Object propertyId, Component uiContext)
+        {
+            Field result = null;
+            String pid = (String) propertyId;
+
+            if (ADDRESS1.equals(pid))
             {
-                PostalAddress pa;
-
-                pa = (PostalAddress) pcm.getContactMechanism();
-
-                this.beanItemContainerPostalAddress.addBean(pa);
+                result = new TextField(this.app.getMessage(ApplicationMessages.PostalAddressAddress1));
             }
+            else if (ADDRESS2.equals(pid))
+            {
+                result = new TextField(this.app.getMessage(ApplicationMessages.PostalAddressAddress2));
+            }
+            else if (CITY.equals(pid))
+            {
+                result = new TextField(this.app.getMessage(ApplicationMessages.PostalAddressCity));
+            }
+            else if (POSTAL_CODE.equals(pid))
+            {
+                result = new TextField(this.app.getMessage(ApplicationMessages.PostalAddressPostalCode));
+            }
+            else if (COUNTRY.equals(pid))
+            {
+                result = new TextField(this.app.getMessage(ApplicationMessages.PostalAddressCountry));
+            }
+
+            return result;
         }
     }
 }

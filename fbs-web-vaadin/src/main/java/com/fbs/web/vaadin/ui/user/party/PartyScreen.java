@@ -6,10 +6,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.fbs.dmr.universal.model.contact.PostalAddress;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyClassification;
-import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.dmr.universal.model.party.PartyRole;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
@@ -22,7 +20,6 @@ import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.Table;
 
 public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 {

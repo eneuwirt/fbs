@@ -245,7 +245,7 @@ public abstract class ContactMechanismHelper<T extends EntityContactMechanism> e
 		}
 	}
 
-	protected static class ContactDetailsFormFieldFactory implements FormFieldFactory
+	public static class ContactDetailsFormFieldFactory implements FormFieldFactory
 	{
 		private static final long serialVersionUID = 1L;
 		private MyVaadinApplication app;

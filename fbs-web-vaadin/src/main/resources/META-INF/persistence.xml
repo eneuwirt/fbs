@@ -9,11 +9,11 @@
     <class>com.fbs.dmr.universal.model.contact.ElectronicAddress</class>
     <class>com.fbs.dmr.universal.model.contact.PostalAddress</class>
     <class>com.fbs.dmr.universal.model.contact.TelecommunicationNumber</class>
-    
+
     <class>com.fbs.dmr.universal.model.facility.Facility</class>
     <class>com.fbs.dmr.universal.model.facility.FacilityContactMechanism</class>
     <class>com.fbs.dmr.universal.model.facility.FacilityType</class>
-  
+
     <class>com.fbs.dmr.universal.model.party.Organization</class>
     <class>com.fbs.dmr.universal.model.party.Party</class>
     <class>com.fbs.dmr.universal.model.party.PartyClassification</class>
@@ -27,5 +27,8 @@
     <class>com.fbs.dmr.universal.model.party.PartyType</class>
     <class>com.fbs.dmr.universal.model.party.Person</class>
     <class>com.fbs.dmr.universal.model.party.PriorityType</class>
+
+    <class>com.fbs.dmr.universal.model.workeffort.WorkEffort</class>
+    <class>com.fbs.dmr.universal.model.workeffort.WorkEffortType</class>
   </persistence-unit>
 </persistence>

@@ -2,7 +2,6 @@ package com.fbs.web.dto;
 
 import java.io.Serializable;
 
-
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
@@ -12,105 +11,110 @@ import com.fbs.dmr.universal.model.party.PriorityType;
 public class PartyRelationshipDto implements Serializable
 {
     private static final long serialVersionUID = 1L;
-    
+
     private Integer id;
-	private String comment = "";
-	private PartyRelationshipType partyRelationshipType;
-	private PartyRelationshipStatusType partyRelationshipStatusType;
-	private PriorityType priorityType;
-	
-	private Party partyFrom;
-	private Party partyTo;
-	
-	public PartyRelationshipDto()
-	{
-		
-	}
-	
-	public PartyRelationshipDto(PartyRelationship partyRelationship)
-	{
-		this.id = partyRelationship.getId();
-		this.comment = partyRelationship.getComment();
-		
-		this.partyRelationshipType = partyRelationship.getPartyRelationshipType();
-		
-		this.partyRelationshipStatusType = partyRelationship.getPartyRelationshipStatusType();
-		this.priorityType = partyRelationship.getPriorityType();
-		
-		this.partyFrom = partyRelationship.getPartyRoleFrom().getParty();
-		
-		this.partyTo = partyRelationship.getPartyRoleTo().getParty();
-	}
+    private String comment = "";
+    private PartyRelationshipType partyRelationshipType;
+    private PartyRelationshipStatusType partyRelationshipStatusType;
+    private PriorityType priorityType;
 
-	public Integer getId()
+    private Party partyFrom;
+    private Party partyTo;
+
+    public PartyRelationshipDto()
     {
-    	return id;
+
     }
 
-	public void setId(Integer id)
+    public PartyRelationshipDto(PartyRelationship partyRelationship)
     {
-    	this.id = id;
+       this.setPartyRelationship(partyRelationship);
     }
 
-	public String getComment()
+    public void setPartyRelationship(PartyRelationship partyRelationship)
     {
-    	return comment;
+        this.id = partyRelationship.getId();
+        this.comment = partyRelationship.getComment();
+
+        this.partyRelationshipType = partyRelationship.getPartyRelationshipType();
+
+        this.partyRelationshipStatusType = partyRelationship.getPartyRelationshipStatusType();
+        this.priorityType = partyRelationship.getPriorityType();
+
+        this.partyFrom = partyRelationship.getPartyRoleFrom().getParty();
+
+        this.partyTo = partyRelationship.getPartyRoleTo().getParty();
+    }
+    
+
+    public Integer getId()
+    {
+        return id;
     }
 
-	public void setComment(String comment)
+    public void setId(Integer id)
     {
-    	this.comment = comment;
+        this.id = id;
     }
 
-	public PartyRelationshipType getPartyRelationshipType()
+    public String getComment()
     {
-    	return partyRelationshipType;
+        return comment;
     }
 
-	public void setPartyRelationshipType(PartyRelationshipType partyRelationshipType)
+    public void setComment(String comment)
     {
-    	this.partyRelationshipType = partyRelationshipType;
+        this.comment = comment;
     }
 
-	public PartyRelationshipStatusType getPartyRelationshipStatusType()
+    public PartyRelationshipType getPartyRelationshipType()
     {
-    	return partyRelationshipStatusType;
+        return partyRelationshipType;
     }
 
-	public void setPartyRelationshipStatusType(PartyRelationshipStatusType partyRelationshipStatusType)
+    public void setPartyRelationshipType(PartyRelationshipType partyRelationshipType)
     {
-    	this.partyRelationshipStatusType = partyRelationshipStatusType;
+        this.partyRelationshipType = partyRelationshipType;
     }
 
-	public PriorityType getPriorityType()
+    public PartyRelationshipStatusType getPartyRelationshipStatusType()
     {
-    	return priorityType;
+        return partyRelationshipStatusType;
     }
 
-	public void setPriorityType(PriorityType priorityType)
+    public void setPartyRelationshipStatusType(PartyRelationshipStatusType partyRelationshipStatusType)
     {
-    	this.priorityType = priorityType;
+        this.partyRelationshipStatusType = partyRelationshipStatusType;
     }
 
-	public Party getPartyFrom()
+    public PriorityType getPriorityType()
     {
-    	return partyFrom;
+        return priorityType;
     }
 
-	public void setPartyFrom(Party partyFrom)
+    public void setPriorityType(PriorityType priorityType)
     {
-    	this.partyFrom = partyFrom;
+        this.priorityType = priorityType;
     }
 
-	public void setPartyTo(Party partyTo)
+    public Party getPartyFrom()
     {
-	    this.partyTo = partyTo;
+        return partyFrom;
     }
 
-	public Party getPartyTo()
+    public void setPartyFrom(Party partyFrom)
     {
-	    return partyTo;
+        this.partyFrom = partyFrom;
     }
-	
+
+    public void setPartyTo(Party partyTo)
+    {
+        this.partyTo = partyTo;
+    }
+
+    public Party getPartyTo()
+    {
+        return partyTo;
+    }
 
 }

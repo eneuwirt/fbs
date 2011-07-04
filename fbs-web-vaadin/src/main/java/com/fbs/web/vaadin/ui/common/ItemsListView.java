@@ -121,7 +121,7 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
         @Override
         public void buttonClick(ClickEvent event)
         {
-          
+            
         }
     }
 

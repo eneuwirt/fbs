@@ -13,7 +13,7 @@ public class WorkEffortType extends Type
 {
     private static final long serialVersionUID = 1L;
 	@Column(name="standard_work_minutes")
-    private Integer standardWorkMinutes;
+    private Integer standardWorkMinutes = 0;
 	
 	public WorkEffortType()
 	{

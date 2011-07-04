@@ -7,6 +7,7 @@ import com.fbs.web.vaadin.ui.user.contact.ContactMechanismTypeScreen;
 import com.fbs.web.vaadin.ui.user.party.PartyRelationshipTypeScreen;
 import com.fbs.web.vaadin.ui.user.party.PartyRoleTypeScreen;
 import com.fbs.web.vaadin.ui.user.party.PartyTypeScreen;
+import com.fbs.web.vaadin.ui.user.workeffort.WorkEffortTypeScreen;
 import com.vaadin.ui.Accordion;
 
 public class TypesAccordion extends Accordion
@@ -18,6 +19,7 @@ public class TypesAccordion extends Accordion
 	private PartyTypeScreen partyTypeScreen;
 	private PartyRoleTypeScreen partyRoleTypeScreen;
 	private PartyRelationshipTypeScreen relTypeScreen;
+	private WorkEffortTypeScreen workEffortTypeScreen;
 
 	public TypesAccordion(MyVaadinApplication app)
 	{
@@ -28,7 +30,8 @@ public class TypesAccordion extends Accordion
 		this.contactMechanismTypeScreen = new ContactMechanismTypeScreen(this.app);
 		this.partyTypeScreen = new PartyTypeScreen(this.app);
 		this.partyRoleTypeScreen = new PartyRoleTypeScreen(this.app);
-		this.relTypeScreen = new PartyRelationshipTypeScreen(app);
+		this.relTypeScreen = new PartyRelationshipTypeScreen(this.app);
+		this.workEffortTypeScreen = new WorkEffortTypeScreen(this.app);
 
 		this.addTab(partyTypeScreen, this.app.getMessage(ApplicationMessages.PartyTypeTitle), null);
 		this.addTab(partyRoleTypeScreen, this.app.getMessage(ApplicationMessages.PartyRoleTypeTitle), null);
@@ -37,6 +40,8 @@ public class TypesAccordion extends Accordion
 		        this.app.getMessage(ApplicationMessages.ContactMechanismPurposeTypeTitle), null);
 		this.addTab(this.contactMechanismTypeScreen,
 		        this.app.getMessage(ApplicationMessages.ContactMechanismTypeTitle), null);
+		this.addTab(this.workEffortTypeScreen,
+                this.app.getMessage(ApplicationMessages.WorkEffortTypeTitle), null);
 
 		this.initLayout();
 	}

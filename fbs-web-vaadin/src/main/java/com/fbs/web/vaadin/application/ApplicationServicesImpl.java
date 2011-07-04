@@ -20,6 +20,7 @@ import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.model.party.PriorityType;
+import com.fbs.dmr.universal.model.workeffort.WorkEffortType;
 import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.CrudServicePartyContactMechanismPurpose;
 import com.fbs.dmr.universal.service.CrudServiceType;
@@ -83,6 +84,8 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private ServicePartyClassification servicePartyClassification;
 	@Resource(name = "crudServicePriorityType")
 	private CrudService<PostalAddress, Integer> crudServicePostalAddress;
+	@Resource(name="crudServiceWorkEffortType")
+	private CrudService<WorkEffortType, Integer> crudServiceWorkEffortType;
 
 	@Override
 	public SecurityService getSecurityService()
@@ -353,5 +356,16 @@ public class ApplicationServicesImpl implements ApplicationServices
 	public void setCrudServiceFacility(CrudService<Facility, Integer> crudServiceFacility)
     {
 	    this.crudServiceFacility = crudServiceFacility;
+    }
+
+	@Override
+    public CrudService<WorkEffortType, Integer> getCrudServiceWorkEffortType()
+    {
+        return crudServiceWorkEffortType;
+    }
+
+    public void setCrudServiceWorkEffortType(CrudService<WorkEffortType, Integer> crudServiceWorkEffortType)
+    {
+        this.crudServiceWorkEffortType = crudServiceWorkEffortType;
     }
 }

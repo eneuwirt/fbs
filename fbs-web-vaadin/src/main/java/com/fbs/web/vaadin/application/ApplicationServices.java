@@ -18,6 +18,7 @@ import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.model.party.PriorityType;
+import com.fbs.dmr.universal.model.workeffort.WorkEffortType;
 import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.CrudServicePartyContactMechanismPurpose;
 import com.fbs.dmr.universal.service.CrudServiceType;
@@ -75,6 +76,8 @@ public interface ApplicationServices
 	public CrudService<PriorityType, Integer> getCrudServicePriorityType();
 	
 	public CrudService<TelecommunicationNumber, Integer> getCrudServiceTelecommunicationNumber();
+	
+	public CrudService<WorkEffortType, Integer> getCrudServiceWorkEffortType();
 
 	public ServicePartyClassification getCrudServicePartyClassification();
 

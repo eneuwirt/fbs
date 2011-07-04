@@ -176,4 +176,9 @@ public interface ApplicationMessages extends Serializable
 	public static String UserTabTitleParty = "UserTab.TitleParty";
 	public static String UserTabTitleRelationships = "UserTab.TitleRelationships";
 	public static String UserTabTitleTypes = "UserTab.TitleTypes";
+
+    public static String WorkEffortTypeDescription = "WorkEffortType.Description";
+    public static String WorkEffortTypeId = "WorkEffortType.Id";
+    public static String WorkEffortTypeTitle = "WorkEffortType.Title";
+    public static String WorkEffortTypeStandardWorkMunutes = "WorkEffortType.StandardWorkMunutes";
 }

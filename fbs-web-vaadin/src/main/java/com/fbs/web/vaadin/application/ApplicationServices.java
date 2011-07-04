@@ -9,7 +9,6 @@ import com.fbs.dmr.universal.model.facility.Facility;
 import com.fbs.dmr.universal.model.facility.FacilityContactMechanism;
 import com.fbs.dmr.universal.model.party.Organization;
 import com.fbs.dmr.universal.model.party.Party;
-import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.dmr.universal.model.party.PartyFacility;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipStatusType;
@@ -20,6 +19,7 @@ import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.model.party.PriorityType;
 import com.fbs.dmr.universal.model.workeffort.WorkEffortType;
 import com.fbs.dmr.universal.service.CrudService;
+import com.fbs.dmr.universal.service.CrudServicePartyContactMechanism;
 import com.fbs.dmr.universal.service.CrudServicePartyContactMechanismPurpose;
 import com.fbs.dmr.universal.service.CrudServiceType;
 import com.fbs.dmr.universal.service.SeedService;
@@ -53,7 +53,7 @@ public interface ApplicationServices
 
 	public CrudService<Party, Integer> getCrudServiceParty();
 
-	public CrudService<PartyContactMechanism, Integer> getCrudServicePartyContactMechanism();
+	public CrudServicePartyContactMechanism getCrudServicePartyContactMechanism();
 	
 	public CrudServicePartyContactMechanismPurpose getCrudServicePartyContactMechanismPurpose();
 	

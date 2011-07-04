@@ -209,9 +209,14 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 				this.resetOptionGroupClassification(party);
 
-				this.postalAddressView.updateComponents(party);
-				this.telecomView.updateComponents(party);
-				this.electronicAddressView.updateComponents(party);
+				this.postalAddressView.setAnchor(party);
+				this.postalAddressView.updateComponents();
+				
+				this.telecomView.setAnchor(party);
+				this.telecomView.updateComponents();
+				
+				this.electronicAddressView.setAnchor(party);
+				this.electronicAddressView.updateComponents();
 			}
 			catch (Exception e)
 			{

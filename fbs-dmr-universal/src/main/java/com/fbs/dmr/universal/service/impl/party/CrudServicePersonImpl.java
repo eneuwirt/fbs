@@ -5,7 +5,6 @@ import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
 
 public class CrudServicePersonImpl extends CrudServiceGenericImpl<Person, Integer>
 {
-
 	public CrudServicePersonImpl()
 	{
 		super(Person.class);

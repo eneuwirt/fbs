@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.vaadin.ui.FormFieldFactory;
 
-public interface ListView<T>
+public interface ListView<T, A>
 {
     public T createBeanInstance();
 
@@ -22,5 +22,6 @@ public interface ListView<T>
     
     public String getColumnName(String pid);
     
-    public void updateComponents(Object obj);
+    public void setAnchor(A anchor);
+    public void updateComponents();
 }

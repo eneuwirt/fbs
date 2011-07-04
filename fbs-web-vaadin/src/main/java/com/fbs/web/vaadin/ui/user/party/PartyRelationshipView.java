@@ -2,12 +2,13 @@ package com.fbs.web.vaadin.ui.user.party;
 
 import java.util.List;
 
+import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.web.dto.PartyRelationshipDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.ui.common.ItemsListView;
 import com.vaadin.ui.FormFieldFactory;
 
-public class PartyRelationshipView extends ItemsListView<PartyRelationshipDto>
+public class PartyRelationshipView extends ItemsListView<PartyRelationshipDto, Party>
 {
     private static final long serialVersionUID = 1L;
     private static final String ID = "id";
@@ -78,7 +79,7 @@ public class PartyRelationshipView extends ItemsListView<PartyRelationshipDto>
     }
 
     @Override
-    public void updateComponents(Object obj)
+    public void updateComponents()
     {
         // TODO Auto-generated method stub
         

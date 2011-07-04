@@ -466,7 +466,9 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 			}
 			catch (Exception ex)
 			{
-				this.screen.app.showErrorMessage(this.screen.component, ex);
+				logger.log(Level.SEVERE, "Exception: " + ex.getMessage());
+			    
+			    this.screen.app.showErrorMessage(this.screen.component, ex);
 			}
 
 			// fill the form out. If the list does not contain any entries

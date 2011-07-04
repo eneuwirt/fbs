@@ -14,12 +14,14 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
-public abstract class ItemsListView<T> extends Panel implements ListView<T>
+public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A>
 {
     private static final long serialVersionUID = 1L;
 
     protected MyVaadinApplication app;
     protected Class<T> clazz;
+    
+    protected A anchor;
 
     protected Table tableBeans;
     protected BeanItemContainer<T> beanItemContainer;
@@ -28,7 +30,7 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
     protected Button buttonEdit;
     protected Button buttonDelete;
     //
-    protected Window windowAdd;
+    protected CRUDDialog<T, A> dialog;
     //
     protected String[] visibleColumns;
     protected String[] visibleFields;
@@ -39,33 +41,39 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
         this.clazz = clazz;
         this.visibleColumns = visibleColumns;
         this.visibleFields = visibleFields;
-        
+
         this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
 
         this.tableBeans = new Table();
         this.tableBeans.setSelectable(true);
         this.tableBeans.setImmediate(true);
         this.tableBeans.setContainerDataSource(beanItemContainer);
-        this.tableBeans.addListener(new TableSelectListener<T>(this));
+        this.tableBeans.addListener(new TableSelectListener<T, A>(this));
 
-        this.buttonAdd = new Button("Add", new AddListener<T>(this));
-        
-        this.buttonEdit = new Button("Ändern");
+        this.buttonAdd = new Button("Add", new AddListener<T, A>(this));
+
+        this.buttonEdit = new Button("Ändern", new AddListener<T, A>(this));
         this.buttonEdit.setEnabled(false);
-        
-        this.buttonDelete = new Button("-", new DeleteListener<T>(this));
+
+        this.buttonDelete = new Button("-", new DeleteListener<T, A>(this));
         this.buttonDelete.setEnabled(false);
 
-        this.windowAdd = new AddDialog<T>(this);
-        this.windowAdd.setModal(true);
-        
+        this.dialog = new CRUDDialog<T, A>(this);
+        this.dialog.setModal(true);
+
         this.initLayout();
+    }
+    
+    @Override
+    public void setAnchor(A a)
+    {
+        this.anchor = a;
     }
 
     private void initLayout()
     {
         HorizontalLayout buttonRow;
-        
+
         this.setSizeFull();
         this.setScrollable(true);
 
@@ -78,10 +86,10 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
 
             this.tableBeans.setColumnHeader(propertyId, columnName);
         }
-        
+
         buttonRow = new HorizontalLayout();
         buttonRow.setWidth("100%");
-        
+
         buttonRow.addComponent(this.buttonAdd);
         buttonRow.addComponent(this.buttonEdit);
         buttonRow.addComponent(this.buttonDelete);
@@ -89,13 +97,13 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
         this.addComponent(this.tableBeans);
         this.addComponent(buttonRow);
     }
-    
-    private static class TableSelectListener<T> implements Property.ValueChangeListener
+
+    private static class TableSelectListener<T, A> implements Property.ValueChangeListener
     {
         private static final long serialVersionUID = 1L;
-        private ItemsListView<T> view;
+        private ItemsListView<T, A> view;
 
-        public TableSelectListener(ItemsListView<T> view)
+        public TableSelectListener(ItemsListView<T, A> view)
         {
             this.view = view;
         }
@@ -104,16 +112,17 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
         public void valueChange(ValueChangeEvent event)
         {
             this.view.buttonDelete.setEnabled(true);
+
             this.view.buttonEdit.setEnabled(true);
         }
     }
-    
-    private static class DeleteListener<T> implements Button.ClickListener
+
+    private static class DeleteListener<T, A> implements Button.ClickListener
     {
         private static final long serialVersionUID = 1L;
-        private ItemsListView<T> view;
+        private ItemsListView<T, A> view;
 
-        public DeleteListener(ItemsListView<T> view)
+        public DeleteListener(ItemsListView<T, A> view)
         {
             this.view = view;
         }
@@ -121,16 +130,16 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
         @Override
         public void buttonClick(ClickEvent event)
         {
-            
+
         }
     }
 
-    private static class AddListener<T> implements Button.ClickListener
+    private static class AddListener<T, A> implements Button.ClickListener
     {
         private static final long serialVersionUID = 1L;
-        private ItemsListView<T> view;
+        private ItemsListView<T, A> view;
 
-        public AddListener(ItemsListView<T> view)
+        public AddListener(ItemsListView<T, A> view)
         {
             this.view = view;
         }
@@ -138,7 +147,10 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
         @Override
         public void buttonClick(ClickEvent event)
         {
-            if (view.windowAdd.getParent() != null)
+            this.view.dialog.setAction(CRUDDialog.Action.CREATE);
+            this.view.dialog.setBean(this.view.createBeanInstance());
+
+            if (view.dialog.getParent() != null)
             {
                 // window is already showing
                 view.getWindow().showNotification("Window is already open");
@@ -146,16 +158,21 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
             else
             {
                 // Open the subwindow by adding it to the parent window
-                view.getWindow().addWindow(view.windowAdd);
+                view.getWindow().addWindow(view.dialog);
             }
         }
     }
 
-    private static class AddDialog<T> extends Window
+    private static class CRUDDialog<T, A> extends Window
     {
         private static final long serialVersionUID = 1L;
 
-        private ItemsListView<T> view;
+        public enum Action
+        {
+            CREATE, UPDATE, UNDEFINED;
+        }
+
+        private ItemsListView<T, A> view;
 
         private Form form;
         private BeanItem<T> beanItem;
@@ -163,7 +180,9 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
         private Button buttonSave;
         private Button buttonClose;
 
-        public AddDialog(ItemsListView<T> view)
+        private Action action = Action.UNDEFINED;
+
+        public CRUDDialog(ItemsListView<T, A> view)
         {
             super();
 
@@ -186,8 +205,8 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
             this.form.setFormFieldFactory(this.view.getFormFieldFactory());
             this.form.setItemDataSource(beanItem);
 
-            this.buttonSave = new Button("Save", new DialogListener<T>(this));
-            this.buttonClose = new Button("Close", new DialogListener<T>(this));
+            this.buttonSave = new Button("Save", new DialogListener<T, A>(this));
+            this.buttonClose = new Button("Close", new DialogListener<T, A>(this));
 
             HorizontalLayout formLayout = (HorizontalLayout) this.form.getFooter();
             formLayout.setMargin(true);
@@ -198,20 +217,24 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
             layout.addComponent(this.form);
         }
 
-        private void reset()
+        public void setBean(T bean)
         {
-            this.bean = this.view.createBeanInstance();
+            this.bean = bean;
             this.beanItem = new BeanItem<T>(bean);
             this.form.setItemDataSource(beanItem);
-
         }
 
-        private static class DialogListener<T> implements Button.ClickListener
+        public void setAction(Action action)
+        {
+            this.action = action;
+        }
+
+        private static class DialogListener<T, A> implements Button.ClickListener
         {
             private static final long serialVersionUID = 1L;
-            private AddDialog<T> dialog;
+            private CRUDDialog<T, A> dialog;
 
-            public DialogListener(AddDialog<T> dialog)
+            public DialogListener(CRUDDialog<T, A> dialog)
             {
                 this.dialog = dialog;
             }
@@ -221,15 +244,25 @@ public abstract class ItemsListView<T> extends Panel implements ListView<T>
             {
                 if (event.getButton().equals(dialog.buttonSave))
                 {
-
+                    try
+                    {
+                        if (this.dialog.action == Action.CREATE)
+                        {
+                            this.dialog.view.createBean(this.dialog.bean);
+                            
+                            this.dialog.view.updateComponents();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
-
-                this.dialog.reset();
 
                 // close the window by removing it from the parent window
                 this.dialog.getParent().removeWindow(dialog);
             }
-
         }
     }
 }

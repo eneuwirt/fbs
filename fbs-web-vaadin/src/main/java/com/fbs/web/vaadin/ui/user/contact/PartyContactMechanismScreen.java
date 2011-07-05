@@ -2,15 +2,22 @@ package com.fbs.web.vaadin.ui.user.contact;
 
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.fbs.dmr.universal.model.contact.ContactMechanism;
 import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
+import com.fbs.dmr.universal.model.contact.ElectronicAddress;
+import com.fbs.dmr.universal.model.contact.EntityContactMechanism;
+import com.fbs.dmr.universal.model.contact.PostalAddress;
+import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.dmr.universal.model.party.PartyContactMechanismPurpose;
 import com.fbs.web.dto.ContactMechanismDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
+import com.fbs.web.vaadin.ui.common.ItemsListScreen;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -26,12 +33,16 @@ import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyContactMechanism>
+public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMechanism> implements ContactMechanismHelper
 {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(PartyContactMechanismScreen.class.getName());
 	private static final String ID = "id";
 	private static final String COMMENT = "comment";
+	
+	protected static final String CONTACT_MECHANISM_ADDRESS = "contactMechanism.address";
+    protected static final String CONTACT_MECHANISM_TYPE_DESCR = "contactMechanism.contactMechanismType.description";
+
 
 	private static final String PARTY = "party";
 	private static final String PARTY_NAME = "party.name";
@@ -50,6 +61,131 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 	{
 		super(app, PartyContactMechanism.class, new PartyContactMechanismDetails(app, VISIBLE_FIELDS), VISIBLE_COLUMNS, NESTED_PROPERTIES);
 	}
+	
+	@Override
+    protected void layoutItemButtons()
+    {
+        String caption = this.app.getMessage(ApplicationMessages.ContactMechanismCreatePostalAddress);
+        String caption1 = this.app.getMessage(ApplicationMessages.ContactMechanismCreateEAddress);
+        String caption2 = this.app.getMessage(ApplicationMessages.ContactMechanismCreatePhone);
+
+        this.buttonItemAdd.setCaption(caption);
+        this.buttonItemAdd1.setCaption(caption1);
+        this.buttonItemAdd2.setCaption(caption2);
+
+        this.buttonItemDelete.setCaption("-");
+    }
+	
+	
+	protected ContactMechanism createContactMechanism()
+    {
+        ContactMechanism contactMechanism;
+
+        switch (this.actionCurrent)
+        {
+            case CREATE:
+                contactMechanism = new PostalAddress();
+                break;
+
+            case CREATE_1:
+                contactMechanism = new ElectronicAddress();
+                break;
+
+            case CREATE_2:
+                contactMechanism = new TelecommunicationNumber();
+                break;
+
+            default:
+                contactMechanism = new ContactMechanism();
+                break;
+        }
+
+        return contactMechanism;
+    }
+
+    protected void createContactMechanism(ContactMechanismDto bean, EntityContactMechanism t)
+    {
+        if (t.getContactMechanism() instanceof PostalAddress)
+        {
+            PostalAddress postalAddress;
+
+            postalAddress = (PostalAddress) t.getContactMechanism();
+
+            bean.fillPostalAddress(postalAddress);
+
+            this.app.getServices().getCrudServicePostalAddress().create(postalAddress);
+        }
+        else if (t.getContactMechanism() instanceof TelecommunicationNumber)
+        {
+            TelecommunicationNumber tn;
+
+            tn = (TelecommunicationNumber) t.getContactMechanism();
+
+            bean.fillTelecommunicationNumber(tn);
+
+            this.app.getServices().getCrudServiceTelecommunicationNumber().create(tn);
+        }
+        else if (t.getContactMechanism() instanceof ElectronicAddress)
+        {
+            ElectronicAddress ea;
+
+            ea = (ElectronicAddress) t.getContactMechanism();
+
+            bean.fillElectronicAddress(ea);
+
+            this.app.getServices().getCrudServiceElectronicAddress().create(ea);
+        }
+        else
+        {
+            String msg = "Unknown class: " + t.getContactMechanism().getClass().getName();
+
+            logger.log(Level.SEVERE, msg);
+
+            throw new IllegalArgumentException(msg);
+        }
+    }
+
+    protected void updateContactMechanism(ContactMechanismDto bean, EntityContactMechanism t)
+    {
+        if (t.getContactMechanism() instanceof PostalAddress)
+        {
+            PostalAddress postalAddress;
+
+            postalAddress = (PostalAddress) t.getContactMechanism();
+
+            bean.fillPostalAddress(postalAddress);
+
+            this.app.getServices().getCrudServicePostalAddress().update(postalAddress);
+        }
+        else if (t.getContactMechanism() instanceof TelecommunicationNumber)
+        {
+            TelecommunicationNumber tn;
+
+            tn = (TelecommunicationNumber) t.getContactMechanism();
+
+            bean.fillTelecommunicationNumber(tn);
+
+            this.app.getServices().getCrudServiceTelecommunicationNumber().update(tn);
+        }
+        else if (t.getContactMechanism() instanceof ElectronicAddress)
+        {
+            ElectronicAddress ea;
+
+            ea = (ElectronicAddress) t.getContactMechanism();
+
+            bean.fillElectronicAddress(ea);
+
+            this.app.getServices().getCrudServiceElectronicAddress().update(ea);
+        }
+        else
+        {
+            String msg = "Unknown class: " + t.getContactMechanism().getClass().getName();
+
+            logger.log(Level.SEVERE, msg);
+
+            throw new IllegalArgumentException(msg);
+        }
+    }
 
 
 	private void setOptiongroup(PartyContactMechanism pcm)

@@ -1,13 +1,19 @@
 package com.fbs.web.vaadin.ui.user.contact;
 
+import java.util.Arrays;
 import java.util.List;
 
+import com.fbs.dmr.universal.model.contact.ContactMechanism;
+import com.fbs.dmr.universal.model.contact.ElectronicAddress;
+import com.fbs.dmr.universal.model.contact.PostalAddress;
+import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.items.DetailsComponent;
 import com.vaadin.data.Item;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
@@ -20,7 +26,8 @@ import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class PartyContactMechanismDetails extends CustomComponent implements DetailsComponent<PartyContactMechanism>
+public class PartyContactMechanismDetails extends CustomComponent implements DetailsComponent<PartyContactMechanism>,
+        ContactMechanismHelper
 {
     private static final long serialVersionUID = 1L;
 
@@ -30,15 +37,12 @@ public class PartyContactMechanismDetails extends CustomComponent implements Det
     private static final String PARTY = "party";
     private static final String PARTY_NAME = "party.name";
 
-    protected static final String ADDRESS1 = "address1";
-    protected static final String ADDRESS2 = "address2";
-    protected static final String CITY = "city";
-    protected static final String POSTAL_CODE = "postalCode";
-    protected static final String COUNTRY = "country";
-    protected static final String ELECTRONIC_ADDRESS = "electronicAddress";
-    protected static final String COUNTRY_CODE = "countryCode";
-    protected static final String AREA_CODE = "areaCode";
-    protected static final String NUMBER = "number";
+    static final String[] VISIBLE_FIELDS_DETAILS_POSTAL_ADDRESS = new String[]
+    { ADDRESS1, ADDRESS2, POSTAL_CODE, CITY, COUNTRY, };
+    static final String[] VISIBLE_FIELDS_DETAILS_ELECTRONIC_ADDRESS = new String[]
+    { ELECTRONIC_ADDRESS };
+    static final String[] VISIBLE_FIELDS_DETAILS_TELEKOM = new String[]
+    { COUNTRY_CODE, AREA_CODE, NUMBER };
 
     private MyVaadinApplication app;
 
@@ -86,10 +90,15 @@ public class PartyContactMechanismDetails extends CustomComponent implements Det
     }
 
     @Override
-    public void setBean(PartyContactMechanism t)
+    public void setBean(PartyContactMechanism bean)
     {
-        // TODO Auto-generated method stub
+        BeanItem<PartyContactMechanism> beanItem;
 
+        this.bean = bean;
+        
+        beanItem = new BeanItem<PartyContactMechanism>(bean);
+
+        this.form.setItemDataSource(beanItem, Arrays.asList(this.visibleFields));
     }
 
     @Override
@@ -125,6 +134,31 @@ public class PartyContactMechanismDetails extends CustomComponent implements Det
     {
         // TODO Auto-generated method stub
 
+    }
+
+    protected String[] determineVisibleFieldDetails(ContactMechanism contactMechanism)
+    {
+        String[] visible_field_details = null;
+
+        if (contactMechanism instanceof PostalAddress)
+        {
+            visible_field_details = VISIBLE_FIELDS_DETAILS_POSTAL_ADDRESS;
+        }
+        else if (contactMechanism instanceof ElectronicAddress)
+        {
+            visible_field_details = VISIBLE_FIELDS_DETAILS_ELECTRONIC_ADDRESS;
+        }
+        else if (contactMechanism instanceof TelecommunicationNumber)
+        {
+            visible_field_details = VISIBLE_FIELDS_DETAILS_TELEKOM;
+        }
+        else
+        {
+            visible_field_details = new String[]
+            {};
+        }
+
+        return visible_field_details;
     }
 
     private static class PartyContactMechanismFormFieldFactory implements FormFieldFactory

@@ -6,7 +6,6 @@ import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.web.dto.PartyRelationshipDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.ui.common.ItemsListView;
-import com.vaadin.ui.FormFieldFactory;
 
 public class PartyRelationshipView extends ItemsListView<PartyRelationshipDto, Party>
 {
@@ -64,12 +63,6 @@ public class PartyRelationshipView extends ItemsListView<PartyRelationshipDto, P
         
     }
 
-    @Override
-    public FormFieldFactory getFormFieldFactory()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     @Override
     public String getColumnName(String pid)

@@ -48,38 +48,9 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 
 	public PartyContactMechanismScreen(MyVaadinApplication app)
 	{
-		super(app, PartyContactMechanism.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
+		super(app, PartyContactMechanism.class, new PartyContactMechanismDetails(app, VISIBLE_FIELDS), VISIBLE_COLUMNS, NESTED_PROPERTIES);
 	}
 
-	@Override
-	protected AbstractComponentContainer getComponent()
-	{
-		VerticalLayout verticalLayout;
-
-		verticalLayout = new VerticalLayout();
-
-		this.formDetails = new Form();
-		this.formDetails.setCaption(this.app.getMessage(ApplicationMessages.PartyContactMechanismDetails));
-		this.formDetails.setFormFieldFactory(new ContactDetailsFormFieldFactory(this.app));
-
-		this.optionGroupPurpose = new OptionGroup();
-		this.optionGroupPurpose.setCaption(this.app.getMessage(ApplicationMessages.PartyContactMechanismPurpose));
-		this.optionGroupPurpose.setMultiSelect(true);
-		this.optionGroupPurpose.setNullSelectionAllowed(true);
-		this.optionGroupPurpose.setImmediate(true);
-
-		verticalLayout.addComponent(this.form);
-		verticalLayout.addComponent(this.formDetails);
-		verticalLayout.addComponent(this.optionGroupPurpose);
-
-		return verticalLayout;
-	}
-
-	@Override
-	protected void setAdditionalElements(PartyContactMechanism bean)
-	{
-		this.setOptiongroup(bean);
-	}
 
 	private void setOptiongroup(PartyContactMechanism pcm)
 	{
@@ -111,13 +82,6 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 		}
 	}
 
-	@Override
-	protected void layoutComponent()
-	{
-		this.formDetails.setSizeFull();
-
-		this.optionGroupPurpose.setSizeFull();
-	}
 
 	@Override
 	public PartyContactMechanism createBeanInstance()
@@ -139,7 +103,7 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 	@Override
 	public PartyContactMechanism createBean(PartyContactMechanism t) throws Exception
 	{
-		Set<String> selectedPurposes;
+		/*Set<String> selectedPurposes;
 		BeanItem<ContactMechanismDto> beanItem;
 		ContactMechanismDto bean;
 		
@@ -169,6 +133,7 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 		}
 		
 		logger.info("<createBean");
+		*/
 
 		return t;
 	}
@@ -177,7 +142,7 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 	@Override
 	public void updateBean(PartyContactMechanism t) throws Exception
 	{
-		BeanItem<ContactMechanismDto> beanItem;
+		/*BeanItem<ContactMechanismDto> beanItem;
 		ContactMechanismDto bean;
 
 		beanItem = (BeanItem<ContactMechanismDto>) this.formDetails.getItemDataSource();
@@ -187,6 +152,7 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 		this.app.getServices().getCrudServicePartyContactMechanism().update(t);
 
 		this.updateContactMechanism(bean, t);
+		*/
 	}
 
 	@Override
@@ -205,11 +171,6 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 		this.app.getServices().getCrudServicePartyContactMechanism().delete(t.getId());
 	}
 
-	@Override
-	public FormFieldFactory getFormFieldFactory()
-	{
-		return new PartyContactMechanismFormFieldFactory(this.app);
-	}
 
 	@Override
 	public String getColumnName(String propertyId)
@@ -232,55 +193,4 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 		return propertyId;
 	}
 
-	private static class PartyContactMechanismFormFieldFactory implements FormFieldFactory
-	{
-		private static final long serialVersionUID = 1L;
-		private MyVaadinApplication app;
-
-		public PartyContactMechanismFormFieldFactory(MyVaadinApplication app)
-		{
-			this.app = app;
-		}
-
-		@Override
-		public Field createField(Item item, Object propertyId, Component uiContext)
-		{
-			// Identify the fields by their Property ID.
-			Field result = null;
-
-			String pid = (String) propertyId;
-
-			if (ID.equals(pid))
-			{
-				result = new TextField(this.app.getMessage(ApplicationMessages.PartyContactMechanismId));
-
-				result.setReadOnly(true);
-			}
-			else if (COMMENT.equals(pid))
-			{
-				result = new TextField(this.app.getMessage(ApplicationMessages.PartyContactMechanismComment));
-			}
-			else if (PARTY.equals(pid))
-			{
-				Select select;
-				BeanItemContainer<Party> container;
-				List<Party> parties;
-				String caption;
-
-				caption = this.app.getMessage(ApplicationMessages.PartyContactMechanismParty);
-
-				parties = this.app.getServices().getCrudServiceParty().findAll();
-				container = new BeanItemContainer<Party>(Party.class, parties);
-
-				select = new Select(caption, container);
-
-				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
-				select.setItemCaptionPropertyId("name");
-
-				result = select;
-			}
-
-			return result;
-		}
-	}
 }

@@ -14,6 +14,7 @@ import com.fbs.web.dto.PartyRelationshipDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
+import com.fbs.web.vaadin.ui.common.items.DetailsComponentSimple;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -59,7 +60,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
 
     public PartyRelationshipScreen(MyVaadinApplication app)
     {
-        super(app, PartyRelationshipDto.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
+        super(app, PartyRelationshipDto.class, new DetailsComponentSimple<PartyRelationshipDto>(app, new PartyRelationshipFormFieldFactory(app), VISIBLE_FIELDS), VISIBLE_COLUMNS,  NESTED_PROPERTIES);
     }
 
     @Override
@@ -182,12 +183,6 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
         }
 
         return pid;
-    }
-
-    @Override
-    public FormFieldFactory getFormFieldFactory()
-    {
-        return new PartyRelationshipFormFieldFactory(this.app);
     }
 
     private static class PartyRelationshipFormFieldFactory implements FormFieldFactory

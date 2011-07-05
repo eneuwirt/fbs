@@ -202,7 +202,7 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
             this.form = new Form();
             this.form.setSizeFull();
             this.form.setVisibleItemProperties(this.view.visibleFields);
-            this.form.setFormFieldFactory(this.view.getFormFieldFactory());
+            //this.form.setFormFieldFactory(this.view.getFormFieldFactory());
             this.form.setItemDataSource(beanItem);
 
             this.buttonSave = new Button("Save", new DialogListener<T, A>(this));

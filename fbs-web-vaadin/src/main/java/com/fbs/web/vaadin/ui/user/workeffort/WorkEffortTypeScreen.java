@@ -6,6 +6,7 @@ import com.fbs.dmr.universal.model.workeffort.WorkEffortType;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
+import com.fbs.web.vaadin.ui.common.items.DetailsComponentSimple;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
@@ -25,7 +26,8 @@ public class WorkEffortTypeScreen extends ItemsListScreen<WorkEffortType>
 
     public WorkEffortTypeScreen(MyVaadinApplication app)
     {
-        super(app, WorkEffortType.class, VISIBLE_COLUMNS, VISIBLE_FIELDS);
+        super(app, WorkEffortType.class, new DetailsComponentSimple<WorkEffortType>(app, new WorkEffortTypeFormFieldFactory(app),
+                VISIBLE_FIELDS), VISIBLE_COLUMNS);
     }
 
     @Override
@@ -83,12 +85,6 @@ public class WorkEffortTypeScreen extends ItemsListScreen<WorkEffortType>
             return this.app.getMessage(ApplicationMessages.WorkEffortTypeStandardWorkMunutes);
 
         return propertyId;
-    }
-
-    @Override
-    public FormFieldFactory getFormFieldFactory()
-    {
-        return new WorkEffortTypeFormFieldFactory(this.app);
     }
 
     private static class WorkEffortTypeFormFieldFactory implements FormFieldFactory

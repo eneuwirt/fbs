@@ -7,6 +7,7 @@ import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
+import com.fbs.web.vaadin.ui.common.items.DetailsComponentSimple;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Component;
@@ -18,145 +19,140 @@ import com.vaadin.ui.TextField;
 
 public class PartyRelationshipTypeScreen extends ItemsListScreen<PartyRelationshipType>
 {
-	private static final long serialVersionUID = 1L;
-	private static final String COL_ID = "id";
-	private static final String COL_DESC = "description";
-	private static final String COL_NAME = "name";
-	private static final String COL_ROLETYPE_FROM = "partyRoleTypeFrom";
-	private static final String COL_ROLETYPE_TO = "partyRoleTypeTo";
-	private static final String[] VISIBLE_COLUMNS = new String[]
-		{ COL_ID, COL_NAME };
-	private static final String[] VISIBLE_FIELDS = new String[]
-		{ COL_ID, COL_NAME, COL_DESC, COL_ROLETYPE_FROM, COL_ROLETYPE_TO };
+    private static final long serialVersionUID = 1L;
+    private static final String COL_ID = "id";
+    private static final String COL_DESC = "description";
+    private static final String COL_NAME = "name";
+    private static final String COL_ROLETYPE_FROM = "partyRoleTypeFrom";
+    private static final String COL_ROLETYPE_TO = "partyRoleTypeTo";
+    private static final String[] VISIBLE_COLUMNS = new String[]
+    { COL_ID, COL_NAME };
+    private static final String[] VISIBLE_FIELDS = new String[]
+    { COL_ID, COL_NAME, COL_DESC, COL_ROLETYPE_FROM, COL_ROLETYPE_TO };
 
-	public PartyRelationshipTypeScreen(MyVaadinApplication app)
-	{
-		super(app, PartyRelationshipType.class, VISIBLE_COLUMNS, VISIBLE_FIELDS);
-	}
+    public PartyRelationshipTypeScreen(MyVaadinApplication app)
+    {
+        super(app, PartyRelationshipType.class, new DetailsComponentSimple<PartyRelationshipType>(app,
+                new PartyRelationshipTypeFormFieldFactory(app), VISIBLE_FIELDS), VISIBLE_COLUMNS);
+    }
 
-	@Override
-	public PartyRelationshipType createBeanInstance()
-	{
-		return new PartyRelationshipType();
-	}
+    @Override
+    public PartyRelationshipType createBeanInstance()
+    {
+        return new PartyRelationshipType();
+    }
 
-	@Override
-	public List<PartyRelationshipType> getAllBeans() throws Exception
-	{
-		return this.services.getCrudServicePartyRelationshipType().findAll();
-	}
+    @Override
+    public List<PartyRelationshipType> getAllBeans() throws Exception
+    {
+        return this.services.getCrudServicePartyRelationshipType().findAll();
+    }
 
-	@Override
-	public PartyRelationshipType createBean(PartyRelationshipType t) throws Exception
-	{
-		this.services.getCrudServicePartyRelationshipType().create(t);
+    @Override
+    public PartyRelationshipType createBean(PartyRelationshipType t) throws Exception
+    {
+        this.services.getCrudServicePartyRelationshipType().create(t);
 
-		return t;
-	}
+        return t;
+    }
 
-	@Override
-	public void updateBean(PartyRelationshipType t) throws Exception
-	{
-		this.services.getCrudServicePartyRelationshipType().update(t);
-	}
+    @Override
+    public void updateBean(PartyRelationshipType t) throws Exception
+    {
+        this.services.getCrudServicePartyRelationshipType().update(t);
+    }
 
-	@Override
-	public PartyRelationshipType readBean(PartyRelationshipType t) throws Exception
-	{
-		return this.services.getCrudServicePartyRelationshipType().read(t.getId());
-	}
+    @Override
+    public PartyRelationshipType readBean(PartyRelationshipType t) throws Exception
+    {
+        return this.services.getCrudServicePartyRelationshipType().read(t.getId());
+    }
 
-	@Override
-	public void deleteBean(PartyRelationshipType t) throws Exception
-	{
-		this.services.getCrudServicePartyRelationshipType().delete(t.getId());
-	}
-	
-	@Override
-	public String getColumnName(String propertyId)
-	{
-		if (propertyId.equals(COL_ID))
-			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeId);
+    @Override
+    public void deleteBean(PartyRelationshipType t) throws Exception
+    {
+        this.services.getCrudServicePartyRelationshipType().delete(t.getId());
+    }
 
-		if (propertyId.equals(COL_NAME))
-			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeName);
+    @Override
+    public String getColumnName(String propertyId)
+    {
+        if (propertyId.equals(COL_ID))
+            return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeId);
 
-		return propertyId;
-	}
+        if (propertyId.equals(COL_NAME))
+            return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeName);
 
-	@Override
-	public FormFieldFactory getFormFieldFactory()
-	{
-		return new PartyRelationshipTypeFormFieldFactory(this.app);
-	}
+        return propertyId;
+    }
 
-	private static class PartyRelationshipTypeFormFieldFactory implements FormFieldFactory
-	{
-		private static final long serialVersionUID = 1L;
-		private MyVaadinApplication app;
+    private static class PartyRelationshipTypeFormFieldFactory implements FormFieldFactory
+    {
+        private static final long serialVersionUID = 1L;
+        private MyVaadinApplication app;
 
-		public PartyRelationshipTypeFormFieldFactory(MyVaadinApplication app)
-		{
-			this.app = app;
-		}
+        public PartyRelationshipTypeFormFieldFactory(MyVaadinApplication app)
+        {
+            this.app = app;
+        }
 
-		@Override
-		public Field createField(Item item, Object propertyId, Component uiContext)
-		{
-			// Identify the fields by their Property ID.
-			Field result = null;
+        @Override
+        public Field createField(Item item, Object propertyId, Component uiContext)
+        {
+            // Identify the fields by their Property ID.
+            Field result = null;
 
-			String pid = (String) propertyId;
+            String pid = (String) propertyId;
 
-			if (COL_ID.equals(pid))
-			{
-				result = new TextField(this.app.getMessage(ApplicationMessages.PartyRelationshipTypeId));
+            if (COL_ID.equals(pid))
+            {
+                result = new TextField(this.app.getMessage(ApplicationMessages.PartyRelationshipTypeId));
 
-				result.setReadOnly(true);
-			}
-			else if (COL_NAME.equals(pid))
-			{
-				result = new TextField(this.app.getMessage(ApplicationMessages.PartyRelationshipTypeName));
-			}
-			else if (COL_DESC.equals(pid))
-			{
-				TextArea textArea;
-				
-				textArea = new TextArea(this.app.getMessage(ApplicationMessages.PartyRelationshipTypeDescription));
-				textArea.setRows(5);
-				textArea.setColumns(20);
-				textArea.setImmediate(true);
-				
-				result = textArea;
-			}
-			else if (COL_ROLETYPE_TO.equals(pid) || COL_ROLETYPE_FROM.equals(pid))
-			{
-				BeanItemContainer<PartyRoleType> container;
-				Select select;
-				List<PartyRoleType> partyRoleTypes;
-				String caption;
+                result.setReadOnly(true);
+            }
+            else if (COL_NAME.equals(pid))
+            {
+                result = new TextField(this.app.getMessage(ApplicationMessages.PartyRelationshipTypeName));
+            }
+            else if (COL_DESC.equals(pid))
+            {
+                TextArea textArea;
 
-				if (COL_ROLETYPE_TO.equals(pid))
-				{
-					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipTypeRoleTypeTo);
-				}
-				else
-				{
-					caption = this.app.getMessage(ApplicationMessages.PartyRelationshipTypeRoleTypeFrom);
-				}
+                textArea = new TextArea(this.app.getMessage(ApplicationMessages.PartyRelationshipTypeDescription));
+                textArea.setRows(5);
+                textArea.setColumns(20);
+                textArea.setImmediate(true);
 
-				partyRoleTypes = this.app.getServices().getCrudServicePartyRoleType().findAll();
+                result = textArea;
+            }
+            else if (COL_ROLETYPE_TO.equals(pid) || COL_ROLETYPE_FROM.equals(pid))
+            {
+                BeanItemContainer<PartyRoleType> container;
+                Select select;
+                List<PartyRoleType> partyRoleTypes;
+                String caption;
 
-				container = new BeanItemContainer<PartyRoleType>(PartyRoleType.class, partyRoleTypes);
+                if (COL_ROLETYPE_TO.equals(pid))
+                {
+                    caption = this.app.getMessage(ApplicationMessages.PartyRelationshipTypeRoleTypeTo);
+                }
+                else
+                {
+                    caption = this.app.getMessage(ApplicationMessages.PartyRelationshipTypeRoleTypeFrom);
+                }
 
-				select = new Select(caption, container);
-				select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
-				select.setItemCaptionPropertyId("description");
+                partyRoleTypes = this.app.getServices().getCrudServicePartyRoleType().findAll();
 
-				result = select;
-			}
+                container = new BeanItemContainer<PartyRoleType>(PartyRoleType.class, partyRoleTypes);
 
-			return result;
-		}
-	}
+                select = new Select(caption, container);
+                select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
+                select.setItemCaptionPropertyId("description");
+
+                result = select;
+            }
+
+            return result;
+        }
+    }
 }

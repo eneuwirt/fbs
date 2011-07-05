@@ -5,6 +5,7 @@ import java.util.List;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
+import com.fbs.web.vaadin.ui.common.ItemsListScreen;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
@@ -14,7 +15,7 @@ import com.vaadin.ui.Select;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class PersonScreen extends PartyScreen<Person>
+public class PersonScreen extends ItemsListScreen<Person>
 {
 	private static final long serialVersionUID = 1L;
 	private static final String BDATE = "birthDate";
@@ -32,7 +33,7 @@ public class PersonScreen extends PartyScreen<Person>
 
 	public PersonScreen(MyVaadinApplication app)
 	{
-		super(app, Person.class, VISIBLE_COLUMNS, VISIBLE_FIELDS);
+		super(app, Person.class, new PersonDetails(app,  new PersonFormFieldFactory(app),VISIBLE_FIELDS), VISIBLE_COLUMNS);
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class PersonScreen extends PartyScreen<Person>
 	{
 		this.services.getCrudServicePerson().create(t);
 		
-		super.createBean(t);		
+		this.component.createBeanDetails(t);	
 
 		return t;
 	}
@@ -62,9 +63,9 @@ public class PersonScreen extends PartyScreen<Person>
 	@Override
 	public void updateBean(Person t) throws Exception
 	{
-		super.updateBean(t);
-
 		this.services.getCrudServicePerson().update(t);
+		
+		this.component.updateBeanDetails(t);
 	}
 
 	@Override
@@ -73,6 +74,8 @@ public class PersonScreen extends PartyScreen<Person>
 		Person result;
 
 		result = this.services.getCrudServicePerson().read(t.getId());
+		
+		this.component.readBeanDetails(result);
 
 		return result;
 	}
@@ -80,7 +83,9 @@ public class PersonScreen extends PartyScreen<Person>
 	@Override
 	public void deleteBean(Person t) throws Exception
 	{
-		this.services.getCrudServicePerson().delete(t.getId());
+		this.component.deleteBeanDetails(t);
+		
+	    this.services.getCrudServicePerson().delete(t.getId());
 	}
 
 	@Override
@@ -96,12 +101,6 @@ public class PersonScreen extends PartyScreen<Person>
 			return this.app.getMessage(ApplicationMessages.PersonLastName);
 
 		return propertyId;
-	}
-
-	@Override
-	public FormFieldFactory getFormFieldFactory()
-	{
-		return new PersonFormFieldFactory(this.app);
 	}
 
 	private static class PersonFormFieldFactory implements FormFieldFactory

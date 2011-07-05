@@ -119,7 +119,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
 
 		this.component = this.getComponent();
 		this.component.setEnabled(false);
-		this.updateComponent(null);
+		this.updateDetails(null);
 
 		this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
 		this.addNestedContainerProperties();
@@ -173,7 +173,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void updateComponent(T bean)
+	protected void updateDetails(T bean)
 	{
 		if (bean != null)
 		{
@@ -181,8 +181,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
 
 			try
 			{
-				this.notifyClick(Action.SELECT);
-
 				beanItem = (BeanItem<T>) this.table.getItem(bean);
 
 				this.form.setItemDataSource(beanItem, this.getVisibleFields());
@@ -397,7 +395,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
 				this.screen.notifyClick(Action.CREATE_2);
 			}
 
-			this.screen.updateComponent(null);
+			this.screen.updateDetails(null);
 			this.screen.component.setEnabled(true);
 
 			this.screen.buttonItemAdd.setEnabled(false);
@@ -657,7 +655,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
 				beanItem = (BeanItem<T>) this.screen.form.getItemDataSource();
 			}
 
-			this.screen.updateComponent(bean);
+			this.screen.updateDetails(bean);
 
 			this.screen.table.setEnabled(true);
 
@@ -687,10 +685,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
 		public void valueChange(ValueChangeEvent event)
 		{
 			T bean;
+			
+			this.screen.notifyClick(Action.SELECT);
 
 			bean = (T) this.screen.table.getValue();
 
-			this.screen.updateComponent(bean);
+			this.screen.updateDetails(bean);
 		}
 	}
 }

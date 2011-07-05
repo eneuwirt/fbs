@@ -70,14 +70,14 @@ public class FacilityContactMechanismScreen extends ContactMechanismHelper<Facil
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void updateComponent(FacilityContactMechanism bean)
+	protected void updateDetails(FacilityContactMechanism bean)
 	{
 		BeanItem<ContactMechanismDto> beanItem;
 		ContactMechanism contactMechanism = null;
 		ContactMechanismDto dummy = null;
 		String[] visible_field_details = null;
 
-		super.updateComponent(bean);
+		super.updateDetails(bean);
 
 		if (bean != null)
 		{

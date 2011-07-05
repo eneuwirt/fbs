@@ -119,14 +119,14 @@ public abstract class ContactMechanismHelper<T extends EntityContactMechanism> e
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void updateComponent(T bean)
+	protected void updateDetails(T bean)
 	{
 		BeanItem<ContactMechanismDto> beanItem;
 		ContactMechanism contactMechanism = null;
 		ContactMechanismDto dummy = null;
 		String[] visible_field_details = null;
 
-		super.updateComponent(bean);
+		super.updateDetails(bean);
 
 		if (bean != null)
 		{

@@ -183,14 +183,14 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void updateComponent(T party)
+	protected void updateDetails(T party)
 	{
 		BeanItem<T> beanItem;
 		T bean;
 
 		logger.info(">resetComponent");
 
-		super.updateComponent(party);
+		super.updateDetails(party);
 
 		beanItem = (BeanItem<T>) this.form.getItemDataSource();
 

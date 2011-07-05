@@ -28,7 +28,7 @@ public class UserScreen extends ItemsListScreen<User>
     }
 
 	@Override
-    protected User createBeanInstance()
+	public User createBeanInstance()
     {
 	    User user;
 	    String password;
@@ -43,7 +43,7 @@ public class UserScreen extends ItemsListScreen<User>
     }
 
 	@Override
-    protected List<User> getAllBeans() throws Exception
+	public List<User> getAllBeans() throws Exception
     {
 		List<User> users;
 		users = this.services.getUserService().findAll();
@@ -52,7 +52,7 @@ public class UserScreen extends ItemsListScreen<User>
     }
 
 	@Override
-    protected User createBean(User user) throws Exception
+	public User createBean(User user) throws Exception
     {
 	    User result = this.services.getUserService().create(user);
 	    
@@ -60,13 +60,13 @@ public class UserScreen extends ItemsListScreen<User>
     }
 
 	@Override
-    protected void updateBean(User user) throws Exception
+	public void updateBean(User user) throws Exception
     {
 		this.services.getUserService().update(user);
     }
 
 	@Override
-    protected User readBean(User user) throws Exception
+	public User readBean(User user) throws Exception
     {
 	    User result = this.services.getUserService().read(user.getUserName());
 	    
@@ -74,14 +74,14 @@ public class UserScreen extends ItemsListScreen<User>
     }
 
 	@Override
-    protected void deleteBean(User user) throws Exception
+	public void deleteBean(User user) throws Exception
     {
 		this.services.getUserService().delete(user);
     }
 
 	
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(COL_USERNAME))
 			return this.app.getMessage(ApplicationMessages.UserName);
@@ -93,7 +93,7 @@ public class UserScreen extends ItemsListScreen<User>
 	}
 
 	@Override
-    protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
     {
 		return new UserFormFieldFactory(this, this.app);
     }

@@ -29,7 +29,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 
 
 	@Override
-	protected Tenant createBeanInstance()
+	public Tenant createBeanInstance()
 	{
 		Tenant result;
 
@@ -41,7 +41,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 
 
 	@Override
-	protected List<Tenant> getAllBeans() throws Exception
+	public List<Tenant> getAllBeans() throws Exception
 	{
 		List<Tenant> result;
 
@@ -51,7 +51,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 	}
 
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(COL_ID))
 			return this.app.getMessage(ApplicationMessages.TenantId);
@@ -64,21 +64,21 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 
 
 	@Override
-	protected void updateBean(Tenant t) throws Exception
+	public void updateBean(Tenant t) throws Exception
 	{
 		this.services.getTenantService().update(t);
 	}
 
 
 	@Override
-	protected void deleteBean(Tenant t) throws Exception
+	public void deleteBean(Tenant t) throws Exception
 	{
 		this.services.getTenantService().delete(t);
 	}
 
 
 	@Override
-	protected Tenant createBean(Tenant tenant) throws Exception
+	public Tenant createBean(Tenant tenant) throws Exception
 	{
 		Tenant result;
 
@@ -89,7 +89,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 
 
 	@Override
-	protected Tenant readBean(Tenant t) throws Exception
+	public Tenant readBean(Tenant t) throws Exception
 	{
 		Tenant result;
 
@@ -99,7 +99,7 @@ public class TenantsScreen extends ItemsListScreen<Tenant>
 	}
 
 	@Override
-    protected FormFieldFactory getFormFieldFactory()
+    public FormFieldFactory getFormFieldFactory()
     {
 	    return new TenantFormFieldFactory(this.app);
     }

@@ -31,14 +31,14 @@ public class OrganizationScreen extends PartyScreen<Organization>
 
 
 	@Override
-	protected Organization createBeanInstance()
+	public Organization createBeanInstance()
 	{
 		return new Organization();
 	}
 
 
 	@Override
-	protected List<Organization> getAllBeans() throws Exception
+	public List<Organization> getAllBeans() throws Exception
 	{
 		List<Organization> organizations;
 
@@ -49,7 +49,7 @@ public class OrganizationScreen extends PartyScreen<Organization>
 
 
 	@Override
-	protected Organization createBean(Organization t) throws Exception
+	public Organization createBean(Organization t) throws Exception
 	{		
 		this.services.getCrudServiceOrganization().create(t);
 		
@@ -60,7 +60,7 @@ public class OrganizationScreen extends PartyScreen<Organization>
 
 
 	@Override
-	protected void updateBean(Organization t) throws Exception
+	public void updateBean(Organization t) throws Exception
 	{		
 		logger.info(">updateBean");
 		super.updateBean(t);
@@ -71,7 +71,7 @@ public class OrganizationScreen extends PartyScreen<Organization>
 
 
 	@Override
-	protected Organization readBean(Organization t) throws Exception
+	public Organization readBean(Organization t) throws Exception
 	{
 		Organization org;
 
@@ -82,14 +82,14 @@ public class OrganizationScreen extends PartyScreen<Organization>
 
 
 	@Override
-	protected void deleteBean(Organization t) throws Exception
+	public void deleteBean(Organization t) throws Exception
 	{
 		this.services.getCrudServiceOrganization().delete(t.getId());
 	}
 
 
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(ID))
 			return this.app.getMessage(ApplicationMessages.OrgId);
@@ -102,7 +102,7 @@ public class OrganizationScreen extends PartyScreen<Organization>
 
 
 	@Override
-	protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
 	{
 		return new OrganizationFormFieldFactory(this.app);
 	}

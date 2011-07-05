@@ -46,7 +46,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected T createBean(T party) throws Exception
+	public T createBean(T party) throws Exception
 	{
 		Set<String> selectedRoles;
 		Set<String> selectedClassiffcations;
@@ -91,7 +91,7 @@ public abstract class PartyScreen<T extends Party> extends ItemsListScreen<T>
 	}
 
 	@Override
-	protected void updateBean(Party party) throws Exception
+	public void updateBean(Party party) throws Exception
 	{
 		List<PartyRole> partyRoles;
 		List<PartyClassification> classifications;

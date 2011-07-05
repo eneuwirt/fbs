@@ -28,7 +28,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 
 
 	@Override
-	protected PartyType createBeanInstance()
+	public PartyType createBeanInstance()
 	{
 		PartyType partyType;
 
@@ -39,7 +39,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 
 
 	@Override
-	protected List<PartyType> getAllBeans() throws Exception
+	public List<PartyType> getAllBeans() throws Exception
 	{
 		List<PartyType> partyTypes = this.services.getCrudServicePartyType().findAll();
 
@@ -48,7 +48,7 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 
 
 	@Override
-	protected PartyType createBean(PartyType t) throws Exception
+	public PartyType createBean(PartyType t) throws Exception
 	{
 		this.services.getCrudServicePartyType().create(t);
 
@@ -57,14 +57,14 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 
 
 	@Override
-	protected void updateBean(PartyType t) throws Exception
+	public void updateBean(PartyType t) throws Exception
 	{
 		this.services.getCrudServicePartyType().update(t);
 	}
 
 
 	@Override
-	protected PartyType readBean(PartyType t) throws Exception
+	public PartyType readBean(PartyType t) throws Exception
 	{
 		PartyType result;
 
@@ -75,20 +75,20 @@ public class PartyTypeScreen extends ItemsListScreen<PartyType>
 
 
 	@Override
-	protected void deleteBean(PartyType t) throws Exception
+	public void deleteBean(PartyType t) throws Exception
 	{
 		this.services.getCrudServicePartyType().delete(t.getId());
 	}
 
 
 	@Override
-	protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
 	{
 		return new PartyTypeFormFieldFactory(this.app);
 	}
 	
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(ID))
 			return this.app.getMessage(ApplicationMessages.PartyTypeId);

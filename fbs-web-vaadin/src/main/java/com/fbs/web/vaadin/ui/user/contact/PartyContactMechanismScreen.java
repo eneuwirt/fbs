@@ -120,13 +120,13 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 	}
 
 	@Override
-	protected PartyContactMechanism createBeanInstance()
+	public PartyContactMechanism createBeanInstance()
 	{
 		return new PartyContactMechanism();
 	}
 
 	@Override
-	protected List<PartyContactMechanism> getAllBeans() throws Exception
+	public List<PartyContactMechanism> getAllBeans() throws Exception
 	{
 		List<PartyContactMechanism> result;
 
@@ -137,7 +137,7 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected PartyContactMechanism createBean(PartyContactMechanism t) throws Exception
+	public PartyContactMechanism createBean(PartyContactMechanism t) throws Exception
 	{
 		Set<String> selectedPurposes;
 		BeanItem<ContactMechanismDto> beanItem;
@@ -175,7 +175,7 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void updateBean(PartyContactMechanism t) throws Exception
+	public void updateBean(PartyContactMechanism t) throws Exception
 	{
 		BeanItem<ContactMechanismDto> beanItem;
 		ContactMechanismDto bean;
@@ -190,7 +190,7 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 	}
 
 	@Override
-	protected PartyContactMechanism readBean(PartyContactMechanism t) throws Exception
+	public PartyContactMechanism readBean(PartyContactMechanism t) throws Exception
 	{
 		PartyContactMechanism result;
 
@@ -200,19 +200,19 @@ public class PartyContactMechanismScreen extends ContactMechanismHelper<PartyCon
 	}
 
 	@Override
-	protected void deleteBean(PartyContactMechanism t) throws Exception
+	public void deleteBean(PartyContactMechanism t) throws Exception
 	{
 		this.app.getServices().getCrudServicePartyContactMechanism().delete(t.getId());
 	}
 
 	@Override
-	protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
 	{
 		return new PartyContactMechanismFormFieldFactory(this.app);
 	}
 
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(ID))
 			return this.app.getMessage(ApplicationMessages.PartyContactMechanismId);

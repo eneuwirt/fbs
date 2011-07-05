@@ -63,13 +63,13 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
     }
 
     @Override
-    protected PartyRelationshipDto createBeanInstance()
+    public PartyRelationshipDto createBeanInstance()
     {
         return new PartyRelationshipDto();
     }
 
     @Override
-    protected List<PartyRelationshipDto> getAllBeans() throws Exception
+    public List<PartyRelationshipDto> getAllBeans() throws Exception
     {
         List<PartyRelationshipDto> result = new ArrayList<PartyRelationshipDto>();
         List<PartyRelationship> partyRelationships;
@@ -117,7 +117,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
     }
 
     @Override
-    protected PartyRelationshipDto createBean(PartyRelationshipDto t) throws Exception
+    public PartyRelationshipDto createBean(PartyRelationshipDto t) throws Exception
     {
         PartyRelationship p;
         
@@ -131,7 +131,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
     }
 
     @Override
-    protected void updateBean(PartyRelationshipDto t) throws Exception
+    public void updateBean(PartyRelationshipDto t) throws Exception
     {
         PartyRelationship partyRelationship;
 
@@ -143,7 +143,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
     }
 
     @Override
-    protected PartyRelationshipDto readBean(PartyRelationshipDto t) throws Exception
+    public PartyRelationshipDto readBean(PartyRelationshipDto t) throws Exception
     {
         PartyRelationship partyRelationship;
 
@@ -155,13 +155,13 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
     }
 
     @Override
-    protected void deleteBean(PartyRelationshipDto t) throws Exception
+    public void deleteBean(PartyRelationshipDto t) throws Exception
     {
         this.app.getServices().getCrudServicePartyRelationship().delete(t.getId());
     }
 
     @Override
-    protected String getColumnName(String pid)
+    public String getColumnName(String pid)
     {
         if (pid.equals(ID))
             return this.app.getMessage(ApplicationMessages.PartyRelationshipId);
@@ -185,7 +185,7 @@ public class PartyRelationshipScreen extends ItemsListScreen<PartyRelationshipDt
     }
 
     @Override
-    protected FormFieldFactory getFormFieldFactory()
+    public FormFieldFactory getFormFieldFactory()
     {
         return new PartyRelationshipFormFieldFactory(this.app);
     }

@@ -28,19 +28,19 @@ public class ContactMechanismPurposeTypeScreen extends ItemsListScreen<ContactMe
 	}
 
 	@Override
-	protected ContactMechanismPurposeType createBeanInstance()
+	public ContactMechanismPurposeType createBeanInstance()
 	{
 		return new ContactMechanismPurposeType();
 	}
 
 	@Override
-	protected List<ContactMechanismPurposeType> getAllBeans() throws Exception
+	public List<ContactMechanismPurposeType> getAllBeans() throws Exception
 	{
 		return this.app.getServices().getCrudServiceContactMechanismPurposeType().findAll();
 	}
 
 	@Override
-	protected ContactMechanismPurposeType createBean(ContactMechanismPurposeType t) throws Exception
+	public ContactMechanismPurposeType createBean(ContactMechanismPurposeType t) throws Exception
 	{
 		this.app.getServices().getCrudServiceContactMechanismPurposeType().create(t);
 
@@ -48,13 +48,13 @@ public class ContactMechanismPurposeTypeScreen extends ItemsListScreen<ContactMe
 	}
 
 	@Override
-	protected void updateBean(ContactMechanismPurposeType t) throws Exception
+	public void updateBean(ContactMechanismPurposeType t) throws Exception
 	{
 		this.app.getServices().getCrudServiceContactMechanismPurposeType().update(t);
 	}
 
 	@Override
-	protected ContactMechanismPurposeType readBean(ContactMechanismPurposeType t) throws Exception
+	public ContactMechanismPurposeType readBean(ContactMechanismPurposeType t) throws Exception
 	{
 		ContactMechanismPurposeType result;
 
@@ -64,13 +64,13 @@ public class ContactMechanismPurposeTypeScreen extends ItemsListScreen<ContactMe
 	}
 
 	@Override
-	protected void deleteBean(ContactMechanismPurposeType t) throws Exception
+	public void deleteBean(ContactMechanismPurposeType t) throws Exception
 	{
 		this.app.getServices().getCrudServiceContactMechanismPurposeType().delete(t.getId());
 	}
 
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(ID))
 			return this.app.getMessage(ApplicationMessages.ContactMechanismPurposeTypeId);
@@ -82,7 +82,7 @@ public class ContactMechanismPurposeTypeScreen extends ItemsListScreen<ContactMe
 	}
 
 	@Override
-	protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
 	{
 		return new ContactMechanismPurposeTypeFormFieldFactory(this.app);
 	}

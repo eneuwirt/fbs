@@ -108,13 +108,13 @@ public class FacilityContactMechanismScreen extends ContactMechanismHelper<Facil
 	}
 
 	@Override
-	protected FacilityContactMechanism createBeanInstance()
+	public FacilityContactMechanism createBeanInstance()
 	{
 		return new FacilityContactMechanism();
 	}
 
 	@Override
-	protected List<FacilityContactMechanism> getAllBeans() throws Exception
+	public List<FacilityContactMechanism> getAllBeans() throws Exception
 	{
 		List<FacilityContactMechanism> result;
 
@@ -125,7 +125,7 @@ public class FacilityContactMechanismScreen extends ContactMechanismHelper<Facil
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected FacilityContactMechanism createBean(FacilityContactMechanism t) throws Exception
+	public FacilityContactMechanism createBean(FacilityContactMechanism t) throws Exception
 	{
 		BeanItem<ContactMechanismDto> beanItem;
 		ContactMechanismDto bean;
@@ -146,7 +146,7 @@ public class FacilityContactMechanismScreen extends ContactMechanismHelper<Facil
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void updateBean(FacilityContactMechanism t) throws Exception
+	public void updateBean(FacilityContactMechanism t) throws Exception
 	{
 		BeanItem<ContactMechanismDto> beanItem;
 		ContactMechanismDto bean;
@@ -161,7 +161,7 @@ public class FacilityContactMechanismScreen extends ContactMechanismHelper<Facil
 	}
 
 	@Override
-	protected FacilityContactMechanism readBean(FacilityContactMechanism t) throws Exception
+	public FacilityContactMechanism readBean(FacilityContactMechanism t) throws Exception
 	{
 		FacilityContactMechanism result;
 
@@ -171,19 +171,19 @@ public class FacilityContactMechanismScreen extends ContactMechanismHelper<Facil
 	}
 
 	@Override
-	protected void deleteBean(FacilityContactMechanism t) throws Exception
+	public void deleteBean(FacilityContactMechanism t) throws Exception
 	{
 		this.app.getServices().getCrudServiceFacilityContactMechanism().delete(t.getId());
 	}
 
 	@Override
-	protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
 	{
 		return new FacilityContactMechanismFormFieldFactory(this.app);
 	}
 
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(ID))
 			return this.app.getMessage(ApplicationMessages.FacilityContactMechanismId);

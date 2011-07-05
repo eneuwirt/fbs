@@ -30,13 +30,13 @@ public class FacilityScreen extends ItemsListScreen<Facility>
 	}
 
 	@Override
-    protected Facility createBeanInstance()
+	public Facility createBeanInstance()
     {
 	    return new Facility();
     }
 
 	@Override
-    protected List<Facility> getAllBeans() throws Exception
+	public List<Facility> getAllBeans() throws Exception
     {
 		List<Facility> result;
 		
@@ -46,7 +46,7 @@ public class FacilityScreen extends ItemsListScreen<Facility>
     }
 
 	@Override
-    protected Facility createBean(Facility t) throws Exception
+	public Facility createBean(Facility t) throws Exception
     {
 	    this.app.getServices().getCrudServiceFacility().create(t);
 	    
@@ -54,13 +54,13 @@ public class FacilityScreen extends ItemsListScreen<Facility>
     }
 
 	@Override
-    protected void updateBean(Facility t) throws Exception
+	public void updateBean(Facility t) throws Exception
     {
 		this.app.getServices().getCrudServiceFacility().update(t);
     }
 
 	@Override
-    protected Facility readBean(Facility t) throws Exception
+	public Facility readBean(Facility t) throws Exception
     {
 		Facility result;
 		
@@ -70,13 +70,13 @@ public class FacilityScreen extends ItemsListScreen<Facility>
     }
 
 	@Override
-    protected void deleteBean(Facility t) throws Exception
+	public void deleteBean(Facility t) throws Exception
     {
 		this.app.getServices().getCrudServiceFacility().delete(t.getId());
     }
 	
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(ID))
 			return this.app.getMessage(ApplicationMessages.FacilityId);
@@ -89,7 +89,7 @@ public class FacilityScreen extends ItemsListScreen<Facility>
 	}
 
 	@Override
-    protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
     {
 	    return new FacilityFormFieldFactory(this.app);
     }

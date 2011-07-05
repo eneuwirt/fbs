@@ -29,19 +29,19 @@ public class WorkEffortTypeScreen extends ItemsListScreen<WorkEffortType>
     }
 
     @Override
-    protected WorkEffortType createBeanInstance()
+    public WorkEffortType createBeanInstance()
     {
         return new WorkEffortType();
     }
 
     @Override
-    protected List<WorkEffortType> getAllBeans() throws Exception
+    public List<WorkEffortType> getAllBeans() throws Exception
     {
         return this.app.getServices().getCrudServiceWorkEffortType().findAll();
     }
 
     @Override
-    protected WorkEffortType createBean(WorkEffortType t) throws Exception
+    public WorkEffortType createBean(WorkEffortType t) throws Exception
     {
         this.app.getServices().getCrudServiceWorkEffortType().create(t);
 
@@ -49,13 +49,13 @@ public class WorkEffortTypeScreen extends ItemsListScreen<WorkEffortType>
     }
 
     @Override
-    protected void updateBean(WorkEffortType t) throws Exception
+    public void updateBean(WorkEffortType t) throws Exception
     {
         this.app.getServices().getCrudServiceWorkEffortType().update(t);
     }
 
     @Override
-    protected WorkEffortType readBean(WorkEffortType t) throws Exception
+    public WorkEffortType readBean(WorkEffortType t) throws Exception
     {
         WorkEffortType result;
 
@@ -65,13 +65,13 @@ public class WorkEffortTypeScreen extends ItemsListScreen<WorkEffortType>
     }
 
     @Override
-    protected void deleteBean(WorkEffortType t) throws Exception
+    public void deleteBean(WorkEffortType t) throws Exception
     {
         this.app.getServices().getCrudServiceWorkEffortType().delete(t.getId());
     }
 
     @Override
-    protected String getColumnName(String propertyId)
+    public String getColumnName(String propertyId)
     {
         if (propertyId.equals(ID))
             return this.app.getMessage(ApplicationMessages.WorkEffortTypeId);
@@ -86,7 +86,7 @@ public class WorkEffortTypeScreen extends ItemsListScreen<WorkEffortType>
     }
 
     @Override
-    protected FormFieldFactory getFormFieldFactory()
+    public FormFieldFactory getFormFieldFactory()
     {
         return new WorkEffortTypeFormFieldFactory(this.app);
     }

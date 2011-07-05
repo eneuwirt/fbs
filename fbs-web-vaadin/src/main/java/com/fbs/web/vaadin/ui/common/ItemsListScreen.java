@@ -2,7 +2,6 @@ package com.fbs.web.vaadin.ui.common;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -16,7 +15,6 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Form;
-import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Panel;
@@ -35,7 +33,7 @@ import com.vaadin.ui.Button.ClickEvent;
  * 
  * @param <T>
  */
-public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
+public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements ListScreen<T>
 {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(ItemsListScreen.class.getName());
@@ -75,24 +73,11 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 		return this.actionCurrent;
 	}
 
-	protected abstract T createBeanInstance();
-
-	protected abstract List<T> getAllBeans() throws Exception;
-
-	protected abstract T createBean(T t) throws Exception;
-
-	protected abstract void updateBean(T t) throws Exception;
-
-	protected abstract T readBean(T t) throws Exception;
-
-	protected abstract void deleteBean(T t) throws Exception;
 
 	protected Collection<String> getVisibleFields()
 	{
 		return Arrays.asList(visibleFields);
 	}
-
-	protected abstract FormFieldFactory getFormFieldFactory();
 
 	/**
 	 * Returns a nice name of column.
@@ -100,7 +85,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel
 	 * @param propertyId
 	 * @return niceName of it
 	 */
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		return propertyId;
 	}

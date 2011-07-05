@@ -26,13 +26,13 @@ public class PartyRoleTypeScreen extends ItemsListScreen<PartyRoleType>
     }
 
 	@Override
-    protected PartyRoleType createBeanInstance()
+	public PartyRoleType createBeanInstance()
     {
 	    return new PartyRoleType();
     }
 
 	@Override
-    protected List<PartyRoleType> getAllBeans() throws Exception
+	public List<PartyRoleType> getAllBeans() throws Exception
     {
 		List<PartyRoleType> partyRoleTypes = this.services.getCrudServicePartyRoleType().findAll();
 
@@ -40,7 +40,7 @@ public class PartyRoleTypeScreen extends ItemsListScreen<PartyRoleType>
     }
 
 	@Override
-    protected PartyRoleType createBean(PartyRoleType t) throws Exception
+	public PartyRoleType createBean(PartyRoleType t) throws Exception
     {
 		this.services.getCrudServicePartyRoleType().create(t);
 		
@@ -48,13 +48,13 @@ public class PartyRoleTypeScreen extends ItemsListScreen<PartyRoleType>
     }
 
 	@Override
-    protected void updateBean(PartyRoleType t) throws Exception
+	public void updateBean(PartyRoleType t) throws Exception
     {
 		this.services.getCrudServicePartyRoleType().update(t);
     }
 
 	@Override
-    protected PartyRoleType readBean(PartyRoleType t) throws Exception
+	public PartyRoleType readBean(PartyRoleType t) throws Exception
     {
 		PartyRoleType result;
 		
@@ -64,19 +64,19 @@ public class PartyRoleTypeScreen extends ItemsListScreen<PartyRoleType>
     }
 
 	@Override
-    protected void deleteBean(PartyRoleType t) throws Exception
+	public void deleteBean(PartyRoleType t) throws Exception
     {
 		this.services.getCrudServicePartyRoleType().delete(t.getId());
     }
 
 	@Override
-    protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
     {
 	    return new PartyRoleTypeFormFieldFactory(this.app);
     }
 	
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(COL_ID))
 			return this.app.getMessage(ApplicationMessages.PartyRoleTypeId);

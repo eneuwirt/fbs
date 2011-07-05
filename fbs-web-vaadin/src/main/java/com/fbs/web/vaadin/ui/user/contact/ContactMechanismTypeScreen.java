@@ -28,19 +28,19 @@ public class ContactMechanismTypeScreen extends ItemsListScreen<ContactMechanism
 	}
 
 	@Override
-	protected ContactMechanismType createBeanInstance()
+	public ContactMechanismType createBeanInstance()
 	{
 		return new ContactMechanismType();
 	}
 
 	@Override
-	protected List<ContactMechanismType> getAllBeans() throws Exception
+	public List<ContactMechanismType> getAllBeans() throws Exception
 	{
 		return this.app.getServices().getCrudServiceContactMechanismType().findAll();
 	}
 
 	@Override
-	protected ContactMechanismType createBean(ContactMechanismType t) throws Exception
+	public ContactMechanismType createBean(ContactMechanismType t) throws Exception
 	{
 		this.services.getCrudServiceContactMechanismType().create(t);
 
@@ -48,13 +48,13 @@ public class ContactMechanismTypeScreen extends ItemsListScreen<ContactMechanism
 	}
 
 	@Override
-	protected void updateBean(ContactMechanismType t) throws Exception
+	public void updateBean(ContactMechanismType t) throws Exception
 	{
 		this.services.getCrudServiceContactMechanismType().update(t);
 	}
 
 	@Override
-	protected ContactMechanismType readBean(ContactMechanismType t) throws Exception
+	public ContactMechanismType readBean(ContactMechanismType t) throws Exception
 	{
 		ContactMechanismType result;
 
@@ -64,13 +64,13 @@ public class ContactMechanismTypeScreen extends ItemsListScreen<ContactMechanism
 	}
 
 	@Override
-	protected void deleteBean(ContactMechanismType t) throws Exception
+	public void deleteBean(ContactMechanismType t) throws Exception
 	{
 		this.services.getCrudServiceContactMechanismType().delete(t.getId());
 	}
 
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(ID))
 			return this.app.getMessage(ApplicationMessages.ContactMechanismTypeId);
@@ -82,7 +82,7 @@ public class ContactMechanismTypeScreen extends ItemsListScreen<ContactMechanism
 	}
 
 	@Override
-	protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
 	{
 		return new ContactMechanismTypeFormFieldFactory(this.app);
 	}

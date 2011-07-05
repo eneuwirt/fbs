@@ -36,13 +36,13 @@ public class PersonScreen extends PartyScreen<Person>
 	}
 
 	@Override
-	protected Person createBeanInstance()
+	public Person createBeanInstance()
 	{
 		return new Person();
 	}
 
 	@Override
-	protected List<Person> getAllBeans() throws Exception
+	public List<Person> getAllBeans() throws Exception
 	{
 		List<Person> result = this.services.getCrudServicePerson().findAll();
 
@@ -50,7 +50,7 @@ public class PersonScreen extends PartyScreen<Person>
 	}
 
 	@Override
-	protected Person createBean(Person t) throws Exception
+	public Person createBean(Person t) throws Exception
 	{
 		this.services.getCrudServicePerson().create(t);
 		
@@ -60,7 +60,7 @@ public class PersonScreen extends PartyScreen<Person>
 	}
 
 	@Override
-	protected void updateBean(Person t) throws Exception
+	public void updateBean(Person t) throws Exception
 	{
 		super.updateBean(t);
 
@@ -68,7 +68,7 @@ public class PersonScreen extends PartyScreen<Person>
 	}
 
 	@Override
-	protected Person readBean(Person t) throws Exception
+	public Person readBean(Person t) throws Exception
 	{
 		Person result;
 
@@ -78,13 +78,13 @@ public class PersonScreen extends PartyScreen<Person>
 	}
 
 	@Override
-	protected void deleteBean(Person t) throws Exception
+	public void deleteBean(Person t) throws Exception
 	{
 		this.services.getCrudServicePerson().delete(t.getId());
 	}
 
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(ID))
 			return this.app.getMessage(ApplicationMessages.PersonId);
@@ -99,7 +99,7 @@ public class PersonScreen extends PartyScreen<Person>
 	}
 
 	@Override
-	protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
 	{
 		return new PersonFormFieldFactory(this.app);
 	}

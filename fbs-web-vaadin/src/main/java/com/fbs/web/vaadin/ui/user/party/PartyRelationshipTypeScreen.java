@@ -35,19 +35,19 @@ public class PartyRelationshipTypeScreen extends ItemsListScreen<PartyRelationsh
 	}
 
 	@Override
-	protected PartyRelationshipType createBeanInstance()
+	public PartyRelationshipType createBeanInstance()
 	{
 		return new PartyRelationshipType();
 	}
 
 	@Override
-	protected List<PartyRelationshipType> getAllBeans() throws Exception
+	public List<PartyRelationshipType> getAllBeans() throws Exception
 	{
 		return this.services.getCrudServicePartyRelationshipType().findAll();
 	}
 
 	@Override
-	protected PartyRelationshipType createBean(PartyRelationshipType t) throws Exception
+	public PartyRelationshipType createBean(PartyRelationshipType t) throws Exception
 	{
 		this.services.getCrudServicePartyRelationshipType().create(t);
 
@@ -55,25 +55,25 @@ public class PartyRelationshipTypeScreen extends ItemsListScreen<PartyRelationsh
 	}
 
 	@Override
-	protected void updateBean(PartyRelationshipType t) throws Exception
+	public void updateBean(PartyRelationshipType t) throws Exception
 	{
 		this.services.getCrudServicePartyRelationshipType().update(t);
 	}
 
 	@Override
-	protected PartyRelationshipType readBean(PartyRelationshipType t) throws Exception
+	public PartyRelationshipType readBean(PartyRelationshipType t) throws Exception
 	{
 		return this.services.getCrudServicePartyRelationshipType().read(t.getId());
 	}
 
 	@Override
-	protected void deleteBean(PartyRelationshipType t) throws Exception
+	public void deleteBean(PartyRelationshipType t) throws Exception
 	{
 		this.services.getCrudServicePartyRelationshipType().delete(t.getId());
 	}
 	
 	@Override
-	protected String getColumnName(String propertyId)
+	public String getColumnName(String propertyId)
 	{
 		if (propertyId.equals(COL_ID))
 			return this.app.getMessage(ApplicationMessages.PartyRelationshipTypeId);
@@ -85,7 +85,7 @@ public class PartyRelationshipTypeScreen extends ItemsListScreen<PartyRelationsh
 	}
 
 	@Override
-	protected FormFieldFactory getFormFieldFactory()
+	public FormFieldFactory getFormFieldFactory()
 	{
 		return new PartyRelationshipTypeFormFieldFactory(this.app);
 	}

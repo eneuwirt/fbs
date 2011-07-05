@@ -63,12 +63,6 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
 
         this.initLayout();
     }
-    
-    @Override
-    public void setAnchor(A a)
-    {
-        this.anchor = a;
-    }
 
     private void initLayout()
     {
@@ -97,6 +91,14 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
         this.addComponent(this.tableBeans);
         this.addComponent(buttonRow);
     }
+    
+    @Override
+    public void setAnchor(A anchor)
+    {
+        this.anchor = anchor;
+        this.updateComponents();
+    }
+
 
     private static class TableSelectListener<T, A> implements Property.ValueChangeListener
     {
@@ -228,7 +230,8 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
         {
             this.action = action;
         }
-
+        
+       
         private static class DialogListener<T, A> implements Button.ClickListener
         {
             private static final long serialVersionUID = 1L;

@@ -63,6 +63,7 @@ public class PartyDetails<T extends Party> extends CustomComponent implements De
         this.form.setFormFieldFactory(formFieldFactory);
 
         tabsheet = this.createComponents();
+        tabsheet.setSizeFull();
 
         this.form.setSizeFull();
         this.classificationsGroup.setSizeFull();
@@ -75,17 +76,21 @@ public class PartyDetails<T extends Party> extends CustomComponent implements De
     }
 
     @Override
-    public void setBean(T bean)
+    public void setBean(T party)
     {
         BeanItem<T> beanItem;
 
-        this.bean = bean;
-        beanItem = new BeanItem<T>(bean);
+        this.bean = party;
+        beanItem = new BeanItem<T>(party);
 
         this.form.setItemDataSource(beanItem, Arrays.asList(this.visibleFields));
         
-        this.resetOptionGroupClassification(bean);
-        this.resetOptionGroupRoles(bean);
+        this.resetOptionGroupClassification(party);
+        this.resetOptionGroupRoles(party);
+        
+        this.postalAddressView.setAnchor(party);
+        this.electronicAddressView.setAnchor(party);
+        this.telecomView.setAnchor(party);
     }
 
     @Override

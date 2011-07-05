@@ -74,7 +74,6 @@ public class PartyRelationshipView extends ItemsListView<PartyRelationshipDto, P
     @Override
     public void updateComponents()
     {
-        // TODO Auto-generated method stub
         
     }  
 }

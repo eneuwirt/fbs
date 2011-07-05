@@ -46,7 +46,6 @@ public abstract class ContactMechanismView<T extends ContactMechanism> extends I
         return partyContactMechanism;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void updateComponents()
     {

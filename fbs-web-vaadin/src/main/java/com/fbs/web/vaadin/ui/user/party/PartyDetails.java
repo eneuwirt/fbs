@@ -1,6 +1,7 @@
 package com.fbs.web.vaadin.ui.user.party;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -13,6 +14,7 @@ import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.items.DetailsComponent;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Form;
@@ -44,34 +46,46 @@ public class PartyDetails<T extends Party> extends CustomComponent implements De
 
     public PartyDetails(MyVaadinApplication app, FormFieldFactory formFieldFactory, String[] visibleFields)
     {
+        TabSheet tabsheet;
+        
         // A layout structure used for composition
         this.app = app;
         this.visibleFields = visibleFields;
 
-        mainPanel = new Panel();
-        mainPanel.setContent(new VerticalLayout());
-        mainPanel.getContent().setSizeFull();
-        mainPanel.setSizeFull();
-        setSizeFull();
+        this.mainPanel = new Panel();
+        this.mainPanel.setContent(new VerticalLayout());
+        this.mainPanel.getContent().setSizeFull();
+        this.mainPanel.setSizeFull();
+        this.setSizeFull();
 
         this.form = new Form();
         this.form.setImmediate(true);
         this.form.setFormFieldFactory(formFieldFactory);
 
-        this.createComponents();
+        tabsheet = this.createComponents();
 
         this.form.setSizeFull();
         this.classificationsGroup.setSizeFull();
         this.rolesGroup.setSizeFull();
-
+       
+        
+        this.mainPanel.addComponent(tabsheet);
         // The composition root MUST be set
         setCompositionRoot(mainPanel);
     }
 
     @Override
-    public void setBean(T t)
+    public void setBean(T bean)
     {
-        this.bean = t;
+        BeanItem<T> beanItem;
+
+        this.bean = bean;
+        beanItem = new BeanItem<T>(bean);
+
+        this.form.setItemDataSource(beanItem, Arrays.asList(this.visibleFields));
+        
+        this.resetOptionGroupClassification(bean);
+        this.resetOptionGroupRoles(bean);
     }
 
     @Override
@@ -274,7 +288,7 @@ public class PartyDetails<T extends Party> extends CustomComponent implements De
         }
     }
 
-    private void createComponents()
+    private TabSheet createComponents()
     {
         TabSheet tabsheet = new TabSheet();
         String captionMasterData;
@@ -306,6 +320,8 @@ public class PartyDetails<T extends Party> extends CustomComponent implements De
         tabsheet.addTab(new Label("Beziehungen zwischen mir und den andren"), captionRelations, null);
         tabsheet.addTab(this.rolesGroup, captionRoles, null);
         tabsheet.addTab(this.classificationsGroup, captionClass, null);
+        
+        return tabsheet;
     }
 
     private void createContacts()

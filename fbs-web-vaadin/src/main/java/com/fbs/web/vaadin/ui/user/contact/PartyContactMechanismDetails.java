@@ -23,13 +23,13 @@ import com.vaadin.ui.VerticalLayout;
 public class PartyContactMechanismDetails extends CustomComponent implements DetailsComponent<PartyContactMechanism>
 {
     private static final long serialVersionUID = 1L;
-    
+
     private static final String ID = "id";
     private static final String COMMENT = "comment";
-    
+
     private static final String PARTY = "party";
     private static final String PARTY_NAME = "party.name";
-    
+
     protected static final String ADDRESS1 = "address1";
     protected static final String ADDRESS2 = "address2";
     protected static final String CITY = "city";
@@ -39,7 +39,7 @@ public class PartyContactMechanismDetails extends CustomComponent implements Det
     protected static final String COUNTRY_CODE = "countryCode";
     protected static final String AREA_CODE = "areaCode";
     protected static final String NUMBER = "number";
-    
+
     private MyVaadinApplication app;
 
     protected Panel mainPanel;
@@ -66,21 +66,23 @@ public class PartyContactMechanismDetails extends CustomComponent implements Det
         this.form = new Form();
         this.form.setImmediate(true);
         this.form.setFormFieldFactory(new PartyContactMechanismFormFieldFactory(app));
-        
+
         this.formDetails = new Form();
         this.formDetails.setImmediate(true);
         this.formDetails.setFormFieldFactory(new ContactDetailsFormFieldFactory(app));
-        
+
         this.optionGroupPurpose = new OptionGroup();
         this.optionGroupPurpose.setCaption(this.app.getMessage(ApplicationMessages.PartyContactMechanismPurpose));
         this.optionGroupPurpose.setMultiSelect(true);
         this.optionGroupPurpose.setNullSelectionAllowed(true);
         this.optionGroupPurpose.setImmediate(true);
-        
+
         this.mainPanel.addComponent(form);
         this.mainPanel.addComponent(this.formDetails);
         this.mainPanel.addComponent(this.optionGroupPurpose);
-        
+
+        // The composition root MUST be set
+        setCompositionRoot(mainPanel);
     }
 
     @Override
@@ -124,7 +126,7 @@ public class PartyContactMechanismDetails extends CustomComponent implements Det
         // TODO Auto-generated method stub
 
     }
-    
+
     private static class PartyContactMechanismFormFieldFactory implements FormFieldFactory
     {
         private static final long serialVersionUID = 1L;

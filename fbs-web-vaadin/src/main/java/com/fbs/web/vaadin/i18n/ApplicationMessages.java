@@ -21,9 +21,7 @@ public interface ApplicationMessages extends Serializable
 	
 	public static String ContactMechanismCreateEAddress = "ContactMechanism.CreateEAddress";
 	public static String ContactMechanismCreatePhone = "ContactMechanism.CreatePhone";
-	public static String ContactMechanismCreatePostalAddress = "ContactMechanism.CreatePostalAddress";
-	
-	
+	public static String ContactMechanismCreatePostalAddress = "ContactMechanism.CreatePostalAddress";	
 
 	public static String ContactMechanismPurposeTypeId = "ContactMechanismPurposeType.Id";
 	public static String ContactMechanismPurposeTypeDescription = "ContactMechanismPurposeType.Description";
@@ -31,8 +29,7 @@ public interface ApplicationMessages extends Serializable
 	
 	public static String ContactMechanismTypeDescription = "ContactMechanismType.Description";
 	public static String ContactMechanismTypeId = "ContactMechanismType.Id";
-	public static String ContactMechanismTypeTitle = "ContactMechanismType.Title";
-	
+	public static String ContactMechanismTypeTitle = "ContactMechanismType.Title";	
 
 	public static String ElectronicAddress = "ElectronicAddress";
 	

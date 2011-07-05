@@ -83,7 +83,8 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
         this(app, clazz, component, visibleColumns, null);
     }
 
-    public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, DetailsComponent<T> component, String[] visibleColumns, String[] nestedContainerProperties)
+    public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, DetailsComponent<T> component, String[] visibleColumns,
+            String[] nestedContainerProperties)
     {
         super();
 
@@ -599,18 +600,18 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
 
             this.screen.notifyClick(Action.SELECT);
 
-            bean = (T) this.screen.table.getValue();
+                      this.screen.buttonItemAdd.setEnabled(true);
+            this.screen.buttonItemAdd1.setEnabled(true);
+            this.screen.buttonItemAdd2.setEnabled(true);
+            this.screen.buttonItemDelete.setEnabled(true);
 
+            this.screen.component.setEnabled(true);
+            bean = (T) this.screen.table.getValue();
             // something selected
             if (bean != null)
             {
                 this.screen.component.setBean(bean);
             }
-
-            this.screen.buttonItemAdd.setEnabled(true);
-            this.screen.buttonItemAdd1.setEnabled(true);
-            this.screen.buttonItemAdd2.setEnabled(true);
-            this.screen.buttonItemDelete.setEnabled(true);
 
             this.screen.buttonSave.setEnabled(true);
             this.screen.buttonCancel.setEnabled(true);

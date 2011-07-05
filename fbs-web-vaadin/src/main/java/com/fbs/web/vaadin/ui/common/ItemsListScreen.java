@@ -186,15 +186,6 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
 				this.form.setItemDataSource(beanItem, this.getVisibleFields());
 
 				this.component.setEnabled(true);
-
-				this.buttonItemAdd.setEnabled(true);
-				this.buttonItemAdd1.setEnabled(true);
-				this.buttonItemAdd2.setEnabled(true);
-				this.buttonItemDelete.setEnabled(true);
-
-				this.buttonSave.setEnabled(true);
-				this.buttonCancel.setEnabled(true);
-				this.buttonDelete.setEnabled(true);
 			}
 			catch (Exception e)
 			{
@@ -691,6 +682,15 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
 			bean = (T) this.screen.table.getValue();
 
 			this.screen.updateDetails(bean);
+			
+			this.screen.buttonItemAdd.setEnabled(true);
+			this.screen.buttonItemAdd1.setEnabled(true);
+			this.screen.buttonItemAdd2.setEnabled(true);
+			this.screen.buttonItemDelete.setEnabled(true);
+
+			this.screen.buttonSave.setEnabled(true);
+			this.screen.buttonCancel.setEnabled(true);
+			this.screen.buttonDelete.setEnabled(true);
 		}
 	}
 }

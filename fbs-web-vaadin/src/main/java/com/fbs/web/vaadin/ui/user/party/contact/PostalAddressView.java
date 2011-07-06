@@ -1,4 +1,4 @@
-package com.fbs.web.vaadin.ui.user.party;
+package com.fbs.web.vaadin.ui.user.party.contact;
 
 import java.util.List;
 
@@ -33,15 +33,15 @@ public class PostalAddressView extends ContactMechanismView<PostalAddress>
     }
 
     @Override
-    public PostalAddress createBean(PostalAddress t) throws Exception
+    public PostalAddress createBean(PostalAddress postalAddress) throws Exception
     {
         // create Instance
-        this.app.getServices().getCrudServicePostalAddress().create(t);
+        this.app.getServices().getCrudServicePostalAddress().create(postalAddress);
         
         // create party connection
-        this.createPartyContactMechanism(t);
+        this.createPartyContactMechanism(postalAddress);
         
-        return t;
+        return postalAddress;
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Form;
+import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
@@ -35,7 +36,7 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
     protected String[] visibleColumns;
     protected String[] visibleFields;
 
-    public ItemsListView(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields)
+    public ItemsListView(MyVaadinApplication app, Class<T> clazz, FormFieldFactory formFieldFactory, String[] visibleColumns, String[] visibleFields)
     {
         this.app = app;
         this.clazz = clazz;
@@ -58,7 +59,7 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
         this.buttonDelete = new Button("-", new DeleteListener<T, A>(this));
         this.buttonDelete.setEnabled(false);
 
-        this.dialog = new CRUDDialog<T, A>(this);
+        this.dialog = new CRUDDialog<T, A>(this, formFieldFactory);
         this.dialog.setModal(true);
 
         this.initLayout();
@@ -184,7 +185,7 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
 
         private Action action = Action.UNDEFINED;
 
-        public CRUDDialog(ItemsListView<T, A> view)
+        public CRUDDialog(ItemsListView<T, A> view, FormFieldFactory formFieldFactory)
         {
             super();
 
@@ -204,7 +205,7 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
             this.form = new Form();
             this.form.setSizeFull();
             this.form.setVisibleItemProperties(this.view.visibleFields);
-            //this.form.setFormFieldFactory(this.view.getFormFieldFactory());
+            this.form.setFormFieldFactory(formFieldFactory);
             this.form.setItemDataSource(beanItem);
 
             this.buttonSave = new Button("Save", new DialogListener<T, A>(this));

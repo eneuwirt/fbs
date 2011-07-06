@@ -1,4 +1,4 @@
-package com.fbs.web.vaadin.ui.user.party;
+package com.fbs.web.vaadin.ui.user.party.contact;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import com.fbs.web.vaadin.application.MyVaadinApplication;
 public class ElectronicAddressView extends ContactMechanismView<ElectronicAddress>
 {
     private static final long serialVersionUID = 1L;
-    
+
     private static final String[] VISIBLE_COLUMNS =
     { ELECTRONIC_ADDRESS };
     private static final String[] VISIBLE_FIELDS =
@@ -35,8 +35,13 @@ public class ElectronicAddressView extends ContactMechanismView<ElectronicAddres
     @Override
     public ElectronicAddress createBean(ElectronicAddress t) throws Exception
     {
-        // TODO Auto-generated method stub
-        return null;
+        // create Instance
+        this.app.getServices().getCrudServiceElectronicAddress().create(t);
+
+        // create party connection
+        this.createPartyContactMechanism(t);
+
+        return t;
     }
 
     @Override

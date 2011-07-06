@@ -1,7 +1,9 @@
-package com.fbs.web.vaadin.ui.user.contact;
+package com.fbs.web.vaadin.ui.user.party.contact;
 
 import java.util.Arrays;
 import java.util.List;
+
+import com.fbs.web.dto.ContactMechanismDto;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanism;
 import com.fbs.dmr.universal.model.contact.ElectronicAddress;
@@ -12,6 +14,8 @@ import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.items.DetailsComponent;
+import com.fbs.web.vaadin.ui.user.contact.ContactMechanismHelper;
+
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;

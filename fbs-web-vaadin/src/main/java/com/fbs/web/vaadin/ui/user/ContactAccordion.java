@@ -2,7 +2,7 @@ package com.fbs.web.vaadin.ui.user;
 
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
-import com.fbs.web.vaadin.ui.user.contact.PartyContactMechanismScreen;
+import com.fbs.web.vaadin.ui.user.party.PartyContactMechanismScreen;
 import com.vaadin.ui.Accordion;
 
 public class ContactAccordion extends Accordion

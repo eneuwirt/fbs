@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.fbs.web.vaadin.application.MyVaadinApplication;
+import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
@@ -36,6 +37,8 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
     protected Button buttonEdit;
     protected Button buttonDelete;
     //
+    protected String createDialogCaption = "";
+    protected String updateDialogCaption = "";
     protected CRUDDialog<T, A> dialog;
     //
     protected String[] visibleColumns;
@@ -48,6 +51,8 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
         this.clazz = clazz;
         this.visibleColumns = visibleColumns;
         this.visibleFields = visibleFields;
+        
+        this.createDialogCaption = this.app.getMessage(ApplicationMessages.CommonCreate);
 
         this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
 
@@ -57,9 +62,9 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
         this.tableBeans.setContainerDataSource(beanItemContainer);
         this.tableBeans.addListener(new TableSelectListener<T, A>(this));
 
-        this.buttonAdd = new Button("Add", new AddListener<T, A>(this));
+        this.buttonAdd = new Button("Add", new CreateListener<T, A>(this));
 
-        this.buttonEdit = new Button("Ändern", new AddListener<T, A>(this));
+        this.buttonEdit = new Button("Ändern", new EditListener<T, A>(this));
         this.buttonEdit.setEnabled(false);
 
         this.buttonDelete = new Button("-", new DeleteListener<T, A>(this));
@@ -159,13 +164,13 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
             }
         }
     }
-
-    private static class AddListener<T, A> implements Button.ClickListener
+    
+    private static class EditListener<T, A> implements Button.ClickListener
     {
         private static final long serialVersionUID = 1L;
         private ItemsListView<T, A> view;
 
-        public AddListener(ItemsListView<T, A> view)
+        public EditListener(ItemsListView<T, A> view)
         {
             this.view = view;
         }
@@ -173,6 +178,39 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
         @Override
         public void buttonClick(ClickEvent event)
         {
+            this.view.dialog.setCaption(this.view.updateDialogCaption);
+            
+            this.view.dialog.setAction(CRUDDialog.Action.CREATE);
+            this.view.dialog.setBean(this.view.createBeanInstance());
+
+            if (view.dialog.getParent() != null)
+            {
+                // window is already showing
+                view.getWindow().showNotification("Window is already open");
+            }
+            else
+            {
+                // Open the subwindow by adding it to the parent window
+                view.getWindow().addWindow(view.dialog);
+            }
+        }
+    }
+
+    private static class CreateListener<T, A> implements Button.ClickListener
+    {
+        private static final long serialVersionUID = 1L;
+        private ItemsListView<T, A> view;
+
+        public CreateListener(ItemsListView<T, A> view)
+        {
+            this.view = view;
+        }
+
+        @Override
+        public void buttonClick(ClickEvent event)
+        {
+            this.view.dialog.setCaption(this.view.createDialogCaption);
+            
             this.view.dialog.setAction(CRUDDialog.Action.CREATE);
             this.view.dialog.setBean(this.view.createBeanInstance());
 

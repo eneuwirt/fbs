@@ -11,6 +11,7 @@ public interface ApplicationMessages extends Serializable
 	public static String AdminTabTitleTenant = "Admin.TabTitleTenant";
 
 	public static String CommonCancel = "Common.Cancel";
+	public static String CommonCreate = "Common.Create";
 	public static String CommonComment = "Common.Comment";
 	public static String CommonDelete = "Common.Delete";
 	public static String CommonDetails = "Common.Details";
@@ -18,6 +19,7 @@ public interface ApplicationMessages extends Serializable
 	public static String CommonException = "Common.Exception";
 	public static String CommonSave = "Common.Save";
 	public static String CommonSearch = "Common.Search";
+	public static String CommonUpdate = "Common.Update";
 	
 	public static String ContactMechanismCreateEAddress = "ContactMechanism.CreateEAddress";
 	public static String ContactMechanismCreatePhone = "ContactMechanism.CreatePhone";

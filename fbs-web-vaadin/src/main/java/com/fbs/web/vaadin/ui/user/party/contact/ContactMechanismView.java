@@ -24,6 +24,13 @@ public abstract class ContactMechanismView<T extends ContactMechanism> extends I
         super(app, clazz, new ContactMechanismFormFieldFactory(app), visibleColumns, visibleFields);
     }
 
+    /**
+     * Craetes conenction to party
+     * 
+     * @param t
+     * @return
+     * @throws Exception
+     */
     protected PartyContactMechanism createPartyContactMechanism(ContactMechanism t) throws Exception
     {
         PartyContactMechanism partyContactMechanism;
@@ -36,6 +43,18 @@ public abstract class ContactMechanismView<T extends ContactMechanism> extends I
         this.app.getServices().getCrudServicePartyContactMechanism().create(partyContactMechanism);
 
         return partyContactMechanism;
+    }
+
+    /**
+     * Deletes connection to party
+     */
+    protected void deletePartyContactMechanism(T t)
+    {
+        PartyContactMechanism pcm;
+
+        pcm = this.app.getServices().getCrudServicePartyContactMechanism().findByPartyAndContactMechanism(anchor, t);
+
+        this.app.getServices().getCrudServicePartyContactMechanism().delete(pcm.getId());
     }
 
     @SuppressWarnings("unchecked")

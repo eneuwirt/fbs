@@ -37,6 +37,7 @@ public class TelekomView extends ContactMechanismView<TelecommunicationNumber>
     {
         // create Instance
         this.app.getServices().getCrudServiceTelecommunicationNumber().create(t);
+        
         // create party connection
         this.createPartyContactMechanism(t);
         
@@ -46,8 +47,7 @@ public class TelekomView extends ContactMechanismView<TelecommunicationNumber>
     @Override
     public void updateBean(TelecommunicationNumber t) throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.app.getServices().getCrudServiceTelecommunicationNumber().update(t);
     }
 
     @Override
@@ -60,7 +60,8 @@ public class TelekomView extends ContactMechanismView<TelecommunicationNumber>
     @Override
     public void deleteBean(TelecommunicationNumber t) throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.deletePartyContactMechanism(t);
+        
+        this.app.getServices().getCrudServiceTelecommunicationNumber().delete(t.getId());
     }
 }

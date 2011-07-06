@@ -3,7 +3,6 @@ package com.fbs.web.vaadin.ui.user.party.contact;
 import java.util.List;
 
 import com.fbs.dmr.universal.model.contact.PostalAddress;
-import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 
 public class PostalAddressView extends ContactMechanismView<PostalAddress>
@@ -63,11 +62,7 @@ public class PostalAddressView extends ContactMechanismView<PostalAddress>
     @Override
     public void deleteBean(PostalAddress t) throws Exception
     {
-        PartyContactMechanism pcm;
-        
-        pcm = this.app.getServices().getCrudServicePartyContactMechanism().findByPartyAndContactMechanism(anchor, t);
-        
-        this.app.getServices().getCrudServicePartyContactMechanism().delete(pcm.getId());
+        this.deletePartyContactMechanism(t);
         
         this.app.getServices().getCrudServicePostalAddress().delete(t.getId());
     }

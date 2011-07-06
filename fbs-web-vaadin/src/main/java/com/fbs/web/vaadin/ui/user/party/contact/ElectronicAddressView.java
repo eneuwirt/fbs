@@ -47,8 +47,7 @@ public class ElectronicAddressView extends ContactMechanismView<ElectronicAddres
     @Override
     public void updateBean(ElectronicAddress t) throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.app.getServices().getCrudServiceElectronicAddress().update(t);
     }
 
     @Override
@@ -61,8 +60,9 @@ public class ElectronicAddressView extends ContactMechanismView<ElectronicAddres
     @Override
     public void deleteBean(ElectronicAddress t) throws Exception
     {
-        // TODO Auto-generated method stub
-
+        this.deletePartyContactMechanism(t);
+        
+        this.app.getServices().getCrudServiceElectronicAddress().delete(t.getId());
     }
 
 }

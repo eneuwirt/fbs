@@ -1,9 +1,8 @@
-package com.fbs.web.vaadin.ui.user.party.contact;
+package com.fbs.web.vaadin.ui.user.party;
 
 import java.util.Arrays;
 import java.util.List;
 
-import com.fbs.web.dto.ContactMechanismDto;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanism;
 import com.fbs.dmr.universal.model.contact.ElectronicAddress;
@@ -39,7 +38,6 @@ public class PartyContactMechanismDetails extends CustomComponent implements Det
     private static final String COMMENT = "comment";
 
     private static final String PARTY = "party";
-    private static final String PARTY_NAME = "party.name";
 
     static final String[] VISIBLE_FIELDS_DETAILS_POSTAL_ADDRESS = new String[]
     { ADDRESS1, ADDRESS2, POSTAL_CODE, CITY, COUNTRY, };

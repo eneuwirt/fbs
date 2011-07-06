@@ -1,7 +1,6 @@
 package com.fbs.web.vaadin.ui.user.party;
 
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,7 +10,6 @@ import com.fbs.dmr.universal.model.contact.ElectronicAddress;
 import com.fbs.dmr.universal.model.contact.EntityContactMechanism;
 import com.fbs.dmr.universal.model.contact.PostalAddress;
 import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
-import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.dmr.universal.model.party.PartyContactMechanismPurpose;
 import com.fbs.web.dto.ContactMechanismDto;
@@ -19,13 +17,9 @@ import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
 import com.fbs.web.vaadin.ui.user.contact.ContactMechanismHelper;
-import com.fbs.web.vaadin.ui.user.party.contact.PartyContactMechanismDetails;
 
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
+
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.AbstractComponentContainer;
-
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;

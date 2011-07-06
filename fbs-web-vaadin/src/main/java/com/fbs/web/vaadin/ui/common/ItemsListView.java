@@ -1,5 +1,6 @@
 package com.fbs.web.vaadin.ui.common;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.fbs.web.vaadin.application.MyVaadinApplication;
@@ -154,7 +155,7 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Exception: " + e.getMessage());
             }
         }
     }

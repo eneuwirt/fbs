@@ -1,5 +1,7 @@
 package com.fbs.web.vaadin.ui.common;
 
+import java.util.logging.Logger;
+
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -21,8 +23,10 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
 
     protected MyVaadinApplication app;
     protected Class<T> clazz;
-    
+
     protected A anchor;
+
+    protected T selectedBean;
 
     protected Table tableBeans;
     protected BeanItemContainer<T> beanItemContainer;
@@ -36,7 +40,8 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
     protected String[] visibleColumns;
     protected String[] visibleFields;
 
-    public ItemsListView(MyVaadinApplication app, Class<T> clazz, FormFieldFactory formFieldFactory, String[] visibleColumns, String[] visibleFields)
+    public ItemsListView(MyVaadinApplication app, Class<T> clazz, FormFieldFactory formFieldFactory, String[] visibleColumns,
+            String[] visibleFields)
     {
         this.app = app;
         this.clazz = clazz;
@@ -92,14 +97,13 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
         this.addComponent(this.tableBeans);
         this.addComponent(buttonRow);
     }
-    
+
     @Override
     public void setAnchor(A anchor)
     {
         this.anchor = anchor;
         this.updateComponents();
     }
-
 
     private static class TableSelectListener<T, A> implements Property.ValueChangeListener
     {
@@ -111,18 +115,22 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
             this.view = view;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public void valueChange(ValueChangeEvent event)
         {
             this.view.buttonDelete.setEnabled(true);
 
             this.view.buttonEdit.setEnabled(true);
+
+            this.view.selectedBean = (T) this.view.tableBeans.getValue();
         }
     }
 
     private static class DeleteListener<T, A> implements Button.ClickListener
     {
         private static final long serialVersionUID = 1L;
+        private static final Logger logger = Logger.getLogger(DeleteListener.class.getName());
         private ItemsListView<T, A> view;
 
         public DeleteListener(ItemsListView<T, A> view)
@@ -133,7 +141,21 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
         @Override
         public void buttonClick(ClickEvent event)
         {
+            try
+            {
+                this.view.deleteBean(this.view.selectedBean);
 
+                this.view.tableBeans.removeItem(this.view.selectedBean);
+                
+                this.view.tableBeans.select(null);
+                
+                // we have to repopulate table
+                this.view.updateComponents();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -231,8 +253,7 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
         {
             this.action = action;
         }
-        
-       
+
         private static class DialogListener<T, A> implements Button.ClickListener
         {
             private static final long serialVersionUID = 1L;
@@ -253,7 +274,7 @@ public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A
                         if (this.dialog.action == Action.CREATE)
                         {
                             this.dialog.view.createBean(this.dialog.bean);
-                            
+
                             this.dialog.view.updateComponents();
                         }
                     }

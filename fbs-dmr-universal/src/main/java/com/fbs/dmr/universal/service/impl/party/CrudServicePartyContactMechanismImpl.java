@@ -23,7 +23,7 @@ public class CrudServicePartyContactMechanismImpl extends CrudServiceGenericImpl
         PartyContactMechanism result = null;
         Query query;
 
-        query = em.createQuery("SELECT p FROM PartyPartyContactMechanism p WHERE p.party.id = ?1 AND p.contactMechanism.id = ?2");
+        query = em.createQuery("SELECT p FROM PartyContactMechanism p WHERE p.party.id = ?1 AND p.contactMechanism.id = ?2");
         query.setParameter(1, party.getId());
         query.setParameter(2, contactMechanism.getId());
 

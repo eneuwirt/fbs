@@ -35,10 +35,6 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	private static Logger logger = Logger.getLogger(PartyContactMechanismScreen.class.getName());
 	private static final String ID = "id";
 	private static final String COMMENT = "comment";
-	
-	protected static final String CONTACT_MECHANISM_ADDRESS = "contactMechanism.address";
-    protected static final String CONTACT_MECHANISM_TYPE_DESCR = "contactMechanism.contactMechanismType.description";
-
 
 	private static final String PARTY = "party";
 	private static final String PARTY_NAME = "party.name";
@@ -48,6 +44,7 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 	
 	private static final String[] VISIBLE_FIELDS = new String[]
 		{ ID, PARTY, COMMENT };
+	
 	private static final String[] NESTED_PROPERTIES = new String[]
 		{ PARTY_NAME, CONTACT_MECHANISM_ADDRESS };
 

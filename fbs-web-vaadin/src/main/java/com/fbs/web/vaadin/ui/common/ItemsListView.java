@@ -18,8 +18,9 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.Runo;
 
-public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T, A>
+public abstract class ItemsListView<T, A> extends VerticalLayout implements AnchorAware<T, A>
 {
     private static final long serialVersionUID = 1L;
 
@@ -42,24 +43,35 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
     protected CRUDDialog<T, A> dialog;
     //
     protected String[] visibleColumns;
-    protected String[] visibleFields;
+    protected String[] nestedContainerProperties;
 
     public ItemsListView(MyVaadinApplication app, Class<T> clazz, FormFieldFactory formFieldFactory, String[] visibleColumns,
-            String[] visibleFields)
+            String[] visibleFields, String[] nestedContainerProperties)
     {
         this.app = app;
         this.clazz = clazz;
         this.visibleColumns = visibleColumns;
-        this.visibleFields = visibleFields;
-        
+        this.nestedContainerProperties = nestedContainerProperties;
+
         this.createDialogCaption = this.app.getMessage(ApplicationMessages.CommonCreate);
 
         this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
+        //this.addNestedContainerProperties();
 
         this.tableBeans = new Table();
+        this.tableBeans.setSizeFull();
         this.tableBeans.setSelectable(true);
+        this.tableBeans.setMultiSelect(false);
         this.tableBeans.setImmediate(true);
         this.tableBeans.setContainerDataSource(beanItemContainer);
+        //this.tableBeans.setVisibleColumns(this.visibleColumns);
+        // Set nicer header names
+        for (String propertyId : this.visibleColumns)
+        {
+            String columnName = this.getColumnName(propertyId);
+
+            //this.tableBeans.setColumnHeader(propertyId, columnName);
+        }
         this.tableBeans.addListener(new TableSelectListener<T, A>(this));
 
         this.buttonAdd = new Button("Add", new CreateListener<T, A>(this));
@@ -70,7 +82,7 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
         this.buttonDelete = new Button("-", new DeleteListener<T, A>(this));
         this.buttonDelete.setEnabled(false);
 
-        this.dialog = new CRUDDialog<T, A>(this, formFieldFactory);
+        this.dialog = new CRUDDialog<T, A>(this, formFieldFactory, visibleFields);
         this.dialog.setModal(true);
 
         this.initLayout();
@@ -81,20 +93,11 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
         HorizontalLayout buttonRow;
 
         this.setSizeFull();
-        this.setScrollable(true);
 
         this.tableBeans.setSizeFull();
-        this.tableBeans.setVisibleColumns(this.visibleColumns);
-        // Set nicer header names
-        for (String propertyId : this.visibleColumns)
-        {
-            String columnName = this.getColumnName(propertyId);
-
-            this.tableBeans.setColumnHeader(propertyId, columnName);
-        }
 
         buttonRow = new HorizontalLayout();
-        buttonRow.setWidth("100%");
+        buttonRow.setMargin(true);
 
         buttonRow.addComponent(this.buttonAdd);
         buttonRow.addComponent(this.buttonEdit);
@@ -102,13 +105,32 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
 
         this.addComponent(this.tableBeans);
         this.addComponent(buttonRow);
+
+        this.setExpandRatio(this.tableBeans, 1.0f);
     }
 
     @Override
     public void setAnchor(A anchor)
     {
         this.anchor = anchor;
-        this.updateComponents();
+
+        if (anchor != null)
+        {
+            this.updateComponents();
+        }
+    }
+    
+    private void addNestedContainerProperties()
+    {
+        if (this.nestedContainerProperties == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < this.nestedContainerProperties.length; i++)
+        {
+            this.beanItemContainer.addNestedContainerProperty(nestedContainerProperties[i]);
+        }
     }
 
     private static class TableSelectListener<T, A> implements Property.ValueChangeListener
@@ -125,11 +147,20 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
         @Override
         public void valueChange(ValueChangeEvent event)
         {
-            this.view.buttonDelete.setEnabled(true);
-
-            this.view.buttonEdit.setEnabled(true);
-
             this.view.selectedBean = (T) this.view.tableBeans.getValue();
+
+            if (this.view.selectedBean != null)
+            {
+                this.view.buttonDelete.setEnabled(true);
+
+                this.view.buttonEdit.setEnabled(true);
+            }
+            else
+            {
+                this.view.buttonDelete.setEnabled(false);
+
+                this.view.buttonEdit.setEnabled(false);
+            }
         }
     }
 
@@ -151,12 +182,10 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
             {
                 this.view.deleteBean(this.view.selectedBean);
 
-                this.view.tableBeans.removeItem(this.view.selectedBean);
-                
-                this.view.tableBeans.select(null);
-                
                 // we have to repopulate table
                 this.view.updateComponents();
+
+                this.view.tableBeans.setValue(null);
             }
             catch (Exception e)
             {
@@ -164,7 +193,7 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
             }
         }
     }
-    
+
     private static class EditListener<T, A> implements Button.ClickListener
     {
         private static final long serialVersionUID = 1L;
@@ -178,10 +207,13 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
         @Override
         public void buttonClick(ClickEvent event)
         {
+            T bean;
+
+            bean = this.view.selectedBean;
+
             this.view.dialog.setCaption(this.view.updateDialogCaption);
-            
-            this.view.dialog.setAction(CRUDDialog.Action.CREATE);
-            this.view.dialog.setBean(this.view.createBeanInstance());
+            this.view.dialog.setAction(CRUDDialog.Action.UPDATE);
+            this.view.dialog.setBean(bean);
 
             if (view.dialog.getParent() != null)
             {
@@ -209,10 +241,14 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
         @Override
         public void buttonClick(ClickEvent event)
         {
+            T bean;
+
+            bean = this.view.createBeanInstance();
+
             this.view.dialog.setCaption(this.view.createDialogCaption);
-            
+
             this.view.dialog.setAction(CRUDDialog.Action.CREATE);
-            this.view.dialog.setBean(this.view.createBeanInstance());
+            this.view.dialog.setBean(bean);
 
             if (view.dialog.getParent() != null)
             {
@@ -246,7 +282,7 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
 
         private Action action = Action.UNDEFINED;
 
-        public CRUDDialog(ItemsListView<T, A> view, FormFieldFactory formFieldFactory)
+        public CRUDDialog(ItemsListView<T, A> view, FormFieldFactory formFieldFactory, String[] visibleFields)
         {
             super();
 
@@ -264,8 +300,9 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
             beanItem = new BeanItem<T>(bean);
 
             this.form = new Form();
+            this.form.setImmediate(true);
             this.form.setSizeFull();
-            this.form.setVisibleItemProperties(this.view.visibleFields);
+            this.form.setVisibleItemProperties(visibleFields);
             this.form.setFormFieldFactory(formFieldFactory);
             this.form.setItemDataSource(beanItem);
 
@@ -283,7 +320,6 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
 
         public void setBean(T bean)
         {
-            this.bean = bean;
             this.beanItem = new BeanItem<T>(bean);
             this.form.setItemDataSource(beanItem);
         }
@@ -313,9 +349,13 @@ public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T
                         if (this.dialog.action == Action.CREATE)
                         {
                             this.dialog.view.createBean(this.dialog.bean);
-
-                            this.dialog.view.updateComponents();
                         }
+                        else if (this.dialog.action == Action.UPDATE)
+                        {
+                            this.dialog.view.updateBean(this.dialog.bean);
+                        }
+
+                        this.dialog.view.updateComponents();
                     }
                     catch (Exception e)
                     {

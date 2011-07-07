@@ -15,7 +15,7 @@ public class PostalAddressView extends ContactMechanismView<PostalAddress>
 
     public PostalAddressView(MyVaadinApplication app)
     {
-        super(app, PostalAddress.class, VISIBLE_COLUMNS, VISIBLE_FIELDS);
+        super(app, PostalAddress.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
     }
 
     @Override

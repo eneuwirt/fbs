@@ -16,7 +16,7 @@ public class ElectronicAddressView extends ContactMechanismView<ElectronicAddres
 
     public ElectronicAddressView(MyVaadinApplication app)
     {
-        super(app, ElectronicAddress.class, VISIBLE_COLUMNS, VISIBLE_FIELDS);
+        super(app, ElectronicAddress.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ElectronicAddressView extends ContactMechanismView<ElectronicAddres
     public void deleteBean(ElectronicAddress t) throws Exception
     {
         this.deletePartyContactMechanism(t);
-        
+
         this.app.getServices().getCrudServiceElectronicAddress().delete(t.getId());
     }
 

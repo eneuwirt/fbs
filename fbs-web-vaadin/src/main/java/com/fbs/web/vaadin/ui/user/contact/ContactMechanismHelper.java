@@ -3,7 +3,10 @@ package com.fbs.web.vaadin.ui.user.contact;
 public interface ContactMechanismHelper
 {
 	static final String CONTACT_MECHANISM_ADDRESS = "contactMechanism.address";
-	static final String CONTACT_MECHANISM_TYPE_DESCR = "contactMechanism.contactMechanismType.description";
+	
+	static final String CONTACT_MECHANISM_TYPE_DESCR = "contactMechanismType.description";
+	
+	static final String PARTY_NAME = "party.name";
 
 	static final String ADDRESS1 = "address1";
 	static final String ADDRESS2 = "address2";

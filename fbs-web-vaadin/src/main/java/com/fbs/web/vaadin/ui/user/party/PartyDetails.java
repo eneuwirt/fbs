@@ -28,13 +28,12 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
-public class PartyDetails<T extends Party> extends CustomComponent implements DetailsAware<T>
+public class PartyDetails<T extends Party> extends TabSheet implements DetailsAware<T>
 {
     private static final long serialVersionUID = 1L;
     private static Logger logger = Logger.getLogger(PartyDetails.class.getName());
     protected MyVaadinApplication app;
-
-    protected Panel mainPanel;
+    
     protected String[] visibleFields;
 
     protected T bean;
@@ -50,32 +49,22 @@ public class PartyDetails<T extends Party> extends CustomComponent implements De
     public PartyDetails(MyVaadinApplication app, FormFieldFactory formFieldFactory, String[] visibleFields)
     {
         TabSheet tabsheet;
-        
+
         // A layout structure used for composition
         this.app = app;
         this.visibleFields = visibleFields;
-
-        this.mainPanel = new Panel();
-        this.mainPanel.setContent(new VerticalLayout());
-        this.mainPanel.getContent().setSizeFull();
-        this.mainPanel.setSizeFull();
-        this.setSizeFull();
-
+        
         this.form = new Form();
         this.form.setImmediate(true);
         this.form.setFormFieldFactory(formFieldFactory);
+        
+        this.createComponents();
 
-        tabsheet = this.createComponents();
-        tabsheet.setSizeFull();
-
+        this.setSizeFull();
+        
         this.form.setSizeFull();
         this.classificationsGroup.setSizeFull();
-        this.rolesGroup.setSizeFull();
-       
-        
-        this.mainPanel.addComponent(tabsheet);
-        // The composition root MUST be set
-        setCompositionRoot(mainPanel);
+        this.rolesGroup.setSizeFull();       
     }
 
     @Override
@@ -83,17 +72,23 @@ public class PartyDetails<T extends Party> extends CustomComponent implements De
     {
         BeanItem<T> beanItem;
 
+        if (party == null)
+        {
+            return;
+        }
+
         this.bean = party;
         beanItem = new BeanItem<T>(party);
 
         this.form.setItemDataSource(beanItem, Arrays.asList(this.visibleFields));
-        
+
         this.resetOptionGroupClassification(party);
         this.resetOptionGroupRoles(party);
-        
+
         this.postalAddressView.setAnchor(party);
         this.electronicAddressView.setAnchor(party);
         this.telecomView.setAnchor(party);
+
     }
 
     @Override
@@ -296,9 +291,8 @@ public class PartyDetails<T extends Party> extends CustomComponent implements De
         }
     }
 
-    private TabSheet createComponents()
+    private void createComponents()
     {
-        TabSheet tabsheet = new TabSheet();
         String captionMasterData;
         String captionClass;
         String captionRoles;
@@ -321,15 +315,13 @@ public class PartyDetails<T extends Party> extends CustomComponent implements De
         this.createClassificationGroup();
         this.createRolesGroup();
 
-        tabsheet.addTab(this.form, captionMasterData, null);
-        tabsheet.addTab(this.postalAddressView, captionAddr, null);
-        tabsheet.addTab(this.telecomView, captionTelecom, null);
-        tabsheet.addTab(this.electronicAddressView, captionElAddr, null);
-        tabsheet.addTab(new Label("Beziehungen zwischen mir und den andren"), captionRelations, null);
-        tabsheet.addTab(this.rolesGroup, captionRoles, null);
-        tabsheet.addTab(this.classificationsGroup, captionClass, null);
-        
-        return tabsheet;
+        this.addTab(this.form, captionMasterData, null);
+        this.addTab(this.postalAddressView, captionAddr, null);
+        this.addTab(this.telecomView, captionTelecom, null);
+        this.addTab(this.electronicAddressView, captionElAddr, null);
+        this.addTab(new Label("Beziehungen zwischen mir und den andren"), captionRelations, null);
+        this.addTab(this.rolesGroup, captionRoles, null);
+        this.addTab(this.classificationsGroup, captionClass, null);
     }
 
     private void createContacts()

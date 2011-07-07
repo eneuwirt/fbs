@@ -19,9 +19,13 @@ public abstract class ContactMechanismView<T extends ContactMechanism> extends I
 {
     private static final long serialVersionUID = 1L;
 
-    public ContactMechanismView(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields)
+    protected static final String[] NESTED_PROPERTIES = new String[]
+    { CONTACT_MECHANISM_TYPE_DESCR };
+
+    public ContactMechanismView(MyVaadinApplication app, Class<T> clazz, String[] visibleColumns, String[] visibleFields,
+            String[] nestedContainerProperties)
     {
-        super(app, clazz, new ContactMechanismFormFieldFactory(app), visibleColumns, visibleFields);
+        super(app, clazz, new ContactMechanismFormFieldFactory(app), visibleColumns, visibleFields, nestedContainerProperties);
     }
 
     /**
@@ -66,6 +70,7 @@ public abstract class ContactMechanismView<T extends ContactMechanism> extends I
         // TODO Temporal
         partyContactMechanisms = this.app.getServices().getCrudServicePartyContactMechanism().findAll();
 
+        this.tableBeans.select(null);
         this.beanItemContainer.removeAllItems();
         for (PartyContactMechanism pcm : partyContactMechanisms)
         {
@@ -111,11 +116,6 @@ public abstract class ContactMechanismView<T extends ContactMechanism> extends I
             return this.app.getMessage(ApplicationMessages.ElectronicAddress);
 
         return propertyId;
-    }
-
-    public FormFieldFactory getFormFieldFactory()
-    {
-        return new ContactMechanismFormFieldFactory(this.app);
     }
 
     private static class ContactMechanismFormFieldFactory implements FormFieldFactory

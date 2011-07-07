@@ -19,7 +19,7 @@ public class PartyRelationshipView extends ItemsListView<PartyRelationshipDto, P
 
     public PartyRelationshipView(MyVaadinApplication app)
     {
-        super(app, PartyRelationshipDto.class, null, VISIBLE_COLUMNS, VISIBLE_FIELDS);
+        super(app, PartyRelationshipDto.class, null, VISIBLE_COLUMNS, VISIBLE_FIELDS, null);
     }
 
     @Override

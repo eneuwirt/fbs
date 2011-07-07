@@ -44,46 +44,67 @@ public class ApplicationServicesImpl implements ApplicationServices
     private SeedService seedService;
     @Resource(name = "crudServiceContactMechanismPurposeType")
     private CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
+    
     @Resource(name = "crudServiceContactMechanismType")
     private CrudService<ContactMechanismType, Integer> crudServiceContactMechanismType;
+    
     @Resource(name = "crudServiceFacility")
     private CrudService<Facility, Integer> crudServiceFacility;
+    
     @Resource(name = "crudServiceFacilityContactMechanism")
     private CrudService<FacilityContactMechanism, Integer> crudServiceFacilityContactMechanism;
+   
     @Resource(name = "crudServiceElectronicAddress")
     private CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress;
+   
     @Resource(name = "crudServiceOrganization")
     private CrudService<Organization, Integer> crudServiceOrganization;
+   
     @Resource(name = "crudServiceParty")
     private CrudService<Party, Integer> crudServiceParty;
+  
     @Resource(name = "crudServicePartyContactMechanism")
     private CrudServicePartyContactMechanism crudServicePartyContactMechanism;
+  
     @Resource(name = "crudServicePartyContactMechanismPurpose")
     private CrudServicePartyContactMechanismPurpose crudServicePartyContactMechanismPurpose;
+  
     @Resource(name = "crudServicePartyFacility")
     private CrudService<PartyFacility, Integer> crudServicePartyFacility;
+ 
     @Resource(name = "crudServicePartyType")
     private CrudServiceType<PartyType, Integer> crudServicePartyType;
+   
     @Resource(name = "crudServicePartyRelationship")
     private CrudService<PartyRelationship, Integer> crudServicePartyRelationship;
+  
     @Resource(name = "crudServicePartyRelationshipStatusType")
     private CrudService<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType;
+   
     @Resource(name = "crudServicePartyRelationshipType")
     private CrudService<PartyRelationshipType, Integer> crudServicePartyRelationshipType;
+  
     @Resource(name = "crudServicePartyRoleType")
     private CrudServiceType<PartyRoleType, Integer> crudServicePartyRoleType;
+   
     @Resource(name = "crudServicePartyRole")
     private ServicePartyRole crudServicePartyRole;
+  
     @Resource(name = "crudServicePerson")
     private CrudService<Person, Integer> crudServicePerson;
+   
     @Resource(name = "crudServicePriorityType")
     private CrudService<PriorityType, Integer> crudServicePriorityType;
+  
     @Resource(name = "crudServiceTelecommunicationNumber")
     private CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber;
+  
     @Resource
     private ServicePartyClassification servicePartyClassification;
-    @Resource(name = "crudServicePriorityType")
+  
+    @Resource(name = "crudServicePostalAddress")
     private CrudService<PostalAddress, Integer> crudServicePostalAddress;
+   
     @Resource(name = "crudServiceWorkEffortType")
     private CrudService<WorkEffortType, Integer> crudServiceWorkEffortType;
 

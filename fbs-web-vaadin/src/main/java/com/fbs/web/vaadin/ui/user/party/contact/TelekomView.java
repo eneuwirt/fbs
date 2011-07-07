@@ -16,7 +16,7 @@ public class TelekomView extends ContactMechanismView<TelecommunicationNumber>
 
     public TelekomView(MyVaadinApplication app)
     {
-        super(app, TelecommunicationNumber.class, VISIBLE_COLUMNS, VISIBLE_FIELDS);
+        super(app, TelecommunicationNumber.class, VISIBLE_COLUMNS, VISIBLE_FIELDS, NESTED_PROPERTIES);
     }
 
     @Override
@@ -37,10 +37,10 @@ public class TelekomView extends ContactMechanismView<TelecommunicationNumber>
     {
         // create Instance
         this.app.getServices().getCrudServiceTelecommunicationNumber().create(t);
-        
+
         // create party connection
         this.createPartyContactMechanism(t);
-        
+
         return t;
     }
 
@@ -61,7 +61,7 @@ public class TelekomView extends ContactMechanismView<TelecommunicationNumber>
     public void deleteBean(TelecommunicationNumber t) throws Exception
     {
         this.deletePartyContactMechanism(t);
-        
+
         this.app.getServices().getCrudServiceTelecommunicationNumber().delete(t.getId());
     }
 }

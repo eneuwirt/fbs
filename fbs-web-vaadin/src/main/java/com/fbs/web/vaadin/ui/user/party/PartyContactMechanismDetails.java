@@ -12,7 +12,7 @@ import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
-import com.fbs.web.vaadin.ui.common.items.DetailsComponent;
+import com.fbs.web.vaadin.ui.common.items.DetailsAware;
 import com.fbs.web.vaadin.ui.user.contact.ContactMechanismHelper;
 
 import com.vaadin.data.Item;
@@ -29,7 +29,7 @@ import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class PartyContactMechanismDetails extends CustomComponent implements DetailsComponent<PartyContactMechanism>,
+public class PartyContactMechanismDetails extends CustomComponent implements DetailsAware<PartyContactMechanism>,
         ContactMechanismHelper
 {
     private static final long serialVersionUID = 1L;

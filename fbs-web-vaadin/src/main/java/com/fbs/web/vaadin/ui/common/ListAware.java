@@ -2,7 +2,7 @@ package com.fbs.web.vaadin.ui.common;
 
 import java.util.List;
 
-public interface ListScreen<T> extends ItemCrud<T>
+public interface ListAware<T> extends CrudAware<T>
 {
 	/**
 	 * read the list from source

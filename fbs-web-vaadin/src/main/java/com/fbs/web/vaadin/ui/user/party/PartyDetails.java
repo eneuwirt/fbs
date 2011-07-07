@@ -13,7 +13,7 @@ import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
-import com.fbs.web.vaadin.ui.common.items.DetailsComponent;
+import com.fbs.web.vaadin.ui.common.items.DetailsAware;
 import com.fbs.web.vaadin.ui.user.party.contact.ElectronicAddressView;
 import com.fbs.web.vaadin.ui.user.party.contact.PostalAddressView;
 import com.fbs.web.vaadin.ui.user.party.contact.TelekomView;
@@ -28,7 +28,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
-public class PartyDetails<T extends Party> extends CustomComponent implements DetailsComponent<T>
+public class PartyDetails<T extends Party> extends CustomComponent implements DetailsAware<T>
 {
     private static final long serialVersionUID = 1L;
     private static Logger logger = Logger.getLogger(PartyDetails.class.getName());

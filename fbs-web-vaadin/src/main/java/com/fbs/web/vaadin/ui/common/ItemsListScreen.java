@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import com.fbs.web.vaadin.application.ApplicationServices;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
-import com.fbs.web.vaadin.ui.common.items.DetailsComponent;
+import com.fbs.web.vaadin.ui.common.items.DetailsAware;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
@@ -29,7 +29,7 @@ import com.vaadin.ui.Button.ClickEvent;
  * 
  * @param <T>
  */
-public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements ListScreen<T>
+public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements ListAware<T>
 {
     private static final long serialVersionUID = 1L;
     private static Logger logger = Logger.getLogger(ItemsListScreen.class.getName());
@@ -53,7 +53,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
     protected Button buttonItemAdd2;
     protected Button buttonItemDelete;
     // ** Elements right ******************************************
-    protected DetailsComponent<T> component;
+    protected DetailsAware<T> component;
     protected Button buttonSave;
     protected Button buttonCancel;
     protected Button buttonDelete;
@@ -78,12 +78,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
         return propertyId;
     }
 
-    public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, DetailsComponent<T> component, String[] visibleColumns)
+    public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, DetailsAware<T> component, String[] visibleColumns)
     {
         this(app, clazz, component, visibleColumns, null);
     }
 
-    public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, DetailsComponent<T> component, String[] visibleColumns,
+    public ItemsListScreen(MyVaadinApplication app, Class<T> clazz, DetailsAware<T> component, String[] visibleColumns,
             String[] nestedContainerProperties)
     {
         super();

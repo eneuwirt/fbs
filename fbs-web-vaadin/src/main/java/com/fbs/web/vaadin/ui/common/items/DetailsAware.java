@@ -2,7 +2,7 @@ package com.fbs.web.vaadin.ui.common.items;
 
 import com.vaadin.ui.ComponentContainer;
 
-public interface DetailsComponent<T> extends ComponentContainer
+public interface DetailsAware<T> extends ComponentContainer
 {
     public void setBean(T t);
     public T getBean();

@@ -1,6 +1,6 @@
 package com.fbs.web.vaadin.ui.common;
 
-public interface ItemCrud<T>
+public interface CrudAware<T>
 {
     /**
      * New Instance

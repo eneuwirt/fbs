@@ -18,7 +18,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  * @param <T>
  */
-public class DetailsComponentSimple<T extends Serializable> extends CustomComponent implements DetailsComponent<T>
+public class DetailsComponentSimple<T extends Serializable> extends CustomComponent implements DetailsAware<T>
 {
     private static final long serialVersionUID = 1L;
     protected MyVaadinApplication app;

@@ -19,7 +19,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
-public abstract class ItemsListView<T, A> extends Panel implements ListView<T, A>
+public abstract class ItemsListView<T, A> extends Panel implements AnchorAware<T, A>
 {
     private static final long serialVersionUID = 1L;
 

@@ -33,11 +33,6 @@ public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMec
 {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(PartyContactMechanismScreen.class.getName());
-	private static final String ID = "id";
-	private static final String COMMENT = "comment";
-
-	private static final String PARTY = "party";
-	private static final String PARTY_NAME = "party.name";
 
 	private static final String[] VISIBLE_COLUMNS = new String[]
 		{ ID, PARTY_NAME, CONTACT_MECHANISM_ADDRESS };

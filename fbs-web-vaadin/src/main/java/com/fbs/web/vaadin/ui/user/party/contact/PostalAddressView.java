@@ -9,7 +9,7 @@ public class PostalAddressView extends ContactMechanismView<PostalAddress>
 {
     private static final long serialVersionUID = 1L;
     private static final String[] VISIBLE_COLUMNS =
-    { ADDRESS1, ADDRESS2, POSTAL_CODE, CITY, COUNTRY };
+    { "id", "address"};
     private static final String[] VISIBLE_FIELDS =
     { ADDRESS1, ADDRESS2, POSTAL_CODE, CITY, COUNTRY };
 

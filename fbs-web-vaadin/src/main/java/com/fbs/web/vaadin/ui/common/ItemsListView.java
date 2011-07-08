@@ -1,10 +1,12 @@
 package com.fbs.web.vaadin.ui.common;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
+import com.fbs.web.vaadin.ui.common.items.BeanAware;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
@@ -13,12 +15,10 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.Runo;
 
 public abstract class ItemsListView<T, A> extends VerticalLayout implements AnchorAware<T, A>
 {
@@ -54,24 +54,18 @@ public abstract class ItemsListView<T, A> extends VerticalLayout implements Anch
         this.nestedContainerProperties = nestedContainerProperties;
 
         this.createDialogCaption = this.app.getMessage(ApplicationMessages.CommonCreate);
+        
+        this.dialog = new CRUDDialog<T, A>(this, formFieldFactory, visibleFields);
+        this.dialog.setModal(true);
 
         this.beanItemContainer = new BeanItemContainer<T>(this.clazz);
-        //this.addNestedContainerProperties();
+        this.addNestedContainerProperties();
 
         this.tableBeans = new Table();
-        this.tableBeans.setSizeFull();
         this.tableBeans.setSelectable(true);
         this.tableBeans.setMultiSelect(false);
         this.tableBeans.setImmediate(true);
         this.tableBeans.setContainerDataSource(beanItemContainer);
-        //this.tableBeans.setVisibleColumns(this.visibleColumns);
-        // Set nicer header names
-        for (String propertyId : this.visibleColumns)
-        {
-            String columnName = this.getColumnName(propertyId);
-
-            //this.tableBeans.setColumnHeader(propertyId, columnName);
-        }
         this.tableBeans.addListener(new TableSelectListener<T, A>(this));
 
         this.buttonAdd = new Button("Add", new CreateListener<T, A>(this));
@@ -81,9 +75,6 @@ public abstract class ItemsListView<T, A> extends VerticalLayout implements Anch
 
         this.buttonDelete = new Button("-", new DeleteListener<T, A>(this));
         this.buttonDelete.setEnabled(false);
-
-        this.dialog = new CRUDDialog<T, A>(this, formFieldFactory, visibleFields);
-        this.dialog.setModal(true);
 
         this.initLayout();
     }
@@ -95,6 +86,14 @@ public abstract class ItemsListView<T, A> extends VerticalLayout implements Anch
         this.setSizeFull();
 
         this.tableBeans.setSizeFull();
+        this.tableBeans.setVisibleColumns(this.visibleColumns);
+        // Set nicer header names
+        for (String propertyId : this.visibleColumns)
+        {
+            String columnName = this.getColumnName(propertyId);
+
+            this.tableBeans.setColumnHeader(propertyId, columnName);
+        }
 
         buttonRow = new HorizontalLayout();
         buttonRow.setMargin(true);
@@ -119,7 +118,7 @@ public abstract class ItemsListView<T, A> extends VerticalLayout implements Anch
             this.updateComponents();
         }
     }
-    
+
     private void addNestedContainerProperties()
     {
         if (this.nestedContainerProperties == null)
@@ -127,9 +126,9 @@ public abstract class ItemsListView<T, A> extends VerticalLayout implements Anch
             return;
         }
 
-        for (int i = 0; i < this.nestedContainerProperties.length; i++)
+        for (String p :  this.nestedContainerProperties)
         {
-            this.beanItemContainer.addNestedContainerProperty(nestedContainerProperties[i]);
+            this.beanItemContainer.addNestedContainerProperty(p);
         }
     }
 
@@ -263,7 +262,7 @@ public abstract class ItemsListView<T, A> extends VerticalLayout implements Anch
         }
     }
 
-    private static class CRUDDialog<T, A> extends Window
+    private static class CRUDDialog<T, A> extends Window implements BeanAware<T>
     {
         private static final long serialVersionUID = 1L;
 
@@ -273,6 +272,8 @@ public abstract class ItemsListView<T, A> extends VerticalLayout implements Anch
         }
 
         private ItemsListView<T, A> view;
+        
+        private String[] visibleFields;
 
         private Form form;
         private BeanItem<T> beanItem;
@@ -287,6 +288,8 @@ public abstract class ItemsListView<T, A> extends VerticalLayout implements Anch
             super();
 
             this.view = view;
+            
+            this.visibleFields = visibleFields;
 
             this.setClosable(true);
             this.setHeight("50%");
@@ -296,15 +299,14 @@ public abstract class ItemsListView<T, A> extends VerticalLayout implements Anch
             layout.setMargin(true);
             layout.setSpacing(true);
 
-            bean = this.view.createBeanInstance();
-            beanItem = new BeanItem<T>(bean);
+            this.bean = this.view.createBeanInstance();
+            this.beanItem = new BeanItem<T>(bean);
 
             this.form = new Form();
             this.form.setImmediate(true);
             this.form.setSizeFull();
-            this.form.setVisibleItemProperties(visibleFields);
             this.form.setFormFieldFactory(formFieldFactory);
-            this.form.setItemDataSource(beanItem);
+            this.form.setItemDataSource(beanItem, Arrays.asList(visibleFields));
 
             this.buttonSave = new Button("Save", new DialogListener<T, A>(this));
             this.buttonClose = new Button("Close", new DialogListener<T, A>(this));
@@ -320,8 +322,15 @@ public abstract class ItemsListView<T, A> extends VerticalLayout implements Anch
 
         public void setBean(T bean)
         {
+            this.bean = bean;
             this.beanItem = new BeanItem<T>(bean);
-            this.form.setItemDataSource(beanItem);
+            this.form.setItemDataSource(beanItem, Arrays.asList(visibleFields));
+        }
+        
+        @Override
+        public T getBean()
+        {
+            return this.bean;
         }
 
         public void setAction(Action action)

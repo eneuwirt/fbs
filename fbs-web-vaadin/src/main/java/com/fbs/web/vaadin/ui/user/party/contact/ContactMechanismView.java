@@ -70,7 +70,6 @@ public abstract class ContactMechanismView<T extends ContactMechanism> extends I
         // TODO Temporal
         partyContactMechanisms = this.app.getServices().getCrudServicePartyContactMechanism().findAll();
 
-        this.tableBeans.select(null);
         this.beanItemContainer.removeAllItems();
         for (PartyContactMechanism pcm : partyContactMechanisms)
         {

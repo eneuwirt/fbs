@@ -42,7 +42,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
     protected Class<T> clazz;
     protected MyVaadinApplication app;
     protected ApplicationServices services;
-    // Visible columns for table and visible fields for form
+    // Visible columns for table 
     protected String[] visibleColumns;
     protected String[] nestedContainerProperties;
     // ** Elements left *******************************************

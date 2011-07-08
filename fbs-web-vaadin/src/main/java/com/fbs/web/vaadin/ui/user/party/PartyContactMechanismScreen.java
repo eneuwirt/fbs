@@ -16,7 +16,7 @@ import com.fbs.web.dto.ContactMechanismDto;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
-import com.fbs.web.vaadin.ui.user.contact.ContactMechanismHelper;
+import com.fbs.web.vaadin.ui.user.contact.ContactMechanismConstants;
 
 
 import com.vaadin.data.util.BeanItemContainer;
@@ -29,7 +29,7 @@ import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMechanism> implements ContactMechanismHelper
+public class PartyContactMechanismScreen extends ItemsListScreen<PartyContactMechanism> implements ContactMechanismConstants
 {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(PartyContactMechanismScreen.class.getName());

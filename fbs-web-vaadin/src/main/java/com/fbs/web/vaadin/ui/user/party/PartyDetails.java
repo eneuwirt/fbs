@@ -13,6 +13,7 @@ import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
+import com.fbs.web.vaadin.ui.common.items.BeanAware;
 import com.fbs.web.vaadin.ui.common.items.DetailsAware;
 import com.fbs.web.vaadin.ui.user.party.contact.ElectronicAddressView;
 import com.fbs.web.vaadin.ui.user.party.contact.PostalAddressView;
@@ -25,7 +26,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TabSheet;
 
-public class PartyDetails<T extends Party> extends TabSheet implements DetailsAware<T>
+public class PartyDetails<T extends Party> extends TabSheet implements DetailsAware<T>, BeanAware<T>
 {
     private static final long serialVersionUID = 1L;
     private static Logger logger = Logger.getLogger(PartyDetails.class.getName());

@@ -4,9 +4,9 @@ import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.user.contact.ContactMechanismPurposeTypeScreen;
 import com.fbs.web.vaadin.ui.user.contact.ContactMechanismTypeScreen;
-import com.fbs.web.vaadin.ui.user.party.PartyRelationshipTypeScreen;
 import com.fbs.web.vaadin.ui.user.party.PartyRoleTypeScreen;
 import com.fbs.web.vaadin.ui.user.party.PartyTypeScreen;
+import com.fbs.web.vaadin.ui.user.party.relship.PartyRelationshipTypeScreen;
 import com.fbs.web.vaadin.ui.user.workeffort.WorkEffortTypeScreen;
 import com.vaadin.ui.Accordion;
 

@@ -8,14 +8,14 @@ import com.fbs.dmr.universal.model.party.PartyContactMechanism;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListView;
-import com.fbs.web.vaadin.ui.user.contact.ContactMechanismHelper;
+import com.fbs.web.vaadin.ui.user.contact.ContactMechanismConstants;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.TextField;
 
-public abstract class ContactMechanismView<T extends ContactMechanism> extends ItemsListView<T, Party> implements ContactMechanismHelper
+public abstract class ContactMechanismView<T extends ContactMechanism> extends ItemsListView<T, Party> implements ContactMechanismConstants
 {
     private static final long serialVersionUID = 1L;
 

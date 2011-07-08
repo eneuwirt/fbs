@@ -15,6 +15,7 @@ public class UserScreen extends ScreenTemplate
 	private PartyAccordion partyAccordion;
 	private RelationshipAccordion relAccordion;
 	private DocumentsAccordion docAccordion;
+	private WorkEffortAccordion workEffortAccordion;
 	private ContactAccordion contactAccordion;
 	private TypesAccordion typesAccordion;
 
@@ -36,6 +37,7 @@ public class UserScreen extends ScreenTemplate
 		this.docAccordion = new  DocumentsAccordion(this.app);
 		this.contactAccordion = new ContactAccordion(this.app);
 		this.typesAccordion = new TypesAccordion(this.app);
+		this.workEffortAccordion = new WorkEffortAccordion(this.app);
 
 		tabsheet.setSizeFull();
 
@@ -43,6 +45,7 @@ public class UserScreen extends ScreenTemplate
 		tabsheet.addTab(relAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleRelationships), null);
 		tabsheet.addTab(contactAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleContacts), null);
 		tabsheet.addTab(docAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleDocuments), null);
+		tabsheet.addTab(workEffortAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleWorkeffort), null);
 		tabsheet.addTab(typesAccordion, this.app.getMessage(ApplicationMessages.UserTabTitleTypes), null);
 	}
 }

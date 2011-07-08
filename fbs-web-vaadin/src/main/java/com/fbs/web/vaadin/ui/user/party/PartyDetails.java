@@ -19,14 +19,11 @@ import com.fbs.web.vaadin.ui.user.party.contact.PostalAddressView;
 import com.fbs.web.vaadin.ui.user.party.contact.TelekomView;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.VerticalLayout;
 
 public class PartyDetails<T extends Party> extends TabSheet implements DetailsAware<T>
 {
@@ -48,8 +45,6 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
 
     public PartyDetails(MyVaadinApplication app, FormFieldFactory formFieldFactory, String[] visibleFields)
     {
-        TabSheet tabsheet;
-
         // A layout structure used for composition
         this.app = app;
         this.visibleFields = visibleFields;

@@ -1,4 +1,4 @@
-package com.fbs.web.vaadin.ui.user.party;
+package com.fbs.web.vaadin.ui.user.party.details;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,9 +15,6 @@ import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.items.BeanAware;
 import com.fbs.web.vaadin.ui.common.items.DetailsAware;
-import com.fbs.web.vaadin.ui.user.party.contact.ElectronicAddressView;
-import com.fbs.web.vaadin.ui.user.party.contact.PostalAddressView;
-import com.fbs.web.vaadin.ui.user.party.contact.TelekomView;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Form;

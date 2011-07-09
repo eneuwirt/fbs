@@ -1,4 +1,4 @@
-package com.fbs.web.vaadin.ui.user.party;
+package com.fbs.web.vaadin.ui.user.party.details;
 
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.web.vaadin.application.MyVaadinApplication;

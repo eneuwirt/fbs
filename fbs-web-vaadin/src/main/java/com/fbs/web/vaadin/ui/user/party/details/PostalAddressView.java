@@ -1,4 +1,4 @@
-package com.fbs.web.vaadin.ui.user.party.contact;
+package com.fbs.web.vaadin.ui.user.party.details;
 
 import java.util.List;
 

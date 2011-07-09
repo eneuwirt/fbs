@@ -6,6 +6,7 @@ import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
+import com.fbs.web.vaadin.ui.user.party.details.PersonDetails;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;

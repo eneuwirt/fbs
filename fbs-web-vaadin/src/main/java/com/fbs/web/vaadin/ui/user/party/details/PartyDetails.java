@@ -37,9 +37,7 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
     protected OptionGroup rolesGroup;
     protected OptionGroup classificationsGroup;
     //
-    private PostalAddressView postalAddressView;
-    private TelekomView telecomView;
-    private ElectronicAddressView electronicAddressView;
+    private PartyContactMechanismView partyContactMechanismView;
 
     public PartyDetails(MyVaadinApplication app, FormFieldFactory formFieldFactory, String[] visibleFields)
     {
@@ -78,10 +76,7 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
         this.resetOptionGroupClassification(party);
         this.resetOptionGroupRoles(party);
 
-        this.postalAddressView.setAnchor(party);
-        this.electronicAddressView.setAnchor(party);
-        this.telecomView.setAnchor(party);
-
+        this.partyContactMechanismView.setAnchor(party);
     }
 
     @Override
@@ -289,40 +284,30 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
         String captionMasterData;
         String captionClass;
         String captionRoles;
-        String captionAddr;
-        String captionElAddr;
-        String captionTelecom;
         String captionRelations;
+        String captionPartyContacts;
 
         logger.info(">getComponent");
 
         captionMasterData = this.app.getMessage(ApplicationMessages.PartyMasterData);
         captionClass = this.app.getMessage(ApplicationMessages.PartyTypeClassificationTitle);
         captionRoles = this.app.getMessage(ApplicationMessages.PartyRoleTitle);
-        captionAddr = this.app.getMessage(ApplicationMessages.PartyPostalAddress);
-        captionElAddr = this.app.getMessage(ApplicationMessages.PartyElectronicAddress);
         captionRelations = this.app.getMessage(ApplicationMessages.PartyRelationships);
-        captionTelecom = this.app.getMessage(ApplicationMessages.PartyTelecommunicationNumber);
+        captionPartyContacts = "Kontakte";
+        
+        this.partyContactMechanismView = new PartyContactMechanismView(this.app);
 
-        this.createContacts();
         this.createClassificationGroup();
         this.createRolesGroup();
 
         this.addTab(this.form, captionMasterData, null);
-        this.addTab(this.postalAddressView, captionAddr, null);
-        this.addTab(this.telecomView, captionTelecom, null);
-        this.addTab(this.electronicAddressView, captionElAddr, null);
+        
+        this.addTab(partyContactMechanismView, captionPartyContacts, null);
         this.addTab(new Label("Beziehungen zwischen mir und den andren"), captionRelations, null);
         this.addTab(this.rolesGroup, captionRoles, null);
         this.addTab(this.classificationsGroup, captionClass, null);
     }
 
-    private void createContacts()
-    {
-        this.postalAddressView = new PostalAddressView(this.app);
-        this.telecomView = new TelekomView(this.app);
-        this.electronicAddressView = new ElectronicAddressView(this.app);
-    }
 
     private void createClassificationGroup()
     {

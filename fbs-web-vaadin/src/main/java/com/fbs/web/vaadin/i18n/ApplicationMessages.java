@@ -158,9 +158,9 @@ public interface ApplicationMessages extends Serializable
 	public static String SecurityInvalidCredentials = "Security.InvalidCredentials";
 	public static String SecurityUnknownAccount = "Security.UnknownAccount";
 	
-	public static String TelekommunikationCountryCode = "Telekommunikation.CountryCode";
-	public static String TelekommunikationAreaCode = "Telekommunikation.AreaCode";
-	public static String TelekommunikationNumber = "Telekommunikation.Number";
+	public static String TelecommunicationCountryCode = "Telecommunication.CountryCode";
+	public static String TelecommunicationAreaCode = "Telecommunication.AreaCode";
+	public static String TelecommunicationNumber = "Telecommunication.Number";
 
 	public static String TenantId = "Tenant.Id";
 	public static String TenantDescription = "Tenant.Description";

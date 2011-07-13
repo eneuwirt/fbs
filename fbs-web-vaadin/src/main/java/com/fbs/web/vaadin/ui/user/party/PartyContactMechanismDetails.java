@@ -257,15 +257,15 @@ public class PartyContactMechanismDetails extends CustomComponent implements Det
             }
             else if (COUNTRY_CODE.equals(pid))
             {
-                result = new TextField(this.app.getMessage(ApplicationMessages.TelekommunikationCountryCode));
+                result = new TextField(this.app.getMessage(ApplicationMessages.TelecommunicationCountryCode));
             }
             else if (AREA_CODE.equals(pid))
             {
-                result = new TextField(this.app.getMessage(ApplicationMessages.TelekommunikationAreaCode));
+                result = new TextField(this.app.getMessage(ApplicationMessages.TelecommunicationAreaCode));
             }
             else if (NUMBER.equals(pid))
             {
-                result = new TextField(ApplicationMessages.TelekommunikationNumber);
+                result = new TextField(ApplicationMessages.TelecommunicationNumber);
             }
 
             return result;

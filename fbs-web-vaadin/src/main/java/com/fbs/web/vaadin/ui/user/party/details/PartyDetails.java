@@ -297,8 +297,15 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
         
         this.partyContactMechanismView = new PartyContactMechanismView(this.app);
 
-        this.createClassificationGroup();
-        this.createRolesGroup();
+        this.classificationsGroup = new OptionGroup();
+        this.classificationsGroup.setMultiSelect(true);
+        this.classificationsGroup.setNullSelectionAllowed(true);
+        this.classificationsGroup.setImmediate(true);
+        
+        this.rolesGroup = new OptionGroup();
+        this.rolesGroup.setMultiSelect(true);
+        this.rolesGroup.setNullSelectionAllowed(true);
+        this.rolesGroup.setImmediate(true);
 
         this.addTab(this.form, captionMasterData, null);
         
@@ -306,22 +313,5 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
         this.addTab(new Label("Beziehungen zwischen mir und den andren"), captionRelations, null);
         this.addTab(this.rolesGroup, captionRoles, null);
         this.addTab(this.classificationsGroup, captionClass, null);
-    }
-
-
-    private void createClassificationGroup()
-    {
-        this.classificationsGroup = new OptionGroup();
-        this.classificationsGroup.setMultiSelect(true);
-        this.classificationsGroup.setNullSelectionAllowed(true);
-        this.classificationsGroup.setImmediate(true);
-    }
-
-    private void createRolesGroup()
-    {
-        this.rolesGroup = new OptionGroup();
-        this.rolesGroup.setMultiSelect(true);
-        this.rolesGroup.setNullSelectionAllowed(true);
-        this.rolesGroup.setImmediate(true);
     }
 }

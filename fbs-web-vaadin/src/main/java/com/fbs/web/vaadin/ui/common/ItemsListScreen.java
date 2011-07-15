@@ -29,7 +29,7 @@ import com.vaadin.ui.Button.ClickEvent;
  * 
  * @param <T>
  */
-public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements ListAware<T>
+public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements ListAware<T>, CrudAware<T>
 {
     private static final long serialVersionUID = 1L;
     private static Logger logger = Logger.getLogger(ItemsListScreen.class.getName());

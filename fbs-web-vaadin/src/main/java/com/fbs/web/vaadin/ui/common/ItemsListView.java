@@ -20,7 +20,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
-public abstract class ItemsListView<T, A> extends VerticalLayout implements AnchorAware<T, A>
+public abstract class ItemsListView<T, A> extends VerticalLayout implements AnchorAware<T, A>, ListAware<T>, CrudAware<T>
 {
     private static final long serialVersionUID = 1L;
 

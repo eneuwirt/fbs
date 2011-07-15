@@ -135,16 +135,18 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void updateBeanDetails(T party)
     {
         List<PartyRole> partyRoles;
         List<PartyClassification> classifications;
+        Set<String> selectedRoles;
+        Set<String> selectedClassifications;
 
         logger.info(">updateBean");
 
-        @SuppressWarnings("unchecked")
-        Set<String> selectedRoles = (Set<String>) this.rolesGroup.getValue();
+        selectedRoles = (Set<String>) this.rolesGroup.getValue();
 
         // remove all unselected roles
         partyRoles = this.app.getServices().getCrudServicePartyRole().findByParty(party.getId());
@@ -157,7 +159,6 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
         }
 
         // add all selected items to the party
-        partyRoles = new ArrayList<PartyRole>();
         for (String selectedRole : selectedRoles)
         {
             PartyRole partyRole;
@@ -182,8 +183,7 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
             }
         }
 
-        @SuppressWarnings("unchecked")
-        Set<String> selectedClassifications = (Set<String>) this.classificationsGroup.getValue();
+        selectedClassifications = (Set<String>) this.classificationsGroup.getValue();
         // remove all unselected classifications
         classifications = this.app.getServices().getCrudServicePartyClassification().findByParty(party.getId());
         for (PartyClassification classification : classifications)
@@ -194,7 +194,6 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
             }
         }
         // add selected items
-        classifications = new ArrayList<PartyClassification>();
         for (String selectedClass : selectedClassifications)
         {
             PartyClassification partyClass;
@@ -217,8 +216,6 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
             {
                 this.app.getServices().getCrudServicePartyClassification().update(partyClass);
             }
-
-            classifications.add(partyClass);
         }
     }
 

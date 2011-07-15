@@ -2,7 +2,7 @@ package com.fbs.web.vaadin.ui.common;
 
 import java.util.List;
 
-public interface ListAware<T> extends CrudAware<T>
+public interface ListAware<T>
 {
 	/**
 	 * read the list from source

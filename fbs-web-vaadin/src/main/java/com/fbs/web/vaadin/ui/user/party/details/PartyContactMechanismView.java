@@ -2,18 +2,22 @@ package com.fbs.web.vaadin.ui.user.party.details;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.fbs.dmr.universal.model.contact.ContactMechanism;
+import com.fbs.dmr.universal.model.contact.ContactMechanismPurposeType;
 import com.fbs.dmr.universal.model.contact.ElectronicAddress;
 import com.fbs.dmr.universal.model.contact.PostalAddress;
 import com.fbs.dmr.universal.model.contact.TelecommunicationNumber;
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyContactMechanism;
+import com.fbs.dmr.universal.model.party.PartyContactMechanismPurpose;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.AnchorAware;
+import com.fbs.web.vaadin.ui.common.ListAware;
 import com.fbs.web.vaadin.ui.common.items.BeanAware;
 import com.fbs.web.vaadin.ui.user.contact.ContactMechanismConstants;
 
@@ -28,6 +32,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
@@ -36,7 +41,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
 public class PartyContactMechanismView extends VerticalLayout implements AnchorAware<PartyContactMechanism, Party>,
-        ContactMechanismConstants
+        ListAware<PartyContactMechanism>,  ContactMechanismConstants
 {
     private static final long serialVersionUID = 1L;
 
@@ -151,13 +156,6 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
     }
 
     @Override
-    public List<PartyContactMechanism> getAllBeans() throws Exception
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public String getColumnName(String pid)
     {
         if (pid.equals(ID))
@@ -178,7 +176,6 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
         return pid;
     }
 
-    @Override
     public PartyContactMechanism createBeanInstance()
     {
         PartyContactMechanism result;
@@ -207,90 +204,6 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
         return result;
     }
 
-    @Override
-    public PartyContactMechanism createBean(PartyContactMechanism t) throws Exception
-    {
-        if (t.getContactMechanism() instanceof PostalAddress)
-        {
-            PostalAddress postalAddress;
-
-            postalAddress = (PostalAddress) t.getContactMechanism();
-
-            this.app.getServices().getCrudServicePostalAddress().create(postalAddress);
-        }
-        else if (t.getContactMechanism() instanceof TelecommunicationNumber)
-        {
-            TelecommunicationNumber tn;
-
-            tn = (TelecommunicationNumber) t.getContactMechanism();
-
-            this.app.getServices().getCrudServiceTelecommunicationNumber().create(tn);
-        }
-        else if (t.getContactMechanism() instanceof ElectronicAddress)
-        {
-            ElectronicAddress ea;
-
-            ea = (ElectronicAddress) t.getContactMechanism();
-
-            this.app.getServices().getCrudServiceElectronicAddress().create(ea);
-        }
-        else
-        {
-            String msg = "Unknown class: " + t.getContactMechanism().getClass().getName();
-
-            throw new IllegalArgumentException(msg);
-        }
-
-        this.app.getServices().getCrudServicePartyContactMechanism().create(t);
-
-        return t;
-    }
-
-    @Override
-    public void updateBean(PartyContactMechanism t) throws Exception
-    {
-        this.app.getServices().getCrudServicePartyContactMechanism().update(t);
-
-        if (t.getContactMechanism() instanceof PostalAddress)
-        {
-            PostalAddress postalAddress;
-
-            postalAddress = (PostalAddress) t.getContactMechanism();
-
-            this.app.getServices().getCrudServicePostalAddress().update(postalAddress);
-        }
-        else if (t.getContactMechanism() instanceof TelecommunicationNumber)
-        {
-            TelecommunicationNumber tn;
-
-            tn = (TelecommunicationNumber) t.getContactMechanism();
-
-            this.app.getServices().getCrudServiceTelecommunicationNumber().update(tn);
-        }
-        else if (t.getContactMechanism() instanceof ElectronicAddress)
-        {
-            ElectronicAddress ea;
-
-            ea = (ElectronicAddress) t.getContactMechanism();
-
-            this.app.getServices().getCrudServiceElectronicAddress().update(ea);
-        }
-        else
-        {
-            String msg = "Unknown class: " + t.getContactMechanism().getClass().getName();
-
-            throw new IllegalArgumentException(msg);
-        }
-    }
-
-    @Override
-    public PartyContactMechanism readBean(PartyContactMechanism t) throws Exception
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public void deleteBean(PartyContactMechanism t) throws Exception
     {
         this.app.getServices().getCrudServicePartyContactMechanism().delete(t.getId());
@@ -411,7 +324,6 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
             {
                 this.view.action = Action.CREATE_TELECOM;
             }
-           
 
             bean = this.view.createBeanInstance();
 
@@ -481,9 +393,9 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
             bean = this.view.selectedBean;
 
             this.view.dialog.setCaption(this.view.updateDialogCaption);
-            
+
             this.view.action = Action.UPDATE;
-            
+
             this.view.dialog.setBean(bean);
 
             if (view.dialog.getParent() != null)
@@ -513,9 +425,10 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
         private PartyContactMechanismView view;
 
         private PartyContactMechanism bean;
-        private Form form;
+        private Form formPartyContactMechanism;
         private ContactMechanism contactMechanism;
-        private Form contactForm;
+        private Form contactMechanismForm;
+        private OptionGroup optionGroupPurpose;
 
         private Button buttonSave;
         private Button buttonClose;
@@ -536,19 +449,25 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
             layout.setMargin(true);
             layout.setSpacing(true);
 
-            this.form = new Form();
-            this.form.setImmediate(true);
-            this.form.setSizeFull();
-            this.form.setFormFieldFactory(new PartyContactMechanismFormFieldFactory(this.app));
+            this.formPartyContactMechanism = new Form();
+            this.formPartyContactMechanism.setImmediate(true);
+            this.formPartyContactMechanism.setSizeFull();
+            this.formPartyContactMechanism.setFormFieldFactory(new PartyContactMechanismFormFieldFactory(this.app));
 
-            this.contactForm = new Form();
-            this.contactForm.setImmediate(true);
-            this.contactForm.setSizeFull();
-            this.contactForm.setFormFieldFactory(new PartyContactMechanismFormFieldFactory(this.app));
+            this.contactMechanismForm = new Form();
+            this.contactMechanismForm.setImmediate(true);
+            this.contactMechanismForm.setSizeFull();
+            this.contactMechanismForm.setFormFieldFactory(new PartyContactMechanismFormFieldFactory(this.app));
 
             DialogListener dl = new DialogListener(this);
             this.buttonSave = new Button(this.app.getMessage(ApplicationMessages.CommonSave), dl);
             this.buttonClose = new Button(this.app.getMessage(ApplicationMessages.CommonCancel), dl);
+
+            this.optionGroupPurpose = new OptionGroup();
+            this.optionGroupPurpose.setCaption(this.app.getMessage(ApplicationMessages.PartyContactMechanismPurpose));
+            this.optionGroupPurpose.setMultiSelect(true);
+            this.optionGroupPurpose.setNullSelectionAllowed(true);
+            this.optionGroupPurpose.setImmediate(true);
 
             HorizontalLayout buttonRow = new HorizontalLayout();
             buttonRow.setMargin(true);
@@ -558,8 +477,10 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
             buttonRow.addComponent(buttonSave);
             buttonRow.addComponent(buttonClose);
 
-            layout.addComponent(this.form);
-            layout.addComponent(this.contactForm);
+            layout.addComponent(this.contactMechanismForm);
+            layout.addComponent(this.optionGroupPurpose);
+            layout.addComponent(this.formPartyContactMechanism);
+
             layout.addComponent(buttonRow);
         }
 
@@ -570,10 +491,9 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
 
             this.bean = bean;
             this.contactMechanism = bean.getContactMechanism();
-            
-            beanItemPcm = new BeanItem<PartyContactMechanism>(bean);
-            this.form.setItemDataSource(beanItemPcm);
 
+            beanItemPcm = new BeanItem<PartyContactMechanism>(bean);
+            this.formPartyContactMechanism.setItemDataSource(beanItemPcm);
 
             if (this.contactMechanism instanceof PostalAddress)
             {
@@ -581,7 +501,7 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
                 PostalAddress pa = (PostalAddress) this.contactMechanism;
 
                 beanItem = new BeanItem<PostalAddress>(pa);
-                this.contactForm.setItemDataSource(beanItem, Arrays.asList(VISIBLE_FIELDS_DETAILS_POSTAL_ADDRESS));
+                this.contactMechanismForm.setItemDataSource(beanItem, Arrays.asList(VISIBLE_FIELDS_DETAILS_POSTAL_ADDRESS));
             }
             else if (this.contactMechanism instanceof TelecommunicationNumber)
             {
@@ -589,7 +509,7 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
                 TelecommunicationNumber ta = (TelecommunicationNumber) this.contactMechanism;
 
                 beanItem = new BeanItem<TelecommunicationNumber>(ta);
-                this.contactForm.setItemDataSource(beanItem, Arrays.asList(VISIBLE_FIELDS_DETAILS_TELECOM));
+                this.contactMechanismForm.setItemDataSource(beanItem, Arrays.asList(VISIBLE_FIELDS_DETAILS_TELECOM));
             }
             else if (this.contactMechanism instanceof ElectronicAddress)
             {
@@ -597,19 +517,180 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
                 ElectronicAddress ea = (ElectronicAddress) this.contactMechanism;
 
                 beanItem = new BeanItem<ElectronicAddress>(ea);
-                this.contactForm.setItemDataSource(beanItem, Arrays.asList(VISIBLE_FIELDS_DETAILS_ELECTRONIC_ADDRESS));
+                this.contactMechanismForm.setItemDataSource(beanItem, Arrays.asList(VISIBLE_FIELDS_DETAILS_ELECTRONIC_ADDRESS));
             }
             else
             {
                 throw new IllegalArgumentException("instance of unknown class " + this.contactMechanism.getClass().getName());
             }
 
+            this.setOptiongroupPartyContactMechanism(bean);
+        }
+
+        private void setOptiongroupPartyContactMechanism(PartyContactMechanism pcm)
+        {
+            List<ContactMechanismPurposeType> types;
+
+            types = this.app.getServices().getCrudServiceContactMechanismPurposeType().findAll();
+
+            for (ContactMechanismPurposeType t : types)
+            {
+                this.optionGroupPurpose.addItem(t.getDescription());
+            }
+
+            // set selection
+            this.optionGroupPurpose.setValue(null);
+            if (pcm != null)
+            {
+                List<PartyContactMechanismPurpose> purposes;
+
+                purposes = this.app.getServices().getCrudServicePartyContactMechanismPurpose().findByPartyContactMechanism(pcm);
+
+                for (PartyContactMechanismPurpose p : purposes)
+                {
+                    this.optionGroupPurpose.select(p.getContactMechanismPurposeType().getDescription());
+                }
+            }
         }
 
         @Override
         public PartyContactMechanism getBean()
         {
             return this.bean;
+        }
+        
+        @SuppressWarnings("unchecked")
+        public void updatePartyContactMechanism(PartyContactMechanism t) throws Exception
+        {
+            Set<String> selectedPurposes;
+            List<PartyContactMechanismPurpose> purposes;
+            
+            this.app.getServices().getCrudServicePartyContactMechanism().update(t);
+
+            if (t.getContactMechanism() instanceof PostalAddress)
+            {
+                PostalAddress postalAddress;
+
+                postalAddress = (PostalAddress) t.getContactMechanism();
+
+                this.app.getServices().getCrudServicePostalAddress().update(postalAddress);
+            }
+            else if (t.getContactMechanism() instanceof TelecommunicationNumber)
+            {
+                TelecommunicationNumber tn;
+
+                tn = (TelecommunicationNumber) t.getContactMechanism();
+
+                this.app.getServices().getCrudServiceTelecommunicationNumber().update(tn);
+            }
+            else if (t.getContactMechanism() instanceof ElectronicAddress)
+            {
+                ElectronicAddress ea;
+
+                ea = (ElectronicAddress) t.getContactMechanism();
+
+                this.app.getServices().getCrudServiceElectronicAddress().update(ea);
+            }
+            else
+            {
+                String msg = "Unknown class: " + t.getContactMechanism().getClass().getName();
+
+                throw new IllegalArgumentException(msg);
+            }
+            
+            selectedPurposes = (Set<String>) this.optionGroupPurpose.getValue();
+            // remove all unselected roles
+            purposes = this.app.getServices().getCrudServicePartyContactMechanismPurpose().findByPartyContactMechanism(t);
+            for (PartyContactMechanismPurpose p : purposes)
+            {
+                if (!selectedPurposes.contains(p.getContactMechanismPurposeType().getDescription()))
+                {
+                    this.app.getServices().getCrudServicePartyContactMechanismPurpose().delete(p.getId());
+                }
+            }
+
+            // add all selected items to the party contact mechanism
+            for (String s : selectedPurposes)
+            {
+                PartyContactMechanismPurpose purpose;
+
+                purpose = this.app.getServices().getCrudServicePartyContactMechanismPurpose()
+                        .findByPartyContactMechanismAndContactMechanismPurposeType(t, s);
+                
+                if (purpose == null)
+                {
+                    ContactMechanismPurposeType type;
+                    
+                    type = this.app.getServices().getCrudServiceContactMechanismPurposeType().findForDescription(s);
+                    
+                    purpose = new PartyContactMechanismPurpose();
+                    
+                    purpose.setContactMechanismPurposeType(type);
+                    purpose.setPartyContactMechanism(t);
+                    
+                    this.app.getServices().getCrudServicePartyContactMechanismPurpose().create(purpose);
+                }
+                else
+                {
+                    this.app.getServices().getCrudServicePartyContactMechanismPurpose().update(purpose);
+                }
+            }
+        }
+
+        @SuppressWarnings("unchecked")
+        private void createPartyContactMechanism(PartyContactMechanism pcm) throws Exception
+        {
+            Set<String> selectedPurposes;
+            
+            if (pcm.getContactMechanism() instanceof PostalAddress)
+            {
+                PostalAddress postalAddress;
+
+                postalAddress = (PostalAddress) pcm.getContactMechanism();
+
+                this.app.getServices().getCrudServicePostalAddress().create(postalAddress);
+            }
+            else if (pcm.getContactMechanism() instanceof TelecommunicationNumber)
+            {
+                TelecommunicationNumber tn;
+
+                tn = (TelecommunicationNumber) pcm.getContactMechanism();
+
+                this.app.getServices().getCrudServiceTelecommunicationNumber().create(tn);
+            }
+            else if (pcm.getContactMechanism() instanceof ElectronicAddress)
+            {
+                ElectronicAddress ea;
+
+                ea = (ElectronicAddress) pcm.getContactMechanism();
+
+                this.app.getServices().getCrudServiceElectronicAddress().create(ea);
+            }
+            else
+            {
+                String msg = "Unknown class: " + pcm.getContactMechanism().getClass().getName();
+
+                throw new IllegalArgumentException(msg);
+            }
+
+            this.app.getServices().getCrudServicePartyContactMechanism().create(pcm);
+
+            // create party contact mechanism purpsoe
+            selectedPurposes = (Set<String>) this.optionGroupPurpose.getValue();
+            for (String selectedPurpose : selectedPurposes)
+            {
+                PartyContactMechanismPurpose purpose;                
+                ContactMechanismPurposeType type;
+                
+                type = this.app.getServices().getCrudServiceContactMechanismPurposeType().findForDescription(selectedPurpose);
+                
+                purpose = new PartyContactMechanismPurpose();
+                purpose.setContactMechanismPurposeType(type);
+                purpose.setPartyContactMechanism(pcm);
+                
+                this.app.getServices().getCrudServicePartyContactMechanismPurpose().create(purpose);
+            }
+            
         }
 
         private static class DialogListener implements Button.ClickListener
@@ -636,10 +717,10 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
                             case CREATE_POSTAL:
                             case CREATE_ELECTRONIC:
                             case CREATE_TELECOM:
-                                this.dialog.view.createBean(this.dialog.bean);
+                                this.dialog.createPartyContactMechanism(this.dialog.bean);
 
                             case UPDATE:
-                                this.dialog.view.updateBean(this.dialog.bean);
+                                this.dialog.updatePartyContactMechanism(this.dialog.bean);
 
                         }
                     }
@@ -744,5 +825,11 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
 
             return result;
         }
+    }
+
+    @Override
+    public List<PartyContactMechanism> getAllBeans() throws Exception
+    {
+        return null;
     }
 }

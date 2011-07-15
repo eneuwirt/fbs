@@ -35,6 +35,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -414,6 +415,7 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
     private static class CrudDialog extends Window implements BeanAware<PartyContactMechanism>
     {
         private static final long serialVersionUID = 1L;
+        static final String[] VISIBLE_FIELDS = new String[] {COMMENT};
         static final String[] VISIBLE_FIELDS_DETAILS_POSTAL_ADDRESS = new String[]
         { ADDRESS1, ADDRESS2, POSTAL_CODE, CITY, COUNTRY, };
         static final String[] VISIBLE_FIELDS_DETAILS_ELECTRONIC_ADDRESS = new String[]
@@ -493,7 +495,7 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
             this.contactMechanism = bean.getContactMechanism();
 
             beanItemPcm = new BeanItem<PartyContactMechanism>(bean);
-            this.formPartyContactMechanism.setItemDataSource(beanItemPcm);
+            this.formPartyContactMechanism.setItemDataSource(beanItemPcm, Arrays.asList(VISIBLE_FIELDS));
 
             if (this.contactMechanism instanceof PostalAddress)
             {
@@ -764,7 +766,7 @@ public class PartyContactMechanismView extends VerticalLayout implements AnchorA
             }
             else if (COMMENT.equals(pid))
             {
-                result = new TextField(this.app.getMessage(ApplicationMessages.PartyContactMechanismComment));
+                result = new TextArea(this.app.getMessage(ApplicationMessages.PartyContactMechanismComment));
             }
             else if (PARTY.equals(pid))
             {

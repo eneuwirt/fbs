@@ -15,7 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "WORK_EFFORT_TYPES")
+@Table(name = "WORK_EFFORTS")
 public class WorkEffort implements Serializable
 {
 	private static final long serialVersionUID = 1L;

@@ -40,6 +40,7 @@
  <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.party.CrudServicePersonImpl" />
  <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePriorityTypeImpl" />
 
+ <bean id="crudServicePartyWorkEffort" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServicePartyWorkEffortImpl" />
  <bean id="crudServiceWorkEffort" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServiceWorkEffortImpl" />
  <bean id="crudServiceWorkEffortType" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServiceWorkEffortTypeImpl" />
 

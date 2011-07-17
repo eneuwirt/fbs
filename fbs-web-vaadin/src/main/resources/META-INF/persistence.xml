@@ -29,6 +29,8 @@
     <class>com.fbs.dmr.universal.model.party.PriorityType</class>
 
     <class>com.fbs.dmr.universal.model.workeffort.PartyWorkEffort</class>
+    <class>com.fbs.dmr.universal.model.workeffort.TimeEntry</class>
+    <class>com.fbs.dmr.universal.model.workeffort.TimeSheet</class>
     <class>com.fbs.dmr.universal.model.workeffort.WorkEffort</class>
     <class>com.fbs.dmr.universal.model.workeffort.WorkEffortType</class>
   </persistence-unit>

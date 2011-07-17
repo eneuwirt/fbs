@@ -19,6 +19,7 @@ import com.fbs.dmr.universal.model.party.PartyRoleType;
 import com.fbs.dmr.universal.model.party.PartyType;
 import com.fbs.dmr.universal.model.party.Person;
 import com.fbs.dmr.universal.model.party.PriorityType;
+import com.fbs.dmr.universal.model.workeffort.WorkEffort;
 import com.fbs.dmr.universal.model.workeffort.WorkEffortType;
 import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.CrudServicePartyContactMechanism;
@@ -34,356 +35,374 @@ import com.fbs.security.service.UserService;
 // Service Container
 public class ApplicationServicesImpl implements ApplicationServices
 {
-    @Resource
-    private SecurityService securityService;
-    @Resource
-    private TenantService tenantService;
-    @Resource
-    private UserService userService;
-    @Resource
-    private SeedService seedService;
-    @Resource(name = "crudServiceContactMechanismPurposeType")
-    private CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
-    
-    @Resource(name = "crudServiceContactMechanismType")
-    private CrudService<ContactMechanismType, Integer> crudServiceContactMechanismType;
-    
-    @Resource(name = "crudServiceFacility")
-    private CrudService<Facility, Integer> crudServiceFacility;
-    
-    @Resource(name = "crudServiceFacilityContactMechanism")
-    private CrudService<FacilityContactMechanism, Integer> crudServiceFacilityContactMechanism;
-   
-    @Resource(name = "crudServiceElectronicAddress")
-    private CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress;
-   
-    @Resource(name = "crudServiceOrganization")
-    private CrudService<Organization, Integer> crudServiceOrganization;
-   
-    @Resource(name = "crudServiceParty")
-    private CrudService<Party, Integer> crudServiceParty;
-  
-    @Resource(name = "crudServicePartyContactMechanism")
-    private CrudServicePartyContactMechanism crudServicePartyContactMechanism;
-  
-    @Resource(name = "crudServicePartyContactMechanismPurpose")
-    private CrudServicePartyContactMechanismPurpose crudServicePartyContactMechanismPurpose;
-  
-    @Resource(name = "crudServicePartyFacility")
-    private CrudService<PartyFacility, Integer> crudServicePartyFacility;
- 
-    @Resource(name = "crudServicePartyType")
-    private CrudServiceType<PartyType, Integer> crudServicePartyType;
-   
-    @Resource(name = "crudServicePartyRelationship")
-    private CrudService<PartyRelationship, Integer> crudServicePartyRelationship;
-  
-    @Resource(name = "crudServicePartyRelationshipStatusType")
-    private CrudService<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType;
-   
-    @Resource(name = "crudServicePartyRelationshipType")
-    private CrudService<PartyRelationshipType, Integer> crudServicePartyRelationshipType;
-  
-    @Resource(name = "crudServicePartyRoleType")
-    private CrudServiceType<PartyRoleType, Integer> crudServicePartyRoleType;
-   
-    @Resource(name = "crudServicePartyRole")
-    private ServicePartyRole crudServicePartyRole;
-  
-    @Resource(name = "crudServicePerson")
-    private CrudService<Person, Integer> crudServicePerson;
-   
-    @Resource(name = "crudServicePriorityType")
-    private CrudService<PriorityType, Integer> crudServicePriorityType;
-  
-    @Resource(name = "crudServiceTelecommunicationNumber")
-    private CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber;
-  
-    @Resource
-    private ServicePartyClassification servicePartyClassification;
-  
-    @Resource(name = "crudServicePostalAddress")
-    private CrudService<PostalAddress, Integer> crudServicePostalAddress;
-   
-    @Resource(name = "crudServiceWorkEffortType")
-    private CrudService<WorkEffortType, Integer> crudServiceWorkEffortType;
+	@Resource
+	private SecurityService securityService;
+	@Resource
+	private TenantService tenantService;
+	@Resource
+	private UserService userService;
+	@Resource
+	private SeedService seedService;
+	@Resource(name = "crudServiceContactMechanismPurposeType")
+	private CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
 
-    @Override
-    public SecurityService getSecurityService()
-    {
-        return securityService;
-    }
+	@Resource(name = "crudServiceContactMechanismType")
+	private CrudService<ContactMechanismType, Integer> crudServiceContactMechanismType;
 
-    public void setSecurityService(SecurityService securityService)
-    {
-        this.securityService = securityService;
-    }
+	@Resource(name = "crudServiceFacility")
+	private CrudService<Facility, Integer> crudServiceFacility;
 
-    @Override
-    public TenantService getTenantService()
-    {
-        return tenantService;
-    }
+	@Resource(name = "crudServiceFacilityContactMechanism")
+	private CrudService<FacilityContactMechanism, Integer> crudServiceFacilityContactMechanism;
 
-    public void setTenantService(TenantService tenantService)
-    {
-        this.tenantService = tenantService;
-    }
+	@Resource(name = "crudServiceElectronicAddress")
+	private CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress;
 
-    @Override
-    public UserService getUserService()
-    {
-        return userService;
-    }
+	@Resource(name = "crudServiceOrganization")
+	private CrudService<Organization, Integer> crudServiceOrganization;
 
-    public void setUserService(UserService userService)
-    {
-        this.userService = userService;
-    }
+	@Resource(name = "crudServiceParty")
+	private CrudService<Party, Integer> crudServiceParty;
 
-    @Override
-    public SeedService getSeedService()
-    {
-        return seedService;
-    }
+	@Resource(name = "crudServicePartyContactMechanism")
+	private CrudServicePartyContactMechanism crudServicePartyContactMechanism;
 
-    public void setSeedService(SeedService seedService)
-    {
-        this.seedService = seedService;
-    }
+	@Resource(name = "crudServicePartyContactMechanismPurpose")
+	private CrudServicePartyContactMechanismPurpose crudServicePartyContactMechanismPurpose;
 
-    @Override
-    public CrudService<Party, Integer> getCrudServiceParty()
-    {
-        return crudServiceParty;
-    }
+	@Resource(name = "crudServicePartyFacility")
+	private CrudService<PartyFacility, Integer> crudServicePartyFacility;
 
-    public void setCrudPartyService(CrudService<Party, Integer> crudPartyService)
-    {
-        this.crudServiceParty = crudPartyService;
-    }
+	@Resource(name = "crudServicePartyType")
+	private CrudServiceType<PartyType, Integer> crudServicePartyType;
 
-    @Override
-    public CrudServiceType<PartyType, Integer> getCrudServicePartyType()
-    {
-        return crudServicePartyType;
-    }
+	@Resource(name = "crudServicePartyRelationship")
+	private CrudService<PartyRelationship, Integer> crudServicePartyRelationship;
 
-    public void setCrudPartyTypeService(CrudServiceType<PartyType, Integer> crudPartyTypeService)
-    {
-        this.crudServicePartyType = crudPartyTypeService;
-    }
+	@Resource(name = "crudServicePartyRelationshipStatusType")
+	private CrudService<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType;
 
-    @Override
-    public CrudService<Person, Integer> getCrudServicePerson()
-    {
-        return crudServicePerson;
-    }
+	@Resource(name = "crudServicePartyRelationshipType")
+	private CrudService<PartyRelationshipType, Integer> crudServicePartyRelationshipType;
 
-    public void setCrudPersonService(CrudService<Person, Integer> crudPersonService)
-    {
-        this.crudServicePerson = crudPersonService;
-    }
+	@Resource(name = "crudServicePartyRoleType")
+	private CrudServiceType<PartyRoleType, Integer> crudServicePartyRoleType;
 
-    public void setCrudServiceOrganization(CrudService<Organization, Integer> crudServiceOrganization)
-    {
-        this.crudServiceOrganization = crudServiceOrganization;
-    }
+	@Resource(name = "crudServicePartyRole")
+	private ServicePartyRole crudServicePartyRole;
 
-    @Override
-    public CrudService<Organization, Integer> getCrudServiceOrganization()
-    {
-        return crudServiceOrganization;
-    }
+	@Resource(name = "crudServicePerson")
+	private CrudService<Person, Integer> crudServicePerson;
 
-    public void setCrudServicePartyRoleType(CrudServiceType<PartyRoleType, Integer> crudServicePartyRole)
-    {
-        this.crudServicePartyRoleType = crudServicePartyRole;
-    }
+	@Resource(name = "crudServicePriorityType")
+	private CrudService<PriorityType, Integer> crudServicePriorityType;
 
-    @Override
-    public CrudServiceType<PartyRoleType, Integer> getCrudServicePartyRoleType()
-    {
-        return crudServicePartyRoleType;
-    }
+	@Resource(name = "crudServiceTelecommunicationNumber")
+	private CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber;
 
-    public void setCrudServicePartyRelationshipType(CrudService<PartyRelationshipType, Integer> crudServicePartyRelationshipType)
-    {
-        this.crudServicePartyRelationshipType = crudServicePartyRelationshipType;
-    }
+	@Resource
+	private ServicePartyClassification servicePartyClassification;
 
-    @Override
-    public CrudService<PartyRelationshipType, Integer> getCrudServicePartyRelationshipType()
-    {
-        return crudServicePartyRelationshipType;
-    }
+	@Resource(name = "crudServicePostalAddress")
+	private CrudService<PostalAddress, Integer> crudServicePostalAddress;
 
-    public void setCrudServicePartyRelationship(CrudService<PartyRelationship, Integer> crudServicePartyRelationship)
-    {
-        this.crudServicePartyRelationship = crudServicePartyRelationship;
-    }
+	@Resource(name = "crudServiceWorkEffort")
+	private CrudService<WorkEffort, Integer> crudServiceWorkEffort;
 
-    @Override
-    public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship()
-    {
-        return crudServicePartyRelationship;
-    }
+	@Resource(name = "crudServiceWorkEffortType")
+	private CrudService<WorkEffortType, Integer> crudServiceWorkEffortType;
 
-    @Override
-    public ServicePartyRole getCrudServicePartyRole()
-    {
-        return this.crudServicePartyRole;
-    }
+	@Override
+	public SecurityService getSecurityService()
+	{
+		return securityService;
+	}
 
-    public void setCrudServicePartyRole(ServicePartyRole crudServicePartyRole)
-    {
-        this.crudServicePartyRole = crudServicePartyRole;
-    }
+	public void setSecurityService(SecurityService securityService)
+	{
+		this.securityService = securityService;
+	}
 
-    @Override
-    public ServicePartyClassification getCrudServicePartyClassification()
-    {
+	@Override
+	public TenantService getTenantService()
+	{
+		return tenantService;
+	}
 
-        return this.servicePartyClassification;
-    }
+	public void setTenantService(TenantService tenantService)
+	{
+		this.tenantService = tenantService;
+	}
 
-    public void setCrudServicePartyClassification(ServicePartyClassification servicePartyClassification)
-    {
+	@Override
+	public UserService getUserService()
+	{
+		return userService;
+	}
 
-        this.servicePartyClassification = servicePartyClassification;
-    }
+	public void setUserService(UserService userService)
+	{
+		this.userService = userService;
+	}
 
-    public void setCrudServicePartyRelationshipStatusType(
-            CrudService<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType)
-    {
-        this.crudServicePartyRelationshipStatusType = crudServicePartyRelationshipStatusType;
-    }
+	@Override
+	public SeedService getSeedService()
+	{
+		return seedService;
+	}
 
-    @Override
-    public CrudService<PartyRelationshipStatusType, Integer> getCrudServicePartyRelationshipStatusType()
-    {
-        return crudServicePartyRelationshipStatusType;
-    }
+	public void setSeedService(SeedService seedService)
+	{
+		this.seedService = seedService;
+	}
 
-    public void setCrudServicePriorityType(CrudService<PriorityType, Integer> crudServicePriorityType)
-    {
-        this.crudServicePriorityType = crudServicePriorityType;
-    }
+	@Override
+	public CrudService<Party, Integer> getCrudServiceParty()
+	{
+		return crudServiceParty;
+	}
 
-    @Override
-    public CrudService<PriorityType, Integer> getCrudServicePriorityType()
-    {
-        return this.crudServicePriorityType;
-    }
+	public void setCrudPartyService(CrudService<Party, Integer> crudPartyService)
+	{
+		this.crudServiceParty = crudPartyService;
+	}
 
-    @Override
-    public CrudService<ContactMechanismType, Integer> getCrudServiceContactMechanismType()
-    {
-        return this.crudServiceContactMechanismType;
-    }
+	@Override
+	public CrudServiceType<PartyType, Integer> getCrudServicePartyType()
+	{
+		return crudServicePartyType;
+	}
 
-    @Override
-    public CrudServiceType<ContactMechanismPurposeType, Integer> getCrudServiceContactMechanismPurposeType()
-    {
-        return this.crudServiceContactMechanismPurposeType;
-    }
+	public void setCrudPartyTypeService(CrudServiceType<PartyType, Integer> crudPartyTypeService)
+	{
+		this.crudServicePartyType = crudPartyTypeService;
+	}
 
-    @Override
-    public CrudServicePartyContactMechanism getCrudServicePartyContactMechanism()
-    {
-        return this.crudServicePartyContactMechanism;
-    }
+	@Override
+	public CrudService<Person, Integer> getCrudServicePerson()
+	{
+		return crudServicePerson;
+	}
 
-    public void setCrudServicePartyContactMechanism(CrudServicePartyContactMechanism crudServicePartyContactMechanism)
-    {
-        this.crudServicePartyContactMechanism = crudServicePartyContactMechanism;
-    }
+	public void setCrudPersonService(CrudService<Person, Integer> crudPersonService)
+	{
+		this.crudServicePerson = crudPersonService;
+	}
 
-    @Override
-    public CrudService<PostalAddress, Integer> getCrudServicePostalAddress()
-    {
-        return this.crudServicePostalAddress;
-    }
+	public void setCrudServiceOrganization(CrudService<Organization, Integer> crudServiceOrganization)
+	{
+		this.crudServiceOrganization = crudServiceOrganization;
+	}
 
-    public void setCrudServicePostalAddress(CrudService<PostalAddress, Integer> crudServicePostalAddress)
-    {
-        this.crudServicePostalAddress = crudServicePostalAddress;
-    }
+	@Override
+	public CrudService<Organization, Integer> getCrudServiceOrganization()
+	{
+		return crudServiceOrganization;
+	}
 
-    @Override
-    public CrudService<TelecommunicationNumber, Integer> getCrudServiceTelecommunicationNumber()
-    {
-        return this.crudServiceTelecommunicationNumber;
-    }
+	public void setCrudServicePartyRoleType(CrudServiceType<PartyRoleType, Integer> crudServicePartyRole)
+	{
+		this.crudServicePartyRoleType = crudServicePartyRole;
+	}
 
-    public void setCrudServiceTelecommunicationNumber(CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber)
-    {
-        this.crudServiceTelecommunicationNumber = crudServiceTelecommunicationNumber;
-    }
+	@Override
+	public CrudServiceType<PartyRoleType, Integer> getCrudServicePartyRoleType()
+	{
+		return crudServicePartyRoleType;
+	}
 
-    @Override
-    public CrudService<ElectronicAddress, Integer> getCrudServiceElectronicAddress()
-    {
-        return this.crudServiceElectronicAddress;
-    }
+	public void setCrudServicePartyRelationshipType(
+	        CrudService<PartyRelationshipType, Integer> crudServicePartyRelationshipType)
+	{
+		this.crudServicePartyRelationshipType = crudServicePartyRelationshipType;
+	}
 
-    public void setCrudServiceElectronicAddress(CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress)
-    {
-        this.crudServiceElectronicAddress = crudServiceElectronicAddress;
-    }
+	@Override
+	public CrudService<PartyRelationshipType, Integer> getCrudServicePartyRelationshipType()
+	{
+		return crudServicePartyRelationshipType;
+	}
 
-    @Override
-    public CrudServicePartyContactMechanismPurpose getCrudServicePartyContactMechanismPurpose()
-    {
-        return this.crudServicePartyContactMechanismPurpose;
-    }
+	public void setCrudServicePartyRelationship(CrudService<PartyRelationship, Integer> crudServicePartyRelationship)
+	{
+		this.crudServicePartyRelationship = crudServicePartyRelationship;
+	}
 
-    public void setCrudServicePartyContactMechanismPurpose(CrudServicePartyContactMechanismPurpose crudServicePartyContactMechanismPurpose)
-    {
-        this.crudServicePartyContactMechanismPurpose = crudServicePartyContactMechanismPurpose;
-    }
+	@Override
+	public CrudService<PartyRelationship, Integer> getCrudServicePartyRelationship()
+	{
+		return crudServicePartyRelationship;
+	}
 
-    @Override
-    public CrudService<PartyFacility, Integer> getCrudServicePartyFacility()
-    {
-        return this.crudServicePartyFacility;
-    }
+	@Override
+	public ServicePartyRole getCrudServicePartyRole()
+	{
+		return this.crudServicePartyRole;
+	}
 
-    public void setCrudServicePartyFacility(CrudService<PartyFacility, Integer> crudServicePartyFacility)
-    {
-        this.crudServicePartyFacility = crudServicePartyFacility;
-    }
+	public void setCrudServicePartyRole(ServicePartyRole crudServicePartyRole)
+	{
+		this.crudServicePartyRole = crudServicePartyRole;
+	}
 
-    @Override
-    public CrudService<FacilityContactMechanism, Integer> getCrudServiceFacilityContactMechanism()
-    {
-        return crudServiceFacilityContactMechanism;
-    }
+	@Override
+	public ServicePartyClassification getCrudServicePartyClassification()
+	{
 
-    public void setCrudServiceFacilityContactMechanism(CrudService<FacilityContactMechanism, Integer> crudServiceFacilityContactMechanism)
-    {
-        this.crudServiceFacilityContactMechanism = crudServiceFacilityContactMechanism;
-    }
+		return this.servicePartyClassification;
+	}
 
-    @Override
-    public CrudService<Facility, Integer> getCrudServiceFacility()
-    {
-        return crudServiceFacility;
-    }
+	public void setCrudServicePartyClassification(ServicePartyClassification servicePartyClassification)
+	{
 
-    public void setCrudServiceFacility(CrudService<Facility, Integer> crudServiceFacility)
-    {
-        this.crudServiceFacility = crudServiceFacility;
-    }
+		this.servicePartyClassification = servicePartyClassification;
+	}
 
-    @Override
-    public CrudService<WorkEffortType, Integer> getCrudServiceWorkEffortType()
-    {
-        return crudServiceWorkEffortType;
-    }
+	public void setCrudServicePartyRelationshipStatusType(
+	        CrudService<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType)
+	{
+		this.crudServicePartyRelationshipStatusType = crudServicePartyRelationshipStatusType;
+	}
 
-    public void setCrudServiceWorkEffortType(CrudService<WorkEffortType, Integer> crudServiceWorkEffortType)
-    {
-        this.crudServiceWorkEffortType = crudServiceWorkEffortType;
-    }
+	@Override
+	public CrudService<PartyRelationshipStatusType, Integer> getCrudServicePartyRelationshipStatusType()
+	{
+		return crudServicePartyRelationshipStatusType;
+	}
+
+	public void setCrudServicePriorityType(CrudService<PriorityType, Integer> crudServicePriorityType)
+	{
+		this.crudServicePriorityType = crudServicePriorityType;
+	}
+
+	@Override
+	public CrudService<PriorityType, Integer> getCrudServicePriorityType()
+	{
+		return this.crudServicePriorityType;
+	}
+
+	@Override
+	public CrudService<ContactMechanismType, Integer> getCrudServiceContactMechanismType()
+	{
+		return this.crudServiceContactMechanismType;
+	}
+
+	@Override
+	public CrudServiceType<ContactMechanismPurposeType, Integer> getCrudServiceContactMechanismPurposeType()
+	{
+		return this.crudServiceContactMechanismPurposeType;
+	}
+
+	@Override
+	public CrudServicePartyContactMechanism getCrudServicePartyContactMechanism()
+	{
+		return this.crudServicePartyContactMechanism;
+	}
+
+	public void setCrudServicePartyContactMechanism(CrudServicePartyContactMechanism crudServicePartyContactMechanism)
+	{
+		this.crudServicePartyContactMechanism = crudServicePartyContactMechanism;
+	}
+
+	@Override
+	public CrudService<PostalAddress, Integer> getCrudServicePostalAddress()
+	{
+		return this.crudServicePostalAddress;
+	}
+
+	public void setCrudServicePostalAddress(CrudService<PostalAddress, Integer> crudServicePostalAddress)
+	{
+		this.crudServicePostalAddress = crudServicePostalAddress;
+	}
+
+	@Override
+	public CrudService<TelecommunicationNumber, Integer> getCrudServiceTelecommunicationNumber()
+	{
+		return this.crudServiceTelecommunicationNumber;
+	}
+
+	public void setCrudServiceTelecommunicationNumber(
+	        CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber)
+	{
+		this.crudServiceTelecommunicationNumber = crudServiceTelecommunicationNumber;
+	}
+
+	@Override
+	public CrudService<ElectronicAddress, Integer> getCrudServiceElectronicAddress()
+	{
+		return this.crudServiceElectronicAddress;
+	}
+
+	public void setCrudServiceElectronicAddress(CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress)
+	{
+		this.crudServiceElectronicAddress = crudServiceElectronicAddress;
+	}
+
+	@Override
+	public CrudServicePartyContactMechanismPurpose getCrudServicePartyContactMechanismPurpose()
+	{
+		return this.crudServicePartyContactMechanismPurpose;
+	}
+
+	public void setCrudServicePartyContactMechanismPurpose(
+	        CrudServicePartyContactMechanismPurpose crudServicePartyContactMechanismPurpose)
+	{
+		this.crudServicePartyContactMechanismPurpose = crudServicePartyContactMechanismPurpose;
+	}
+
+	@Override
+	public CrudService<PartyFacility, Integer> getCrudServicePartyFacility()
+	{
+		return this.crudServicePartyFacility;
+	}
+
+	public void setCrudServicePartyFacility(CrudService<PartyFacility, Integer> crudServicePartyFacility)
+	{
+		this.crudServicePartyFacility = crudServicePartyFacility;
+	}
+
+	@Override
+	public CrudService<FacilityContactMechanism, Integer> getCrudServiceFacilityContactMechanism()
+	{
+		return crudServiceFacilityContactMechanism;
+	}
+
+	public void setCrudServiceFacilityContactMechanism(
+	        CrudService<FacilityContactMechanism, Integer> crudServiceFacilityContactMechanism)
+	{
+		this.crudServiceFacilityContactMechanism = crudServiceFacilityContactMechanism;
+	}
+
+	@Override
+	public CrudService<Facility, Integer> getCrudServiceFacility()
+	{
+		return crudServiceFacility;
+	}
+
+	public void setCrudServiceFacility(CrudService<Facility, Integer> crudServiceFacility)
+	{
+		this.crudServiceFacility = crudServiceFacility;
+	}
+
+	public void setCrudServiceWorkEffort(CrudService<WorkEffort, Integer> crudServiceWorkEffort)
+	{
+		this.crudServiceWorkEffort = crudServiceWorkEffort;
+	}
+
+	@Override
+	public CrudService<WorkEffort, Integer> getCrudServiceWorkEffort()
+	{
+		return crudServiceWorkEffort;
+	}
+
+	@Override
+	public CrudService<WorkEffortType, Integer> getCrudServiceWorkEffortType()
+	{
+		return crudServiceWorkEffortType;
+	}
+
+	public void setCrudServiceWorkEffortType(CrudService<WorkEffortType, Integer> crudServiceWorkEffortType)
+	{
+		this.crudServiceWorkEffortType = crudServiceWorkEffortType;
+	}
 }

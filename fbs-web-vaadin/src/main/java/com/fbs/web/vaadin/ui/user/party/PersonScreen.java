@@ -157,8 +157,7 @@ public class PersonScreen extends ItemsListScreen<Person>
 			}
 			else if (BDATE.equals(pid))
 			{
-				DateField date;
-				
+				DateField date;				
 				
 				date = new DateField(this.app.getMessage(ApplicationMessages.PersonBirthDate));
 				date.setResolution(DateField.RESOLUTION_DAY);

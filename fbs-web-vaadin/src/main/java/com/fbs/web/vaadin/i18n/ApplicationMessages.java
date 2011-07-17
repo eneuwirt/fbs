@@ -180,6 +180,7 @@ public interface ApplicationMessages extends Serializable
 	public static String WorkEffortDescription = "WorkEffort.Decription";
 	public static String WorkEffortId = "WorkEffort.Id";
 	public static String WorkEffortName = "WorkEffort.Name";
+	public static String WorkEffortScheduledStartDate = "WorkEffort.ScheduledStartDate";
 
     public static String WorkEffortTypeDescription = "WorkEffortType.Description";
     public static String WorkEffortTypeId = "WorkEffortType.Id";

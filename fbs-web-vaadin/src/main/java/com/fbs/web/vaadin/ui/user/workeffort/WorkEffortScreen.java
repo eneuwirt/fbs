@@ -6,13 +6,6 @@ import com.fbs.dmr.universal.model.workeffort.WorkEffort;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
-import com.fbs.web.vaadin.ui.common.items.DetailsComponentSimple;
-import com.vaadin.data.Item;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.FormFieldFactory;
-import com.vaadin.ui.TextField;
 
 public class WorkEffortScreen extends ItemsListScreen<WorkEffort>
 {
@@ -20,17 +13,13 @@ public class WorkEffortScreen extends ItemsListScreen<WorkEffort>
 	private static final String ID = "id";
 	private static final String DESC = "description";
 	private static final String NAME = "name";
-	private static final String SCHEDULED_START_DATE = "scheduledStartDate";
 
 	private static final String[] VISIBLE_COLUMNS = new String[]
 		{ ID, NAME };
-	private static final String[] VISIBLE_FIELDS = new String[]
-		{ ID, NAME, DESC, SCHEDULED_START_DATE };
 
 	public WorkEffortScreen(MyVaadinApplication app)
 	{
-		super(app, WorkEffort.class, new DetailsComponentSimple<WorkEffort>(app, new WorkEffortFormFieldFactory(app),
-		        VISIBLE_FIELDS), VISIBLE_COLUMNS);
+		super(app, WorkEffort.class, new WorkEffortDetails(app), VISIBLE_COLUMNS);
 	}
 
 	@Override
@@ -89,51 +78,5 @@ public class WorkEffortScreen extends ItemsListScreen<WorkEffort>
 			return this.app.getMessage(ApplicationMessages.WorkEffortName);
 
 		return propertyId;
-	}
-
-	private static class WorkEffortFormFieldFactory implements FormFieldFactory
-	{
-		private static final long serialVersionUID = 1L;
-		private MyVaadinApplication app;
-
-		public WorkEffortFormFieldFactory(MyVaadinApplication app)
-		{
-			this.app = app;
-		}
-
-		@Override
-		public Field createField(Item item, Object propertyId, Component uiContext)
-		{
-			// Identify the fields by their Property ID.
-			Field result = null;
-
-			String pid = (String) propertyId;
-
-			if (ID.equals(pid))
-			{
-				result = new TextField(this.app.getMessage(ApplicationMessages.WorkEffortId));
-
-				result.setReadOnly(true);
-			}
-			else if (DESC.equals(pid))
-			{
-				result = new TextField(this.app.getMessage(ApplicationMessages.WorkEffortDescription));
-			}
-			else if (NAME.equals(pid))
-			{
-				result = new TextField(this.app.getMessage(ApplicationMessages.WorkEffortName));
-			}
-			else if (SCHEDULED_START_DATE.equals(pid))
-			{
-				DateField date;				
-				
-				date = new DateField(this.app.getMessage(ApplicationMessages.WorkEffortScheduledStartDate));
-				date.setResolution(DateField.RESOLUTION_DAY);
-
-				result = date;
-			}
-
-			return result;
-		}
 	}
 }

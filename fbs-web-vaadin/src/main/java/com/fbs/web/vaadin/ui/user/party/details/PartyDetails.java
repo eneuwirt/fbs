@@ -304,7 +304,6 @@ public class PartyDetails<T extends Party> extends TabSheet implements DetailsAw
         this.rolesGroup.setImmediate(true);
 
         this.addTab(this.form, captionMasterData, null);
-        
         this.addTab(partyContactMechanismView, captionPartyContacts, null);
         this.addTab(new Label("Beziehungen zwischen mir und den andren"), captionRelations, null);
         this.addTab(this.rolesGroup, captionRoles, null);

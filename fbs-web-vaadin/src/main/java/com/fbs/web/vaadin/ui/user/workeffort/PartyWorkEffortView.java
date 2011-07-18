@@ -168,7 +168,8 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
     @Override
     public PartyWorkEffort createBean(PartyWorkEffort t) throws Exception
     {
-        // TODO Auto-generated method stub
+        
+        
         return null;
     }
 

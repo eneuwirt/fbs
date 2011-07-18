@@ -41,28 +41,31 @@ public class WorkEffortScreen extends ItemsListScreen<WorkEffort>
 	@Override
 	public WorkEffort createBean(WorkEffort t) throws Exception
 	{
-		// TODO Auto-generated method stub
-		return null;
+	    this.app.getServices().getCrudServiceWorkEffort().create(t);
+	    
+		return t;
 	}
 
 	@Override
 	public void updateBean(WorkEffort t) throws Exception
 	{
-		// TODO Auto-generated method stub
+	    this.app.getServices().getCrudServiceWorkEffort().update(t);
 	}
 
 	@Override
 	public WorkEffort readBean(WorkEffort t) throws Exception
 	{
-		// TODO Auto-generated method stub
-		return null;
+		WorkEffort result;
+		
+		result = this.app.getServices().getCrudServiceWorkEffort().read(t.getId());
+		
+		return result;
 	}
 
 	@Override
 	public void deleteBean(WorkEffort t) throws Exception
 	{
-		// TODO Auto-generated method stub
-
+	    this.app.getServices().getCrudServiceWorkEffort().delete(t.getId());
 	}
 
 	@Override

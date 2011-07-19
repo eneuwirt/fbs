@@ -37,7 +37,7 @@ public class WorkEffortDetails extends TabSheet implements DetailsAware<WorkEffo
 
     protected Form form;
 
-    protected PartyWorkEffortView partyWorkEffortView;
+    protected WorkEffortPartyAssignmentView workEffortPartyAssignmentView;
 
     public WorkEffortDetails(MyVaadinApplication app)
     {
@@ -51,7 +51,7 @@ public class WorkEffortDetails extends TabSheet implements DetailsAware<WorkEffo
         this.form.setImmediate(true);
         this.form.setFormFieldFactory(new WorkEffortFormFieldFactory(this.app));
 
-        this.partyWorkEffortView = new PartyWorkEffortView(this.app);
+        this.workEffortPartyAssignmentView = new WorkEffortPartyAssignmentView(this.app);
 
         this.createComponents();
 
@@ -65,7 +65,7 @@ public class WorkEffortDetails extends TabSheet implements DetailsAware<WorkEffo
         captionMasterData = this.app.getMessage(ApplicationMessages.WorkEffortMasterData);
 
         this.addTab(this.form, captionMasterData, null);
-        this.addTab(this.partyWorkEffortView, "Hoho", null);
+        this.addTab(this.workEffortPartyAssignmentView, "Hoho", null);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class WorkEffortDetails extends TabSheet implements DetailsAware<WorkEffo
 
         this.form.setItemDataSource(beanItem, Arrays.asList(this.visibleFields));
 
-        this.partyWorkEffortView.setAnchor(workEffort);
+        this.workEffortPartyAssignmentView.setAnchor(workEffort);
     }
 
     @Override

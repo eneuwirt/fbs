@@ -187,4 +187,10 @@ public interface ApplicationMessages extends Serializable
     public static String WorkEffortTypeId = "WorkEffortType.Id";
     public static String WorkEffortTypeTitle = "WorkEffortType.Title";
     public static String WorkEffortTypeStandardWorkMunutes = "WorkEffortType.StandardWorkMunutes";
+
+    public static String WorkEffortPartyAssignmentComment = "WorkEffortPartyAssignment.Comment";
+    public static String WorkEffortPartyAssignmentFromDate = "WorkEffortPartyAssignment.FromDate";
+    public static String WorkEffortPartyAssignmentMinutes = "WorkEffortPartyAssignment.Minutes";
+    public static String WorkEffortPartyAssignmentParty = "WorkEffortPartyAssignment.Party";
+    public static String WorkEffortPartyAssignmentToDate = "WorkEffortPartyAssignment.ToDate";
 }

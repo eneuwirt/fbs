@@ -22,6 +22,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.FormFieldFactory;
@@ -34,21 +35,25 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
-public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<WorkEffortPartyAssignment, WorkEffort>, ListAware<WorkEffortPartyAssignment>,
-        CrudAware<WorkEffortPartyAssignment>
+public class WorkEffortPartyAssignmentView extends VerticalLayout implements AnchorAware<WorkEffortPartyAssignment, WorkEffort>,
+        ListAware<WorkEffortPartyAssignment>, CrudAware<WorkEffortPartyAssignment>
 {
     private static final long serialVersionUID = 1L;
+
+    static final String MINUTES = "minutes";
+    static final String COMMENT = "comment";
+    static final String FROM_DATE = "fromDate";
+    static final String PARTY = "party";
+    static final String TO_DATE = "toDate";
+    public static final String ID = "id";
+
+    private static final String[] VISIBLE_COLUMNS =
+    { ID };
 
     public enum Action
     {
         CREATE, DELETE, UNDEFINED, UPDATE;
     };
-
-    static final String COMMENT = "comment";
-    public static final String ID = "id";
-
-    private static final String[] VISIBLE_COLUMNS =
-    { ID };
 
     protected MyVaadinApplication app;
 
@@ -56,6 +61,8 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
     private WorkEffortPartyAssignment selectedBean;
     private Action action = Action.UNDEFINED;
 
+    protected String createDialogCaption = "";
+    protected String updateDialogCaption = "";
     protected CrudDialog dialog;
 
     protected Table tableBeans;
@@ -71,13 +78,15 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
     protected String[] nestedContainerProperties = new String[]
     {};
 
-    public PartyWorkEffortView(MyVaadinApplication app)
+    public WorkEffortPartyAssignmentView(MyVaadinApplication app)
     {
         super();
 
         this.app = app;
         this.visibleColumns = VISIBLE_COLUMNS;
 
+        this.createDialogCaption = this.app.getMessage(ApplicationMessages.CommonCreate);
+        this.updateDialogCaption = this.app.getMessage(ApplicationMessages.CommonUpdate);
         this.dialog = new CrudDialog(this);
 
         this.beanItemContainer = new BeanItemContainer<WorkEffortPartyAssignment>(WorkEffortPartyAssignment.class);
@@ -161,6 +170,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
         WorkEffortPartyAssignment result = null;
 
         result = new WorkEffortPartyAssignment();
+        result.setWorkEffort(this.anchor);
 
         return result;
     }
@@ -168,8 +178,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
     @Override
     public WorkEffortPartyAssignment createBean(WorkEffortPartyAssignment t) throws Exception
     {
-        
-        
+
         return null;
     }
 
@@ -197,9 +206,9 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
     private static class TableSelectListener implements Property.ValueChangeListener
     {
         private static final long serialVersionUID = 1L;
-        private PartyWorkEffortView view;
+        private WorkEffortPartyAssignmentView view;
 
-        public TableSelectListener(PartyWorkEffortView view)
+        public TableSelectListener(WorkEffortPartyAssignmentView view)
         {
             this.view = view;
         }
@@ -225,9 +234,9 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
     private static class CreateListener implements Button.ClickListener
     {
         private static final long serialVersionUID = 1L;
-        private PartyWorkEffortView view;
+        private WorkEffortPartyAssignmentView view;
 
-        public CreateListener(PartyWorkEffortView view)
+        public CreateListener(WorkEffortPartyAssignmentView view)
         {
             this.view = view;
         }
@@ -236,7 +245,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
         public void buttonClick(ClickEvent event)
         {
             WorkEffortPartyAssignment bean;
-            
+
             this.view.action = Action.CREATE;
 
             bean = this.view.createBeanInstance();
@@ -259,9 +268,9 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
     private static class EditListener implements Button.ClickListener
     {
         private static final long serialVersionUID = 1L;
-        private PartyWorkEffortView view;
+        private WorkEffortPartyAssignmentView view;
 
-        public EditListener(PartyWorkEffortView view)
+        public EditListener(WorkEffortPartyAssignmentView view)
         {
             this.view = view;
         }
@@ -270,11 +279,11 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
         public void buttonClick(ClickEvent event)
         {
             WorkEffortPartyAssignment bean;
-            
+
             this.view.action = Action.UPDATE;
-            
+
             bean = this.view.selectedBean;
-            
+
             this.view.dialog.setBean(bean);
 
             if (view.dialog.getParent() != null)
@@ -293,9 +302,9 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
     private static class DeleteListener implements Button.ClickListener
     {
         private static final long serialVersionUID = 1L;
-        private PartyWorkEffortView view;
+        private WorkEffortPartyAssignmentView view;
 
-        public DeleteListener(PartyWorkEffortView view)
+        public DeleteListener(WorkEffortPartyAssignmentView view)
         {
             this.view = view;
         }
@@ -310,10 +319,11 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
     private static class CrudDialog extends Window implements BeanAware<WorkEffortPartyAssignment>
     {
         private static final long serialVersionUID = 1L;
-        static final String[] VISIBLE_FIELDS = new String[] {COMMENT};
+        static final String[] VISIBLE_FIELDS = new String[]
+        { PARTY, FROM_DATE, TO_DATE, MINUTES, COMMENT };
 
         private MyVaadinApplication app;
-        private PartyWorkEffortView view;
+        private WorkEffortPartyAssignmentView view;
 
         private WorkEffortPartyAssignment bean;
 
@@ -321,7 +331,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
         private Button buttonSave;
         private Button buttonClose;
 
-        public CrudDialog(PartyWorkEffortView view)
+        public CrudDialog(WorkEffortPartyAssignmentView view)
         {
             this.app = view.app;
             this.view = view;
@@ -338,12 +348,12 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
             this.form = new Form();
             this.form.setImmediate(true);
             this.form.setSizeFull();
-            this.form.setFormFieldFactory(new PartyWorkEffortFormFieldFactory(app));
+            this.form.setFormFieldFactory(new WorkEffortPartyAssignmentFormFieldFactory(app));
 
             DialogListener dl = new DialogListener(this);
             this.buttonSave = new Button(this.app.getMessage(ApplicationMessages.CommonSave), dl);
             this.buttonClose = new Button(this.app.getMessage(ApplicationMessages.CommonCancel), dl);
-            
+
             HorizontalLayout buttonRow = new HorizontalLayout();
             buttonRow.setMargin(true);
             buttonRow.setSpacing(true);
@@ -361,11 +371,11 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
         public void setBean(WorkEffortPartyAssignment bean)
         {
             BeanItem<WorkEffortPartyAssignment> beanItem;
-            
+
             this.bean = bean;
-            
+
             beanItem = new BeanItem<WorkEffortPartyAssignment>(bean);
-            
+
             this.form.setItemDataSource(beanItem, Arrays.asList(VISIBLE_FIELDS));
         }
 
@@ -417,25 +427,24 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
             }
         }
 
-        public void createPartyWorkEffort(WorkEffortPartyAssignment bean2)
+        public void createPartyWorkEffort(WorkEffortPartyAssignment bean)
         {
-            // TODO Auto-generated method stub
             
         }
 
         public void updatePartyWorkEffort(WorkEffortPartyAssignment bean2)
         {
             // TODO Auto-generated method stub
-            
+
         }
     }
 
-    private static class PartyWorkEffortFormFieldFactory implements FormFieldFactory
+    private static class WorkEffortPartyAssignmentFormFieldFactory implements FormFieldFactory
     {
         private static final long serialVersionUID = 1L;
         private MyVaadinApplication app;
 
-        public PartyWorkEffortFormFieldFactory(MyVaadinApplication app)
+        public WorkEffortPartyAssignmentFormFieldFactory(MyVaadinApplication app)
         {
             this.app = app;
         }
@@ -448,9 +457,47 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<W
 
             String pid = (String) propertyId;
 
+            if (MINUTES.equals(pid))
+            {
+                result = new TextField(this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentMinutes));
+            }
             if (COMMENT.equals(pid))
             {
-                result = new TextField("Kommmenneejrh");
+                result = new TextField(this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentComment));
+            }
+            else if (FROM_DATE.equals(pid))
+            {
+                DateField date;             
+                
+                date = new DateField(this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentFromDate));
+                date.setResolution(DateField.RESOLUTION_DAY);
+
+                result = date;
+            }
+            else if (TO_DATE.equals(pid))
+            {
+                DateField date;             
+                
+                date = new DateField(this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentToDate));
+                date.setResolution(DateField.RESOLUTION_DAY);
+
+                result = date;
+            }
+            else if (PARTY.equals(pid))
+            {
+                List<Party> parties;
+                BeanItemContainer<Party> container;
+                Select select;
+                
+                parties = this.app.getServices().getCrudServiceParty().findAll();
+                
+                container = new BeanItemContainer<Party>(Party.class, parties);
+                
+                select = new Select(this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentParty), container);
+                select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
+                select.setItemCaptionPropertyId("name");
+                
+                result = select;
             }
 
             return result;

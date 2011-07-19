@@ -31,7 +31,7 @@ public class WorkEffortPartyAssignment implements Serializable
 	@Temporal(TemporalType.DATE)
 	@Column(name = "to_date")
 	private Date toDate = new Date();
-	private Double minutes;
+	private Double minutes = 0.0;
 	private String comment = "";
 	@ManyToOne
     @JoinColumn(name = "party_id")

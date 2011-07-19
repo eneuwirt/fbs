@@ -25,6 +25,7 @@ import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.CrudServicePartyContactMechanism;
 import com.fbs.dmr.universal.service.CrudServicePartyContactMechanismPurpose;
 import com.fbs.dmr.universal.service.CrudServiceType;
+import com.fbs.dmr.universal.service.CrudServiceWorkEffortPartyAssignment;
 import com.fbs.dmr.universal.service.SeedService;
 import com.fbs.dmr.universal.service.ServicePartyClassification;
 import com.fbs.dmr.universal.service.ServicePartyRole;
@@ -108,6 +109,9 @@ public class ApplicationServicesImpl implements ApplicationServices
 
 	@Resource(name = "crudServiceWorkEffort")
 	private CrudService<WorkEffort, Integer> crudServiceWorkEffort;
+	
+	@Resource(name = "crudServiceWorkEffortPartyAssignment")
+    private CrudServiceWorkEffortPartyAssignment crudServiceWorkEffortPartyAssignment;
 
 	@Resource(name = "crudServiceWorkEffortType")
 	private CrudService<WorkEffortType, Integer> crudServiceWorkEffortType;
@@ -405,4 +409,15 @@ public class ApplicationServicesImpl implements ApplicationServices
 	{
 		this.crudServiceWorkEffortType = crudServiceWorkEffortType;
 	}
+
+	@Override
+    public CrudServiceWorkEffortPartyAssignment getCrudServiceWorkEffortPartyAssignment()
+    {
+        return crudServiceWorkEffortPartyAssignment;
+    }
+
+    public void setCrudServiceWorkEffortPartyAssignment(CrudServiceWorkEffortPartyAssignment crudServiceWorkEffortPartyAssignment)
+    {
+        this.crudServiceWorkEffortPartyAssignment = crudServiceWorkEffortPartyAssignment;
+    }
 }

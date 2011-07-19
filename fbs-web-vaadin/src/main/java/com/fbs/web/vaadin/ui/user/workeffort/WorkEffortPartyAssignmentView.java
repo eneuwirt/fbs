@@ -14,7 +14,6 @@ import com.fbs.web.vaadin.ui.common.AnchorAware;
 import com.fbs.web.vaadin.ui.common.CrudAware;
 import com.fbs.web.vaadin.ui.common.ListAware;
 import com.fbs.web.vaadin.ui.common.items.BeanAware;
-import com.fbs.web.vaadin.ui.user.party.details.PartyContactMechanismView.Action;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -44,11 +43,15 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
     static final String COMMENT = "comment";
     static final String FROM_DATE = "fromDate";
     static final String PARTY = "party";
+    static final String PARTY_NAME = "party.name";
     static final String TO_DATE = "toDate";
     public static final String ID = "id";
 
     private static final String[] VISIBLE_COLUMNS =
-    { ID };
+    { ID, PARTY_NAME };
+
+    private static final String[] NESTED_PROPERTIES =
+    { PARTY_NAME };
 
     public enum Action
     {
@@ -84,12 +87,17 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
 
         this.app = app;
         this.visibleColumns = VISIBLE_COLUMNS;
+        this.nestedContainerProperties = NESTED_PROPERTIES;
 
         this.createDialogCaption = this.app.getMessage(ApplicationMessages.CommonCreate);
         this.updateDialogCaption = this.app.getMessage(ApplicationMessages.CommonUpdate);
         this.dialog = new CrudDialog(this);
 
         this.beanItemContainer = new BeanItemContainer<WorkEffortPartyAssignment>(WorkEffortPartyAssignment.class);
+        for (String p : this.nestedContainerProperties)
+        {
+            this.beanItemContainer.addNestedContainerProperty(p);
+        }
 
         this.tableBeans = new Table();
         this.tableBeans.setSelectable(true);
@@ -147,7 +155,15 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
     @Override
     public void updateComponents()
     {
+        List<WorkEffortPartyAssignment> assignments;
 
+        assignments = this.app.getServices().getCrudServiceWorkEffortPartyAssignment().findByWorkEffort(this.anchor.getId());
+
+        this.beanItemContainer.removeAllItems();
+        for (WorkEffortPartyAssignment a : assignments)
+        {
+            this.beanItemContainer.addBean(a);
+        }
     }
 
     @Override
@@ -245,6 +261,8 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
         public void buttonClick(ClickEvent event)
         {
             WorkEffortPartyAssignment bean;
+            
+            this.view.dialog.setCaption(this.view.createDialogCaption);
 
             this.view.action = Action.CREATE;
 
@@ -279,6 +297,8 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
         public void buttonClick(ClickEvent event)
         {
             WorkEffortPartyAssignment bean;
+            
+            this.view.dialog.setCaption(this.view.updateDialogCaption);
 
             this.view.action = Action.UPDATE;
 
@@ -429,7 +449,7 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
 
         public void createPartyWorkEffort(WorkEffortPartyAssignment bean)
         {
-           
+            this.app.getServices().getCrudServiceWorkEffortPartyAssignment().create(bean);
         }
 
         public void updatePartyWorkEffort(WorkEffortPartyAssignment bean2)
@@ -463,12 +483,12 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
             }
             if (COMMENT.equals(pid))
             {
-                result = new TextField(this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentComment));
+                result = new TextArea(this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentComment));
             }
             else if (FROM_DATE.equals(pid))
             {
-                DateField date;             
-                
+                DateField date;
+
                 date = new DateField(this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentFromDate));
                 date.setResolution(DateField.RESOLUTION_DAY);
 
@@ -476,8 +496,8 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
             }
             else if (TO_DATE.equals(pid))
             {
-                DateField date;             
-                
+                DateField date;
+
                 date = new DateField(this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentToDate));
                 date.setResolution(DateField.RESOLUTION_DAY);
 
@@ -488,15 +508,15 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
                 List<Party> parties;
                 BeanItemContainer<Party> container;
                 Select select;
-                
+
                 parties = this.app.getServices().getCrudServiceParty().findAll();
-                
+
                 container = new BeanItemContainer<Party>(Party.class, parties);
-                
+
                 select = new Select(this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentParty), container);
                 select.setItemCaptionMode(Select.ITEM_CAPTION_MODE_PROPERTY);
                 select.setItemCaptionPropertyId("name");
-                
+
                 result = select;
             }
 

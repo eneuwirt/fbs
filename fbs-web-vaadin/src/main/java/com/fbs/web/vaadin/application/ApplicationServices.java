@@ -23,6 +23,7 @@ import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.CrudServicePartyContactMechanism;
 import com.fbs.dmr.universal.service.CrudServicePartyContactMechanismPurpose;
 import com.fbs.dmr.universal.service.CrudServiceType;
+import com.fbs.dmr.universal.service.CrudServiceWorkEffortPartyAssignment;
 import com.fbs.dmr.universal.service.SeedService;
 import com.fbs.dmr.universal.service.ServicePartyClassification;
 import com.fbs.dmr.universal.service.ServicePartyRole;
@@ -79,6 +80,8 @@ public interface ApplicationServices
 	public CrudService<TelecommunicationNumber, Integer> getCrudServiceTelecommunicationNumber();
 	
 	public CrudService<WorkEffort, Integer> getCrudServiceWorkEffort();
+	
+	public CrudServiceWorkEffortPartyAssignment getCrudServiceWorkEffortPartyAssignment();
 	
 	public CrudService<WorkEffortType, Integer> getCrudServiceWorkEffortType();
 

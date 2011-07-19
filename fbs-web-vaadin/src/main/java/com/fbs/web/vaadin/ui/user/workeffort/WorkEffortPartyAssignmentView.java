@@ -429,7 +429,7 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
 
         public void createPartyWorkEffort(WorkEffortPartyAssignment bean)
         {
-            
+           
         }
 
         public void updatePartyWorkEffort(WorkEffortPartyAssignment bean2)

@@ -8,9 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fbs.dmr.universal.model.party.Party;
 
 @Entity
 @Table(name = "PARTY_WORK_EFFORT")
@@ -29,13 +33,39 @@ public class WorkEffortPartyAssignment implements Serializable
 	private Date toDate = new Date();
 	private Double minutes;
 	private String comment = "";
+	@ManyToOne
+    @JoinColumn(name = "party_id")
+    private Party party;
+	@ManyToOne
+    @JoinColumn(name = "work_effort_id")
+    private WorkEffort workEffort;
 
 	public WorkEffortPartyAssignment()
 	{
 
 	}
 
-	public Date getFromDate()
+	public Party getParty()
+    {
+        return party;
+    }
+
+    public void setParty(Party party)
+    {
+        this.party = party;
+    }
+
+    public WorkEffort getWorkEffort()
+    {
+        return workEffort;
+    }
+
+    public void setWorkEffort(WorkEffort workEffort)
+    {
+        this.workEffort = workEffort;
+    }
+
+    public Date getFromDate()
     {
     	return fromDate;
     }

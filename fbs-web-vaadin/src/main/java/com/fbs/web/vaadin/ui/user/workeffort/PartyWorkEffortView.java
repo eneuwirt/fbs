@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.fbs.dmr.universal.model.party.Party;
-import com.fbs.dmr.universal.model.workeffort.PartyWorkEffort;
+import com.fbs.dmr.universal.model.workeffort.WorkEffortPartyAssignment;
 import com.fbs.dmr.universal.model.workeffort.WorkEffort;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.i18n.ApplicationMessages;
@@ -34,8 +34,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
-public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<PartyWorkEffort, WorkEffort>, ListAware<PartyWorkEffort>,
-        CrudAware<PartyWorkEffort>
+public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<WorkEffortPartyAssignment, WorkEffort>, ListAware<WorkEffortPartyAssignment>,
+        CrudAware<WorkEffortPartyAssignment>
 {
     private static final long serialVersionUID = 1L;
 
@@ -53,13 +53,13 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
     protected MyVaadinApplication app;
 
     private WorkEffort anchor;
-    private PartyWorkEffort selectedBean;
+    private WorkEffortPartyAssignment selectedBean;
     private Action action = Action.UNDEFINED;
 
     protected CrudDialog dialog;
 
     protected Table tableBeans;
-    protected BeanItemContainer<PartyWorkEffort> beanItemContainer;
+    protected BeanItemContainer<WorkEffortPartyAssignment> beanItemContainer;
 
     protected Button buttonAdd;
     protected Button buttonEdit;
@@ -80,7 +80,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
 
         this.dialog = new CrudDialog(this);
 
-        this.beanItemContainer = new BeanItemContainer<PartyWorkEffort>(PartyWorkEffort.class);
+        this.beanItemContainer = new BeanItemContainer<WorkEffortPartyAssignment>(WorkEffortPartyAssignment.class);
 
         this.tableBeans = new Table();
         this.tableBeans.setSelectable(true);
@@ -142,7 +142,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
     }
 
     @Override
-    public List<PartyWorkEffort> getAllBeans() throws Exception
+    public List<WorkEffortPartyAssignment> getAllBeans() throws Exception
     {
         // TODO Auto-generated method stub
         return null;
@@ -156,17 +156,17 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
     }
 
     @Override
-    public PartyWorkEffort createBeanInstance()
+    public WorkEffortPartyAssignment createBeanInstance()
     {
-        PartyWorkEffort result = null;
+        WorkEffortPartyAssignment result = null;
 
-        result = new PartyWorkEffort();
+        result = new WorkEffortPartyAssignment();
 
         return result;
     }
 
     @Override
-    public PartyWorkEffort createBean(PartyWorkEffort t) throws Exception
+    public WorkEffortPartyAssignment createBean(WorkEffortPartyAssignment t) throws Exception
     {
         
         
@@ -174,21 +174,21 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
     }
 
     @Override
-    public void updateBean(PartyWorkEffort t) throws Exception
+    public void updateBean(WorkEffortPartyAssignment t) throws Exception
     {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public PartyWorkEffort readBean(PartyWorkEffort t) throws Exception
+    public WorkEffortPartyAssignment readBean(WorkEffortPartyAssignment t) throws Exception
     {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void deleteBean(PartyWorkEffort t) throws Exception
+    public void deleteBean(WorkEffortPartyAssignment t) throws Exception
     {
         // TODO Auto-generated method stub
 
@@ -207,7 +207,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
         @Override
         public void valueChange(ValueChangeEvent event)
         {
-            this.view.selectedBean = (PartyWorkEffort) this.view.tableBeans.getValue();
+            this.view.selectedBean = (WorkEffortPartyAssignment) this.view.tableBeans.getValue();
 
             if (this.view.selectedBean != null)
             {
@@ -235,7 +235,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
         @Override
         public void buttonClick(ClickEvent event)
         {
-            PartyWorkEffort bean;
+            WorkEffortPartyAssignment bean;
             
             this.view.action = Action.CREATE;
 
@@ -269,7 +269,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
         @Override
         public void buttonClick(ClickEvent event)
         {
-            PartyWorkEffort bean;
+            WorkEffortPartyAssignment bean;
             
             this.view.action = Action.UPDATE;
             
@@ -307,7 +307,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
         }
     }
 
-    private static class CrudDialog extends Window implements BeanAware<PartyWorkEffort>
+    private static class CrudDialog extends Window implements BeanAware<WorkEffortPartyAssignment>
     {
         private static final long serialVersionUID = 1L;
         static final String[] VISIBLE_FIELDS = new String[] {COMMENT};
@@ -315,7 +315,7 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
         private MyVaadinApplication app;
         private PartyWorkEffortView view;
 
-        private PartyWorkEffort bean;
+        private WorkEffortPartyAssignment bean;
 
         private Form form;
         private Button buttonSave;
@@ -358,19 +358,19 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
         }
 
         @Override
-        public void setBean(PartyWorkEffort bean)
+        public void setBean(WorkEffortPartyAssignment bean)
         {
-            BeanItem<PartyWorkEffort> beanItem;
+            BeanItem<WorkEffortPartyAssignment> beanItem;
             
             this.bean = bean;
             
-            beanItem = new BeanItem<PartyWorkEffort>(bean);
+            beanItem = new BeanItem<WorkEffortPartyAssignment>(bean);
             
             this.form.setItemDataSource(beanItem, Arrays.asList(VISIBLE_FIELDS));
         }
 
         @Override
-        public PartyWorkEffort getBean()
+        public WorkEffortPartyAssignment getBean()
         {
             return this.bean;
         }
@@ -417,13 +417,13 @@ public class PartyWorkEffortView extends VerticalLayout implements AnchorAware<P
             }
         }
 
-        public void createPartyWorkEffort(PartyWorkEffort bean2)
+        public void createPartyWorkEffort(WorkEffortPartyAssignment bean2)
         {
             // TODO Auto-generated method stub
             
         }
 
-        public void updatePartyWorkEffort(PartyWorkEffort bean2)
+        public void updatePartyWorkEffort(WorkEffortPartyAssignment bean2)
         {
             // TODO Auto-generated method stub
             

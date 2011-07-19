@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "PARTY_WORK_EFFORT")
-public class PartyWorkEffort implements Serializable
+public class WorkEffortPartyAssignment implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -30,7 +30,7 @@ public class PartyWorkEffort implements Serializable
 	private Double minutes;
 	private String comment = "";
 
-	public PartyWorkEffort()
+	public WorkEffortPartyAssignment()
 	{
 
 	}
@@ -93,12 +93,12 @@ public class PartyWorkEffort implements Serializable
 			return false;
 		}
 
-		if (!(obj instanceof PartyWorkEffort))
+		if (!(obj instanceof WorkEffortPartyAssignment))
 		{
 			return false;
 		}
 
-		PartyWorkEffort other = (PartyWorkEffort) obj;
+		WorkEffortPartyAssignment other = (WorkEffortPartyAssignment) obj;
 
 		if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id))
 		{
@@ -121,6 +121,6 @@ public class PartyWorkEffort implements Serializable
 
 	public String toString()
 	{
-		return String.format("PartyWorkEffort [id=%s]", this.id);
+		return String.format("WorkEffortPartyAssignment [id=%s]", this.id);
 	}
 }

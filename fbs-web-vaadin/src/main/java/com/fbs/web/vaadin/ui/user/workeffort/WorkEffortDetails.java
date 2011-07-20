@@ -1,7 +1,6 @@
 package com.fbs.web.vaadin.ui.user.workeffort;
 
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import com.fbs.dmr.universal.model.workeffort.WorkEffort;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
@@ -21,7 +20,6 @@ import com.vaadin.ui.TextField;
 public class WorkEffortDetails extends TabSheet implements DetailsAware<WorkEffort>, BeanAware<WorkEffort>
 {
     private static final long serialVersionUID = 1L;
-    private static Logger logger = Logger.getLogger(WorkEffortDetails.class.getName());
     private static final String ID = "id";
     private static final String DESC = "description";
     private static final String NAME = "name";

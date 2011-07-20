@@ -6,11 +6,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.fbs.dmr.universal.model.party.PartyClassification;
-import com.fbs.dmr.universal.service.ServicePartyClassification;
+import com.fbs.dmr.universal.service.CrudServicePartyClassification;
 import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
 
 public class CrudServicePartyClassificationImpl extends CrudServiceGenericImpl<PartyClassification, Integer> implements
-        ServicePartyClassification
+        CrudServicePartyClassification
 {
 	public CrudServicePartyClassificationImpl()
 	{

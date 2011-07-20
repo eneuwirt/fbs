@@ -7,10 +7,10 @@ import javax.persistence.Query;
 
 import com.fbs.dmr.universal.model.party.Party;
 import com.fbs.dmr.universal.model.party.PartyRole;
-import com.fbs.dmr.universal.service.ServicePartyRole;
+import com.fbs.dmr.universal.service.CrudServicePartyRole;
 import com.fbs.dmr.universal.service.impl.CrudServiceGenericImpl;
 
-public class CrudServicePartyRoleImpl extends CrudServiceGenericImpl<PartyRole, Integer> implements ServicePartyRole
+public class CrudServicePartyRoleImpl extends CrudServiceGenericImpl<PartyRole, Integer> implements CrudServicePartyRole
 {
 	public CrudServicePartyRoleImpl()
 	{

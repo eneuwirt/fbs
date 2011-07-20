@@ -27,8 +27,8 @@ import com.fbs.dmr.universal.service.CrudServicePartyContactMechanismPurpose;
 import com.fbs.dmr.universal.service.CrudServiceType;
 import com.fbs.dmr.universal.service.CrudServiceWorkEffortPartyAssignment;
 import com.fbs.dmr.universal.service.SeedService;
-import com.fbs.dmr.universal.service.ServicePartyClassification;
-import com.fbs.dmr.universal.service.ServicePartyRole;
+import com.fbs.dmr.universal.service.CrudServicePartyClassification;
+import com.fbs.dmr.universal.service.CrudServicePartyRole;
 import com.fbs.security.service.SecurityService;
 import com.fbs.security.service.TenantService;
 import com.fbs.security.service.UserService;
@@ -90,7 +90,7 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private CrudServiceType<PartyRoleType, Integer> crudServicePartyRoleType;
 
 	@Resource(name = "crudServicePartyRole")
-	private ServicePartyRole crudServicePartyRole;
+	private CrudServicePartyRole crudServicePartyRole;
 
 	@Resource(name = "crudServicePerson")
 	private CrudService<Person, Integer> crudServicePerson;
@@ -102,7 +102,7 @@ public class ApplicationServicesImpl implements ApplicationServices
 	private CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber;
 
 	@Resource
-	private ServicePartyClassification servicePartyClassification;
+	private CrudServicePartyClassification crudServicePartyClassification;
 
 	@Resource(name = "crudServicePostalAddress")
 	private CrudService<PostalAddress, Integer> crudServicePostalAddress;
@@ -239,27 +239,27 @@ public class ApplicationServicesImpl implements ApplicationServices
 	}
 
 	@Override
-	public ServicePartyRole getCrudServicePartyRole()
+	public CrudServicePartyRole getCrudServicePartyRole()
 	{
 		return this.crudServicePartyRole;
 	}
 
-	public void setCrudServicePartyRole(ServicePartyRole crudServicePartyRole)
+	public void setCrudServicePartyRole(CrudServicePartyRole crudServicePartyRole)
 	{
 		this.crudServicePartyRole = crudServicePartyRole;
 	}
 
 	@Override
-	public ServicePartyClassification getCrudServicePartyClassification()
+	public CrudServicePartyClassification getCrudServicePartyClassification()
 	{
 
-		return this.servicePartyClassification;
+		return this.crudServicePartyClassification;
 	}
 
-	public void setCrudServicePartyClassification(ServicePartyClassification servicePartyClassification)
+	public void setCrudServicePartyClassification(CrudServicePartyClassification crudServicePartyClassification)
 	{
 
-		this.servicePartyClassification = servicePartyClassification;
+		this.crudServicePartyClassification = crudServicePartyClassification;
 	}
 
 	public void setCrudServicePartyRelationshipStatusType(

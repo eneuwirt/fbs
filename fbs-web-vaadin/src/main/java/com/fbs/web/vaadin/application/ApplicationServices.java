@@ -25,8 +25,8 @@ import com.fbs.dmr.universal.service.CrudServicePartyContactMechanismPurpose;
 import com.fbs.dmr.universal.service.CrudServiceType;
 import com.fbs.dmr.universal.service.CrudServiceWorkEffortPartyAssignment;
 import com.fbs.dmr.universal.service.SeedService;
-import com.fbs.dmr.universal.service.ServicePartyClassification;
-import com.fbs.dmr.universal.service.ServicePartyRole;
+import com.fbs.dmr.universal.service.CrudServicePartyClassification;
+import com.fbs.dmr.universal.service.CrudServicePartyRole;
 import com.fbs.security.service.SecurityService;
 import com.fbs.security.service.TenantService;
 import com.fbs.security.service.UserService;
@@ -85,7 +85,7 @@ public interface ApplicationServices
 	
 	public CrudService<WorkEffortType, Integer> getCrudServiceWorkEffortType();
 
-	public ServicePartyClassification getCrudServicePartyClassification();
+	public CrudServicePartyClassification getCrudServicePartyClassification();
 
-	public ServicePartyRole getCrudServicePartyRole();	
+	public CrudServicePartyRole getCrudServicePartyRole();	
 }

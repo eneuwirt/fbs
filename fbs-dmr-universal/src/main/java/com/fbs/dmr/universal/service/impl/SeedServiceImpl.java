@@ -23,7 +23,7 @@ import com.fbs.dmr.universal.model.party.PriorityType;
 import com.fbs.dmr.universal.service.CrudService;
 import com.fbs.dmr.universal.service.CrudServiceType;
 import com.fbs.dmr.universal.service.SeedService;
-import com.fbs.dmr.universal.service.ServicePartyRole;
+import com.fbs.dmr.universal.service.CrudServicePartyRole;
 
 public class SeedServiceImpl implements SeedService
 {
@@ -81,7 +81,7 @@ public class SeedServiceImpl implements SeedService
 	@Resource(name = "crudServicePerson")
 	private CrudService<Person, Integer> crudServicePerson;
 	@Resource(name = "crudServicePartyRole")
-	private ServicePartyRole servicePartyRole;
+	private CrudServicePartyRole crudServicePartyRole;
 
 	@Override
 	public void defaultFill()
@@ -354,7 +354,7 @@ public class SeedServiceImpl implements SeedService
 		partyRole = new PartyRole();
 		partyRole.setParty(org);
 		partyRole.setPartyRoleType(partyRoleType);
-		this.servicePartyRole.create(partyRole);
+		this.crudServicePartyRole.create(partyRole);
 		//
 		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_POSTAL);
 		postalAddress = new PostalAddress();
@@ -389,7 +389,7 @@ public class SeedServiceImpl implements SeedService
 		partyRole = new PartyRole();
 		partyRole.setParty(org);
 		partyRole.setPartyRoleType(partyRoleType);
-		this.servicePartyRole.create(partyRole);
+		this.crudServicePartyRole.create(partyRole);
 	}
 
 	private void createDemoPersons()
@@ -410,7 +410,7 @@ public class SeedServiceImpl implements SeedService
 		partyRole = new PartyRole();
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);
-		this.servicePartyRole.create(partyRole);
+		this.crudServicePartyRole.create(partyRole);
 
 		person = new Person();
 		person.setLastName("Klaglos");
@@ -420,7 +420,7 @@ public class SeedServiceImpl implements SeedService
 		partyRole = new PartyRole();
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);
-		this.servicePartyRole.create(partyRole);
+		this.crudServicePartyRole.create(partyRole);
 
 		person = new Person();
 		person.setGender(FEMALE);
@@ -430,7 +430,7 @@ public class SeedServiceImpl implements SeedService
 		partyRole = new PartyRole();
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);
-		this.servicePartyRole.create(partyRole);
+		this.crudServicePartyRole.create(partyRole);
 
 		person = new Person();
 		person.setGender(MALE);
@@ -440,7 +440,7 @@ public class SeedServiceImpl implements SeedService
 		partyRole = new PartyRole();
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);
-		this.servicePartyRole.create(partyRole);
+		this.crudServicePartyRole.create(partyRole);
 		//
 		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(CONTACT_TYPE_POSTAL);
 		postalAddress = new PostalAddress();
@@ -472,7 +472,7 @@ public class SeedServiceImpl implements SeedService
 		partyRole = new PartyRole();
 		partyRole.setParty(person);
 		partyRole.setPartyRoleType(partyRoleType);
-		this.servicePartyRole.create(partyRole);
+		this.crudServicePartyRole.create(partyRole);
 
 	}
 
@@ -498,9 +498,9 @@ public class SeedServiceImpl implements SeedService
 		this.crudServiceContactMechanismPurposeType = crudServiceContactMechanismPurposeType;
 	}
 
-	public void setServicePartyRole(ServicePartyRole servicePartyRole)
+	public void setServicePartyRole(CrudServicePartyRole crudServicePartyRole)
 	{
-		this.servicePartyRole = servicePartyRole;
+		this.crudServicePartyRole = crudServicePartyRole;
 	}
 
 	public void setCrudServicePostalAddress(CrudService<PostalAddress, Integer> crudServicePostalAddress)

@@ -65,7 +65,7 @@ public class WorkEffortDetails extends TabSheet implements DetailsAware<WorkEffo
         captionMasterData = this.app.getMessage(ApplicationMessages.WorkEffortMasterData);
 
         this.addTab(this.form, captionMasterData, null);
-        this.addTab(this.workEffortPartyAssignmentView, "Hoho", null);
+        this.addTab(this.workEffortPartyAssignmentView, this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentTitle), null);
     }
 
     @Override

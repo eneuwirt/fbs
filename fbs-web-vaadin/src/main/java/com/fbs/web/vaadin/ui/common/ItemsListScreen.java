@@ -106,7 +106,7 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
         this.table.setMultiSelect(false);
         this.table.setImmediate(true);
         this.table.setContainerDataSource(beanItemContainer);
-        this.table.addListener(new LocalValueChangeListener<T>(this));
+        this.table.addListener(new TableSelectChangeListener<T>(this));
 
         this.buttonItemAdd = new Button();
         this.buttonItemAdd.addListener(new CreateItemListener<T>(this));
@@ -582,12 +582,12 @@ public abstract class ItemsListScreen<T> extends HorizontalSplitPanel implements
         }
     }
 
-    private static class LocalValueChangeListener<T> implements Property.ValueChangeListener
+    private static class TableSelectChangeListener<T> implements Property.ValueChangeListener
     {
         private static final long serialVersionUID = 1L;
         private ItemsListScreen<T> screen;
 
-        public LocalValueChangeListener(ItemsListScreen<T> itemsListScreen)
+        public TableSelectChangeListener(ItemsListScreen<T> itemsListScreen)
         {
             this.screen = itemsListScreen;
         }

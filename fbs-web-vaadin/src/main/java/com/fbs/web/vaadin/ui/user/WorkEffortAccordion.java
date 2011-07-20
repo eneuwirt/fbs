@@ -1,9 +1,9 @@
 package com.fbs.web.vaadin.ui.user;
 
 import com.fbs.web.vaadin.application.MyVaadinApplication;
+import com.fbs.web.vaadin.i18n.ApplicationMessages;
 import com.fbs.web.vaadin.ui.user.workeffort.WorkEffortScreen;
 import com.vaadin.ui.Accordion;
-import com.vaadin.ui.Label;
 
 public class WorkEffortAccordion extends Accordion
 {
@@ -18,7 +18,7 @@ public class WorkEffortAccordion extends Accordion
         
         this.workEffortScreen = new WorkEffortScreen(app);
         
-        this.addTab(this.workEffortScreen, "In Arbeit", null);
+        this.addTab(this.workEffortScreen, this.app.getMessage(ApplicationMessages.WorkEffortTitle), null);
         
         this.initLayout();
     }

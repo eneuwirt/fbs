@@ -14,7 +14,6 @@ import com.fbs.web.vaadin.ui.common.AnchorAware;
 import com.fbs.web.vaadin.ui.common.CrudAware;
 import com.fbs.web.vaadin.ui.common.ListAware;
 import com.fbs.web.vaadin.ui.common.items.BeanAware;
-import com.fbs.web.vaadin.ui.user.party.details.PartyContactMechanismView.Action;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -69,7 +68,7 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
     protected String updateDialogCaption = "";
     protected CrudDialog dialog;
 
-    protected Table tableBeans;
+    protected Table tableParties;
     protected BeanItemContainer<WorkEffortPartyAssignment> beanItemContainer;
 
     protected Button buttonAdd;
@@ -100,19 +99,19 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
             this.beanItemContainer.addNestedContainerProperty(p);
         }
 
-        this.tableBeans = new Table();
-        this.tableBeans.setSelectable(true);
-        this.tableBeans.setMultiSelect(false);
-        this.tableBeans.setImmediate(true);
-        this.tableBeans.setContainerDataSource(beanItemContainer);
-        this.tableBeans.addListener(new TableSelectListener(this));
+        this.tableParties = new Table();
+        this.tableParties.setSelectable(true);
+        this.tableParties.setMultiSelect(false);
+        this.tableParties.setImmediate(true);
+        this.tableParties.setContainerDataSource(beanItemContainer);
+        this.tableParties.addListener(new TableSelectListener(this));
 
-        this.buttonAdd = new Button("Add", new CreateListener(this));
+        this.buttonAdd = new Button(this.app.getMessage(ApplicationMessages.CommonCreate), new CreateListener(this));
 
-        this.buttonEdit = new Button("Edit", new EditListener(this));
+        this.buttonEdit = new Button(this.app.getMessage(ApplicationMessages.CommonUpdate), new EditListener(this));
         this.buttonEdit.setEnabled(false);
 
-        this.buttonDelete = new Button("Delete", new DeleteListener(this));
+        this.buttonDelete = new Button(this.app.getMessage(ApplicationMessages.CommonDelete), new DeleteListener(this));
         this.buttonDelete.setEnabled(false);
 
         this.initLayout();
@@ -124,14 +123,14 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
 
         this.setSizeFull();
 
-        this.tableBeans.setSizeFull();
-        this.tableBeans.setVisibleColumns(this.visibleColumns);
+        this.tableParties.setSizeFull();
+        this.tableParties.setVisibleColumns(this.visibleColumns);
         // Set nicer header names
         for (String propertyId : this.visibleColumns)
         {
             String columnName = this.getColumnName(propertyId);
 
-            this.tableBeans.setColumnHeader(propertyId, columnName);
+            this.tableParties.setColumnHeader(propertyId, columnName);
         }
 
         buttonRow = new HorizontalLayout();
@@ -141,10 +140,10 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
         buttonRow.addComponent(this.buttonEdit);
         buttonRow.addComponent(this.buttonDelete);
 
-        this.addComponent(this.tableBeans);
+        this.addComponent(this.tableParties);
         this.addComponent(buttonRow);
 
-        this.setExpandRatio(this.tableBeans, 1.0f);
+        this.setExpandRatio(this.tableParties, 1.0f);
     }
 
     @Override
@@ -175,10 +174,15 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
     }
 
     @Override
-    public String getColumnName(String pid)
+    public String getColumnName(String propertyId)
     {
+        if (propertyId.equals(ID))
+            return this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentId);
+        
+        if (propertyId.equals(PARTY_NAME))
+            return this.app.getMessage(ApplicationMessages.WorkEffortPartyAssignmentParty);
 
-        return pid;
+        return propertyId;
     }
 
     @Override
@@ -196,7 +200,7 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
     public WorkEffortPartyAssignment createBean(WorkEffortPartyAssignment t) throws Exception
     {
         this.app.getServices().getCrudServiceWorkEffortPartyAssignment().create(t);
-        
+
         return t;
     }
 
@@ -232,7 +236,7 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
         @Override
         public void valueChange(ValueChangeEvent event)
         {
-            this.view.selectedBean = (WorkEffortPartyAssignment) this.view.tableBeans.getValue();
+            this.view.selectedBean = (WorkEffortPartyAssignment) this.view.tableParties.getValue();
 
             if (this.view.selectedBean != null)
             {
@@ -323,7 +327,7 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
     {
         private static final long serialVersionUID = 1L;
         private static Logger logger = Logger.getLogger(DeleteListener.class.getName());
-        
+
         private WorkEffortPartyAssignmentView view;
 
         public DeleteListener(WorkEffortPartyAssignmentView view)
@@ -335,7 +339,7 @@ public class WorkEffortPartyAssignmentView extends VerticalLayout implements Anc
         public void buttonClick(ClickEvent event)
         {
             WorkEffortPartyAssignment bean;
-            
+
             try
             {
                 this.view.action = Action.DELETE;

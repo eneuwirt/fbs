@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-  xmlns:tx="http://www.springframework.org/schema/tx"
-  xsi:schemaLocation="http://www.springframework.org/schema/aop 
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+ xsi:schemaLocation="http://www.springframework.org/schema/aop 
                       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
                       http://www.springframework.org/schema/beans
                       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -18,65 +17,67 @@
                       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 
-  <!-- post-processors for all standard config annotations -->
-  <context:annotation-config />
-  <tx:annotation-driven transaction-manager="transactionManager" />
+ <!-- post-processors for all standard config annotations -->
+ <context:annotation-config />
+ <tx:annotation-driven transaction-manager="transactionManager" />
 
-  <!-- Exception translation bean post processor -->
-  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+ <!-- Exception translation bean post processor -->
+ <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 
-  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-    <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-    <property name="url" value="jdbc:hsqldb:mem:test" />
-    <property name="username" value="sa" />
-    <property name="password" value="" />
-  </bean>
+ <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+  <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+  <property name="url" value="jdbc:hsqldb:mem:test" />
+  <property name="username" value="sa" />
+  <property name="password" value="" />
+ </bean>
 
-  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-    <property name="dataSource" ref="dataSource" />
-    <property name="persistenceUnitName" value="punit" />
-    <property name="jpaVendorAdapter">
-      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="showSql" value="true" />
-        <property name="generateDdl" value="true" />
-        <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
-      </bean>
-    </property>
-  </bean>
+ <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+  <property name="dataSource" ref="dataSource" />
+  <property name="persistenceUnitName" value="punit" />
+  <property name="jpaVendorAdapter">
+   <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+    <property name="showSql" value="true" />
+    <property name="generateDdl" value="true" />
+    <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
+   </bean>
+  </property>
+ </bean>
 
-  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-    <property name="entityManagerFactory" ref="entityManagerFactory" />
-  </bean>
+ <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+  <property name="entityManagerFactory" ref="entityManagerFactory" />
+ </bean>
 
-  <bean id="seedService" class="com.fbs.dmr.universal.service.impl.SeedServiceImpl" />
+ <bean id="seedService" class="com.fbs.dmr.universal.service.impl.SeedServiceImpl" />
 
-  <bean id="crudServiceContactMechanism" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismImpl" />
-  <bean id="crudServiceContactMechanismPurposeType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismPurposeTypeImpl" />
-  <bean id="crudServiceContactMechanismType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismTypeImpl" />
-  <bean id="crudServiceElectronicAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceElectronicAddressImpl" />
-  <bean id="crudServiceTelecommunicationNumber" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceTelecommunicationNumberImpl" />
-  <bean id="crudServicePostalAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServicePostalAddressImpl" />
+ <bean id="crudServiceContactMechanism" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismImpl" />
+ <bean id="crudServiceContactMechanismPurposeType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismPurposeTypeImpl" />
+ <bean id="crudServiceContactMechanismType" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceContactMechanismTypeImpl" />
+ <bean id="crudServiceElectronicAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceElectronicAddressImpl" />
+ <bean id="crudServiceTelecommunicationNumber" class="com.fbs.dmr.universal.service.impl.contact.CrudServiceTelecommunicationNumberImpl" />
+ <bean id="crudServicePostalAddress" class="com.fbs.dmr.universal.service.impl.contact.CrudServicePostalAddressImpl" />
 
-  <bean id="crudServiceFacilityContactMechanism" class="com.fbs.dmr.universal.service.impl.facility.CrudServiceFacilityContactMechanismImpl" />
-  <bean id="crudServiceFacility" class="com.fbs.dmr.universal.service.impl.facility.CrudServiceFacilityImpl" />
-  <bean id="crudServiceFacilityType" class="com.fbs.dmr.universal.service.impl.facility.CrudServiceFacilityTypeImpl" />
+ <bean id="crudServiceFacilityContactMechanism" class="com.fbs.dmr.universal.service.impl.facility.CrudServiceFacilityContactMechanismImpl" />
+ <bean id="crudServiceFacility" class="com.fbs.dmr.universal.service.impl.facility.CrudServiceFacilityImpl" />
+ <bean id="crudServiceFacilityType" class="com.fbs.dmr.universal.service.impl.facility.CrudServiceFacilityTypeImpl" />
 
-  <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.party.CrudServiceOrganizationImpl" />
-  <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyClassificationImpl" />
-  <bean id="crudServicePartyContactMechanism" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyContactMechanismImpl" />
-  <bean id="crudServicePartyContactMechanismPurpose" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyContactMechanismPurposeImpl" />
-  <bean id="crudServicePartyFacility" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyFacilityImpl" />
-  <bean id="crudServicePartyRelationship" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipImpl" />
-  <bean id="crudServicePartyRelationshipStatusType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipStatusTypeImpl" />
-  <bean id="crudServicePartyRelationshipType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipTypeImpl" />
-  <bean id="crudServicePartyRole" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRoleImpl" />
-  <bean id="crudServicePartyRoleType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRoleTypeImpl" />
-  <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyTypeImpl" />
-  <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.party.CrudServicePersonImpl" />
-  <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePriorityTypeImpl" />
+ <bean id="crudServiceOrganization" class="com.fbs.dmr.universal.service.impl.party.CrudServiceOrganizationImpl" />
+ <bean id="crudServicePartyClassification" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyClassificationImpl" />
+ <bean id="crudServicePartyContactMechanism" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyContactMechanismImpl" />
+ <bean id="crudServicePartyContactMechanismPurpose" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyContactMechanismPurposeImpl" />
+ <bean id="crudServicePartyFacility" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyFacilityImpl" />
+ <bean id="crudServicePartyRelationship" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipImpl" />
+ <bean id="crudServicePartyRelationshipStatusType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipStatusTypeImpl" />
+ <bean id="crudServicePartyRelationshipType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRelationshipTypeImpl" />
+ <bean id="crudServicePartyRole" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRoleImpl" />
+ <bean id="crudServicePartyRoleType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyRoleTypeImpl" />
+ <bean id="crudServicePartyType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePartyTypeImpl" />
+ <bean id="crudServicePerson" class="com.fbs.dmr.universal.service.impl.party.CrudServicePersonImpl" />
+ <bean id="crudServicePriorityType" class="com.fbs.dmr.universal.service.impl.party.CrudServicePriorityTypeImpl" />
 
-  <bean id="crudServicePartyWorkEffort" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServiceWorkEffortPartyAssignmentImpl" />
-  <bean id="crudServiceWorkEffort" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServiceWorkEffortImpl" />
-  <bean id="crudServiceWorkEffortType" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServiceWorkEffortTypeImpl" />
+ <bean id="crudServicePartyWorkEffort" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServiceWorkEffortPartyAssignmentImpl" />
+ <bean id="crudServiceTimeEntry" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServiceTimeEntryImpl" />
+ <bean id="crudServiceTimeSheet" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServiceTimeSheetImpl" />
+ <bean id="crudServiceWorkEffort" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServiceWorkEffortImpl" />
+ <bean id="crudServiceWorkEffortType" class="com.fbs.dmr.universal.service.impl.workeffort.CrudServiceWorkEffortTypeImpl" />
 </beans>

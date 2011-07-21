@@ -164,6 +164,8 @@ public interface ApplicationMessages extends Serializable
     public static String TenantId = "Tenant.Id";
     public static String TenantDescription = "Tenant.Description";
     public static String TenantScreenTitle = "TenantScreen.Title";
+    
+    public static String TimeSheetTitle = "TimeSheet.Title";
 
     public static String UserAlreadyExists = "User.AlreadyExists";
     public static String UserName = "User.Name";
@@ -194,8 +196,5 @@ public interface ApplicationMessages extends Serializable
     public static String WorkEffortPartyAssignmentId = "WorkEffortPartyAssignment.Id";
     public static String WorkEffortPartyAssignmentMinutes = "WorkEffortPartyAssignment.Minutes";
     public static String WorkEffortPartyAssignmentParty = "WorkEffortPartyAssignment.Party";
-    public static String WorkEffortPartyAssignmentToDate = "WorkEffortPartyAssignment.ToDate";
-
-
-   
+    public static String WorkEffortPartyAssignmentToDate = "WorkEffortPartyAssignment.ToDate";   
 }

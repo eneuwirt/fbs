@@ -5,15 +5,18 @@ import java.util.List;
 import com.fbs.dmr.universal.model.workeffort.TimeSheet;
 import com.fbs.web.vaadin.application.MyVaadinApplication;
 import com.fbs.web.vaadin.ui.common.ItemsListScreen;
-import com.fbs.web.vaadin.ui.common.items.DetailsAware;
 
-public class TimeSheetScreen  extends ItemsListScreen<TimeSheet>
+public class TimeSheetScreen extends ItemsListScreen<TimeSheet>
 {
     private static final long serialVersionUID = 1L;
+    private static final String ID = "id";
 
-    public TimeSheetScreen(MyVaadinApplication app,DetailsAware<TimeSheet> component, String[] visibleColumns)
+    private static String[] VISIBLE_COLUMNS = new String[]
+    { ID };
+
+    public TimeSheetScreen(MyVaadinApplication app)
     {
-        super(app, TimeSheet.class, component, visibleColumns);
+        super(app, TimeSheet.class, new TimeSheetDetails(app), VISIBLE_COLUMNS);
     }
 
     @Override
@@ -26,8 +29,11 @@ public class TimeSheetScreen  extends ItemsListScreen<TimeSheet>
     @Override
     public TimeSheet createBeanInstance()
     {
-        // TODO Auto-generated method stub
-        return null;
+        TimeSheet result;
+        
+        result = new TimeSheet();
+        
+        return result;
     }
 
     @Override
@@ -41,7 +47,7 @@ public class TimeSheetScreen  extends ItemsListScreen<TimeSheet>
     public void updateBean(TimeSheet t) throws Exception
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -55,7 +61,5 @@ public class TimeSheetScreen  extends ItemsListScreen<TimeSheet>
     public void deleteBean(TimeSheet t) throws Exception
     {
         // TODO Auto-generated method stub
-        
     }
-
 }

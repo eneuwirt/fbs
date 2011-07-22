@@ -14,7 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fbs.dmr.universal.model.party.PartyRole;
+import com.fbs.dmr.universal.model.party.Party;
+
 
 @Entity
 @Table(name = "TIME_SHEETS")
@@ -32,8 +33,8 @@ public class TimeSheet implements Serializable
 	@Column(name = "to_date")
 	private Date toDate = new Date();
 	@ManyToOne
-	@JoinColumn(name = "party_role_id")
-	private PartyRole partyRole;
+	@JoinColumn(name = "party_id")
+	private Party party;
 
 	public TimeSheet()
 	{
@@ -80,15 +81,15 @@ public class TimeSheet implements Serializable
 		this.toDate = toDate;
 	}
 
-	public PartyRole getPartyRole()
-	{
-		return partyRole;
-	}
+	public Party getParty()
+    {
+    	return party;
+    }
 
-	public void setPartyRole(PartyRole partyRole)
-	{
-		this.partyRole = partyRole;
-	}
+	public void setParty(Party party)
+    {
+    	this.party = party;
+    }
 
 	@Override
 	public boolean equals(Object obj)

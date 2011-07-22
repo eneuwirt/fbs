@@ -20,8 +20,16 @@ import com.fbs.dmr.universal.service.crud.CrudService;
 import com.fbs.dmr.universal.service.crud.CrudServicePartyRole;
 import com.fbs.dmr.universal.service.crud.CrudServiceType;
 import com.fbs.dmr.universal.service.customizing.ContactTypeValues;
+import com.fbs.dmr.universal.service.customizing.PartyRelationshipStatusValues;
+import com.fbs.dmr.universal.service.customizing.PriorityTypeValues;
 import com.fbs.dmr.universal.service.seed.SeedService;
 
+/**
+ * Core customizing values.
+ * 
+ * @author neuwirt
+ *
+ */
 public class SeedServiceImpl implements SeedService
 {
 	private static Logger logger = Logger.getLogger(SeedServiceImpl.class.getName());
@@ -110,11 +118,11 @@ public class SeedServiceImpl implements SeedService
 			PartyRelationshipStatusType type;
 
 			type = new PartyRelationshipStatusType();
-			type.setDescription("Aktiv");
+			type.setDescription(PartyRelationshipStatusValues.ACTIVE);
 			this.crudServicePartyRelationshipStatusType.create(type);
 
 			type = new PartyRelationshipStatusType();
-			type.setDescription("Inaktiv");
+			type.setDescription(PartyRelationshipStatusValues.INACTIVE);
 			this.crudServicePartyRelationshipStatusType.create(type);
 		}
 	}
@@ -130,84 +138,16 @@ public class SeedServiceImpl implements SeedService
 			PriorityType priorityType;
 
 			priorityType = new PriorityType();
-			priorityType.setDescription("Hoch");
+			priorityType.setDescription(PriorityTypeValues.HIGH);
 			this.crudServicePriorityType.create(priorityType);
 
 			priorityType = new PriorityType();
-			priorityType.setDescription("Mittel");
+			priorityType.setDescription(PriorityTypeValues.MIDDLE);
 			this.crudServicePriorityType.create(priorityType);
 
 			priorityType = new PriorityType();
-			priorityType.setDescription("Niedrig");
+			priorityType.setDescription(PriorityTypeValues.LOW);
 			this.crudServicePriorityType.create(priorityType);
 		}
 	}
-
-	public void setCrudServiceOrganization(CrudService<Organization, Integer> crudServiceOrganization)
-	{
-		this.crudServiceOrganization = crudServiceOrganization;
-	}
-
-	public void setCrudServicePerson(CrudService<Person, Integer> crudServicePerson)
-	{
-		this.crudServicePerson = crudServicePerson;
-	}
-
-	public void setCrudServiceContactMechanismType(
-	        CrudServiceType<ContactMechanismType, Integer> crudServiceContactMechanismType)
-	{
-		this.crudServiceContactMechanismType = crudServiceContactMechanismType;
-	}
-
-	public void setCrudServiceContactMechanismPurposeType(
-	        CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType)
-	{
-		this.crudServiceContactMechanismPurposeType = crudServiceContactMechanismPurposeType;
-	}
-
-	public void setServicePartyRole(CrudServicePartyRole crudServicePartyRole)
-	{
-		this.crudServicePartyRole = crudServicePartyRole;
-	}
-
-	public void setCrudServicePostalAddress(CrudService<PostalAddress, Integer> crudServicePostalAddress)
-	{
-		this.crudServicePostalAddress = crudServicePostalAddress;
-	}
-
-	public CrudService<PostalAddress, Integer> getCrudServicePostalAddress()
-	{
-		return crudServicePostalAddress;
-	}
-
-	public void setServicePartyType(CrudService<PartyType, Integer> servicePartyType)
-	{
-		this.crudServicePartyType = servicePartyType;
-	}
-
-	public void setServicePartyRoleType(CrudServiceType<PartyRoleType, Integer> servicePartyRoleType)
-	{
-		this.crudServicePartyRoleType = servicePartyRoleType;
-	}
-
-	public void setServicePriorityType(CrudServiceType<PriorityType, Integer> servicePriorityType)
-	{
-		this.crudServicePriorityType = servicePriorityType;
-	}
-
-	public void setServicePartyRelationshipStatusType(
-	        CrudServiceType<PartyRelationshipStatusType, Integer> servicePartyRelationshipStatusType)
-	{
-		this.crudServicePartyRelationshipStatusType = servicePartyRelationshipStatusType;
-	}
-
-	public void setCrudServicePartyContactMechanismPurpose(CrudServiceType<PartyContactMechanismPurpose, Integer> crudServicePartyContactMechanismPurpose)
-    {
-	    this.crudServicePartyContactMechanismPurpose = crudServicePartyContactMechanismPurpose;
-    }
-
-	public void setCrudServicePartyRelationshipType(CrudServiceType<PartyRelationshipType, Integer> crudServicePartyRelationshipType)
-    {
-	    this.crudServicePartyRelationshipType = crudServicePartyRelationshipType;
-    }
 }

@@ -23,7 +23,8 @@ import com.fbs.dmr.universal.model.party.PriorityType;
 import com.fbs.dmr.universal.service.crud.CrudService;
 import com.fbs.dmr.universal.service.crud.CrudServicePartyRole;
 import com.fbs.dmr.universal.service.crud.CrudServiceType;
-import com.fbs.dmr.universal.service.customizing.ContactType;
+import com.fbs.dmr.universal.service.customizing.ContactTypeValues;
+import com.fbs.dmr.universal.service.customizing.PersonCoreValues;
 import com.fbs.dmr.universal.service.demo.DemoDataService;
 
 public class DemoDataLawOfficeServiceImpl implements DemoDataService
@@ -39,8 +40,6 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
     private static final String CLIENT_INVESTMENT = "Mandant Investition";
     private static final String CLIENT_OUTSTANDING = "Mandant Forderung";
     private static final String CLIENT_FISCAL_LAW = "Mandant Steuerrecht";
-    private static final String FEMALE = "Frau";
-    private static final String MALE = "Herr";
     private static final String PRIVATE = "Private";
     private static final String PURPOSE_HEAD_QUARTERS = "Die Zentrale";
     private static final String PURPOSE_GENERAL_PHONE = "Haupttelefonkontakt";
@@ -91,6 +90,8 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
             }
         }
         
+        this.createPartyType();
+        
         this.createPartyRoleType();
         
         this.createContactMechanismPurposeType();
@@ -103,6 +104,27 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
 
         logger.info("<demoFill");
     }
+    
+    private void createPartyType()
+    {
+        List<PartyType> partyTypes;
+
+        partyTypes = this.crudServicePartyType.findAll();
+
+        if (partyTypes.size() == 0)
+        {
+            PartyType partyType;
+
+            partyType = new PartyType();
+            partyType.setDescription("Person");
+            this.crudServicePartyType.create(partyType);
+
+            partyType = new PartyType();
+            partyType.setDescription("Organization");
+            this.crudServicePartyType.create(partyType);
+        }
+
+    }   
     
     private void createContactMechanismPurposeType()
     {
@@ -189,7 +211,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
         org.setName("Bürogemeinschaft Klaglos & Ratlos");
         this.crudServiceOrganization.create(org);
         //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactType.POSTAL);
+        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.POSTAL);
         postalAddress = new PostalAddress();
         postalAddress.setAddress1("Gerechtigkeitstraße 7");
         postalAddress.setCity(DEMO_CITY);
@@ -201,7 +223,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
         pcm.setParty(org);
         this.crudServicePartyContactMechanism.create(pcm);
         //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactType.EMAIL);
+        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.EMAIL);
         electronicAddress = new ElectronicAddress();
         electronicAddress.setContactMechanismType(contactMechanismType);
         electronicAddress.setElectronicAddress("contact@klaglos-ratlos.de");
@@ -221,7 +243,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
         partyRole.setPartyRoleType(partyRoleType);
         this.crudServicePartyRole.create(partyRole);
         //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactType.POSTAL);
+        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.POSTAL);
         postalAddress = new PostalAddress();
         postalAddress.setAddress1(DEMO_STREET);
         postalAddress.setCity(DEMO_CITY);
@@ -239,7 +261,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
         this.crudServicePartyContactMechanismPurpose.create(pcmp);
 
         //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactType.EMAIL);
+        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.EMAIL);
         electronicAddress = new ElectronicAddress();
         electronicAddress.setContactMechanismType(contactMechanismType);
         electronicAddress.setElectronicAddress("info@querformat.com");
@@ -267,7 +289,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
         ContactMechanismType contactMechanismType;
 
         person = new Person();
-        person.setGender(MALE);
+        person.setGender(PersonCoreValues.Gender.MALE);
         person.setLastName("Ratlos");
         this.crudServicePerson.create(person);
         partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
@@ -278,7 +300,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
 
         person = new Person();
         person.setLastName("Klaglos");
-        person.setGender(MALE);
+        person.setGender(PersonCoreValues.Gender.MALE);
         this.crudServicePerson.create(person);
         partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
         partyRole = new PartyRole();
@@ -287,7 +309,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
         this.crudServicePartyRole.create(partyRole);
 
         person = new Person();
-        person.setGender(FEMALE);
+        person.setGender(PersonCoreValues.Gender.FEMALE);
         person.setLastName("Walküre");
         this.crudServicePerson.create(person);
         partyRoleType = this.crudServicePartyRoleType.findForDescription(ASSISTANCE);
@@ -297,7 +319,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
         this.crudServicePartyRole.create(partyRole);
 
         person = new Person();
-        person.setGender(MALE);
+        person.setGender(PersonCoreValues.Gender.MALE);
         person.setLastName("Reinweiß");
         this.crudServicePerson.create(person);
         partyRoleType = this.crudServicePartyRoleType.findForDescription(CLIENT_INVESTMENT);
@@ -306,7 +328,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
         partyRole.setPartyRoleType(partyRoleType);
         this.crudServicePartyRole.create(partyRole);
         //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactType.POSTAL);
+        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.POSTAL);
         postalAddress = new PostalAddress();
         postalAddress.setAddress1(DEMO_STREET);
         postalAddress.setCity(DEMO_CITY);
@@ -318,7 +340,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
         pcm.setParty(person);
         this.crudServicePartyContactMechanism.create(pcm);
         //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactType.PHONE);
+        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.PHONE);
         phone = new TelecommunicationNumber();
         phone.setNumber("0815 – 10");
         phone.setContactMechanismType(contactMechanismType);
@@ -329,7 +351,7 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
         this.crudServicePartyContactMechanism.create(pcm);
 
         person = new Person();
-        person.setGender(MALE);
+        person.setGender(PersonCoreValues.Gender.MALE);
         person.setLastName("Lahm");
         this.crudServicePerson.create(person);
         partyRoleType = this.crudServicePartyRoleType.findForDescription(PRIVATE);

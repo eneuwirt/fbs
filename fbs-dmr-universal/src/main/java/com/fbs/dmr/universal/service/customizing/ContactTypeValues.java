@@ -1,6 +1,6 @@
 package com.fbs.dmr.universal.service.customizing;
 
-public interface ContactType
+public interface ContactTypeValues
 {
     public static String EMAIL = "E-Mail";
     public static String FAX = "Fax";

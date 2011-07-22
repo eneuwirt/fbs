@@ -19,7 +19,7 @@ import com.fbs.dmr.universal.model.party.PriorityType;
 import com.fbs.dmr.universal.service.crud.CrudService;
 import com.fbs.dmr.universal.service.crud.CrudServicePartyRole;
 import com.fbs.dmr.universal.service.crud.CrudServiceType;
-import com.fbs.dmr.universal.service.customizing.ContactType;
+import com.fbs.dmr.universal.service.customizing.ContactTypeValues;
 import com.fbs.dmr.universal.service.seed.SeedService;
 
 public class SeedServiceImpl implements SeedService
@@ -58,7 +58,6 @@ public class SeedServiceImpl implements SeedService
 		// Contact part
 		this.createContactMechanismType();
 		// Party part
-		this.createPartyType();
 		this.createPriorityType();
 		this.createPartyRelationshipType();
 		logger.info("<defaultFill");
@@ -75,27 +74,27 @@ public class SeedServiceImpl implements SeedService
 			ContactMechanismType type;
 
 			type = new ContactMechanismType();
-			type.setDescription(ContactType.PHONE);
+			type.setDescription(ContactTypeValues.PHONE);
 			this.crudServiceContactMechanismType.create(type);
 
 			type = new ContactMechanismType();
-			type.setDescription(ContactType.FAX);
+			type.setDescription(ContactTypeValues.FAX);
 			this.crudServiceContactMechanismType.create(type);
 
 			type = new ContactMechanismType();
-			type.setDescription(ContactType.POSTAL);
+			type.setDescription(ContactTypeValues.POSTAL);
 			this.crudServiceContactMechanismType.create(type);
 
 			type = new ContactMechanismType();
-			type.setDescription(ContactType.EMAIL);
+			type.setDescription(ContactTypeValues.EMAIL);
 			this.crudServiceContactMechanismType.create(type);
 
 			type = new ContactMechanismType();
-			type.setDescription(ContactType.MOBILE);
+			type.setDescription(ContactTypeValues.MOBILE);
 			this.crudServiceContactMechanismType.create(type);
 
 			type = new ContactMechanismType();
-			type.setDescription(ContactType.WEB);
+			type.setDescription(ContactTypeValues.WEB);
 			this.crudServiceContactMechanismType.create(type);
 		}
 	}
@@ -143,29 +142,6 @@ public class SeedServiceImpl implements SeedService
 			this.crudServicePriorityType.create(priorityType);
 		}
 	}
-
-	
-
-	private void createPartyType()
-	{
-		List<PartyType> partyTypes;
-
-		partyTypes = this.crudServicePartyType.findAll();
-
-		if (partyTypes.size() == 0)
-		{
-			PartyType partyType;
-
-			partyType = new PartyType();
-			partyType.setDescription("Person");
-			this.crudServicePartyType.create(partyType);
-
-			partyType = new PartyType();
-			partyType.setDescription("Organization");
-			this.crudServicePartyType.create(partyType);
-		}
-
-	}	
 
 	public void setCrudServiceOrganization(CrudService<Organization, Integer> crudServiceOrganization)
 	{

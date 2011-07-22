@@ -128,17 +128,17 @@ public interface ApplicationMessages extends Serializable
     // PartyTypeClassification
     public static String PartyTypeClassificationTitle = "PartyTypeClassification.Title";
 
-    // Person
-    public static String PersonBirthDate = "Person.BirthDate";
-    public static String PersonFirstName = "Person.FirstName";
-    public static String PersonGender = "Person.Gender";
-    public static String PersonGenderFemaleSalutation = "Person.GenderFemaleSalutation";
-    public static String PersonGenderMaleSalutation = "Person.GenderMaleSalutation";
-    public static String PersonId = "Person.Id";
-    public static String PersonLastName = "Person.LastName";
-    public static String PersonMiddleName = "Person.MiddleName";
-    public static String PersonTitle = "Person.Title";
-    public static String PersonTitleAcademic = "Person.TitleAcademic";
+    // PersonCoreValues
+    public static String PersonBirthDate = "PersonCoreValues.BirthDate";
+    public static String PersonFirstName = "PersonCoreValues.FirstName";
+    public static String PersonGender = "PersonCoreValues.Gender";
+    public static String PersonGenderFemaleSalutation = "PersonCoreValues.GenderFemaleSalutation";
+    public static String PersonGenderMaleSalutation = "PersonCoreValues.GenderMaleSalutation";
+    public static String PersonId = "PersonCoreValues.Id";
+    public static String PersonLastName = "PersonCoreValues.LastName";
+    public static String PersonMiddleName = "PersonCoreValues.MiddleName";
+    public static String PersonTitle = "PersonCoreValues.Title";
+    public static String PersonTitleAcademic = "PersonCoreValues.TitleAcademic";
 
     // PostalAddress
     public static String PostalAddressAddress1 = "PostalAddress.Address1";

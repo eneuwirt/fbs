@@ -189,6 +189,6 @@ public class Person extends Party
 
 	public String toString()
 	{
-		return String.format("Person [id=%s, name=%s]", this.getId(), this.firstName + " " + this.lastName);
+		return String.format("PersonCoreValues [id=%s, name=%s]", this.getId(), this.firstName + " " + this.lastName);
 	}
 }

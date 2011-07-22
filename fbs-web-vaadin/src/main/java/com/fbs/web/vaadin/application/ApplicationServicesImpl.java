@@ -28,6 +28,7 @@ import com.fbs.dmr.universal.service.crud.CrudServicePartyContactMechanismPurpos
 import com.fbs.dmr.universal.service.crud.CrudServicePartyRole;
 import com.fbs.dmr.universal.service.crud.CrudServiceType;
 import com.fbs.dmr.universal.service.crud.CrudServiceWorkEffortPartyAssignment;
+import com.fbs.dmr.universal.service.demo.DemoDataService;
 import com.fbs.dmr.universal.service.seed.SeedService;
 import com.fbs.security.service.SecurityService;
 import com.fbs.security.service.TenantService;
@@ -38,13 +39,31 @@ public class ApplicationServicesImpl implements ApplicationServices
 {
 	@Resource
 	private SecurityService securityService;
+	
 	@Resource
 	private TenantService tenantService;
+	
 	@Resource
 	private UserService userService;
+	
 	@Resource
 	private SeedService seedService;
-	@Resource(name = "crudServiceContactMechanismPurposeType")
+	
+	@Resource 
+	DemoDataService demoDataService;
+	
+	@Override
+	public DemoDataService getDemoDataService()
+    {
+        return demoDataService;
+    }
+
+    public void setDemoDataService(DemoDataService demoDataService)
+    {
+        this.demoDataService = demoDataService;
+    }
+
+    @Resource(name = "crudServiceContactMechanismPurposeType")
 	private CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
 
 	@Resource(name = "crudServiceContactMechanismType")

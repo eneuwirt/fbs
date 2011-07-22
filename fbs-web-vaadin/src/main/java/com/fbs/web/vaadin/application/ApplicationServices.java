@@ -26,6 +26,7 @@ import com.fbs.dmr.universal.service.crud.CrudServicePartyContactMechanismPurpos
 import com.fbs.dmr.universal.service.crud.CrudServicePartyRole;
 import com.fbs.dmr.universal.service.crud.CrudServiceType;
 import com.fbs.dmr.universal.service.crud.CrudServiceWorkEffortPartyAssignment;
+import com.fbs.dmr.universal.service.demo.DemoDataService;
 import com.fbs.dmr.universal.service.seed.SeedService;
 import com.fbs.security.service.SecurityService;
 import com.fbs.security.service.TenantService;
@@ -40,6 +41,8 @@ public interface ApplicationServices
 	public UserService getUserService();
 
 	public SeedService getSeedService();
+	
+	public DemoDataService getDemoDataService();
 
 	public CrudServiceType<ContactMechanismPurposeType, Integer> getCrudServiceContactMechanismPurposeType();
 

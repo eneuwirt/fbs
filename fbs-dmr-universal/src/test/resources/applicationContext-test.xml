@@ -49,6 +49,8 @@
  </bean>
 
  <bean id="seedService" class="com.fbs.dmr.universal.service.seed.impl.SeedServiceImpl" />
+ 
+ <bean id="demoService" class="com.fbs.dmr.universal.service.demo.impl.DemoDataLawOfficeServiceImpl" />
 
  <bean id="crudServiceContactMechanism" class="com.fbs.dmr.universal.service.crud.impl.contact.CrudServiceContactMechanismImpl" />
  <bean id="crudServiceContactMechanismPurposeType" class="com.fbs.dmr.universal.service.crud.impl.contact.CrudServiceContactMechanismPurposeTypeImpl" />

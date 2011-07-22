@@ -110,7 +110,7 @@ public class MyVaadinApplication extends Application implements ApplicationConte
 		TenantContextHolder.setTenant(authentication.getTenantId());
 		
 		this.services.getSeedService().defaultFill();
-		this.services.getSeedService().demoFill();
+		this.services.getDemoDataService().demoFill();
 
 		// Switch to the protected view
 		if (authentication.getUserRole() == UserRole.ROLE_USER)

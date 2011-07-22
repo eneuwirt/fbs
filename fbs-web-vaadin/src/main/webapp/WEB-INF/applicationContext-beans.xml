@@ -46,6 +46,8 @@
  <bean id="crudServiceWorkEffortPartyAssignment" class="com.fbs.dmr.universal.service.crud.impl.workeffort.CrudServiceWorkEffortPartyAssignmentImpl" />
  <bean id="crudServiceWorkEffortType" class="com.fbs.dmr.universal.service.crud.impl.workeffort.CrudServiceWorkEffortTypeImpl" />
 
+ <bean id="demoService" class="com.fbs.dmr.universal.service.demo.impl.DemoDataLawOfficeServiceImpl" />
+
  <bean id="seedService" class="com.fbs.dmr.universal.service.seed.impl.SeedServiceImpl" />
 
  <bean id="tenantService" class="com.fbs.security.service.impl.TenantServiceImpl">

@@ -21,6 +21,7 @@ import com.fbs.dmr.universal.service.crud.CrudServicePartyRole;
 import com.fbs.dmr.universal.service.crud.CrudServiceType;
 import com.fbs.dmr.universal.service.customizing.ContactTypeValues;
 import com.fbs.dmr.universal.service.customizing.PartyRelationshipStatusValues;
+import com.fbs.dmr.universal.service.customizing.PartyRoleTypeValues;
 import com.fbs.dmr.universal.service.customizing.PriorityTypeValues;
 import com.fbs.dmr.universal.service.seed.SeedService;
 
@@ -66,12 +67,29 @@ public class SeedServiceImpl implements SeedService
 		// Contact part
 		this.createContactMechanismType();
 		// Party part
+		this.createPartyRoleTypes();
 		this.createPriorityType();
 		this.createPartyRelationshipType();
 		logger.info("<defaultFill");
 	}
 
-	private void createContactMechanismType()
+	private void createPartyRoleTypes()
+    {
+	    List<PartyRoleType> partyRoleTypes;
+
+        partyRoleTypes = crudServicePartyRoleType.findAll();
+
+        if (partyRoleTypes.size() == 0)
+        {
+            PartyRoleType partyRoleType;
+
+            partyRoleType = new PartyRoleType();
+            partyRoleType.setDescription(PartyRoleTypeValues.EMPLOYEE);
+            this.crudServicePartyRoleType.create(partyRoleType);
+        }
+    }
+
+    private void createContactMechanismType()
 	{
 		List<ContactMechanismType> types;
 

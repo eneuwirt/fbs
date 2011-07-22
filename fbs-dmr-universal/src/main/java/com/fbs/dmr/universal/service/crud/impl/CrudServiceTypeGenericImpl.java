@@ -2,6 +2,7 @@ package com.fbs.dmr.universal.service.crud.impl;
 
 import java.io.Serializable;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.fbs.dmr.universal.model.type.Type;
@@ -11,27 +12,34 @@ public class CrudServiceTypeGenericImpl<T extends Type, ID extends Serializable>
         CrudServiceType<T, ID>
 {
 
-	public CrudServiceTypeGenericImpl(Class<T> entityClass)
+    public CrudServiceTypeGenericImpl(Class<T> entityClass)
     {
-	    super(entityClass);
+        super(entityClass);
     }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     @Override
     public T findForDescription(String description)
     {
-	    T result = null;
-	    Query query;
-	    String queryString;
-	    
-	    queryString = String.format("SELECT t FROM %s t WHERE t.description = ?1", this.entityClass.getName());
+        T result = null;
+        Query query;
+        String queryString;
 
-		query = em.createQuery(queryString);
-		query.setParameter(1, description);
+        try
+        {
+            queryString = String.format("SELECT t FROM %s t WHERE t.description = ?1", this.entityClass.getName());
 
-		result = (T) query.getSingleResult();
-	    
-	    return result;
+            query = em.createQuery(queryString);
+            query.setParameter(1, description);
+
+            result = (T) query.getSingleResult();
+        }
+        catch (NoResultException e)
+        {
+            return null;
+        }
+
+        return result;
     }
 
 }

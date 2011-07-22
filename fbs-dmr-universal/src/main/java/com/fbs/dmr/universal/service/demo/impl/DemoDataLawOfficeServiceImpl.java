@@ -156,14 +156,10 @@ public class DemoDataLawOfficeServiceImpl implements DemoDataService
     
     private void createPartyRoleType()
     {
-        List<PartyRoleType> partyRoleTypes;
+        PartyRoleType partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
 
-        partyRoleTypes = crudServicePartyRoleType.findAll();
-
-        if (partyRoleTypes.size() == 0)
+        if (partyRoleType == null)
         {
-            PartyRoleType partyRoleType;
-
             partyRoleType = new PartyRoleType();
             partyRoleType.setDescription(ADVOCATE);
             this.crudServicePartyRoleType.create(partyRoleType);

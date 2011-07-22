@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fbs.dmr.universal.model.party.PartyRelationship;
 import com.fbs.dmr.universal.model.party.PartyRelationshipType;
 import com.fbs.dmr.universal.model.party.PartyRoleType;
-import com.fbs.dmr.universal.service.CrudService;
+import com.fbs.dmr.universal.service.crud.CrudService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/applicationContext-test.xml")

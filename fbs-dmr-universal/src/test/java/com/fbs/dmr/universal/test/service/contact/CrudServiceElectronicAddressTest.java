@@ -12,7 +12,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fbs.dmr.universal.model.contact.ElectronicAddress;
-import com.fbs.dmr.universal.service.CrudService;
+import com.fbs.dmr.universal.service.crud.CrudService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/applicationContext-test.xml")

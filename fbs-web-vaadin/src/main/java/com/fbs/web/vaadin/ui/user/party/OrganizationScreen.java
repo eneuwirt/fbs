@@ -68,8 +68,7 @@ public class OrganizationScreen extends ItemsListScreen<Organization>
 		
 		this.services.getCrudServiceOrganization().update(t);
 		
-		this.component.updateBeanDetails(t);
-		
+		this.component.updateBeanDetails(t);		
 		
 		logger.info("<updateBean");
 	}

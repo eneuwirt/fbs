@@ -37,6 +37,6 @@ public class DemoServiceTest
     {
         this.seedService.defaultFill();
         
-        this.demoService.demoFill();
+        this.demoService.demoFill(1);
     }
 }

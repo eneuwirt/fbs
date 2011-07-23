@@ -29,349 +29,352 @@ import com.fbs.dmr.universal.service.demo.DemoDataService;
 
 public class DemoDataLawOfficeServiceImpl implements DemoDataService
 {
-    private static Logger logger = Logger.getLogger(DemoDataLawOfficeServiceImpl.class.getName());
-    private static final String SUPPLIER = "Supplier";
-    private static final String DEMO_STREET = "A4";
-    private static final String DEMO_CITY = "Mannheim";
-    private static final String DEMO_ZIP = "69011";
-    private static final String PARTY_ROLE_TYPE_REPRESENT_INVESTMENT = "Beratung in Investitionen";
-    private static final String ADVOCATE = "Anwalt";
-    private static final String ASSISTANCE = "Assistenz";
-    private static final String CLIENT_INVESTMENT = "Mandant Investition";
-    private static final String CLIENT_OUTSTANDING = "Mandant Forderung";
-    private static final String CLIENT_FISCAL_LAW = "Mandant Steuerrecht";
-    private static final String PRIVATE = "Private";
-    private static final String PURPOSE_HEAD_QUARTERS = "Die Zentrale";
-    private static final String PURPOSE_GENERAL_PHONE = "Haupttelefonkontakt";
-    private static final String PURPOSE_GENERAL_FAX = "Fax";
-    private static final String PURPOSE_SECONDARY_FAX = "Zweite Faxnummer";
-    // *******************************************************************************
-    @Resource(name = "crudServicePartyContactMechanism")
-    CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism;
-    @Resource(name = "crudServiceElectronicAddress")
-    CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress;
-    @Resource(name = "crudServiceTelecommunicationNumber")
-    CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber;
-    @Resource(name = "crudServicePostalAddress")
-    CrudService<PostalAddress, Integer> crudServicePostalAddress;
-    @Resource(name = "crudServiceContactMechanismPurposeType")
-    CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
-    @Resource(name = "crudServiceContactMechanismType")
-    CrudServiceType<ContactMechanismType, Integer> crudServiceContactMechanismType;
-    @Resource(name = "crudServicePartyContactMechanismPurpose")
-    CrudService<PartyContactMechanismPurpose, Integer> crudServicePartyContactMechanismPurpose;
-    @Resource(name = "crudServicePartyRelationshipStatusType")
-    CrudServiceType<PartyRelationshipType, Integer> crudServicePartyRelationshipType;
-    @Resource(name = "crudServicePartyRelationshipStatusType")
-    CrudServiceType<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType;
-    @Resource(name = "crudServicePartyRoleType")
-    CrudServiceType<PartyRoleType, Integer> crudServicePartyRoleType;
-    @Resource(name = "crudServicePartyType")
-    CrudService<PartyType, Integer> crudServicePartyType;
-    @Resource(name = "crudServicePriorityType")
-    CrudServiceType<PriorityType, Integer> crudServicePriorityType;
-    @Resource(name = "crudServiceOrganization")
-    CrudService<Organization, Integer> crudServiceOrganization;
-    @Resource(name = "crudServicePerson")
-    CrudService<Person, Integer> crudServicePerson;
-    @Resource(name = "crudServicePartyRole")
-    CrudServicePartyRole crudServicePartyRole;
+	private static Logger logger = Logger.getLogger(DemoDataLawOfficeServiceImpl.class.getName());
+	private static final String SUPPLIER = "Supplier";
+	private static final String DEMO_STREET = "A4";
+	private static final String DEMO_CITY = "Mannheim";
+	private static final String DEMO_ZIP = "69011";
+	private static final String PARTY_ROLE_TYPE_REPRESENT_INVESTMENT = "Beratung in Investitionen";
+	private static final String ADVOCATE = "Anwalt";
+	private static final String ASSISTANCE = "Assistenz";
+	private static final String CLIENT_INVESTMENT = "Mandant Investition";
+	private static final String CLIENT_OUTSTANDING = "Mandant Forderung";
+	private static final String CLIENT_FISCAL_LAW = "Mandant Steuerrecht";
+	private static final String PRIVATE = "Private";
+	private static final String PURPOSE_HEAD_QUARTERS = "Die Zentrale";
+	private static final String PURPOSE_GENERAL_PHONE = "Haupttelefonkontakt";
+	private static final String PURPOSE_GENERAL_FAX = "Fax";
+	private static final String PURPOSE_SECONDARY_FAX = "Zweite Faxnummer";
+	// *******************************************************************************
+	@Resource(name = "crudServicePartyContactMechanism")
+	CrudService<PartyContactMechanism, Integer> crudServicePartyContactMechanism;
+	@Resource(name = "crudServiceElectronicAddress")
+	CrudService<ElectronicAddress, Integer> crudServiceElectronicAddress;
+	@Resource(name = "crudServiceTelecommunicationNumber")
+	CrudService<TelecommunicationNumber, Integer> crudServiceTelecommunicationNumber;
+	@Resource(name = "crudServicePostalAddress")
+	CrudService<PostalAddress, Integer> crudServicePostalAddress;
+	@Resource(name = "crudServiceContactMechanismPurposeType")
+	CrudServiceType<ContactMechanismPurposeType, Integer> crudServiceContactMechanismPurposeType;
+	@Resource(name = "crudServiceContactMechanismType")
+	CrudServiceType<ContactMechanismType, Integer> crudServiceContactMechanismType;
+	@Resource(name = "crudServicePartyContactMechanismPurpose")
+	CrudService<PartyContactMechanismPurpose, Integer> crudServicePartyContactMechanismPurpose;
+	@Resource(name = "crudServicePartyRelationshipStatusType")
+	CrudServiceType<PartyRelationshipType, Integer> crudServicePartyRelationshipType;
+	@Resource(name = "crudServicePartyRelationshipStatusType")
+	CrudServiceType<PartyRelationshipStatusType, Integer> crudServicePartyRelationshipStatusType;
+	@Resource(name = "crudServicePartyRoleType")
+	CrudServiceType<PartyRoleType, Integer> crudServicePartyRoleType;
+	@Resource(name = "crudServicePartyType")
+	CrudService<PartyType, Integer> crudServicePartyType;
+	@Resource(name = "crudServicePriorityType")
+	CrudServiceType<PriorityType, Integer> crudServicePriorityType;
+	@Resource(name = "crudServiceOrganization")
+	CrudService<Organization, Integer> crudServiceOrganization;
+	@Resource(name = "crudServicePerson")
+	CrudService<Person, Integer> crudServicePerson;
+	@Resource(name = "crudServicePartyRole")
+	CrudServicePartyRole crudServicePartyRole;
 
-    @Override
-    public void demoFill()
-    {
-        logger.info(">demoFill");
+	@Override
+	public void demoFill(int iterations)
+	{
+		logger.info(">demoFill");
 
-        for (Organization o : this.crudServiceOrganization.findAll())
-        {
-            if (o.getName().equals("Querformat GmbH"))
-            {
-                return;
-            }
-        }
-        
-        this.createPartyType();
-        
-        this.createPartyRoleType();
-        
-        this.createContactMechanismPurposeType();
+		for (Organization o : this.crudServiceOrganization.findAll())
+		{
+			if (o.getName().equals("Querformat GmbH"))
+			{
+				return;
+			}
+		}
 
-        this.createDemoPersons();
+		this.createPartyType();
 
-        this.createDemoOrgs();
+		this.createPartyRoleType();
 
-        this.createDemoRelationshipTypes();
+		this.createContactMechanismPurposeType();
 
-        logger.info("<demoFill");
-    }
-    
-    private void createPartyType()
-    {
-        List<PartyType> partyTypes;
+		for (int i = 0; i < iterations; i++)
+		{
+			this.createDemoPersons();
 
-        partyTypes = this.crudServicePartyType.findAll();
+			this.createDemoOrgs();
 
-        if (partyTypes.size() == 0)
-        {
-            PartyType partyType;
+			this.createDemoRelationshipTypes();
+		}
 
-            partyType = new PartyType();
-            partyType.setDescription("Person");
-            this.crudServicePartyType.create(partyType);
+		logger.info("<demoFill");
+	}
 
-            partyType = new PartyType();
-            partyType.setDescription("Organization");
-            this.crudServicePartyType.create(partyType);
-        }
+	private void createPartyType()
+	{
+		List<PartyType> partyTypes;
 
-    }   
-    
-    private void createContactMechanismPurposeType()
-    {
-        List<ContactMechanismPurposeType> types;
+		partyTypes = this.crudServicePartyType.findAll();
 
-        types = this.crudServiceContactMechanismPurposeType.findAll();
+		if (partyTypes.size() == 0)
+		{
+			PartyType partyType;
 
-        if (types.size() == 0)
-        {
-            ContactMechanismPurposeType type;
+			partyType = new PartyType();
+			partyType.setDescription("Person");
+			this.crudServicePartyType.create(partyType);
 
-            type = new ContactMechanismPurposeType();
-            type.setDescription(PURPOSE_HEAD_QUARTERS);
-            this.crudServiceContactMechanismPurposeType.create(type);
+			partyType = new PartyType();
+			partyType.setDescription("Organization");
+			this.crudServicePartyType.create(partyType);
+		}
 
-            type = new ContactMechanismPurposeType();
-            type.setDescription(PURPOSE_GENERAL_PHONE);
-            this.crudServiceContactMechanismPurposeType.create(type);
+	}
 
-            type = new ContactMechanismPurposeType();
-            type.setDescription(PURPOSE_GENERAL_FAX);
-            this.crudServiceContactMechanismPurposeType.create(type);
+	private void createContactMechanismPurposeType()
+	{
+		List<ContactMechanismPurposeType> types;
 
-            type = new ContactMechanismPurposeType();
-            type.setDescription(PURPOSE_SECONDARY_FAX);
-            this.crudServiceContactMechanismPurposeType.create(type);
-        }
-    }
-    
-    private void createPartyRoleType()
-    {
-        PartyRoleType partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
+		types = this.crudServiceContactMechanismPurposeType.findAll();
 
-        if (partyRoleType == null)
-        {
-            partyRoleType = new PartyRoleType();
-            partyRoleType.setDescription(ADVOCATE);
-            this.crudServicePartyRoleType.create(partyRoleType);
+		if (types.size() == 0)
+		{
+			ContactMechanismPurposeType type;
 
-            partyRoleType = new PartyRoleType();
-            partyRoleType.setDescription(CLIENT_FISCAL_LAW);
-            this.crudServicePartyRoleType.create(partyRoleType);
+			type = new ContactMechanismPurposeType();
+			type.setDescription(PURPOSE_HEAD_QUARTERS);
+			this.crudServiceContactMechanismPurposeType.create(type);
 
-            partyRoleType = new PartyRoleType();
-            partyRoleType.setDescription(CLIENT_OUTSTANDING);
-            this.crudServicePartyRoleType.create(partyRoleType);
+			type = new ContactMechanismPurposeType();
+			type.setDescription(PURPOSE_GENERAL_PHONE);
+			this.crudServiceContactMechanismPurposeType.create(type);
 
-            partyRoleType = new PartyRoleType();
-            partyRoleType.setDescription(CLIENT_INVESTMENT);
-            this.crudServicePartyRoleType.create(partyRoleType);
+			type = new ContactMechanismPurposeType();
+			type.setDescription(PURPOSE_GENERAL_FAX);
+			this.crudServiceContactMechanismPurposeType.create(type);
 
-            partyRoleType = new PartyRoleType();
-            partyRoleType.setDescription(ASSISTANCE);
-            this.crudServicePartyRoleType.create(partyRoleType);
+			type = new ContactMechanismPurposeType();
+			type.setDescription(PURPOSE_SECONDARY_FAX);
+			this.crudServiceContactMechanismPurposeType.create(type);
+		}
+	}
 
-            partyRoleType = new PartyRoleType();
-            partyRoleType.setDescription(SUPPLIER);
-            this.crudServicePartyRoleType.create(partyRoleType);
+	private void createPartyRoleType()
+	{
+		PartyRoleType partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
 
-            partyRoleType = new PartyRoleType();
-            partyRoleType.setDescription(PRIVATE);
-            this.crudServicePartyRoleType.create(partyRoleType);
-        }
-    }
+		if (partyRoleType == null)
+		{
+			partyRoleType = new PartyRoleType();
+			partyRoleType.setDescription(ADVOCATE);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
-    private void createDemoOrgs()
-    {
-        Organization org;
-        PartyRoleType partyRoleType;
-        PartyRole partyRole;
-        PostalAddress postalAddress;
-        ElectronicAddress electronicAddress;
-        PartyContactMechanism pcm;
-        PartyContactMechanismPurpose pcmp;
-        ContactMechanismType contactMechanismType;
-        ContactMechanismPurposeType contactMechanismPurposeType;
+			partyRoleType = new PartyRoleType();
+			partyRoleType.setDescription(CLIENT_FISCAL_LAW);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
-        // ************************************************************************************************
-        org = new Organization();
-        org.setName("Bürogemeinschaft Klaglos & Ratlos");
-        this.crudServiceOrganization.create(org);
-        //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.POSTAL);
-        postalAddress = new PostalAddress();
-        postalAddress.setAddress1("Gerechtigkeitstraße 7");
-        postalAddress.setCity(DEMO_CITY);
-        postalAddress.setPostalCode(DEMO_ZIP);
-        postalAddress.setContactMechanismType(contactMechanismType);
-        this.crudServicePostalAddress.create(postalAddress);
-        pcm = new PartyContactMechanism();
-        pcm.setContactMechanism(postalAddress);
-        pcm.setParty(org);
-        this.crudServicePartyContactMechanism.create(pcm);
-        //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.EMAIL);
-        electronicAddress = new ElectronicAddress();
-        electronicAddress.setContactMechanismType(contactMechanismType);
-        electronicAddress.setElectronicAddress("contact@klaglos-ratlos.de");
-        this.crudServiceElectronicAddress.create(electronicAddress);
-        pcm = new PartyContactMechanism();
-        pcm.setContactMechanism(electronicAddress);
-        pcm.setParty(org);
-        this.crudServicePartyContactMechanism.create(pcm);
+			partyRoleType = new PartyRoleType();
+			partyRoleType.setDescription(CLIENT_OUTSTANDING);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
-        // ************************************************************************************************
-        org = new Organization();
-        org.setName("Querformat GmbH");
-        this.crudServiceOrganization.create(org);
-        partyRoleType = this.crudServicePartyRoleType.findForDescription(SUPPLIER);
-        partyRole = new PartyRole();
-        partyRole.setParty(org);
-        partyRole.setPartyRoleType(partyRoleType);
-        this.crudServicePartyRole.create(partyRole);
-        //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.POSTAL);
-        postalAddress = new PostalAddress();
-        postalAddress.setAddress1(DEMO_STREET);
-        postalAddress.setCity(DEMO_CITY);
-        postalAddress.setPostalCode(DEMO_ZIP);
-        postalAddress.setContactMechanismType(contactMechanismType);
-        this.crudServicePostalAddress.create(postalAddress);
-        pcm = new PartyContactMechanism();
-        pcm.setContactMechanism(postalAddress);
-        pcm.setParty(org);
-        this.crudServicePartyContactMechanism.create(pcm);
-        contactMechanismPurposeType = this.crudServiceContactMechanismPurposeType.findForDescription(PURPOSE_HEAD_QUARTERS);
-        pcmp = new PartyContactMechanismPurpose();
-        pcmp.setPartyContactMechanism(pcm);
-        pcmp.setContactMechanismPurposeType(contactMechanismPurposeType);
-        this.crudServicePartyContactMechanismPurpose.create(pcmp);
+			partyRoleType = new PartyRoleType();
+			partyRoleType.setDescription(CLIENT_INVESTMENT);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
-        //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.EMAIL);
-        electronicAddress = new ElectronicAddress();
-        electronicAddress.setContactMechanismType(contactMechanismType);
-        electronicAddress.setElectronicAddress("info@querformat.com");
-        this.crudServiceElectronicAddress.create(electronicAddress);
-        pcm = new PartyContactMechanism();
-        pcm.setContactMechanism(electronicAddress);
-        pcm.setParty(org);
-        this.crudServicePartyContactMechanism.create(pcm);
-        //
-        partyRoleType = this.crudServicePartyRoleType.findForDescription(CLIENT_OUTSTANDING);
-        partyRole = new PartyRole();
-        partyRole.setParty(org);
-        partyRole.setPartyRoleType(partyRoleType);
-        this.crudServicePartyRole.create(partyRole);
-    }
+			partyRoleType = new PartyRoleType();
+			partyRoleType.setDescription(ASSISTANCE);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
-    private void createDemoPersons()
-    {
-        Person person;
-        PartyRoleType partyRoleType;
-        PartyRole partyRole;
-        PostalAddress postalAddress;
-        TelecommunicationNumber phone;
-        PartyContactMechanism pcm;
-        ContactMechanismType contactMechanismType;
+			partyRoleType = new PartyRoleType();
+			partyRoleType.setDescription(SUPPLIER);
+			this.crudServicePartyRoleType.create(partyRoleType);
 
-        person = new Person();
-        person.setGender(PersonCoreValues.Gender.MALE);
-        person.setLastName("Ratlos");
-        this.crudServicePerson.create(person);
-        partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
-        partyRole = new PartyRole();
-        partyRole.setParty(person);
-        partyRole.setPartyRoleType(partyRoleType);
-        this.crudServicePartyRole.create(partyRole);
+			partyRoleType = new PartyRoleType();
+			partyRoleType.setDescription(PRIVATE);
+			this.crudServicePartyRoleType.create(partyRoleType);
+		}
+	}
 
-        person = new Person();
-        person.setLastName("Klaglos");
-        person.setGender(PersonCoreValues.Gender.MALE);
-        this.crudServicePerson.create(person);
-        partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
-        partyRole = new PartyRole();
-        partyRole.setParty(person);
-        partyRole.setPartyRoleType(partyRoleType);
-        this.crudServicePartyRole.create(partyRole);
+	private void createDemoOrgs()
+	{
+		Organization org;
+		PartyRoleType partyRoleType;
+		PartyRole partyRole;
+		PostalAddress postalAddress;
+		ElectronicAddress electronicAddress;
+		PartyContactMechanism pcm;
+		PartyContactMechanismPurpose pcmp;
+		ContactMechanismType contactMechanismType;
+		ContactMechanismPurposeType contactMechanismPurposeType;
 
-        person = new Person();
-        person.setGender(PersonCoreValues.Gender.FEMALE);
-        person.setLastName("Walküre");
-        this.crudServicePerson.create(person);
-        partyRoleType = this.crudServicePartyRoleType.findForDescription(ASSISTANCE);
-        partyRole = new PartyRole();
-        partyRole.setParty(person);
-        partyRole.setPartyRoleType(partyRoleType);
-        this.crudServicePartyRole.create(partyRole);
+		// ************************************************************************************************
+		org = new Organization();
+		org.setName("Bürogemeinschaft Klaglos & Ratlos");
+		this.crudServiceOrganization.create(org);
+		//
+		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.POSTAL);
+		postalAddress = new PostalAddress();
+		postalAddress.setAddress1("Gerechtigkeitstraße 7");
+		postalAddress.setCity(DEMO_CITY);
+		postalAddress.setPostalCode(DEMO_ZIP);
+		postalAddress.setContactMechanismType(contactMechanismType);
+		this.crudServicePostalAddress.create(postalAddress);
+		pcm = new PartyContactMechanism();
+		pcm.setContactMechanism(postalAddress);
+		pcm.setParty(org);
+		this.crudServicePartyContactMechanism.create(pcm);
+		//
+		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.EMAIL);
+		electronicAddress = new ElectronicAddress();
+		electronicAddress.setContactMechanismType(contactMechanismType);
+		electronicAddress.setElectronicAddress("contact@klaglos-ratlos.de");
+		this.crudServiceElectronicAddress.create(electronicAddress);
+		pcm = new PartyContactMechanism();
+		pcm.setContactMechanism(electronicAddress);
+		pcm.setParty(org);
+		this.crudServicePartyContactMechanism.create(pcm);
 
-        person = new Person();
-        person.setGender(PersonCoreValues.Gender.MALE);
-        person.setLastName("Reinweiß");
-        this.crudServicePerson.create(person);
-        partyRoleType = this.crudServicePartyRoleType.findForDescription(CLIENT_INVESTMENT);
-        partyRole = new PartyRole();
-        partyRole.setParty(person);
-        partyRole.setPartyRoleType(partyRoleType);
-        this.crudServicePartyRole.create(partyRole);
-        //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.POSTAL);
-        postalAddress = new PostalAddress();
-        postalAddress.setAddress1(DEMO_STREET);
-        postalAddress.setCity(DEMO_CITY);
-        postalAddress.setPostalCode(DEMO_ZIP);
-        postalAddress.setContactMechanismType(contactMechanismType);
-        this.crudServicePostalAddress.create(postalAddress);
-        pcm = new PartyContactMechanism();
-        pcm.setContactMechanism(postalAddress);
-        pcm.setParty(person);
-        this.crudServicePartyContactMechanism.create(pcm);
-        //
-        contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.PHONE);
-        phone = new TelecommunicationNumber();
-        phone.setNumber("0815 – 10");
-        phone.setContactMechanismType(contactMechanismType);
-        this.crudServiceTelecommunicationNumber.create(phone);
-        pcm = new PartyContactMechanism();
-        pcm.setContactMechanism(phone);
-        pcm.setParty(person);
-        this.crudServicePartyContactMechanism.create(pcm);
+		// ************************************************************************************************
+		org = new Organization();
+		org.setName("Querformat GmbH");
+		this.crudServiceOrganization.create(org);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(SUPPLIER);
+		partyRole = new PartyRole();
+		partyRole.setParty(org);
+		partyRole.setPartyRoleType(partyRoleType);
+		this.crudServicePartyRole.create(partyRole);
+		//
+		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.POSTAL);
+		postalAddress = new PostalAddress();
+		postalAddress.setAddress1(DEMO_STREET);
+		postalAddress.setCity(DEMO_CITY);
+		postalAddress.setPostalCode(DEMO_ZIP);
+		postalAddress.setContactMechanismType(contactMechanismType);
+		this.crudServicePostalAddress.create(postalAddress);
+		pcm = new PartyContactMechanism();
+		pcm.setContactMechanism(postalAddress);
+		pcm.setParty(org);
+		this.crudServicePartyContactMechanism.create(pcm);
+		contactMechanismPurposeType = this.crudServiceContactMechanismPurposeType
+		        .findForDescription(PURPOSE_HEAD_QUARTERS);
+		pcmp = new PartyContactMechanismPurpose();
+		pcmp.setPartyContactMechanism(pcm);
+		pcmp.setContactMechanismPurposeType(contactMechanismPurposeType);
+		this.crudServicePartyContactMechanismPurpose.create(pcmp);
 
-        person = new Person();
-        person.setGender(PersonCoreValues.Gender.MALE);
-        person.setLastName("Lahm");
-        this.crudServicePerson.create(person);
-        partyRoleType = this.crudServicePartyRoleType.findForDescription(PRIVATE);
-        partyRole = new PartyRole();
-        partyRole.setParty(person);
-        partyRole.setPartyRoleType(partyRoleType);
-        this.crudServicePartyRole.create(partyRole);
-    }
-    
-    private void createDemoRelationshipTypes()
-    {
-        PartyRelationshipType partyRelationshipType;
-        PartyRoleType partyRoleTypeFrom;
-        PartyRoleType partyRoleTypeTo;
-        
-        partyRoleTypeFrom = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
-        partyRoleTypeTo =  this.crudServicePartyRoleType.findForDescription(CLIENT_INVESTMENT);
-        
-        
-        partyRelationshipType = new PartyRelationshipType();
-        partyRelationshipType.setName(PARTY_ROLE_TYPE_REPRESENT_INVESTMENT);
-        partyRelationshipType.setPartyRoleTypeFrom(partyRoleTypeFrom);
-        partyRelationshipType.setPartyRoleTypeTo(partyRoleTypeTo);
-        
-        this.crudServicePartyRelationshipType.create(partyRelationshipType);
-    }
+		//
+		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.EMAIL);
+		electronicAddress = new ElectronicAddress();
+		electronicAddress.setContactMechanismType(contactMechanismType);
+		electronicAddress.setElectronicAddress("info@querformat.com");
+		this.crudServiceElectronicAddress.create(electronicAddress);
+		pcm = new PartyContactMechanism();
+		pcm.setContactMechanism(electronicAddress);
+		pcm.setParty(org);
+		this.crudServicePartyContactMechanism.create(pcm);
+		//
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(CLIENT_OUTSTANDING);
+		partyRole = new PartyRole();
+		partyRole.setParty(org);
+		partyRole.setPartyRoleType(partyRoleType);
+		this.crudServicePartyRole.create(partyRole);
+	}
+
+	private void createDemoPersons()
+	{
+		Person person;
+		PartyRoleType partyRoleType;
+		PartyRole partyRole;
+		PostalAddress postalAddress;
+		TelecommunicationNumber phone;
+		PartyContactMechanism pcm;
+		ContactMechanismType contactMechanismType;
+
+		person = new Person();
+		person.setGender(PersonCoreValues.Gender.MALE);
+		person.setLastName("Ratlos");
+		this.crudServicePerson.create(person);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
+		partyRole = new PartyRole();
+		partyRole.setParty(person);
+		partyRole.setPartyRoleType(partyRoleType);
+		this.crudServicePartyRole.create(partyRole);
+
+		person = new Person();
+		person.setLastName("Klaglos");
+		person.setGender(PersonCoreValues.Gender.MALE);
+		this.crudServicePerson.create(person);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
+		partyRole = new PartyRole();
+		partyRole.setParty(person);
+		partyRole.setPartyRoleType(partyRoleType);
+		this.crudServicePartyRole.create(partyRole);
+
+		person = new Person();
+		person.setGender(PersonCoreValues.Gender.FEMALE);
+		person.setLastName("Walküre");
+		this.crudServicePerson.create(person);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(ASSISTANCE);
+		partyRole = new PartyRole();
+		partyRole.setParty(person);
+		partyRole.setPartyRoleType(partyRoleType);
+		this.crudServicePartyRole.create(partyRole);
+
+		person = new Person();
+		person.setGender(PersonCoreValues.Gender.MALE);
+		person.setLastName("Reinweiß");
+		this.crudServicePerson.create(person);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(CLIENT_INVESTMENT);
+		partyRole = new PartyRole();
+		partyRole.setParty(person);
+		partyRole.setPartyRoleType(partyRoleType);
+		this.crudServicePartyRole.create(partyRole);
+		//
+		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.POSTAL);
+		postalAddress = new PostalAddress();
+		postalAddress.setAddress1(DEMO_STREET);
+		postalAddress.setCity(DEMO_CITY);
+		postalAddress.setPostalCode(DEMO_ZIP);
+		postalAddress.setContactMechanismType(contactMechanismType);
+		this.crudServicePostalAddress.create(postalAddress);
+		pcm = new PartyContactMechanism();
+		pcm.setContactMechanism(postalAddress);
+		pcm.setParty(person);
+		this.crudServicePartyContactMechanism.create(pcm);
+		//
+		contactMechanismType = this.crudServiceContactMechanismType.findForDescription(ContactTypeValues.PHONE);
+		phone = new TelecommunicationNumber();
+		phone.setNumber("0815 – 10");
+		phone.setContactMechanismType(contactMechanismType);
+		this.crudServiceTelecommunicationNumber.create(phone);
+		pcm = new PartyContactMechanism();
+		pcm.setContactMechanism(phone);
+		pcm.setParty(person);
+		this.crudServicePartyContactMechanism.create(pcm);
+
+		person = new Person();
+		person.setGender(PersonCoreValues.Gender.MALE);
+		person.setLastName("Lahm");
+		this.crudServicePerson.create(person);
+		partyRoleType = this.crudServicePartyRoleType.findForDescription(PRIVATE);
+		partyRole = new PartyRole();
+		partyRole.setParty(person);
+		partyRole.setPartyRoleType(partyRoleType);
+		this.crudServicePartyRole.create(partyRole);
+	}
+
+	private void createDemoRelationshipTypes()
+	{
+		PartyRelationshipType partyRelationshipType;
+		PartyRoleType partyRoleTypeFrom;
+		PartyRoleType partyRoleTypeTo;
+
+		partyRoleTypeFrom = this.crudServicePartyRoleType.findForDescription(ADVOCATE);
+		partyRoleTypeTo = this.crudServicePartyRoleType.findForDescription(CLIENT_INVESTMENT);
+
+		partyRelationshipType = new PartyRelationshipType();
+		partyRelationshipType.setName(PARTY_ROLE_TYPE_REPRESENT_INVESTMENT);
+		partyRelationshipType.setPartyRoleTypeFrom(partyRoleTypeFrom);
+		partyRelationshipType.setPartyRoleTypeTo(partyRoleTypeTo);
+
+		this.crudServicePartyRelationshipType.create(partyRelationshipType);
+	}
 }

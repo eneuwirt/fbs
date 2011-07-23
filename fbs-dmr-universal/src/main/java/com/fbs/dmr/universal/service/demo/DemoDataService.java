@@ -6,5 +6,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation=Propagation.REQUIRED)
 public interface DemoDataService
 {
-    public void demoFill();
+    public void demoFill(int iterations);
 }
